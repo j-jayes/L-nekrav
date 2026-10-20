@@ -1,0 +1,636 @@
+{
+ "data": {
+  "concepts": [
+   {
+    "id": "sq3e_WVv_Fjd",
+    "ssyk_code_2012": "5343",
+    "preferred_label": "Personliga assistenter",
+    "definition": "Underlättar för person med funktionsnedsättning att sköta sin skolgång eller sitt arbete. Ger stöd vid vardagssysslor samt fritidsaktiviteter. Ger personlig ledsagning.\r\n\r\nHit hör inte\r\nVårdare/Arbetshandledare/Boendestödjare (5342)",
+    "narrower": [
+     {
+      "id": "eU1q_zvL_9Rf",
+      "preferred_label": "Personlig assistent",
+      "alternative_labels": [],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/9c55aa23-e3f2-4c00-8c90-5ed5204951a3",
+        "preferred_label": "personlig assistent"
+       }
+      ],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "KJoL_2hp_Sa5",
+      "preferred_label": "Personligt ombud",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/9c55aa23-e3f2-4c00-8c90-5ed5204951a3",
+        "preferred_label": "personlig assistent"
+       }
+      ],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "SF73_TBz_fhR",
+      "preferred_label": "Ledsagare",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [],
+      "broad_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/9c55aa23-e3f2-4c00-8c90-5ed5204951a3",
+        "preferred_label": "personlig assistent"
+       }
+      ],
+      "narrow_match": []
+     }
+    ]
+   },
+   {
+    "id": "Qo7p_wjf_gtv",
+    "ssyk_code_2012": "2421",
+    "preferred_label": "Lednings- och organisationsutvecklare",
+    "definition": "Utreder företags och organisationers verksamhet. Föreslår och planerar åtgärder för att utveckla och rationalisera verksamheten.",
+    "narrower": [
+     {
+      "id": "X1FS_ZXE_DT2",
+      "preferred_label": "Verksamhetsanalytiker",
+      "alternative_labels": [],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/207d7b18-6540-432e-8aa6-785ed434572f",
+        "preferred_label": "omvärldsanalytiker"
+       }
+      ],
+      "close_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/60082a99-d8ef-4e84-9290-78902681b6ed",
+        "preferred_label": "företagsanalytiker"
+       }
+      ],
+      "broad_match": [],
+      "narrow_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/a330b100-e651-4db1-bcf0-e9cbc025c614",
+        "preferred_label": "processansvarig"
+       }
+      ]
+     },
+     {
+      "id": "Fb9B_93K_hHP",
+      "preferred_label": "Kvalitetsrevisor",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [],
+      "broad_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/eda0d957-3c3c-4139-b89a-a18bc9e18897",
+        "preferred_label": "revisor"
+       }
+      ],
+      "narrow_match": []
+     },
+     {
+      "id": "fUJp_V4d_ueo",
+      "preferred_label": "Verksamhetsutvecklare",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/c9862fdd-53b7-4da9-b742-4302d704836c",
+        "preferred_label": "verksamhetsutvecklare, lean"
+       }
+      ]
+     },
+     {
+      "id": "J7aL_Ugk_bkU",
+      "preferred_label": "Affärsarkitekt",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/60082a99-d8ef-4e84-9290-78902681b6ed",
+        "preferred_label": "företagsanalytiker"
+       }
+      ],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "3Zo3_ez5_Kdx",
+      "preferred_label": "Verksamhetskonsult",
+      "alternative_labels": [],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/6a29d804-f775-446c-bec7-35fc4e28ac97",
+        "preferred_label": "företagskonsult"
+       }
+      ],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "Wui8_Q9N_NVc",
+      "preferred_label": "Verksamhetsarkitekt",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [],
+      "broad_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/60082a99-d8ef-4e84-9290-78902681b6ed",
+        "preferred_label": "företagsanalytiker"
+       }
+      ],
+      "narrow_match": []
+     },
+     {
+      "id": "3vry_gaE_yfQ",
+      "preferred_label": "Organisationsutvecklare",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/c9862fdd-53b7-4da9-b742-4302d704836c",
+        "preferred_label": "verksamhetsutvecklare, lean"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/60082a99-d8ef-4e84-9290-78902681b6ed",
+        "preferred_label": "företagsanalytiker"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/6a29d804-f775-446c-bec7-35fc4e28ac97",
+        "preferred_label": "företagskonsult"
+       }
+      ],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "x6oS_7T1_8Rh",
+      "preferred_label": "Ekonomikonsult",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [],
+      "broad_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/6a29d804-f775-446c-bec7-35fc4e28ac97",
+        "preferred_label": "företagskonsult"
+       }
+      ],
+      "narrow_match": []
+     }
+    ]
+   },
+   {
+    "id": "13md_uyV_BNG",
+    "ssyk_code_2012": "3511",
+    "preferred_label": "Drifttekniker, IT",
+    "definition": "Sköter daglig drift av informations- och kommunikationssystem, kringutrustning, maskinvara, programvara och annan datorutrustning för att identifiera och förebygga fel och driftstörningar.",
+    "narrower": [
+     {
+      "id": "tJQK_eGb_V9R",
+      "preferred_label": "Drifttekniker IT",
+      "alternative_labels": [],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/3e7bf729-4442-4b9f-ad5e-83111963795c",
+        "preferred_label": "it-tekniker"
+       }
+      ],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/9729c0f3-c9bc-482e-ac59-a82ec3b67ba3",
+        "preferred_label": "datacentralsoperatör"
+       }
+      ]
+     },
+     {
+      "id": "AF1L_wVt_xmK",
+      "preferred_label": "IT-tekniker",
+      "alternative_labels": [
+       "Datatekniker"
+      ],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/3e7bf729-4442-4b9f-ad5e-83111963795c",
+        "preferred_label": "it-tekniker"
+       }
+      ],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/591c5063-69ce-4551-ba60-e2304111130f",
+        "preferred_label": "it-chef, överföring av flygdata"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "KiVA_anS_RJh",
+    "ssyk_code_2012": "0110",
+    "preferred_label": "Officerare",
+    "definition": "Leder, planerar och genomför militära operationer nationellt och internationellt. Leder militära förband.\r\n",
+    "narrower": [
+     {
+      "id": "fsDP_fPf_xfC",
+      "preferred_label": "Officer",
+      "alternative_labels": [],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/c6a26e11-bdf1-47a1-849d-fdcf819d458d",
+        "preferred_label": "officer"
+       }
+      ],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/e44b2459-af5e-492d-9c57-d9c2e62944e7",
+        "preferred_label": "fänrik"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/b223f402-0318-4e27-8691-df6e7f7295d2",
+        "preferred_label": "löjtnant"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/e4c915ff-6c9c-4fa9-a8fb-09d0c67e30d4",
+        "preferred_label": "major"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/9bf4c8ea-e814-4772-ae31-0f29672dc497",
+        "preferred_label": "kapten"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2cc5978-e45c-4f28-b859-7f89221b0505",
+        "preferred_label": "flygvapenofficer"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/7696b15a-c52e-4ac5-b38d-9eeb010c5fa3",
+        "preferred_label": "artilleriofficer"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/0b1d8dcb-d941-4d79-99bf-fc10c1806c43",
+        "preferred_label": "marinchef"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/c6e5e0e7-fa99-4f71-9fc1-9889d85282a5",
+        "preferred_label": "general"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/262f21a3-ae78-46f4-a5f9-5a1f502caa90",
+        "preferred_label": "marinofficer"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/b864c9a3-ef6e-46a0-a40c-66188f74dfa7",
+        "preferred_label": "överste"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/bbd1fe06-1b55-4937-9317-fc162311ab38",
+        "preferred_label": "brigadgeneral"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "1EBv_UzM_ozQ",
+    "ssyk_code_2012": "9210",
+    "preferred_label": "Bärplockare och plantörer m.fl.",
+    "definition": "Skördar grönsaker, frukt och bär. Röjer, gräver, planterar, rensar, gallrar, stackar m.m., med hjälp av handredskap och handverktyg. Rengör stallar och ladugårdar.",
+    "narrower": [
+     {
+      "id": "g6hq_ENJ_Yno",
+      "preferred_label": "Skördearbetare",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/e5e3ea36-4ed9-4c57-987c-9974385551a8",
+        "preferred_label": "vingårdsarbetare"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/373db468-bd25-4b67-a6e0-4ac79d9a9e85",
+        "preferred_label": "frukt- och grönsaksplockare"
+       }
+      ]
+     },
+     {
+      "id": "HTC6_96A_dwB",
+      "preferred_label": "Plantskolearbetare",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [],
+      "broad_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/773cf1de-50a4-42e7-bab1-e68dcbae3f54",
+        "preferred_label": "skogsarbetare"
+       }
+      ],
+      "narrow_match": []
+     },
+     {
+      "id": "V1QR_VzZ_vbj",
+      "preferred_label": "Växtskötare",
+      "alternative_labels": [],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/a10eb17a-3c78-4f7a-a1da-8f31146339d3",
+        "preferred_label": "växtskötare"
+       }
+      ],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "StaK_vgD_1pR",
+      "preferred_label": "Bärplockare",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [],
+      "broad_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/373db468-bd25-4b67-a6e0-4ac79d9a9e85",
+        "preferred_label": "frukt- och grönsaksplockare"
+       }
+      ],
+      "narrow_match": []
+     },
+     {
+      "id": "iJHN_s3P_2Ge",
+      "preferred_label": "Plantör",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [],
+      "broad_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/773cf1de-50a4-42e7-bab1-e68dcbae3f54",
+        "preferred_label": "skogsarbetare"
+       }
+      ],
+      "narrow_match": []
+     }
+    ]
+   },
+   {
+    "id": "DJh5_yyF_hEM",
+    "ssyk_code_2012": "2512",
+    "preferred_label": "Mjukvaru- och systemutvecklare m.fl.",
+    "definition": "Analyserar, designar och utvecklar IT-system eller delar av system. Utformar och utvecklar lösningar för programvara, applikationer, system och databaser.",
+    "narrower": [
+     {
+      "id": "WoBk_fWz_nrt",
+      "preferred_label": "GIS-utvecklare",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [],
+      "broad_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "preferred_label": "IKT-systemutvecklare"
+       }
+      ],
+      "narrow_match": []
+     },
+     {
+      "id": "7wdX_4rv_33z",
+      "preferred_label": "Backend-utvecklare",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/349ee6f6-c295-4c38-9b98-48765b55280e",
+        "preferred_label": "molntekniker"
+       }
+      ]
+     },
+     {
+      "id": "GDHs_eoz_uKx",
+      "preferred_label": "Frontend-utvecklare",
+      "alternative_labels": [],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "preferred_label": "gränssnittsutvecklare"
+       }
+      ],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "CZkP_hCz_KM8",
+      "preferred_label": "Applikationsutvecklare",
+      "alternative_labels": [],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "preferred_label": "IKT-programutvecklare"
+       }
+      ],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "z5AM_ayf_WcL",
+      "preferred_label": "Projektledare, IT",
+      "alternative_labels": [
+       "IT-projektledare"
+      ],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+        "preferred_label": "projektledare inom IKT"
+       }
+      ],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "CQse_CRd_snw",
+      "preferred_label": "Civilingenjör, systemutveckling",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "preferred_label": "IKT-systemutvecklare"
+       }
+      ],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "vpAN_viS_cFV",
+      "preferred_label": "Databasanalytiker",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+        "preferred_label": "databasutvecklare"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "preferred_label": "databasdesigner"
+       }
+      ],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "rQds_YGd_quU",
+      "preferred_label": "Mjukvaruutvecklare",
+      "alternative_labels": [],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "preferred_label": "programvaruutvecklare"
+       }
+      ],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/349ee6f6-c295-4c38-9b98-48765b55280e",
+        "preferred_label": "molntekniker"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/781a6350-e686-45b9-b075-e4c8d5a05ff7",
+        "preferred_label": "molnprogramutvecklare"
+       },
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/24135b84-cbdd-4d42-9ed2-02fd982d15b2",
+        "preferred_label": "blockkedjeutvecklare"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "mZsb_A1K_Gec",
+    "ssyk_code_2012": "1210",
+    "preferred_label": "Ekonomi- och finanschefer",
+    "definition": "Ansvarar för att upprätta budget samt för redovisning och bokslut. Kontrollerar att verksamhetens resurser används på ett effektivt sätt. Utformar riktlinjer, följer upp och utvärderar verksamheten mot uppsatta ekonomiska mål. Redovisar resultat och rapporterar till företagsledningen eller motsvarande. Har personalansvar.",
+    "narrower": [
+     {
+      "id": "fjFj_GGk_woa",
+      "preferred_label": "Budgetchef",
+      "alternative_labels": [],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/44e0c015-309d-4f67-98a3-1e036966ed7f",
+        "preferred_label": "budgetchef"
+       }
+      ],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "iCy6_G72_abh",
+      "preferred_label": "Ekonomichef",
+      "alternative_labels": [],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/30f3ea93-882a-4525-841c-1d5b4b64076f",
+        "preferred_label": "ekonomichef"
+       }
+      ],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "b288_Hx5_KYy",
+      "preferred_label": "Internrevisionschef",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/30f3ea93-882a-4525-841c-1d5b4b64076f",
+        "preferred_label": "ekonomichef"
+       }
+      ],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "99va_MQm_DWY",
+      "preferred_label": "Revisionschef",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/30f3ea93-882a-4525-841c-1d5b4b64076f",
+        "preferred_label": "ekonomichef"
+       }
+      ],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "jgo4_iYd_cr6",
+      "preferred_label": "Ekonomidirektör/Finanschef",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/30f3ea93-882a-4525-841c-1d5b4b64076f",
+        "preferred_label": "ekonomichef"
+       }
+      ],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "Ld9h_41y_zvw",
+      "preferred_label": "Redovisningschef",
+      "alternative_labels": [],
+      "exact_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/04f39bfa-bc03-4480-98bc-b18ce4fe4b4b",
+        "preferred_label": "redovisningschef"
+       }
+      ],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": []
+     },
+     {
+      "id": "BgmL_dwK_5gF",
+      "preferred_label": "Kreditchef",
+      "alternative_labels": [],
+      "exact_match": [],
+      "close_match": [],
+      "broad_match": [],
+      "narrow_match": [
+       {
+        "esco_uri": "http://data.europa.eu/esco/occupation/c530b0ee-46f8-40fb-818c-d9b44b891cb9",
+        "preferred_label": "analytiker, bankprodukter"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

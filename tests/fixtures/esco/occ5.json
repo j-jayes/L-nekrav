@@ -1,0 +1,30 @@
+{
+ "uri": "http://data.europa.eu/esco/occupation/60082a99-d8ef-4e84-9290-78902681b6ed",
+ "code": "2421.1",
+ "preferredLabel": {
+  "sv": "företagsanalytiker",
+  "en": "business analyst"
+ },
+ "alternativeLabel": {
+  "en": [
+   "standardisation expert",
+   "business strategy analyst",
+   "standardization expert",
+   "business development analyst",
+   "business strategy consultant",
+   "management consultant",
+   "standardisation manager",
+   "organisational developer"
+  ]
+ },
+ "description": {
+  "sv": {
+   "literal": "Företagsanalytiker undersöker och förstår verksamheters och företags strategiska position i förhållande till deras marknader och intressenter. De analyserar och presenterar sina synpunkter om hur företaget ur många perspektiv kan förbättra sin strategiska position och interna struktur. De bedömer behoven av förändring, kommunikationsmetoder, teknik, it-verktyg, nya standarder och certifieringar.",
+   "mimetype": "plain/text"
+  },
+  "en": {
+   "literal": "\nBusiness analysts research and understand the strategic position of businesses and companies in relation to their markets and their stakeholders. They analyse and present their views on how the company, from many perspectives, can improve its strategic position and internal corporate structure. They assess needs for change, communication methods, technology, IT tools, new standards and certifications.",
+   "mimetype": "plain/text"
+  }
+ }
+}

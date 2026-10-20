@@ -23,10 +23,10 @@ script, never hand-typed). The default `uv run pytest` is offline. Real models o
 
 ## Phase 1: Setup
 
-- [ ] T001 Add runtime dependencies to `pyproject.toml` with `uv add` (httpx, pydantic, openpyxl, pypdf, polars, pyyaml, `pymilvus[milvus-lite]>=3`, `sentence-transformers>=6`, psutil); register `lonekrav-etl = "lonekrav.etl.cli:main"`; remove the `uv init` placeholder `main` from `src/lonekrav/__init__.py` and its `lonekrav` script entry
-- [ ] T002 Configure pytest in `pyproject.toml`: `testpaths = ["tests"]`, a `benchmark` marker, and `addopts = "-m 'not benchmark'"`; configure ruff (line length 100)
-- [ ] T003 [P] Create the package skeleton `src/lonekrav/core/__init__.py`, `src/lonekrav/etl/__init__.py` and the folders `tests/unit/`, `tests/integration/`, `tests/eval/`, `tests/fixtures/`, `data/processed/`
-- [ ] T004 [P] Write `scripts/cut_fixtures.py`, a standalone script using plain httpx and openpyxl that downloads each source once and keeps only slices for the codes 0000, 0110, 1211, 1212, 2512, 2421, 3511, 4430, 5322, 5343 and 9210: workbook rows re-saved as small xlsx, json-stat2 responses filtered to those codes, GraphQL responses, ILO rows, a few ESCO URIs, and the PDF text pages. It writes them to `tests/fixtures/`. Run it, read the output, and commit the fixtures, so parser tests have real inputs before any parser exists.
+- [X] T001 Add runtime dependencies to `pyproject.toml` with `uv add` (httpx, pydantic, openpyxl, pypdf, polars, pyyaml, `pymilvus[milvus-lite]>=3`, `sentence-transformers>=6`, psutil); register `lonekrav-etl = "lonekrav.etl.cli:main"`; remove the `uv init` placeholder `main` from `src/lonekrav/__init__.py` and its `lonekrav` script entry
+- [X] T002 Configure pytest in `pyproject.toml`: `testpaths = ["tests"]`, a `benchmark` marker, and `addopts = "-m 'not benchmark'"`; configure ruff (line length 100)
+- [X] T003 [P] Create the package skeleton `src/lonekrav/core/__init__.py`, `src/lonekrav/etl/__init__.py` and the folders `tests/unit/`, `tests/integration/`, `tests/eval/`, `tests/fixtures/`, `data/processed/`
+- [X] T004 [P] Write `scripts/cut_fixtures.py`, a standalone script using plain httpx and openpyxl that downloads each source once and keeps only slices for the codes 0000, 0110, 1211, 1212, 2512, 2421, 3511, 4430, 5322, 5343 and 9210: workbook rows re-saved as small xlsx, json-stat2 responses filtered to those codes, GraphQL responses, ILO rows, a few ESCO URIs, and the PDF text pages. It writes them to `tests/fixtures/`. Run it, read the output, and commit the fixtures, so parser tests have real inputs before any parser exists.
 
 ---
 
@@ -38,7 +38,7 @@ script, never hand-typed). The default `uv run pytest` is offline. Real models o
 - [ ] T008 Implement the cached atomic download in `src/lonekrav/etl/http.py` (temporary file, then rename) until T007 passes
 - [ ] T009 [P] Test `tests/unit/test_cli.py`: `lonekrav-etl --help` lists fetch, build, index, benchmark and measure-models; an unknown source for `fetch --only` exits 1 with a message
 - [ ] T010 Implement the argparse skeleton in `src/lonekrav/etl/cli.py`, with subcommands calling stub functions, until T009 passes
-- [ ] T011 Check the fixtures from T004 against the live sources: for each fixture, record its URL and fetch date in `tests/fixtures/README.md`
+- [X] T011 Check the fixtures from T004 against the live sources: for each fixture, record its URL and fetch date in `tests/fixtures/README.md`
 
 ---
 

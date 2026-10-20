@@ -1,0 +1,31 @@
+{
+ "uri": "http://data.europa.eu/esco/occupation/44e0c015-309d-4f67-98a3-1e036966ed7f",
+ "code": "1211.1.3",
+ "preferredLabel": {
+  "sv": "budgetchef",
+  "en": "budget manager"
+ },
+ "alternativeLabel": {
+  "en": [
+   "budget coordinator",
+   "budget and analysis manager",
+   "budget counselor",
+   "money manager",
+   "budgeting manager",
+   "budget and planning manager",
+   "money managers",
+   "bookkeepers",
+   "budget and policy manager"
+  ]
+ },
+ "description": {
+  "sv": {
+   "literal": "Budgetchefer bedömer förslag från olika avdelningar innan de beviljar ekonomiska resurser till projekt. De övervakar genomförandet av budgetpolicyer och budgetrutiner. De har ett nära samarbete med andra avdelningar vid utvärderingen av program, deras inverkan på organisationen, de intäkter de kan ge och de ekonomiska insatser som krävs.",
+   "mimetype": "plain/text"
+  },
+  "en": {
+   "literal": "Budget managers assess financial proposals of different departments before granting financial resources to projects. They monitor the implementation of budget policies and procedures. They work closely with other departments in the evaluation of programs, their impact in the organisation, the revenue that they can yield, and the financial efforts required.",
+   "mimetype": "plain/text"
+  }
+ }
+}

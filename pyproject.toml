@@ -8,11 +8,18 @@ authors = [
 requires-python = ">=3.12"
 dependencies = [
     "httpx>=0.28.1",
+    "openpyxl>=3.1.5",
+    "polars>=2.0.0",
+    "psutil>=7.2.2",
     "pydantic>=2.14.1",
+    "pymilvus[milvus-lite]>=3",
+    "pypdf>=6.21.1",
+    "pyyaml>=6.0.3",
+    "sentence-transformers>=6",
 ]
 
 [project.scripts]
-lonekrav = "lonekrav:main"
+lonekrav-etl = "lonekrav.etl.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.9.9,<0.10.0"]
@@ -23,3 +30,11 @@ dev = [
     "pytest>=9.1.1",
     "ruff>=0.17.1",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-m 'not benchmark' --import-mode=importlib"
+markers = ["benchmark: full cross-lingual benchmark with real models (slow, needs model downloads)"]
+
+[tool.ruff]
+line-length = 100

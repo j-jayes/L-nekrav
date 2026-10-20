@@ -1,0 +1,32 @@
+{
+ "uri": "http://data.europa.eu/esco/occupation/04f39bfa-bc03-4480-98bc-b18ce4fe4b4b",
+ "code": "1211.1.1",
+ "preferredLabel": {
+  "sv": "redovisningschef",
+  "en": "accounting manager"
+ },
+ "alternativeLabel": {
+  "en": [
+   "accounting department manager",
+   "cost accounting manager",
+   "accounting director",
+   "accounting office manager",
+   "group accounting manager",
+   "accounts payable manager",
+   "head of accounts",
+   "financial accounting manager",
+   "financial accounts supervisor",
+   "financial director"
+  ]
+ },
+ "description": {
+  "sv": {
+   "literal": "Redovisningschefer ansvarar för all bokföring i samband med finansiell rapportering. De utvecklar och upprätthåller principer och rutiner för redovisning för att säkerställa utfärdande av korrekta finansiella rapporter i rätt tid, övervakar redovisningspersonal och sköter redovisningsaktiviteterna inom en lämplig tidsram och med lämplig budget.",
+   "mimetype": "plain/text"
+  },
+  "en": {
+   "literal": "Accounting managers assume responsibility for all accounting activities relating to financial reporting. They develop and maintain accounting principles and procedures to ensure timely and accurate financial statements issued, supervise accounting staff and manage the accounting activities within the appropriate time frame and budget.",
+   "mimetype": "plain/text"
+  }
+ }
+}
