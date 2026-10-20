@@ -13,12 +13,46 @@ def _todo(args: argparse.Namespace) -> None:
     raise NotImplementedError(f"'{args.command}' is not implemented yet")
 
 
+def _fetch(args: argparse.Namespace) -> None:
+    from lonekrav.etl import pipeline
+
+    pipeline.fetch(args.only, force=args.force)
+
+
+def _build(args: argparse.Namespace) -> None:
+    from lonekrav.etl import pipeline
+
+    pipeline.build()
+
+
+def _index(args: argparse.Namespace) -> None:
+    from pathlib import Path
+
+    from lonekrav.etl import pipeline
+
+    pipeline.index(args.models.split(","), db=Path(args.db) if args.db else None)
+
+
+def _measure(args: argparse.Namespace) -> None:
+    from lonekrav.etl import measure
+
+    measure.measure()
+
+
+def _benchmark(args: argparse.Namespace) -> None:
+    from pathlib import Path
+
+    from lonekrav.etl import benchmark
+
+    print(benchmark.table(benchmark.run(db=Path(args.db) if args.db else None)))
+
+
 COMMANDS: dict[str, Callable[[argparse.Namespace], None]] = {
-    "fetch": _todo,
-    "build": _todo,
-    "index": _todo,
-    "benchmark": _todo,
-    "measure-models": _todo,
+    "fetch": _fetch,
+    "build": _build,
+    "index": _index,
+    "benchmark": _benchmark,
+    "measure-models": _measure,
 }
 
 

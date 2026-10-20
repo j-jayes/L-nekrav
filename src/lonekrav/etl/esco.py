@@ -10,7 +10,7 @@ from pathlib import Path
 import httpx
 from pydantic import BaseModel
 
-from lonekrav.etl.http import USER_AGENT, cached_get
+from lonekrav.etl.http import USER_AGENT, FetchError, cached_get
 
 URL = "https://ec.europa.eu/esco/api/resource/occupation"
 LANGS = ("en", "sv")
@@ -27,18 +27,57 @@ def path_for(raw: Path, uri: str) -> Path:
     return raw / "esco" / (hashlib.sha1(uri.encode()).hexdigest()[:16] + ".json")
 
 
-def fetch(raw: Path, uris: list[str], force: bool = False, delay: float = 0.1) -> list[Path]:
-    """One request per URI (the API returns every language at once), politely spaced."""
+class FetchResult(BaseModel):
+    paths: list[Path]
+    missing: list[str]  # URIs JobTech links to that ESCO no longer publishes (HTTP 404)
+
+
+def _unservable(e: FetchError) -> bool:
+    """404 (removed from ESCO) or a 500 carrying ESCO's own error body (a data defect for that
+    one occupation, seen live as CognizoneException). Network errors and 503s are not."""
+    cause = e.__cause__
+    if not isinstance(cause, httpx.HTTPStatusError):
+        return False
+    r = cause.response
+    if r.status_code == 404:
+        return True
+    try:
+        return r.status_code == 500 and "logref" in r.json()
+    except ValueError:
+        return False
+
+
+def fetch(raw: Path, uris: list[str], force: bool = False, delay: float = 0.1) -> FetchResult:
+    """One request per URI (the API returns every language at once), politely spaced.
+
+    Occupations ESCO cannot serve are recorded in `esco/missing.json` and skipped. Any other
+    failure stops the fetch. The skip list is saved even when the fetch stops.
+    """
+    known = raw / "esco" / "missing.json"
+    missing = set() if force or not known.exists() else set(json.loads(known.read_text()))
     paths = []
-    with httpx.Client(timeout=60, follow_redirects=True, headers={"User-Agent": USER_AGENT}) as c:
-        for uri in uris:
-            dest = path_for(raw, uri)
-            fresh = force or not dest.exists()
-            paths.append(cached_get("esco", URL, dest, params={"uri": uri, "language": "en"},
-                                    client=c, force=force, validate=json.loads))
-            if fresh:
-                time.sleep(delay)
-    return paths
+    try:
+        with httpx.Client(timeout=60, follow_redirects=True,
+                          headers={"User-Agent": USER_AGENT}) as c:
+            for uri in uris:
+                if uri in missing:
+                    continue
+                dest = path_for(raw, uri)
+                fresh = force or not dest.exists()
+                try:
+                    paths.append(cached_get("esco", URL, dest, client=c, force=force,
+                                            params={"uri": uri, "language": "en"},
+                                            validate=json.loads))
+                except FetchError as e:
+                    if not _unservable(e):
+                        raise
+                    missing.add(uri)
+                if fresh:
+                    time.sleep(delay)
+    finally:
+        known.parent.mkdir(parents=True, exist_ok=True)
+        known.write_text(json.dumps(sorted(missing), indent=1))
+    return FetchResult(paths=paths, missing=sorted(missing))
 
 
 def parse(path: Path) -> Occupation:
