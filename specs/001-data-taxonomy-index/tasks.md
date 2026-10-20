@@ -32,12 +32,12 @@ script, never hand-typed). The default `uv run pytest` is offline. Real models o
 
 ## Phase 2: Foundational (blocks every story)
 
-- [ ] T005 [P] Test `tests/unit/test_models.py`: OccupationProfile requires a 4-digit code, `title_sv`, `title_en` and at least one Swedish description; Synonym deduplicates on (lang, casefolded label); SalaryDistribution rejects `p10 > p25` and lists null fields in `suppressed`
-- [ ] T006 Implement the pydantic models from data-model.md in `src/lonekrav/core/models.py` until T005 passes
-- [ ] T007 [P] Test `tests/unit/test_http.py` with an httpx MockTransport: download writes `<file>` and `<file>.meta.json` (url, fetched_at, sha256); a cached file is reused without `force`; a failed download (simulated with the mock transport returning a connection error and a 500) raises an error naming the source and URL, and leaves the old file untouched
-- [ ] T008 Implement the cached atomic download in `src/lonekrav/etl/http.py` (temporary file, then rename) until T007 passes
-- [ ] T009 [P] Test `tests/unit/test_cli.py`: `lonekrav-etl --help` lists fetch, build, index, benchmark and measure-models; an unknown source for `fetch --only` exits 1 with a message
-- [ ] T010 Implement the argparse skeleton in `src/lonekrav/etl/cli.py`, with subcommands calling stub functions, until T009 passes
+- [X] T005 [P] Test `tests/unit/test_models.py`: OccupationProfile requires a 4-digit code, `title_sv`, `title_en` and at least one Swedish description; Synonym deduplicates on (lang, casefolded label); SalaryDistribution rejects `p10 > p25` and lists null fields in `suppressed`
+- [X] T006 Implement the pydantic models from data-model.md in `src/lonekrav/core/models.py` until T005 passes
+- [X] T007 [P] Test `tests/unit/test_http.py` with an httpx MockTransport: download writes `<file>` and `<file>.meta.json` (url, fetched_at, sha256); a cached file is reused without `force`; a failed download (simulated with the mock transport returning a connection error and a 500) raises an error naming the source and URL, and leaves the old file untouched
+- [X] T008 Implement the cached atomic download in `src/lonekrav/etl/http.py` (temporary file, then rename) until T007 passes
+- [X] T009 [P] Test `tests/unit/test_cli.py`: `lonekrav-etl --help` lists fetch, build, index, benchmark and measure-models; an unknown source for `fetch --only` exits 1 with a message
+- [X] T010 Implement the argparse skeleton in `src/lonekrav/etl/cli.py`, with subcommands calling stub functions, until T009 passes
 - [X] T011 Check the fixtures from T004 against the live sources: for each fixture, record its URL and fetch date in `tests/fixtures/README.md`
 
 ---

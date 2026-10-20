@@ -5,8 +5,12 @@ Run: uv run --python 3.12 --with "pymilvus[milvus-lite]>=3" python references/mi
 Output seen: bm25 [("2512", -2.019)]; bm25 sv [("2222", -1.492)]; hybrid top 2512, 5.3 ms.
 Gotcha: Milvus Lite returns BM25 scores as negative numbers (lower is better), unlike Milvus server.
 """
-import sys, time, random
-from pymilvus import MilvusClient, DataType, Function, FunctionType, AnnSearchRequest, RRFRanker
+import random
+import sys
+import time
+
+from pymilvus import AnnSearchRequest, DataType, Function, FunctionType, MilvusClient, RRFRanker
+
 db = sys.argv[1]
 c = MilvusClient(db)
 if c.has_collection("t"): c.drop_collection("t")
