@@ -106,9 +106,13 @@ session log; the Milvus spike is saved as `references/milvus_lite_hybrid.py`.
   without a prompt. Both are L2-normalised and searched by cosine.
 - **Measurement task**: The first implementation task measures, on the M2 Pro CPU, the time per short
   query, per 600-word pasted ad and for the full corpus, plus resident memory per model, in fp32 first.
-  Results go to `references/embedding-benchmark.md`. If Harrier fp32 plus KBLab exceeds a 2.5 GB
-  budget, try a quantised or ONNX variant; failing that, switch the slot to
-  `google/embeddinggemma-300m` and record why.
+  Results go to `references/embedding-benchmark.md`.
+- **Measured (2026-10-20)**: KBLab fp32 0.73 GB peak, 39 ms per short query. Harrier loads as bf16
+  by default, which is about 10× slower on CPU (5.9 s per 600-word ad), so it MUST be loaded in fp32:
+  130 ms per short query, 0.58 s per ad, 130 ms per document, 3.1 GB peak.
+- **Budget decision (maintainer, 2026-10-20)**: the container memory budget is 4 GB, with Harrier in
+  fp32. No quantisation. `google/embeddinggemma-300m` remains the documented fallback if a smaller
+  target is needed later.
 
 ## R9. Testing without models
 

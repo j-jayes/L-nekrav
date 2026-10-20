@@ -32,7 +32,7 @@ milvus-lite 3.2, sentence-transformers 6 (torch CPU)
 **Performance Goals**: full rebuild in under 60 minutes, rebuild from cache in under 15; the fused
 search latency is measured here and budgeted in Feature 002
 
-**Constraints**: index under 200 MB; model memory measured against a 2.5 GB container budget (R8);
+**Constraints**: index under 200 MB; 4 GB container memory budget, decided 2026-10-20 after measurement (R8);
 no network or models in the default test run
 
 **Scale/Scope**: 429 occupations, about 3 000–5 000 chunks, about 12 years × 430 salary rows, about
