@@ -1,6 +1,10 @@
 <!--
 Sync Impact Report
-- Version change: (template) → 1.0.0
+- Version change: 1.0.0 → 1.0.1 (PATCH, 2026-10-20): Principle IV clarifies that the
+  cross-lingual benchmark runs under a `benchmark` marker and gates merges of data or search changes,
+  rather than running in every default test run. Prompted by the Feature 001 clarification and the
+  /speckit-analyze finding D1.
+- Earlier: (template) → 1.0.0
 - Principles defined: I. Core First, Adapters Thin; II. Data Integrity; III. Honest Fit;
   IV. Test-First and Proven by Hand; V. Compact and Portable; VI. Simplicity and Surgical Change
 - Added sections: Technology and Data Constraints; Development Workflow; Governance
@@ -62,8 +66,9 @@ Misclassification hurts the applicant; transparency helps them negotiate.
 - A change is not done until it has been run for real — CLI on a fixture, `curl` against a dev
   server, or a browser screenshot — and that evidence is in the pull request.
 - A bug found by hand MUST be fixed by first writing a failing regression test.
-- Retrieval quality is a tested property: the cross-lingual benchmark MUST run in the suite and
-  a regression in its headline metrics fails the build.
+- Retrieval quality is a tested property: the cross-lingual benchmark MUST live in the test suite
+  under the `benchmark` marker, MUST fail when its headline metrics regress, and MUST pass before
+  any change to data or search is merged. The default test run stays fast and offline.
 
 Rationale: passing unit tests do not prove that a server boots or that an English query finds
 the same occupation as its Swedish translation.
@@ -130,4 +135,4 @@ Rationale: an agent-built codebase grows by accretion unless size is treated as 
 - The `LegalConstants` registry MUST be reviewed every June when SCB publishes a new median, and
   whenever Migrationsverket announces a rule change.
 
-**Version**: 1.0.0 | **Ratified**: 2026-10-20 | **Last Amended**: 2026-10-20
+**Version**: 1.0.1 | **Ratified**: 2026-10-20 | **Last Amended**: 2026-10-20

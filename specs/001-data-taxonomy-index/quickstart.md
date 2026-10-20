@@ -32,7 +32,7 @@ uv run pytest -m benchmark                 # asserts SC-004, SC-005, SC-006
 | 12 | Size of `data/lonekrav_milvus.db` | under 200 MB (SC-008) |
 | 13 | Spot queries through `core.search` | "backend developer" → 2512 in the top 5; "sjuksköterska" → a 222x code in the top 5; "management consultant" → 2421 in the top 5 |
 | 14 | `benchmark_results.json` | fused Recall@5 ≥ 0.80 in both languages; EN−SV gap ≤ 5 points; fused ≥ each single method |
-| 15 | Fetch with SCB unreachable (for example a wrong host set through an env override) | exit 1, message names SCB and the URL, cached files unchanged |
+| 15 | Fetch failure (covered by the mock-transport test in T007) | exit 1, message names the source and the URL, cached files unchanged |
 
 Spot query one-liner:
 

@@ -34,7 +34,7 @@ script, never hand-typed). The default `uv run pytest` is offline. Real models o
 
 - [ ] T005 [P] Test `tests/unit/test_models.py`: OccupationProfile requires a 4-digit code, `title_sv`, `title_en` and at least one Swedish description; Synonym deduplicates on (lang, casefolded label); SalaryDistribution rejects `p10 > p25` and lists null fields in `suppressed`
 - [ ] T006 Implement the pydantic models from data-model.md in `src/lonekrav/core/models.py` until T005 passes
-- [ ] T007 [P] Test `tests/unit/test_http.py` with an httpx MockTransport: download writes `<file>` and `<file>.meta.json` (url, fetched_at, sha256); a cached file is reused without `force`; a failed download raises an error naming the source and URL and leaves the old file untouched
+- [ ] T007 [P] Test `tests/unit/test_http.py` with an httpx MockTransport: download writes `<file>` and `<file>.meta.json` (url, fetched_at, sha256); a cached file is reused without `force`; a failed download (simulated with the mock transport returning a connection error and a 500) raises an error naming the source and URL, and leaves the old file untouched
 - [ ] T008 Implement the cached atomic download in `src/lonekrav/etl/http.py` (temporary file, then rename) until T007 passes
 - [ ] T009 [P] Test `tests/unit/test_cli.py`: `lonekrav-etl --help` lists fetch, build, index, benchmark and measure-models; an unknown source for `fetch --only` exits 1 with a message
 - [ ] T010 Implement the argparse skeleton in `src/lonekrav/etl/cli.py`, with subcommands calling stub functions, until T009 passes
@@ -57,7 +57,7 @@ and a discrepancy report.
 - [ ] T015 [P] [US1] `tests/unit/test_ilo.py` on fixture rows: 2512 gives an English definition, a tasks text and included-occupation titles ("Software engineer" and others), each tagged `isco_code="2512"`
 - [ ] T016 [P] [US1] `tests/unit/test_esco.py` on fixture JSON: one occupation URI gives en and sv preferred labels, alternative labels and descriptions
 - [ ] T017 [P] [US1] `tests/unit/test_mis2012.py` on fixture PDF text: descriptions for 1212, 4430 and 5322 are extracted from the description section, not from the overview list or correspondence tables (assert that the text for 1212 starts "Verksamhetsnära chef")
-- [ ] T018 [US1] `tests/integration/test_build_profiles.py`: building from fixtures gives profiles for every fixture code. 0110 gets its title from the salary-table label and its English title from ILO; 2512 has no flags, at least one sv and one en description, and synonyms in both languages; the discrepancy rows for 0110 and 1212 are correct; output JSON is sorted and two builds are byte-identical
+- [ ] T018 [US1] `tests/integration/test_build_profiles.py`: building from fixtures gives profiles for every fixture code. 0110 gets its title from the salary-table label and its English title from ILO; 2512 has no flags, at least one sv and one en description, and synonyms in both languages; the discrepancy rows for 0110 and 1212 are correct; a fixture code with no ESCO or ILO text still builds from the SCB/JobTech text and records the absence in `sources`; output JSON is sorted and two builds are byte-identical
 
 ### Implementation
 
@@ -134,7 +134,7 @@ and a discrepancy report.
 
 - [ ] T048 [US4] Write `tests/eval/queries_handwritten.yaml`: 30+ EN/SV pairs, including the look-alikes 2512/2511/2514, 2122 statistician/2421/2512 data analyst, 2221–2229 nurse specialities, and manager nivå 1/2 pairs. Flag it for review by a Swedish speaker in the PR. (T047)
 - [ ] T049 [US4] `src/lonekrav/etl/benchmark.py`: the generated set and hold-out (written during `build`), metrics, results JSON with model ids and revisions (T045, T046)
-- [ ] T050 [US4] `tests/eval/test_benchmark.py`, marked `benchmark`: loads the real index, asserts SC-004 (fused Recall@5 ≥ 0.80 per language), SC-005 (gap ≤ 5 points) and SC-006 (fused ≥ each method)
+- [ ] T050 [US4] `tests/eval/test_benchmark.py`, marked `benchmark`: loads the real index, asserts SC-004 (fused Recall@5 ≥ 0.80 per language), SC-005 (gap ≤ 5 points) and SC-006 (fused ≥ each method), and that for at least 80 % of the hand-written pairs the English and Swedish fused top-five lists share at least three codes (spec Story 3, scenario 2)
 - [ ] T051 [US4] Wire `benchmark` into the CLI; run `lonekrav-etl benchmark` and `uv run pytest -m benchmark` for real; commit `data/processed/benchmark_results.json`. If a gate fails, report it with the numbers rather than loosening the threshold.
 
 ---
@@ -148,7 +148,7 @@ and a discrepancy report.
 - [ ] T052 [P] [US5] `tests/unit/test_measure.py`: the measurement writer renders the markdown table from a dict of fake results
 - [ ] T053 [US5] `src/lonekrav/etl/measure.py` plus the `measure-models` subcommand: run each model fp32 (and Harrier bf16 for comparison) and regenerate `references/embedding-benchmark.md` (T052)
 - [ ] T054 [US5] `tests/integration/test_idempotent.py`: build twice from fixtures gives byte-identical files; build with `OPENROUTER_KEY` unset succeeds
-- [ ] T055 [US5] Run for real: delete `data/processed/*` and the index, run all steps, time each one against SC-007, and run quickstart checks 10, 11 and 15
+- [ ] T055 [US5] Run for real: delete `data/processed/*` and the index, run all steps, time each one against SC-007, and run quickstart checks 10 and 11
 
 ---
 

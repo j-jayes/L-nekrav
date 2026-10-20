@@ -159,7 +159,7 @@ previous run.
 1. **Given** no LLM key is configured, **When** all four steps run, **Then** they complete and every
    required profile field is filled.
 2. **Given** a completed build, **When** the build step is re-run with cached downloads, **Then** the
-   outputs are byte-identical apart from timestamps.
+   outputs are byte-identical.
 3. **Given** a fresh clone with the committed processed data, **When** the index step runs, **Then**
    it rebuilds the index without fetching from SCB, JobTech, ILO or ESCO.
 4. **Given** a source is unreachable, **When** fetch runs, **Then** it fails with a message naming the
@@ -256,7 +256,8 @@ previous run.
   its meaning, units, source, licence and required attribution.
 - **FR-021a**: The processed profiles and salary tables MUST be committed. Raw downloads, the
   index file and model weights MUST NOT be committed.
-- **FR-022**: The system MUST provide four separately runnable steps — fetch, build, index,
+- **FR-022**: The system MUST provide four separately runnable pipeline steps (plus a separate
+  model-measurement command for FR-017) — fetch, build, index,
   benchmark — that can be re-run safely and give the same output for the same inputs.
 - **FR-023**: Fetch MUST cache raw downloads locally and MUST NOT overwrite a good cache with a
   failed download. Failure messages MUST name the source and the address that failed.
