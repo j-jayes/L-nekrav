@@ -11,6 +11,21 @@ dataset and a bilingual search index for Lönekrav — canonical profiles reconc
 JobTech code lists, official SCB salary statistics with age bands, a two-model plus keyword search index,
 a cross-lingual benchmark, a data dictionary, and a repeatable pipeline that runs without an LLM key."
 
+## Clarifications
+
+### Session 2026-10-20
+
+- Q: Where should benchmark gold labels come from? → A: Hybrid: about 30 hand-written EN/SV pairs
+  (duties, look-alikes) plus 200+ title queries generated from official JobTech title-to-code
+  mappings; generated query titles are held out of the indexed text.
+- Q: Which salary years should the dataset hold? → A: 2014 to the latest published year, from both
+  SCB SSYK 2012 tables.
+- Q: How does a fresh machine or image get the index? → A: Commit the small processed data; rebuild
+  the index from it locally or during the image build. Nothing large in git.
+- Q: Does the benchmark run in the normal test suite? → A: No. The default suite stays fast and
+  offline with a tiny fixture index; a separately marked benchmark run gates changes to data and
+  search.
+
 ## User Scenarios & Testing *(mandatory)*
 
 The direct users of this feature are the maintainer and the later Lönekrav features (search,
@@ -52,7 +67,7 @@ field against the official sources by hand.
 
 For any code, the maintainer can read the official SCB monthly salary distribution (10th, 25th, 50th,
 75th and 90th percentiles and mean, with published confidence intervals) for each available year from
-2023 to 2025, plus mean salary and headcount by age band, each figure labelled with its source table,
+2014 to 2025, plus mean salary and headcount by age band, each figure labelled with its source table,
 reference year and fetch time.
 
 **Why this priority**: The salary comparison is the purpose of the product. It is equal first with the
@@ -99,7 +114,8 @@ ranking.
 
 ### User Story 4 - Prove that query language does not change results (Priority: P2)
 
-The maintainer can run a benchmark of at least 40 paired English and Swedish queries and get, per
+The maintainer can run a benchmark of hand-written English/Swedish query pairs plus generated
+title queries, and get, per
 method and for the fused ranking, the share of queries whose correct occupation ranks first, ranks in
 the top five, and the mean reciprocal rank, split by language. The results are saved in a file that the
 web client can later display.
@@ -114,10 +130,16 @@ checkable and protects it from regressions.
 1. **Given** the index is built, **When** the benchmark runs, **Then** it reports Recall@1, Recall@5
    and MRR for each method and language and writes them to a results file with the run date and
    model versions.
-2. **Given** the benchmark set, **When** it is inspected, **Then** it contains short titles,
+2. **Given** the benchmark set, **When** it is inspected, **Then** it has at least 30 hand-written
+   pairs and at least 200 generated title queries, and it contains short titles,
    single-sentence duties, multi-sentence descriptions and look-alike pairs (for example data analyst
    versus statistician versus organisation developer; nurse specialities; manager level 1 versus
    level 2).
+3. **Given** a generated title query, **When** the index is inspected, **Then** that exact title is
+   not part of the indexed text.
+4. **Given** a normal test run, **When** the suite runs, **Then** no model download is needed and the
+   benchmark is skipped; **When** the benchmark run is requested, **Then** it fails if fused Recall@5
+   falls below SC-004 or the language gap exceeds SC-005.
 
 ---
 
@@ -138,7 +160,9 @@ previous run.
    required profile field is filled.
 2. **Given** a completed build, **When** the build step is re-run with cached downloads, **Then** the
    outputs are byte-identical apart from timestamps.
-3. **Given** a source is unreachable, **When** fetch runs, **Then** it fails with a message naming the
+3. **Given** a fresh clone with the committed processed data, **When** the index step runs, **Then**
+   it rebuilds the index without fetching from SCB, JobTech, ILO or ESCO.
+4. **Given** a source is unreachable, **When** fetch runs, **Then** it fails with a message naming the
    source and URL, and leaves earlier cached data intact.
 
 ### Edge Cases
@@ -156,6 +180,8 @@ previous run.
 - An ESCO or ILO description is missing for a code: the profile falls back to the SCB/JobTech text
   and records the absence.
 - A new SCB year appears: fetch picks it up without code changes, and older years are kept.
+- The 2014–2022 and 2023-onward SCB tables overlap or differ in layout: each year is taken from
+  exactly one table, recorded per figure.
 - An LLM-generated synonym duplicates an official one: the official one is kept and the duplicate
   dropped.
 
@@ -186,10 +212,10 @@ previous run.
 
 **Salary statistics**
 
-- **FR-009**: The system MUST store, for each code and each available year from 2023 onwards, the
+- **FR-009**: The system MUST store, for each code and each available year from 2014 onwards, the
   official SCB 10th, 25th, 50th, 75th and 90th percentiles and mean monthly salary for all sectors and
   both sexes combined, with the published 95 % confidence intervals.
-- **FR-010**: The system MUST store, for each code and year, mean monthly salary and headcount for the
+- **FR-010**: The system MUST store, for each code and each available year from 2014 onwards, mean monthly salary and headcount for the
   age bands 18–24, 25–34, 35–44, 45–54, 55–64 and 65–68, and for all ages.
 - **FR-011**: The system MUST store the "all occupations" row as the national reference.
 - **FR-012**: Every stored figure MUST carry its source table, reference year and fetch time.
@@ -198,7 +224,8 @@ previous run.
 
 **Search index**
 
-- **FR-014**: The system MUST build a single portable index file that ranks occupations against a
+- **FR-014**: The system MUST build a single portable index file, rebuildable from the committed
+  processed data alone, that ranks occupations against a
   query by each of three methods: a Swedish-centred meaning model, a multilingual meaning model, and
   keyword matching over Swedish and English text.
 - **FR-015**: The index MUST also return a fused ranking that combines the three methods.
@@ -209,18 +236,26 @@ previous run.
 
 **Benchmark**
 
-- **FR-018**: The system MUST include a benchmark of at least 40 queries, each written in English and
-  in Swedish, each labelled with one or more acceptable correct codes, covering short titles,
-  single-sentence duties, multi-sentence descriptions and look-alike pairs.
+- **FR-018**: The system MUST include a benchmark with (a) at least 30 hand-written queries, each in
+  English and in Swedish, covering short titles, single-sentence duties, multi-sentence descriptions
+  and look-alike pairs, each labelled with one or more acceptable codes; and (b) at least 200 title
+  queries generated from official JobTech title-to-code mappings, in Swedish and, where ESCO gives
+  one, English.
+- **FR-018a**: Titles used as generated benchmark queries MUST be excluded from the indexed text, so
+  the benchmark measures matching rather than lookup.
 - **FR-019**: The benchmark MUST report Recall@1, Recall@5 and MRR for each method and the fused
   ranking, separately for each language, and the difference between languages.
 - **FR-020**: The benchmark MUST save its results, the run date and the model identifiers to a file
   that later features can read.
+- **FR-020a**: The default test run MUST NOT need model downloads or network access. The benchmark
+  MUST run as a separately requested test run that fails when SC-004 or SC-005 is not met.
 
 **Documentation and pipeline**
 
 - **FR-021**: The system MUST provide a data dictionary describing every output table and column,
   its meaning, units, source, licence and required attribution.
+- **FR-021a**: The processed profiles and salary tables MUST be committed. Raw downloads, the
+  index file and model weights MUST NOT be committed.
 - **FR-022**: The system MUST provide four separately runnable steps — fetch, build, index,
   benchmark — that can be re-run safely and give the same output for the same inputs.
 - **FR-023**: Fetch MUST cache raw downloads locally and MUST NOT overwrite a good cache with a
@@ -232,15 +267,15 @@ previous run.
 - **Occupation profile**: one SSYK 2012 4-digit occupation. Code, Swedish and English titles,
   descriptions by language and source, synonyms by language and source, ISCO-08 and ESCO links, legal
   flags, source coverage.
-- **Salary distribution**: one occupation, one year. Percentiles, mean, confidence intervals,
+- **Salary distribution**: one occupation, one year (2014 onwards). Percentiles, mean, confidence intervals,
   suppression flags, source table, reference year, fetch time.
 - **Age-band salary**: one occupation, one year, one age band. Mean salary, headcount, suppression
   flags, source.
 - **Legal flag**: an occupation's status under SFS 2026:605: exempt (75 % level), banned or
   partially banned. Includes citation and effective date.
 - **Discrepancy record**: one code and the list of sources that contain it.
-- **Benchmark query**: a pair of English and Swedish texts, a query type, and the acceptable correct
-  codes.
+- **Benchmark query**: a hand-written English/Swedish pair or a generated title, its query type,
+  origin (hand-written or generated), and the acceptable correct codes.
 - **Benchmark result**: one method, one language, the three metrics, the run date and the model
   identifiers.
 
@@ -266,8 +301,8 @@ previous run.
 
 ## Assumptions
 
-- The latest published SCB year (currently 2025) is the default year for later features. Earlier
-  years are kept for trend views.
+- The latest published SCB year (currently 2025) is the default year for later features. Years
+  from 2014 are kept for trend views. SSYK 2012 figures before 2014 do not exist.
 - "All sectors, both sexes" is the only cut stored, as decided in planning, to minimise suppressed
   cells.
 - The 27 exempt codes and the bans are taken from SFS 2026:605, published 23 May 2026. Later changes
@@ -277,6 +312,6 @@ previous run.
 - The two meaning models are KBLab's Swedish sentence-BERT and Microsoft Harrier 0.6B, as decided in
   planning. If Harrier cannot meet the memory budget, a smaller multilingual model can replace it
   through the same slot. That decision is recorded with the measurements.
-- The benchmark queries are written by the maintainer and the agent, in both languages, and reviewed
-  by a Swedish speaker before the results are published.
+- The hand-written benchmark queries are written by the maintainer and the agent, in both
+  languages, and reviewed by a Swedish speaker before the results are published.
 - Out of scope: API endpoints, job-ad parsing, eligibility logic, user interface, job-ad market data.
