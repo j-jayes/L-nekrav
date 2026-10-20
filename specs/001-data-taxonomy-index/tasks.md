@@ -81,14 +81,14 @@ and a discrepancy report.
 
 ### Tests
 
-- [ ] T028 [P] [US2] `tests/unit/test_scb_pxweb.py` on json-stat2 fixtures: TAB5932 2025 gives 0000 a median of 38 300 and 2512 the values mean 55 500, median 53 500, P10 39 600, P25 46 200, P75 62 600, P90 72 600 with CI half-widths; TAB4265 gives null CIs; null cells end up in `suppressed`
-- [ ] T029 [P] [US2] `tests/unit/test_salary_age.py`: TAB5844 2025 for 2512 gives 18–24 mean 36 100 with headcount null and suppressed; the 65–66 band is dropped; TAB4264 rows have `source_table="TAB4264"`
-- [ ] T030 [US2] `tests/integration/test_build_salary.py`: each (code, year) appears once; years 2014–2022 come from TAB4265 and 2023 onwards from TAB5932; every row has source_table, reference_year and a `fetched_at` equal to the raw file's meta; a percentile-order violation fails the build with the code and year in the message
+- [X] T028 [P] [US2] `tests/unit/test_scb_pxweb.py` on json-stat2 fixtures: TAB5932 2025 gives 0000 a median of 38 300 and 2512 the values mean 55 500, median 53 500, P10 39 600, P25 46 200, P75 62 600, P90 72 600 with CI half-widths; TAB4265 gives null CIs; null cells end up in `suppressed`
+- [X] T029 [P] [US2] `tests/unit/test_salary_age.py`: TAB5844 2025 for 2512 gives 18–24 mean 36 100 with headcount null and suppressed; the 65–66 band is dropped; TAB4264 rows have `source_table="TAB4264"`
+- [X] T030 [US2] `tests/integration/test_build_salary.py`: each (code, year) appears once; years 2014–2022 come from TAB4265 and 2023 onwards from TAB5932; every row has source_table, reference_year and a `fetched_at` equal to the raw file's meta; a percentile-order violation fails the build with the code and year in the message
 
 ### Implementation
 
-- [ ] T031 [US2] `src/lonekrav/etl/scb_pxweb.py`: GET json-stat2 for TAB4265, TAB5932, TAB4264 and TAB5844 with Sektor=0 and Kon=1+2, all codes and years (T028)
-- [ ] T032 [US2] `src/lonekrav/core/salary.py`: json-stat2 to SalaryDistribution and AgeBandSalary, validation, `load_distributions()` and `load_age_bands()`; write the parquet files (T029, T030)
+- [X] T031 [US2] `src/lonekrav/etl/scb_pxweb.py`: GET json-stat2 for TAB4265, TAB5932, TAB4264 and TAB5844 with Sektor=0 and Kon=1+2, all codes and years (T028)
+- [X] T032 [US2] `src/lonekrav/core/salary.py`: json-stat2 to SalaryDistribution and AgeBandSalary, validation, `load_distributions()` and `load_age_bands()`; write the parquet files (T029, T030)
 - [ ] T033 [US2] Wire `fetch --only scb_pxweb` and the salary half of `build` into the CLI
 - [ ] T034 [US2] Run for real: quickstart checks 5–8, then check 9 by comparing 10 codes against statistikdatabasen.scb.se by hand (record the codes and URLs in the PR)
 
@@ -102,18 +102,18 @@ and a discrepancy report.
 
 ### Tests
 
-- [ ] T035 [P] [US3] `tests/unit/test_chunks.py`: a profile yields title, desc_sv, desc_en and synonym chunks of at most 2 000 characters and at most 40 labels; hold-out titles (and the alternative labels of the same occupation-name) are absent from every chunk
-- [ ] T036 [P] [US3] `tests/unit/test_embeddings.py`: FakeEmbedder is deterministic and L2-normalised; the registry returns `kblab` and `harrier` specs with the right dims; harrier specifies fp32 and the `web_search_query` prompt for queries only (no model load)
-- [ ] T037 [P] [US3] `tests/unit/test_fusion.py`: chunk hits reduce to one max score per code; BM25 distances are sign-flipped so higher is better; RRF with k=60 on known ranks gives the expected order; a code missing from one method gets `None` for that score
-- [ ] T038 [US3] `tests/integration/test_index_search.py` with FakeEmbedder and a temp Milvus Lite file: index the fixture profiles; "mjukvaruutvecklare" ranks 2512 first under bm25; the fused hit carries all three score fields and the matched chunk; deleting and rebuilding gives the same results
+- [X] T035 [P] [US3] `tests/unit/test_chunks.py`: a profile yields title, desc_sv, desc_en and synonym chunks of at most 2 000 characters and at most 40 labels; hold-out titles (and the alternative labels of the same occupation-name) are absent from every chunk
+- [X] T036 [P] [US3] `tests/unit/test_embeddings.py`: FakeEmbedder is deterministic and L2-normalised; the registry returns `kblab` and `harrier` specs with the right dims; harrier specifies fp32 and the `web_search_query` prompt for queries only (no model load)
+- [X] T037 [P] [US3] `tests/unit/test_fusion.py`: chunk hits reduce to one max score per code; BM25 distances are sign-flipped so higher is better; RRF with k=60 on known ranks gives the expected order; a code missing from one method gets `None` for that score
+- [X] T038 [US3] `tests/integration/test_index_search.py` with FakeEmbedder and a temp Milvus Lite file: index the fixture profiles; "mjukvaruutvecklare" ranks 2512 first under bm25; the fused hit carries all three score fields and the matched chunk; deleting and rebuilding gives the same results
 
 ### Implementation
 
-- [ ] T039 [P] [US3] `src/lonekrav/core/chunks.py` (T035)
-- [ ] T040 [P] [US3] `src/lonekrav/core/embeddings.py`: Embedder protocol, FakeEmbedder, and lazily loaded KBLab and Harrier (fp32, prompts) (T036)
-- [ ] T041 [US3] `src/lonekrav/core/store.py`: the collection schema from `references/milvus_lite_hybrid.py`, batch insert, per-method search, and `MILVUS_URI` override
-- [ ] T042 [US3] `src/lonekrav/core/search.py`: reduce, flip BM25, RRF, SearchHit (T037, T038)
-- [ ] T043 [US3] Wire `index` into the CLI
+- [X] T039 [P] [US3] `src/lonekrav/core/chunks.py` (T035)
+- [X] T040 [P] [US3] `src/lonekrav/core/embeddings.py`: Embedder protocol, FakeEmbedder, and lazily loaded KBLab and Harrier (fp32, prompts) (T036)
+- [X] T041 [US3] `src/lonekrav/core/store.py`: the collection schema from `references/milvus_lite_hybrid.py`, batch insert, per-method search, and `MILVUS_URI` override
+- [X] T042 [US3] `src/lonekrav/core/search.py`: reduce, flip BM25, RRF, SearchHit (T037, T038)
+- [X] T043 [US3] Wire `index` into the CLI
 - [ ] T044 [US3] Run for real with both models: `lonekrav-etl index`, then quickstart checks 11–13; record index size and build time
 
 ---
@@ -126,15 +126,15 @@ and a discrepancy report.
 
 ### Tests
 
-- [ ] T045 [P] [US4] `tests/unit/test_metrics.py`: Recall@1, Recall@5 and MRR on hand-computed toy rankings, including several acceptable codes per query and a missed query (reciprocal rank 0)
-- [ ] T046 [P] [US4] `tests/unit/test_generated_set.py`: the seeded sample is stable across runs, has at most one query per code and at least 200 queries; the English text comes from ESCO exact or close matches only; the hold-out file lists every sampled title
-- [ ] T047 [P] [US4] `tests/unit/test_handwritten_queries.py`: the YAML parses into BenchmarkQuery; at least 30 queries; every type present; every expected code exists in the profiles
+- [X] T045 [P] [US4] `tests/unit/test_metrics.py`: Recall@1, Recall@5 and MRR on hand-computed toy rankings, including several acceptable codes per query and a missed query (reciprocal rank 0)
+- [X] T046 [P] [US4] `tests/unit/test_generated_set.py`: the seeded sample is stable across runs, has at most one query per code and at least 200 queries; the English text comes from ESCO exact or close matches only; the hold-out file lists every sampled title
+- [X] T047 [P] [US4] `tests/unit/test_handwritten_queries.py`: the YAML parses into BenchmarkQuery; at least 30 queries; every type present; every expected code exists in the profiles
 
 ### Implementation
 
-- [ ] T048 [US4] Write `tests/eval/queries_handwritten.yaml`: 30+ EN/SV pairs, including the look-alikes 2512/2511/2514, 2122 statistician/2421/2512 data analyst, 2221–2229 nurse specialities, and manager nivå 1/2 pairs. Flag it for review by a Swedish speaker in the PR. (T047)
-- [ ] T049 [US4] `src/lonekrav/etl/benchmark.py`: the generated set and hold-out (written during `build`), metrics, results JSON with model ids and revisions (T045, T046)
-- [ ] T050 [US4] `tests/eval/test_benchmark.py`, marked `benchmark`: loads the real index, asserts SC-004 (fused Recall@5 ≥ 0.80 per language), SC-005 (gap ≤ 5 points) and SC-006 (fused ≥ each method), and that for at least 80 % of the hand-written pairs the English and Swedish fused top-five lists share at least three codes (spec Story 3, scenario 2)
+- [X] T048 [US4] Write `tests/eval/queries_handwritten.yaml`: 30+ EN/SV pairs, including the look-alikes 2512/2511/2514, 2122 statistician/2421/2512 data analyst, 2221–2229 nurse specialities, and manager nivå 1/2 pairs. Flag it for review by a Swedish speaker in the PR. (T047)
+- [X] T049 [US4] `src/lonekrav/etl/benchmark.py`: the generated set and hold-out (written during `build`), metrics, results JSON with model ids and revisions (T045, T046)
+- [X] T050 [US4] `tests/eval/test_benchmark.py`, marked `benchmark`: loads the real index, asserts SC-004 (fused Recall@5 ≥ 0.80 per language), SC-005 (gap ≤ 5 points) and SC-006 (fused ≥ each method), and that for at least 80 % of the hand-written pairs the English and Swedish fused top-five lists share at least three codes (spec Story 3, scenario 2)
 - [ ] T051 [US4] Wire `benchmark` into the CLI; run `lonekrav-etl benchmark` and `uv run pytest -m benchmark` for real; commit `data/processed/benchmark_results.json`. If a gate fails, report it with the numbers rather than loosening the threshold.
 
 ---
@@ -145,8 +145,8 @@ and a discrepancy report.
 
 **Independent test**: quickstart checks 10, 11 and 15.
 
-- [ ] T052 [P] [US5] `tests/unit/test_measure.py`: the measurement writer renders the markdown table from a dict of fake results
-- [ ] T053 [US5] `src/lonekrav/etl/measure.py` plus the `measure-models` subcommand: run each model fp32 (and Harrier bf16 for comparison) and regenerate `references/embedding-benchmark.md` (T052)
+- [X] T052 [P] [US5] `tests/unit/test_measure.py`: the measurement writer renders the markdown table from a dict of fake results
+- [X] T053 [US5] `src/lonekrav/etl/measure.py` plus the `measure-models` subcommand: run each model fp32 (and Harrier bf16 for comparison) and regenerate `references/embedding-benchmark.md` (T052)
 - [ ] T054 [US5] `tests/integration/test_idempotent.py`: build twice from fixtures gives byte-identical files; build with `OPENROUTER_KEY` unset succeeds
 - [ ] T055 [US5] Run for real: delete `data/processed/*` and the index, run all steps, time each one against SC-007, and run quickstart checks 10 and 11
 
