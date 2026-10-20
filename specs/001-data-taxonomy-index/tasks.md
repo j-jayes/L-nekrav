@@ -51,23 +51,23 @@ and a discrepancy report.
 
 ### Tests (write first, see them fail)
 
-- [ ] T012 [P] [US1] `tests/unit/test_legal_flags.py`: exactly 27 `exempt_75` codes equal to the SFS 2026:605 list; 5343 is `banned`; 9210 has both `exempt_75` and `partially_banned`; every flag cites `SFS 2026:605` with effective_from 2026-06-01
-- [ ] T013 [P] [US1] `tests/unit/test_scb_files.py` on fixtures: the structure workbook gives 426 codes; the English workbook gives "Software- and system developers" for 2512; the ISCO key splits "2511, 2512, 2513, 2514, 2521" for 2512; title-index rows with 3-digit codes are dropped
-- [ ] T014 [P] [US1] `tests/unit/test_jobtech.py` on GraphQL fixtures: parse ssyk-level-4 definitions and occupation-names with alternative labels and ESCO matches (match type kept); map merged code 1210 to 1211 and 1212 with `jobtech_shared=True`
-- [ ] T015 [P] [US1] `tests/unit/test_ilo.py` on fixture rows: 2512 gives an English definition, a tasks text and included-occupation titles ("Software engineer" and others), each tagged `isco_code="2512"`
-- [ ] T016 [P] [US1] `tests/unit/test_esco.py` on fixture JSON: one occupation URI gives en and sv preferred labels, alternative labels and descriptions
-- [ ] T017 [P] [US1] `tests/unit/test_mis2012.py` on fixture PDF text: descriptions for 1212, 4430 and 5322 are extracted from the description section, not from the overview list or correspondence tables (assert that the text for 1212 starts "Verksamhetsnära chef")
-- [ ] T018 [US1] `tests/integration/test_build_profiles.py`: building from fixtures gives profiles for every fixture code. 0110 gets its title from the salary-table label and its English title from ILO; 2512 has no flags, at least one sv and one en description, and synonyms in both languages; the discrepancy rows for 0110 and 1212 are correct; a fixture code with no ESCO or ILO text still builds from the SCB/JobTech text and records the absence in `sources`; output JSON is sorted and two builds are byte-identical
+- [X] T012 [P] [US1] `tests/unit/test_legal_flags.py`: exactly 27 `exempt_75` codes equal to the SFS 2026:605 list; 5343 is `banned`; 9210 has both `exempt_75` and `partially_banned`; every flag cites `SFS 2026:605` with effective_from 2026-06-01
+- [X] T013 [P] [US1] `tests/unit/test_scb_files.py` on fixtures: the structure workbook gives 426 codes; the English workbook gives "Software- and system developers" for 2512; the ISCO key splits "2511, 2512, 2513, 2514, 2521" for 2512; title-index rows with 3-digit codes are dropped
+- [X] T014 [P] [US1] `tests/unit/test_jobtech.py` on GraphQL fixtures: parse ssyk-level-4 definitions and occupation-names with alternative labels and ESCO matches (match type kept); map merged code 1210 to 1211 and 1212 with `jobtech_shared=True`
+- [X] T015 [P] [US1] `tests/unit/test_ilo.py` on fixture rows: 2512 gives an English definition, a tasks text and included-occupation titles ("Software engineer" and others), each tagged `isco_code="2512"`
+- [X] T016 [P] [US1] `tests/unit/test_esco.py` on fixture JSON: one occupation URI gives en and sv preferred labels, alternative labels and descriptions
+- [X] T017 [P] [US1] `tests/unit/test_mis2012.py` on fixture PDF text: descriptions for 1212, 4430 and 5322 are extracted from the description section, not from the overview list or correspondence tables (assert that the text for 1212 starts "Verksamhetsnära chef")
+- [X] T018 [US1] `tests/integration/test_build_profiles.py`: building from fixtures gives profiles for every fixture code. 0110 gets its title from the salary-table label and its English title from ILO; 2512 has no flags, at least one sv and one en description, and synonyms in both languages; the discrepancy rows for 0110 and 1212 are correct; a fixture code with no ESCO or ILO text still builds from the SCB/JobTech text and records the absence in `sources`; output JSON is sorted and two builds are byte-identical
 
 ### Implementation
 
-- [ ] T019 [P] [US1] `src/lonekrav/core/legal_flags.py`: code lists as data with the SFS citation (T012)
-- [ ] T020 [P] [US1] `src/lonekrav/etl/scb_files.py`: download and parse the four SCB workbooks (T013)
-- [ ] T021 [P] [US1] `src/lonekrav/etl/jobtech.py`: GraphQL fetch with paging and the parsers (T014)
-- [ ] T022 [P] [US1] `src/lonekrav/etl/ilo.py` (T015)
-- [ ] T023 [P] [US1] `src/lonekrav/etl/esco.py`: fetch per URI for en and sv, cached under `data/raw/esco/`, polite rate limit (T016)
-- [ ] T024 [P] [US1] `src/lonekrav/etl/mis2012.py`: description-section parser used only for gap codes (T017)
-- [ ] T025 [US1] `src/lonekrav/core/profiles.py`: assemble profiles from parsed sources with source precedence (SCB, then JobTech, ILO, ESCO), synonym dedup, and `load_profiles()`; write `ssyk_profiles.json` and `discrepancies.csv` (T018)
+- [X] T019 [P] [US1] `src/lonekrav/core/legal_flags.py`: code lists as data with the SFS citation (T012)
+- [X] T020 [P] [US1] `src/lonekrav/etl/scb_files.py`: download and parse the four SCB workbooks (T013)
+- [X] T021 [P] [US1] `src/lonekrav/etl/jobtech.py`: GraphQL fetch with paging and the parsers (T014)
+- [X] T022 [P] [US1] `src/lonekrav/etl/ilo.py` (T015)
+- [X] T023 [P] [US1] `src/lonekrav/etl/esco.py`: fetch per URI for en and sv, cached under `data/raw/esco/`, polite rate limit (T016)
+- [X] T024 [P] [US1] `src/lonekrav/etl/mis2012.py`: description-section parser used only for gap codes (T017)
+- [X] T025 [US1] `src/lonekrav/core/profiles.py`: assemble profiles from parsed sources with source precedence (SCB, then JobTech, ILO, ESCO), synonym dedup, and `load_profiles()`; write `ssyk_profiles.json` and `discrepancies.csv` (T018)
 - [ ] T026 [US1] Wire `fetch` (scb_files, jobtech, ilo, esco, mis2012) and the profile half of `build` into `src/lonekrav/etl/cli.py`
 - [ ] T027 [US1] Run for real: `lonekrav-etl fetch && lonekrav-etl build`, then quickstart checks 1–4. Paste the output into the PR notes. Any bug found becomes a failing test first.
 
