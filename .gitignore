@@ -1,0 +1,37 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+
+# data and models (rebuilt by `uv run lonekrav-etl`)
+data/raw/
+data/*.db
+data/*.db.lock
+models/
+.hf-cache/
+
+# frontend
+frontend/node_modules/
+frontend/dist/
+
+# slides kit outputs (see CLAUDE.md)
+reports/
+slides/_site/
+inbox/
+work/
+outbox/
+
+# os / editors
+.DS_Store
+.idea/
+.vscode/
