@@ -114,7 +114,7 @@ and a discrepancy report.
 - [X] T041 [US3] `src/lonekrav/core/store.py`: the collection schema from `references/milvus_lite_hybrid.py`, batch insert, per-method search, and `MILVUS_URI` override
 - [X] T042 [US3] `src/lonekrav/core/search.py`: reduce, flip BM25, RRF, SearchHit (T037, T038)
 - [X] T043 [US3] Wire `index` into the CLI
-- [ ] T044 [US3] Run for real with both models: `lonekrav-etl index`, then quickstart checks 11–13; record index size and build time
+- [X] T044 [US3] Run for real with both models: `lonekrav-etl index`, then quickstart checks 11–13; record index size and build time
 
 ---
 
@@ -135,7 +135,7 @@ and a discrepancy report.
 - [X] T048 [US4] Write `tests/eval/queries_handwritten.yaml`: 30+ EN/SV pairs, including the look-alikes 2512/2511/2514, 2122 statistician/2421/2512 data analyst, 2221–2229 nurse specialities, and manager nivå 1/2 pairs. Flag it for review by a Swedish speaker in the PR. (T047)
 - [X] T049 [US4] `src/lonekrav/etl/benchmark.py`: the generated set and hold-out (written during `build`), metrics, results JSON with model ids and revisions (T045, T046)
 - [X] T050 [US4] `tests/eval/test_benchmark.py`, marked `benchmark`: loads the real index, asserts SC-004 (fused Recall@5 ≥ 0.80 per language), SC-005 (gap ≤ 5 points) and SC-006 (fused ≥ each method), and that for at least 80 % of the hand-written pairs the English and Swedish fused top-five lists share at least three codes (spec Story 3, scenario 2)
-- [ ] T051 [US4] Wire `benchmark` into the CLI; run `lonekrav-etl benchmark` and `uv run pytest -m benchmark` for real; commit `data/processed/benchmark_results.json`. If a gate fails, report it with the numbers rather than loosening the threshold.
+- [X] T051 [US4] Wire `benchmark` into the CLI; run `lonekrav-etl benchmark` and `uv run pytest -m benchmark` for real; commit `data/processed/benchmark_results.json`. If a gate fails, report it with the numbers rather than loosening the threshold.
 
 ---
 
