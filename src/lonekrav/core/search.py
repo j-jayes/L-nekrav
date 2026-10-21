@@ -217,24 +217,39 @@ class SearchEngine:
                 return f"Harrier could not be loaded ({type(e).__name__})"
         return None
 
-    def rank(self, text: str, methods: Sequence[str], pool: int,
-             k: int) -> tuple[list[SearchHit], list[str] | None]:
-        """Fused top-k for a text; a title list searches each part and pools the chunk hits."""
-        parts = title_parts(text)
-        queries = parts or [text]
-        per: dict[str, list[tuple[str, ChunkHit]]] = {}
+    def chunk_hits(self, queries: Sequence[str], methods: Sequence[str],
+                   pool: int) -> dict[str, list[list[dict]]]:
+        """Each method's top `pool` chunks for each query, best first. The top n chunks are a
+        prefix of the top `pool`, so one fetch serves any smaller pool (the benchmark's fast mode)."""
+        out = {}
         for m in methods:
             if m == "bm25":
-                raw = [h for q in queries for h in self.store.search_bm25(q, pool)]
+                out[m] = [self.store.search_bm25(q, pool) for q in queries]
             else:
-                vecs = self.embedders[m].encode_queries(queries)
-                raw = [h for v in vecs for h in self.search_dense(m, v, pool)]
-            per[m] = reduce_to_codes([ChunkHit(**h) for h in raw])
+                vecs = self.embedders[m].encode_queries(list(queries))
+                out[m] = [self.search_dense(m, v, pool) for v in vecs]
+        return out
+
+    @staticmethod
+    def ranking(hits: Mapping[str, list[list[dict]]],
+                pool: int) -> dict[str, list[tuple[str, ChunkHit]]]:
+        """Per method, occupations ranked by their best chunk among every query's top `pool`."""
+        return {m: reduce_to_codes([ChunkHit(**h) for per_q in lists for h in per_q[:pool]])
+                for m, lists in hits.items()}
+
+    def fused(self, per: Mapping[str, list[tuple[str, ChunkHit]]], k: int) -> list[SearchHit]:
         hits = fuse(per, k=k)
         for h in hits:
             h.title_sv, h.title_en = self.titles.get(h.code, ("", ""))
             h.legal_flags = flags_for(h.code)
-        return hits, parts
+        return hits
+
+    def rank(self, text: str, methods: Sequence[str], pool: int,
+             k: int) -> tuple[list[SearchHit], list[str] | None]:
+        """Fused top-k for a text; a title list searches each part and pools the chunk hits."""
+        parts = title_parts(text)
+        per = self.ranking(self.chunk_hits(parts or [text], methods, pool), pool)
+        return self.fused(per, k), parts
 
 
 def run(req: SearchRequest, engine: SearchEngine) -> SearchAnswer:

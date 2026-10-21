@@ -69,3 +69,29 @@ def test_document_cache_is_keyed_by_model_identity_not_alias(tmp_path):
 def test_real_models_are_pinned_to_a_revision():
     for spec in SPECS.values():
         assert len(spec.revision) == 40
+
+
+def test_kblab_queries_encode_on_one_thread_and_restore_it():  # research R2, T034
+    import numpy as np
+    import torch
+
+    from lonekrav.core.embeddings import SPECS, SentenceTransformerEmbedder
+
+    seen = []
+
+    class Model:
+        def encode(self, texts, **kw):
+            seen.append(torch.get_num_threads())
+            return np.ones((len(texts), 4), dtype=np.float32)
+
+    def fake(name):
+        e = SentenceTransformerEmbedder.__new__(SentenceTransformerEmbedder)
+        e.name, e.spec, e.dim, e.batch_size, e.model = name, SPECS[name], 4, 16, Model()
+        return e
+
+    before = torch.get_num_threads()
+    fake("kblab").encode_queries(["backend developer"])
+    fake("harrier").encode_queries(["backend developer"])
+    fake("kblab").encode_documents(["a document"])
+    assert seen == [1, before, before]
+    assert torch.get_num_threads() == before

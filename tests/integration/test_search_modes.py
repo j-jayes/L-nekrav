@@ -75,3 +75,17 @@ def test_invalid_search_requests(body):
 
     with pytest.raises(ValidationError):
         SearchRequest(**body)
+
+
+def test_benchmark_ranks_through_the_live_search_path(fixture_engine):  # FR-017, T037
+    from lonekrav.core.benchmark import BenchmarkQuery
+    from lonekrav.core.search import POOL
+    from lonekrav.etl.benchmark import evaluate
+
+    engine, _ = fixture_engine
+    q = BenchmarkQuery(id="t", origin="handwritten", type="title", text_en="software developer",
+                       text_sv="Mjukvaruutvecklare/Drifttekniker", expected_codes=["2512"])
+    result = evaluate([q], engine, ("kblab", "bm25"))
+    for lang, text in (("en", q.text_en), ("sv", q.text_sv)):
+        live, _ = engine.rank(text, ("kblab", "bm25"), POOL, 5)
+        assert result["top5"]["t"][lang] == [h.code for h in live], lang

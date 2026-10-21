@@ -28,11 +28,12 @@ class Spec:
     dim: int
     query_prompt_name: str | None
     dtype: str = "float32"
+    query_threads: int | None = None  # torch threads for query encoding; None keeps the default
 
 
 SPECS = {
     "kblab": Spec("KBLab/sentence-bert-swedish-cased", "6b5e83cd29c03729cfdc33d13b1423399b0efb5c",
-                  768, None),
+                  768, None, query_threads=1),  # 1 thread is faster for short queries (R2)
     # Harrier ships bf16 weights; on CPU they are ~10x slower than fp32 (measured 2026-10-20).
     "harrier": Spec("microsoft/harrier-oss-v1-0.6b", "f9b9dc8d367d443f2479d27aa5d8d2850c0774ee",
                     1024, "web_search_query"),
@@ -54,8 +55,17 @@ class SentenceTransformerEmbedder:
                                  convert_to_numpy=True, **kw).astype(np.float32)
 
     def encode_queries(self, texts: list[str]) -> np.ndarray:
+        import torch
+
         kw = {"prompt_name": self.spec.query_prompt_name} if self.spec.query_prompt_name else {}
-        return self._encode(texts, **kw)
+        if not self.spec.query_threads:
+            return self._encode(texts, **kw)
+        before = torch.get_num_threads()
+        torch.set_num_threads(self.spec.query_threads)
+        try:
+            return self._encode(texts, **kw)
+        finally:
+            torch.set_num_threads(before)
 
     def encode_documents(self, texts: list[str]) -> np.ndarray:
         return self._encode(texts, show_progress_bar=len(texts) > 100)

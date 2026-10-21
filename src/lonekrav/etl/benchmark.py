@@ -104,14 +104,15 @@ def generate_queries(inputs: Inputs, profiles: dict[str, OccupationProfile],
     return queries, held
 
 
-def evaluate(queries: list[BenchmarkQuery], store, embedders: dict, methods: tuple[str, ...],
+def evaluate(queries: list[BenchmarkQuery], engine, methods: tuple[str, ...],
              depth: int = 10) -> dict:
-    """Rank every query in each language; return metrics, per-query ranks and fused top-5 lists.
+    """Rank every query in each language through the live search path (FR-017); return metrics,
+    per-query ranks and fused top-5 lists.
 
-    "fused" fuses every method (full mode); with three methods, "fused_fast" fuses kblab and bm25
-    only (fast mode), from the same per-method rankings."""
+    "fused" fuses every method at the full-mode pool; with three methods, "fused_fast" fuses
+    kblab and bm25 at the fast-mode pool (`search.MODES`), from the same chunk fetch."""
     from lonekrav.core.benchmark import first_rank, mrr, recall_at
-    from lonekrav.core.search import POOL, ChunkHit, fuse, reduce_to_codes
+    from lonekrav.core.search import FAST_POOL, MODES, POOL, title_parts
 
     texts = {lang: [(q, getattr(q, f"text_{lang}")) for q in queries if getattr(q, f"text_{lang}")]
              for lang in ("en", "sv")}
@@ -120,19 +121,16 @@ def evaluate(queries: list[BenchmarkQuery], store, embedders: dict, methods: tup
     rows = {q.id: {"id": q.id, "origin": q.origin, "paired": bool(q.text_en),
                    "form": "slash" if "/" in q.text_sv else "single", "ranks": {}}
             for q in queries}
+    fast_methods = MODES["fast"] if len(methods) > 2 and set(MODES["fast"]) <= set(methods) else None
     for lang, items in texts.items():
-        vecs = {m: embedders[m].encode_queries([t for _, t in items]) for m in methods if m != "bm25"}
-        for i, (q, text) in enumerate(items):
-            per = {}
-            for m in methods:
-                raw = (store.search_bm25(text, POOL) if m == "bm25"
-                       else store.search_dense(m, vecs[m][i], POOL))
-                per[m] = reduce_to_codes([ChunkHit(**h) for h in raw])
+        for q, text in items:
+            hits = engine.chunk_hits(title_parts(text) or [text], methods, POOL)
+            per = engine.ranking(hits, POOL)
             ranked = {m: [c for c, _ in per[m][:depth]] for m in methods}
-            ranked["fused"] = [h.code for h in fuse(per, k=depth)]
-            if len(methods) > 2 and {"kblab", "bm25"} <= set(methods):
-                fast = {m: per[m] for m in ("kblab", "bm25")}
-                ranked["fused_fast"] = [h.code for h in fuse(fast, k=depth)]
+            ranked["fused"] = [h.code for h in engine.fused(per, depth)]
+            if fast_methods:
+                fast = engine.ranking({m: hits[m] for m in fast_methods}, FAST_POOL)
+                ranked["fused_fast"] = [h.code for h in engine.fused(fast, depth)]
             rows[q.id]["ranks"][lang] = {}
             paired = bool(q.text_en)
             origin = q.origin if paired else f"{q.origin}_sv_only"
@@ -194,8 +192,11 @@ def run(db=None, out=None, methods=("kblab", "harrier", "bm25")) -> dict:
     queries = load_handwritten(HANDWRITTEN) + [
         BenchmarkQuery.model_validate(q)
         for q in json.loads((out / "benchmark_generated.json").read_text())]
+    from lonekrav.core.search import SearchEngine
+
     embedders = {m: get_embedder(m) for m in methods if m != "bm25"}
-    result = evaluate(queries, Store(db), embedders, tuple(methods))
+    engine = SearchEngine(store=Store(db), embedders=embedders, titles={})
+    result = evaluate(queries, engine, tuple(methods))
     result = {
         "run_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
         "models": {m: f"{SPECS[m].hf_id}@{SPECS[m].revision[:12]}" for m in embedders},
