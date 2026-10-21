@@ -17,6 +17,20 @@ part-time warning, stale-data warning. (4) Salary payloads naming SCB table and 
 figures flagged is_simulated. (5) Compare 2–5 codes side by side. (6) Versioned web API. Framing is
 honest fit. Anything needing the OpenRouter key must be skippable without it."
 
+## Clarifications
+
+### Session 2026-10-21
+
+- Q: Must the benchmark gates pass in fast mode too, or only in full mode? → A: Full mode passes
+  every gate; fast mode must reach ≥ 80 % top-five recall in each language.
+- Q: If the Swedish gap comes mostly from slash-joined queries, how is it fixed? → A: Search treats
+  "/" as alternatives (searches each part and merges the results); the benchmark queries stay
+  unchanged.
+- Q: Should an ad's job title be kept for search as its own kind of passage? → A: Yes: a "title"
+  label, always kept.
+- Q: May the service keep the ads, salaries and other details users send it? → A: Request contents
+  may be logged for debugging and are deleted after a short period (set to 7 days).
+
 ## User Scenarios & Testing *(mandatory)*
 
 The people this feature serves are non-EU job seekers, and the people advising them, who hold a job
@@ -121,8 +135,8 @@ gate passes.
 2. **Given** the diagnosis shows that part of the gap comes from how the queries were built, **When**
    the query set is corrected, **Then** the correction is recorded with its reason, the benchmark is
    re-run, and the old and new numbers are both kept so the change cannot hide a regression.
-3. **Given** the corrections and any search changes, **When** the benchmark runs, **Then** the
-   English–Swedish gap is within 5 points, fused recall in the top five is at least 80 % in each
+3. **Given** the corrections and any search changes, **When** the benchmark runs in full mode, **Then**
+   the English–Swedish gap is within 5 points, fused recall in the top five is at least 80 % in each
    language, the fused ranking is at least as good as each single method, and hand-written pairs
    share at least three of their top five codes in at least 80 % of cases.
 
@@ -131,7 +145,8 @@ gate passes.
 ### User Story 4 - Paste a whole job ad and search on the parts that matter (Priority: P2)
 
 A user pastes a full job ad. The system splits it into sentences or short passages and labels each
-as a duty, a skill, company description, benefits or other. Duties and skills are kept for search;
+as the job title, a duty, a skill, company description, benefits or other. The title, duties and
+skills are kept for search;
 the rest is set aside but shown, so the user can see what was used and why.
 
 **Why this priority**: Real users paste ads, and company blurbs and benefits pull search towards
@@ -143,11 +158,11 @@ with the hand labels, and compare search on the kept text with search on the raw
 **Acceptance Scenarios**:
 
 1. **Given** a pasted English ad with a company paragraph, a duties list, a requirements list and a
-   benefits list, **When** it is parsed, **Then** each passage is labelled, duties and skills are
-   marked as kept, and the company and benefits passages are marked as not kept.
+   benefits list, **When** it is parsed, **Then** each passage is labelled, the title, duties and
+   skills are marked as kept, and the company and benefits passages are marked as not kept.
 2. **Given** a pasted ad, **When** the user asks to search it with parsing, **Then** search runs on
    the kept passages only and the answer shows which text was used.
-3. **Given** an ad in which no passage is labelled a duty or a skill, **When** it is parsed and
+3. **Given** an ad in which no passage is labelled a title, duty or skill, **When** it is parsed and
    searched, **Then** search falls back to the whole ad and says it did so.
 
 ---
@@ -235,6 +250,8 @@ but nothing in this feature depends on it.
 - Salary exactly at the threshold: passes (the requirement is "at least").
 - Share of full time of zero, above 100 % or not a number; negative salary; unknown or malformed
   code: refused with a message naming the field.
+- Slash-joined search text such as "Aktuarie/Försäkringsaktuarie": each title is searched and the
+  results merged (FR-013a); a slash inside ordinary prose is not a title list.
 - Empty search text, or text beyond the length limit: refused with a message stating the limit.
 - Search text that matches nothing well (for example "asdf"): results are still ranked but the
   answer carries a low-confidence note.
@@ -294,6 +311,8 @@ but nothing in this feature depends on it.
 - **FR-013**: Search MUST accept free text in English or Swedish (other languages best effort) and
   return the top k codes (default 5, at most 20), each with code, Swedish and English titles,
   fused rank, per-method score and rank, the matched official text, and the code's legal flags.
+- **FR-013a**: When the search text is a list of titles joined by "/", search MUST treat each part
+  as an alternative, search each part and merge the results into one ranking.
 - **FR-014**: Search MUST offer a fast mode (meaning model plus keyword search) and a full mode
   (adds the second meaning model). If the second model cannot be loaded, full mode MUST fall back
   to fast mode and say so.
@@ -309,17 +328,20 @@ but nothing in this feature depends on it.
 - **FR-018**: A diagnosis MUST break benchmark recall down by language, query origin (hand-written
   or generated) and query form (single title or slash-joined), and report how much of the English–
   Swedish gap each accounts for. Its output MUST be saved beside the benchmark results.
-- **FR-019**: Any correction to the benchmark queries MUST be justified by the diagnosis, recorded
-  with its reason, and keep generated query titles out of the indexed text. The results from
+- **FR-019**: Slash-joined benchmark queries MUST stay as they are; the slash handling in FR-013a
+  is the fix for them. Any other correction to the benchmark queries MUST be justified by the
+  diagnosis, recorded with its reason, and keep generated query titles out of the indexed text. The results from
   before the correction MUST be kept for comparison.
-- **FR-020**: The benchmark gates (top-five recall ≥ 80 % per language, English–Swedish gap
-  ≤ 5 points, fused at least as good as each single method, hand-written pair overlap ≥ 80 %) MUST
-  pass before this feature is merged.
+- **FR-020**: Before this feature is merged, full mode MUST pass every benchmark gate (top-five
+  recall ≥ 80 % per language, English–Swedish gap ≤ 5 points, fused at least as good as each single
+  method, hand-written pair overlap ≥ 80 %), and fast mode MUST reach top-five recall ≥ 80 % in
+  each language. The benchmark MUST report both modes.
 
 **Job-ad parsing**
 
-- **FR-021**: The system MUST split a pasted ad into passages and label each as duty, skill,
-  company, benefits or other, with a keep flag that is true for duties and skills only.
+- **FR-021**: The system MUST split a pasted ad into passages and label each as title, duty,
+  skill, company, benefits or other, with a keep flag that is true for titles, duties and skills
+  only.
 - **FR-022**: Parsing MUST work for English and Swedish ads and MUST NOT need an LLM or network
   access.
 - **FR-023**: Search MUST optionally parse its input first, run on the kept passages, return which
@@ -355,6 +377,9 @@ but nothing in this feature depends on it.
 - **FR-031**: Invalid input MUST be refused with a message that names the field and the rule it
   broke. No operation may expose internal errors or file paths.
 - **FR-032**: No operation in this feature may require the OpenRouter key.
+- **FR-033**: Request contents (ad text, salaries, dates, declared exemptions) MAY be written to
+  local debug logs, MUST NOT be stored anywhere else, and MUST be deleted after 7 days. Logs MUST
+  NOT be committed, and evidence transcripts MUST use made-up or public ads and offers only.
 
 ### Key Entities
 
@@ -388,9 +413,10 @@ but nothing in this feature depends on it.
 - **SC-003**: Fast search returns within 50 ms for 95 % of single-title queries, and full search
   within 1 second for 95 % of queries up to the length of a typical ad, measured on the
   maintainer's laptop with models loaded.
-- **SC-004**: The benchmark gates pass: top-five recall ≥ 80 % in each language, English–Swedish
+- **SC-004**: In full mode the benchmark gates pass: top-five recall ≥ 80 % in each language, English–Swedish
   gap ≤ 5 points, fused at least as good as each single method, and hand-written English–Swedish
-  pairs sharing at least three of their top five codes in ≥ 80 % of pairs.
+  pairs sharing at least three of their top five codes in ≥ 80 % of pairs. In fast mode, top-five
+  recall is ≥ 80 % in each language.
 - **SC-005**: On ten hand-labelled real ads (five per language), at least 85 % of passages get the
   hand label, and search on the kept passages puts the correct code in the top five at least as
   often as search on the raw ad.
