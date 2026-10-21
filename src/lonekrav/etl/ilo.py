@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import io
 import re
 from pathlib import Path
 
@@ -22,8 +23,15 @@ class UnitGroup(BaseModel):
     included: list[str]
 
 
+def validate(data: bytes) -> None:
+    header = next(openpyxl.load_workbook(io.BytesIO(data), read_only=True).worksheets[0]
+                  .iter_rows(max_row=1, values_only=True))
+    if "ISCO 08 Code" not in header:
+        raise ValueError(f"unexpected header {header}")
+
+
 def fetch(raw: Path, force: bool = False) -> Path:
-    return cached_get("ilo", URL, raw / "ilo" / "isco08_en.xlsx", force=force)
+    return cached_get("ilo", URL, raw / "ilo" / "isco08_en.xlsx", force=force, validate=validate)
 
 
 def _text(v) -> str:

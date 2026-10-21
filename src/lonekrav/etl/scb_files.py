@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import io
 from collections import defaultdict
 from pathlib import Path
 
@@ -16,10 +17,22 @@ FILES = {
     "title_index": "ssyk_index_webb_2026.xlsx",
     "isco_key": "webb_nyckel_ssyk2012_isco-08_20160905.xlsx",
 }
+SHEETS = {"structure": "4-siffer", "english": "4-digit", "title_index": "Index",
+          "isco_key": "Nyckel"}
+
+
+def validator(key: str):
+    """Reject a download that is not a workbook with the sheet its parser reads."""
+    def check(data: bytes) -> None:
+        wb = openpyxl.load_workbook(io.BytesIO(data), read_only=True)
+        if SHEETS[key] not in wb.sheetnames:
+            raise ValueError(f"no sheet '{SHEETS[key]}' (found {wb.sheetnames})")
+    return check
 
 
 def fetch(raw: Path, force: bool = False) -> dict[str, Path]:
-    return {k: cached_get("scb_files", BASE + f, raw / "scb" / f, force=force)
+    return {k: cached_get("scb_files", BASE + f, raw / "scb" / f, force=force,
+                          validate=validator(k))
             for k, f in FILES.items()}
 
 
