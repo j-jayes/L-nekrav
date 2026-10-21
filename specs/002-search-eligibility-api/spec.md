@@ -30,6 +30,11 @@ honest fit. Anything needing the OpenRouter key must be skippable without it."
   label, always kept.
 - Q: May the service keep the ads, salaries and other details users send it? → A: Request contents
   may be logged for debugging and are deleted after a short period (set to 7 days).
+- Q: (Revisiting FR-012 after reading Migrationsverket's pages in planning) Does an exempt code on a
+  transitional extension get 75 %? → A: No. These extensions must meet the earlier maintenance
+  requirement (god försörjning, 80 %), which has no 75 % exemption; judge at 80 % with no "75 % may
+  apply" warning. Planning also corrected FR-002, FR-003, FR-006 and the exemption list from the
+  same pages (see research.md).
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -42,9 +47,11 @@ Swedish. The direct consumers are the later Lönekrav surfaces (MCP and A2A in 0
 ### User Story 1 - Check whether an offer meets the salary requirement (Priority: P1)
 
 A user enters an SSYK code, the offered monthly salary, the share of full time, the application
-type (first permit or extension), the date the application is filed and, for extensions, the date
-the current permit was granted, plus any personal exemption that applies (start-up employer, former
-student, licensed profession, temporary protection). They get back which rule applies, the threshold
+type (first permit or extension), the date the application is filed, the expected decision date
+(today if not given) and, for extensions, the date the current permit was granted, plus any
+personal exemption that applies (former student or researcher, temporary protection under the EU
+mass-displacement directive, doctor, dentist or nurse becoming licensed in Sweden, employee of a
+young tech or life-science company). They get back which rule applies, the threshold
 in kronor, whether the offer passes, by how much, and every warning that matters, each with its
 legal source and the date that source was checked.
 
@@ -79,9 +86,17 @@ each answer with Migrationsverket's published amounts and SFS 2026:605 by hand.
 8. **Given** an evaluation date after mid-June of a year for which the registry holds no newer SCB
    median, **When** eligibility is evaluated, **Then** the answer carries a stale-data warning
    saying a newer median may have been published and naming the median it used.
-9. **Given** a user who declares a personal exemption (for example a start-up employer), **When**
+9. **Given** a user who declares a personal exemption (for example an employee of a young tech
+   company), **When**
    eligibility is evaluated for a non-exempt code, **Then** the 75 % level applies and the answer
    names the declared exemption as the reason, with its conditions and source.
+
+10. **Given** an extension for code 3511 filed on 30 November 2026 on a permit granted before 1
+    June 2026, **When** eligibility is evaluated, **Then** the 80 % maintenance requirement applies
+    (30 640 SEK), not the 75 % exemption.
+11. **Given** a first-permit application filed on 20 May 2026 and decided after 1 June 2026,
+    **When** eligibility is evaluated, **Then** the 90 % rule applies to the median in force on 20
+    May 2026 (37 100), giving 33 390 SEK.
 
 ---
 
@@ -238,14 +253,16 @@ but nothing in this feature depends on it.
 
 ### Edge Cases
 
-- Application date before 1 November 2023: the answer says the date is outside the period the
-  registry covers rather than applying a rule it does not hold.
+- A first permit decided before 1 June 2026, or an extension filed before 1 June 2026: the answer
+  says this is outside what the tool covers rather than applying a rule it does not model.
+- A first permit filed before 1 June 2026 but decided on or after it: the new rule applies, with
+  the median in force on the filing date.
 - Application date in the future: evaluated under the rules known today, with the stale-data
   warning if a new median is due before that date.
 - Extension filed in the transition window for a permit granted on or after 1 June 2026: the
   transitional 80 % rule does not apply.
-- An exempt code (75 %) on an extension filed in the transition window: judged at 80 % with a
-  warning that 75 % may apply (FR-012).
+- An exempt code (75 %) on an extension filed in the transition window: judged at 80 %, because
+  the 75 % exemption belongs to the new rule, which does not apply to these extensions (FR-012).
 - A declared personal exemption on a banned code: banned wins.
 - Salary exactly at the threshold: passes (the requirement is "at least").
 - Share of full time of zero, above 100 % or not a number; negative salary; unknown or malformed
@@ -272,23 +289,28 @@ but nothing in this feature depends on it.
   category MUST live in one registry. Each row MUST have an effective-from date, an optional
   effective-to date, a source link and a checked-on date. The existing occupation flags from
   Feature 001 MUST be read from this registry rather than kept separately.
-- **FR-002**: The registry MUST hold the SCB medians from June 2021 to June 2026 with the date each
-  took effect, and the rule history: 13 000 SEK flat, 80 % from 1 November 2023, 90 % from 1 June
-  2026, 75 % for exempt codes and personal exemptions from 1 June 2026, and the transitional 80 %
-  rule for extensions filed 1 June–1 December 2026 on permits granted before 1 June 2026.
-- **FR-003**: The median that governs an application MUST be the latest one published on the day
-  the application is filed.
+- **FR-002**: The registry MUST hold the SCB medians from 22 June 2021 to 16 June 2026 with the
+  date each took effect (as listed by Migrationsverket), and the rule history: 13 000 SEK flat,
+  the maintenance requirement (god försörjning) of 80 % from 1 November 2023 to 31 May 2026, the
+  salary requirement of 90 % for decisions from 1 June 2026, 75 % for exempt codes and personal
+  exemptions under that requirement, and the transitional 80 % maintenance requirement for
+  extensions filed 1 June–1 December 2026 on permits granted before 1 June 2026.
+- **FR-003**: Which rule applies MUST follow Migrationsverket: for a first permit, the decision date
+  (new rule from 1 June 2026); for an extension, the filing date and the date the current permit
+  was granted. The median MUST be the one in force on the filing date. The exempt-code list MUST
+  be the one in force on the decision date.
 - **FR-004**: Threshold amounts MUST be derived from the registry's percentage and median and MUST
-  equal the amounts Migrationsverket publishes (34 470, 28 725 and 33 390 SEK in the scenarios
-  above).
+  equal the amounts Migrationsverket publishes for every median in the registry (for example
+  34 470, 28 725, 33 390 and, for the 80 % rule, 30 640 SEK).
 - **FR-005**: The system MUST warn when the evaluation date is after 16 June of a year and the
   registry holds no median published that year. The warning MUST name the median used.
 
 **Eligibility**
 
 - **FR-006**: The eligibility operation MUST take: code, monthly salary in SEK before tax, share of
-  full time, application type (first permit or extension), filing date, prior-permit grant date
-  (extensions only), and zero or more declared personal exemptions.
+  full time, application type (first permit or extension), filing date, expected decision date
+  (default today), prior-permit grant date (extensions only), and zero or more declared personal
+  exemptions.
 - **FR-007**: It MUST return: whether a permit is possible for the code, the rule applied, the
   percentage, the median and its SCB reference year, the threshold in SEK, pass or fail, margin in
   SEK and percent, the reason for the rule chosen, warnings, and every source with its checked-on
@@ -302,9 +324,8 @@ but nothing in this feature depends on it.
   collective agreement or industry practice, which this tool does not check, and that the result is
   information, not legal advice.
 - **FR-012**: For an exempt code on an extension filed in the transition window, pass or fail
-  MUST use the transitional 80 % rule, and the answer MUST warn that the 75 % level may apply
-  instead, cite the transitional provision and the exemption, and advise confirming with
-  Migrationsverket.
+  MUST use the transitional 80 % maintenance requirement, citing Migrationsverket's page on it.
+  The 75 % level MUST NOT be offered for these extensions.
 
 **Search**
 
@@ -388,7 +409,7 @@ but nothing in this feature depends on it.
   date.
 - **Median record**: an SCB national median, its reference year, the date it took effect for
   permits, source link and checked-on date.
-- **Eligibility request**: code, salary, share of full time, application type, filing date,
+- **Eligibility request**: code, salary, share of full time, application type, filing date, decision date,
   prior-permit date, declared exemptions.
 - **Eligibility answer**: permitted or not, rule applied and why, percentage, median, threshold,
   pass/fail, margin, warnings, sources, disclaimer.
@@ -431,13 +452,17 @@ but nothing in this feature depends on it.
 
 - The salary a user enters is the gross monthly salary actually paid, so it is compared with the
   threshold as it is. Benefits, allowances and overtime are not added.
-- Personal exemptions (start-up employer under 5 years old with under 100 staff, former student,
-  licensed profession, temporary protection) are declared by the user; the system lists their
-  conditions but does not verify them.
-- Eligibility is supported for applications filed from 1 November 2023. The 13 000 SEK flat rule
-  appears in the timeline only.
-- Applications are judged on the filing date. Whether Migrationsverket can apply a newer median
-  published while an application is pending is out of scope.
+- Personal exemptions are the four Migrationsverket lists (former student or researcher applying
+  for a first work permit; temporary protection under the EU mass-displacement directive, for two
+  years or the permit's length; doctors, dentists and nurses with a foreign degree becoming
+  licensed; employees of tech or life-science companies under five years old with fewer than 100
+  staff). They are declared by the user; the system lists their conditions but does not verify
+  them.
+- The tool covers ordinary work permits. EU Blue Card, intra-corporate transfer, seasonal work and
+  the other permit types Migrationsverket exempts from these requirements are out of scope, and
+  the answer says so.
+- Eligibility covers first permits decided from 1 June 2026 and extensions filed from 1 June 2026.
+  The earlier rules (13 000 SEK flat; 80 % from 1 November 2023) appear in the timeline only.
 - "Typical ad" means up to about 600 words. The search length limit is set to comfortably cover
   long ads.
 - The ten real ads for the parsing test are taken from public JobTech job ads and labelled by the
