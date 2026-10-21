@@ -139,3 +139,13 @@ def test_benchmark_route(api_client, tmp_path, monkeypatch):
     assert r.status_code == 404 and "lonekrav-etl benchmark" in r.json()["detail"]
     (tmp_path / "missing.json").write_text('{"run_at": "x"}')
     assert api_client.get("/api/v1/benchmark").json() == {"run_at": "x"}
+
+
+def test_parse_job_ad_route(api_client, fixtures):
+    ad = (fixtures / "ads/en1_backend.txt").read_text()
+    r = api_client.post("/api/v1/parse-job-ad", json={"text": ad})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["passages"][0] == {"index": 0, "text": "Backend Developer (Python)",
+                                   "label": "title", "keep": True, "by": "position"}
+    assert api_client.post("/api/v1/parse-job-ad", json={"text": ""}).status_code == 422

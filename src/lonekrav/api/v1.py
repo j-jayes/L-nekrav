@@ -7,7 +7,9 @@ import json
 from pathlib import Path
 
 from fastapi import APIRouter, HTTPException, Request
+from pydantic import BaseModel, Field
 
+from lonekrav.core.adparse import ParsedAd, parse
 from lonekrav.core.compare import CompareRequest, Comparison, compare
 from lonekrav.core.eligibility import EligibilityAnswer, EligibilityRequest, UnknownCode, evaluate
 from lonekrav.core.legal import TimelineEvent, load_registry
@@ -91,3 +93,12 @@ def benchmark() -> dict:
     if not BENCHMARK_RESULTS.exists():
         raise HTTPException(404, "no benchmark results yet: run `lonekrav-etl benchmark`")
     return json.loads(BENCHMARK_RESULTS.read_text())
+
+
+class AdText(BaseModel):
+    text: str = Field(min_length=1, max_length=20_000)
+
+
+@router.post("/parse-job-ad")
+def parse_job_ad(body: AdText, request: Request) -> ParsedAd:
+    return parse(body.text, request.app.state.engine.embedders["kblab"])

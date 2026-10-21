@@ -89,3 +89,25 @@ def test_benchmark_ranks_through_the_live_search_path(fixture_engine):  # FR-017
     for lang, text in (("en", q.text_en), ("sv", q.text_sv)):
         live, _ = engine.rank(text, ("kblab", "bm25"), POOL, 5)
         assert result["top5"]["t"][lang] == [h.code for h in live], lang
+
+
+def test_parse_ad_searches_the_kept_text(fixture_engine, fixtures):
+    engine, _ = fixture_engine
+    ad = (fixtures / "ads/sv1_utvecklare.txt").read_text()
+    a = run(SearchRequest(text=ad, parse_ad=True), engine)
+    assert a.passages and a.searched_text != ad
+    assert "Friskvårdsbidrag" not in a.searched_text  # benefits are set aside
+    assert a.searched_text.startswith("Mjukvaruutvecklare Java")  # the title is kept
+    assert a.hits
+
+
+def test_parse_ad_falls_back_to_the_whole_text(fixture_engine):
+    engine, _ = fixture_engine
+    ad = "Om oss\nVi är ett bolag.\n\nVi erbjuder\n- Friskvårdsbidrag"
+    a = run(SearchRequest(text=ad, parse_ad=True), engine)
+    assert a.searched_text == ad and a.passages
+
+
+def test_without_parse_ad_there_are_no_passages(fixture_engine):
+    engine, _ = fixture_engine
+    assert run(SearchRequest(text="mjukvaruutvecklare"), engine).passages is None

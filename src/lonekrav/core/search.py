@@ -14,6 +14,7 @@ from typing import Literal
 import numpy as np
 from pydantic import BaseModel, Field
 
+from lonekrav.core.adparse import AdPassage, parse
 from lonekrav.core.embeddings import Embedder, get_embedder
 from lonekrav.core.legal_flags import flags_for
 from lonekrav.core.models import LegalFlag
@@ -146,6 +147,7 @@ class SearchRequest(BaseModel):
     text: str = Field(min_length=1, max_length=20_000)
     mode: Literal["fast", "full"] = "fast"
     k: int = Field(5, ge=1, le=20)
+    parse_ad: bool = Field(False, description="Search only the passages that describe the job")
 
 
 class SearchAnswer(BaseModel):
@@ -153,6 +155,7 @@ class SearchAnswer(BaseModel):
     fallback_reason: str | None = None
     searched_text: str
     title_list: list[str] | None = None
+    passages: list[AdPassage] | None = None
     low_confidence: bool
     hits: list[SearchHit]
     honest_fit: str = HONEST_FIT
@@ -257,9 +260,13 @@ def run(req: SearchRequest, engine: SearchEngine) -> SearchAnswer:
     mode, reason = req.mode, None
     if mode == "full" and (reason := engine._ensure_harrier()):
         mode = "fast"
-    hits, parts = engine.rank(req.text, MODES[mode], FAST_POOL if mode == "fast" else POOL, req.k)
+    text, passages = req.text, None
+    if req.parse_ad:
+        parsed = parse(req.text, engine.embedders["kblab"])
+        text, passages = parsed.kept_text, parsed.passages
+    hits, parts = engine.rank(text, MODES[mode], FAST_POOL if mode == "fast" else POOL, req.k)
     cutoff = engine.low_confidence_cutoff
     top = hits[0].scores.get("kblab") if hits else None
     low = cutoff is not None and (top is None or top < cutoff)
-    return SearchAnswer(mode_used=mode, fallback_reason=reason, searched_text=req.text,
-                        title_list=parts, low_confidence=low, hits=hits)
+    return SearchAnswer(mode_used=mode, fallback_reason=reason, searched_text=text,
+                        title_list=parts, passages=passages, low_confidence=low, hits=hits)
