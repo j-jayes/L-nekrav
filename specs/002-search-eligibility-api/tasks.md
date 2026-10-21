@@ -92,7 +92,7 @@ Done first because the diagnosis could change the search design (plan, implement
 
 - [X] T026 [US1] Implement `EligibilityRequest`, `EligibilityAnswer`, `Warning` and `evaluate()` in `src/lonekrav/core/eligibility.py`, following the rule-selection order in data-model.md and reading every date from registry rows (no legal date or amount literal in `eligibility.py`), until T022–T024 pass
 - [X] T027 [US1] Add `POST /eligibility` to `src/lonekrav/api/v1.py` (validate, call `evaluate`, return) until T025 passes
-- [ ] T028 [US1] Run for real: `uv run lonekrav-serve`, curl every Story 1 scenario, compare each answer with the two Migrationsverket pages, and save the transcript as the first section of `references/api-smoke.md`
+- [X] T028 [US1] Run for real: `uv run lonekrav-serve`, curl every Story 1 scenario, compare each answer with the two Migrationsverket pages, and save the transcript as the first section of `references/api-smoke.md`
 
 **Checkpoint**: MVP. Eligibility is usable over HTTP without any search.
 
@@ -121,7 +121,7 @@ low-confidence note, honest-fit text.
 - [X] T037 [US2] Make `evaluate` in `src/lonekrav/etl/benchmark.py` rank through the same engine code path as `run()` (title lists, pools, weights), so FR-017 holds; extend `tests/unit/test_metrics.py` with a check that `evaluate` and `run` give the same top five for one query on the fixture index
 - [X] T038 [US2] Derive the low-confidence cut-off in `src/lonekrav/etl/benchmark.py` per FR-017a, with `tests/eval/nonsense.yaml` (about 15 nonsense queries in both languages); write it into the results file; `SearchEngine` reads it at start-up
 - [X] T039 [US2] Add `POST /search` to `src/lonekrav/api/v1.py`; the app lifespan builds the real `SearchEngine` (T033)
-- [ ] T040 [US2] Write `scripts/latency.py` (200 fast single-title queries, 50 full queries including 600-word ads, against a running server, reporting p50 and p95) and run it; fast p95 < 50 ms and full p95 < 1 s (SC-003). Save the output to `references/search-latency.md`. If the budget is missed, report the measured split before changing anything
+- [X] T040 [US2] Write `scripts/latency.py` (200 fast single-title queries, 50 full queries including 600-word ads, against a running server, reporting p50 and p95) and run it; fast p95 < 50 ms and full p95 < 1 s (SC-003). Save the output to `references/search-latency.md`. If the budget is missed, report the measured split before changing anything
 
 **Checkpoint**: search usable over HTTP; latency recorded.
 
