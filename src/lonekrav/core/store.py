@@ -6,6 +6,7 @@ MILVUS_URI to use a Milvus server instead.
 
 from __future__ import annotations
 
+import json
 import os
 from pathlib import Path
 
@@ -42,6 +43,12 @@ class Store:
         if self.client.has_collection(COLLECTION):
             self.client.load_collection(COLLECTION)  # a reopened index starts "released"
 
+    @property
+    def _vocab_file(self) -> Path | None:
+        """The analysis vocabulary is saved beside a local index, so reopening it (or a copy of
+        it) analyses queries exactly as the documents were analysed."""
+        return None if self.uri.startswith("http") else Path(self.uri + ".vocab.json")
+
     def create(self) -> None:
         if self.client.has_collection(COLLECTION):
             self.client.drop_collection(COLLECTION)
@@ -62,6 +69,8 @@ class Store:
             s.add_field(f"vec_{name}", DataType.FLOAT_VECTOR, dim=dim)
             ip.add_index(f"vec_{name}", index_type="FLAT", metric_type="COSINE")
         self.client.create_collection(COLLECTION, schema=s, index_params=ip)
+        if self._vocab_file:
+            self._vocab_file.write_text(json.dumps(sorted(self.vocab), ensure_ascii=False))
 
     def insert(self, chunks: list[Chunk], vectors: dict[str, np.ndarray], batch: int = 500) -> None:
         rows = []
@@ -90,7 +99,9 @@ class Store:
 
     @property
     def vocab(self) -> frozenset[str]:
-        if self._vocab is None:
+        if self._vocab is None and self._vocab_file and self._vocab_file.exists():
+            self._vocab = frozenset(json.loads(self._vocab_file.read_text()))
+        if self._vocab is None:  # a Milvus server index: rebuild from the committed profiles
             from lonekrav.core.profiles import load_profiles
 
             self._vocab = profile_vocab(load_profiles().values())

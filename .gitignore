@@ -17,6 +17,7 @@ build/
 data/raw/
 data/*.db
 data/*.db.lock
+data/*.db.vocab.json
 models/
 .hf-cache/
 

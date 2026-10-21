@@ -51,6 +51,16 @@ def test_rebuild_gives_same_results(inputs, tmp_path):
     assert [h.code for h in again] == [h.code for h in first]
 
 
+def test_reopened_index_uses_the_vocabulary_it_was_built_with(inputs, tmp_path, monkeypatch):
+    """Copilot review on PR #1: reopening loaded the cwd-relative profiles file instead."""
+    profiles = build_profiles(inputs)
+    store, *_ = build_index(profiles, tmp_path / "t.db")
+    built = store.vocab
+    store.client.close()
+    monkeypatch.chdir(tmp_path)  # no data/processed/ here
+    assert Store(tmp_path / "t.db").vocab == built
+
+
 def test_a_fresh_process_can_search_an_existing_index(inputs, tmp_path):
     """Found by hand: a new process opening the index got 'collection is released'.
     Build and search each run in their own process; Milvus Lite locks its directory."""
