@@ -63,12 +63,23 @@ def fixture_engine(inputs, tmp_path):
 
 
 @pytest.fixture
-def api_client(fixture_engine):
+def api_client(fixture_engine, salaries):
     from fastapi.testclient import TestClient
 
     from lonekrav.app import create_app
 
     engine, profiles = fixture_engine
-    with TestClient(create_app(engine=engine, profiles=profiles),
+    with TestClient(create_app(engine=engine, profiles=profiles, salaries=salaries),
                     raise_server_exceptions=False) as client:
         yield client
+
+
+@pytest.fixture
+def salaries(fixtures):
+    """Fixture SCB tables parsed as the build does: (distributions, age bands)."""
+    import datetime as dt
+
+    t = dt.datetime(2026, 10, 20, 12, tzinfo=dt.UTC)
+    px = fixtures / "pxweb"
+    return (scb_pxweb.parse_distributions(px / "TAB5932.json", "TAB5932", t),
+            scb_pxweb.parse_age_bands(px / "TAB5844.json", "TAB5844", t))

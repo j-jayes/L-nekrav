@@ -134,9 +134,9 @@ optional simulated age block.
 
 **Independent test**: quickstart §3 salary row; figures match SCB.
 
-- [ ] T041 [P] [US5] `tests/unit/test_salary_payload.py` on fixture salary data: 2512's 2025 distribution matches the stored row exactly and names TAB5932 and 2025; threshold lines for 90 %, 75 % and the code's own rule on a given date come from the registry; a code with suppressed cells keeps nulls and lists them; `age_band="25-34"` gives percentiles equal to percentile × band mean ÷ all-ages mean, `is_simulated` true, the formula string and both input tables; a null input gives a null simulated value; a code with no salary rows sets `no_occupation_data`
-- [ ] T042 [US5] Implement `ThresholdLine`, `SimulatedPercentiles`, `SalaryPayload` and `payload()` in `src/lonekrav/core/salary.py` until T041 passes
-- [ ] T043 [US5] Add `GET /occupations/{code}/salary` (query `age_band`, `on`) to `src/lonekrav/api/v1.py` with a test in `tests/integration/test_api.py` (unknown code 404, bad age band 422)
+- [X] T041 [P] [US5] `tests/unit/test_salary_payload.py` on fixture salary data: 2512's 2025 distribution matches the stored row exactly and names TAB5932 and 2025; threshold lines for 90 %, 75 % and the code's own rule on a given date come from the registry; a code with suppressed cells keeps nulls and lists them; `age_band="25-34"` gives percentiles equal to percentile × band mean ÷ all-ages mean, `is_simulated` true, the formula string and both input tables; a null input gives a null simulated value; a code with no salary rows sets `no_occupation_data`
+- [X] T042 [US5] Implement `ThresholdLine`, `SimulatedPercentiles`, `SalaryPayload` and `payload()` in `src/lonekrav/core/salary.py` until T041 passes
+- [X] T043 [US5] Add `GET /occupations/{code}/salary` (query `age_band`, `on`) to `src/lonekrav/api/v1.py` with a test in `tests/integration/test_api.py` (unknown code 404, bad age band 422)
 
 ---
 

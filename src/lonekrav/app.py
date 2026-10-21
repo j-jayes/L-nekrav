@@ -14,16 +14,20 @@ from lonekrav.api import v1
 log = logging.getLogger("lonekrav.access")
 
 
-def create_app(engine=None, profiles=None) -> FastAPI:
-    """`engine` and `profiles` are injected by tests; the server loads the real ones at start-up."""
+def create_app(engine=None, profiles=None, salaries=None) -> FastAPI:
+    """`engine`, `profiles` and `salaries` (distributions, age bands) are injected by tests; the
+    server loads the real ones at start-up."""
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         from lonekrav.core.profiles import load_profiles
+        from lonekrav.core.salary import load_age_bands, load_distributions
         from lonekrav.core.search import SearchEngine
 
         app.state.engine = engine or SearchEngine.load()
         app.state.profiles = profiles if profiles is not None else load_profiles()
+        app.state.distributions, app.state.age_bands = salaries or (load_distributions(),
+                                                                    load_age_bands())
         yield
 
     app = FastAPI(title="Lönekrav", version="1", lifespan=lifespan,

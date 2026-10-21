@@ -78,3 +78,19 @@ def test_search_route(api_client):
 def test_search_rejects_oversized_text(api_client):
     r = api_client.post("/api/v1/search", json={"text": "x" * 20001})
     assert r.status_code == 422 and r.json()["detail"][0]["loc"][-1] == "text"
+
+
+def test_salary_route(api_client):
+    r = api_client.get("/api/v1/occupations/2512/salary",
+                       params={"age_band": "25-34", "on": "2026-10-21"})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["title_en"] == "Software- and system developers"
+    assert body["simulated"]["is_simulated"] is True
+    assert any(d["year"] == 2025 and d["median"] == 53500 for d in body["distributions"])
+
+
+def test_salary_route_errors(api_client):
+    assert api_client.get("/api/v1/occupations/1234/salary").status_code == 404
+    r = api_client.get("/api/v1/occupations/2512/salary", params={"age_band": "12-17"})
+    assert r.status_code == 422 and "age_band" in r.text
