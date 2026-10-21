@@ -117,3 +117,36 @@ def test_registry_is_current(reg, today, current):  # FR-005a
 
 def test_registry_holds_this_years_median():  # FR-005a: fails in CI if the June update is missed
     assert load_registry().registry_is_current(dt.date.today())
+
+
+SRC = legal.REGISTRY_FILE.parents[1]  # src/lonekrav
+
+
+def legal_literals(text: str) -> list[str]:
+    """Registry amounts, percentages and dates written out in `text` (SC-002)."""
+    import re
+
+    reg = load_registry()
+    amounts = {m.amount for m in reg.medians} | {
+        reg.threshold(r, m) for m in reg.medians for r, rule in reg.rules.items()
+        if rule.kind == "share_of_median"} | {r.amount for r in reg.rules.values() if r.amount}
+    dates = {d for r in [*reg.rules.values(), *reg.code_lists.values(), *reg.medians]
+             for d in (r.effective_from, r.effective_to, getattr(r, "permits_granted_before", None))
+             if d}
+    patterns = [rf"\b{a}\b|\b{a // 1000}[  ]{a % 1000:03d}\b" for a in amounts]
+    patterns += [rf"{d.isoformat()}|date\({d.year}, ?{d.month}, ?{d.day}\)" for d in dates]
+    patterns += [r"\b(75|80|90) ?%", r"\b0\.(75|8|9)\b"]
+    return [m.group(0) for p in patterns for m in re.finditer(p, text)]
+
+
+def test_the_scan_finds_a_planted_literal():
+    assert legal_literals("THRESHOLD = 34470") == ["34470"]
+    assert legal_literals('floor = "34 470 SEK"') == ["34 470"]
+    assert legal_literals("START = dt.date(2026, 6, 1)") == ["date(2026, 6, 1)"]
+    assert legal_literals("x = 0.9 * median") == ["0.9"]
+
+
+def test_no_legal_literal_outside_the_registry():  # SC-002, Principle II
+    found = {str(p.relative_to(SRC)): hits for p in sorted(SRC.rglob("*.py"))
+             if (hits := legal_literals(p.read_text()))}
+    assert found == {}

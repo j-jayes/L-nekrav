@@ -14,11 +14,10 @@ EXEMPT_75 = frozenset(_LISTS["exempt_75"].codes)
 BANNED = set(_LISTS["banned"].codes)
 PARTIALLY_BANNED = dict(_LISTS["partially_banned"].codes)
 _PARAGRAPH = {"exempt_75": "6 §", "banned": "5 §", "partially_banned": "5 §"}
-_NOTE = {"exempt_75": "75 % of the median applies instead of 90 %"}
 
 
 def _flag(cl: CodeList, code: str) -> LegalFlag:
-    return LegalFlag(kind=cl.kind, note=cl.codes[code] or _NOTE.get(cl.kind, ""),
+    return LegalFlag(kind=cl.kind, note=cl.codes[code] or cl.note,
                      effective_from=cl.effective_from, checked_on=cl.source.checked_on,
                      source=SourceRef(source="sfs", ref=f"SFS 2026:605, 5 kap. {_PARAGRAPH[cl.kind]}",
                                       url=cl.source.url))

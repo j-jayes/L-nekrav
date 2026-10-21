@@ -12,12 +12,14 @@ from __future__ import annotations
 import datetime as dt
 import json
 import sys
+from pathlib import Path
 
 import httpx
 
 BASE = sys.argv[1] if len(sys.argv) > 1 else "http://127.0.0.1:8000"
 OFFER = {"code": "2512", "monthly_salary_sek": 40000, "fte_percent": 100,
          "application_type": "first_permit", "filed_on": "2026-06-16", "decided_on": "2026-07-01"}
+AD = Path("tests/fixtures/ads/en1_backend.txt").read_text()  # a made-up ad
 OLD_PERMIT = {"application_type": "extension", "current_permit_granted_on": "2026-01-10"}
 
 CALLS = [
@@ -57,6 +59,17 @@ CALLS = [
     ("Search, title list", "POST", "/search",
      {"text": "Aktuarie/Försäkringsaktuarie/Försäkringsmatematiker", "mode": "full"}),
     ("Search, nonsense", "POST", "/search", {"text": "asdf"}),
+    ("Search, pasted ad with parse_ad", "POST", "/search",
+     {"text": AD, "mode": "full", "parse_ad": True}),
+    ("Parse a job ad", "POST", "/parse-job-ad", {"text": AD}),
+    ("Occupation 3511", "GET", "/occupations/3511", None),
+    ("Salary for 2512 with the 25–34 age band", "GET",
+     "/occupations/2512/salary?age_band=25-34&on=2026-10-21", None),
+    ("Compare 2512, 2511 and 3512 with an offer", "POST", "/compare",
+     {"codes": ["2512", "2511", "3512"], "offer": {k: v for k, v in OFFER.items() if k != "code"}}),
+    ("Compare, one code only", "POST", "/compare", {"codes": ["2512"]}),
+    ("Legal timeline", "GET", "/legal/timeline", None),
+    ("Benchmark results", "GET", "/benchmark", None),
     ("Health", "GET", "/health", None),
 ]
 
