@@ -41,6 +41,20 @@ def _split(text: str, limit: int = MAX_CHARS) -> list[str]:
     return pieces
 
 
+def _batches(labels: list[str]) -> list[str]:
+    """Join labels with '; ', at most MAX_LABELS and MAX_CHARS per batch."""
+    out, cur = [], []
+    for label in labels:
+        label = label[:MAX_CHARS]
+        if cur and (len(cur) == MAX_LABELS or len("; ".join([*cur, label])) > MAX_CHARS):
+            out.append("; ".join(cur))
+            cur = []
+        cur.append(label)
+    if cur:
+        out.append("; ".join(cur))
+    return out
+
+
 def chunk_profile(p: OccupationProfile, holdout: set[str] = frozenset()) -> list[Chunk]:
     """`holdout`: case-folded titles used as benchmark queries, kept out of the indexed text."""
     chunks: list[Chunk] = []
@@ -57,6 +71,6 @@ def chunk_profile(p: OccupationProfile, holdout: set[str] = frozenset()) -> list
     for lang in ("sv", "en"):
         labels = [s.label for s in p.synonyms
                   if s.lang == lang and s.label.casefold().strip() not in holdout]
-        for i in range(0, len(labels), MAX_LABELS):
-            add(f"synonyms_{lang}", lang, "; ".join(labels[i:i + MAX_LABELS]))
+        for batch in _batches(labels):
+            add(f"synonyms_{lang}", lang, batch)
     return chunks

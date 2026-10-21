@@ -42,3 +42,13 @@ def test_holdout_titles_removed_everywhere():
     assert "backend developer" not in text
     assert "utvecklare 3;" not in text and not text.endswith("utvecklare 3")
     assert "software engineer" in text
+
+
+def test_synonym_chunks_respect_the_character_limit():
+    """Copilot review on PR #1: 40 labels of 50+ characters overflowed MAX_CHARS."""
+    p = profile(n_sv_labels=0).model_copy(update={"synonyms": [
+        Synonym(lang="sv", label=f"Mycket långt yrkesnamn nummer {i:03d} " + "x" * 30, source=S)
+        for i in range(120)]})
+    syn = [c for c in chunk_profile(p) if c.kind == "synonyms_sv"]
+    assert all(len(c.text) <= MAX_CHARS for c in syn)
+    assert sum(c.text.count(";") + 1 for c in syn) == 120  # no label lost
