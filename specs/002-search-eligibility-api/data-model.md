@@ -15,8 +15,16 @@ A2A and the web client, reuse them unchanged. Models from 001 (`OccupationProfil
 
 **Rule**: `id` (`flat_13000`, `maintenance_80`, `salary_90`, `salary_75_exempt`,
 `transition_maintenance_80`), `kind: "flat" | "share_of_median"`, `percent: Decimal | None`,
-`amount: int | None`, `effective_from`, `effective_to | None`, `applies_to` (plain-language
-condition), `source`.
+`amount: int | None`, `effective_from`, `effective_to | None`, `permits_granted_before: date |
+None` (transition only), `applies_to` (plain-language condition), `source`.
+
+**Statement**: a legal statement shown as a warning, with `id` (`part_time`, `partial_ban_9210`),
+`text`, `source`. The part-time statement cites Migrationsverket's employees page ("a monthly
+salary or wages totalling at least 90 percent of the median"); it says the requirement is on the
+monthly pay actually received and that the page gives no reduction for part-time work.
+
+**MedianPublicationWindow**: `earliest: (month, day)` = 16 June, `latest: (month, day)` = 22 June,
+derived from the dates medians have taken effect, with source.
 
 **CodeList**: `kind: "exempt_75" | "banned" | "partially_banned"`, `codes: dict[code, note]`,
 `effective_from`, `effective_to | None`, `source`.
@@ -24,7 +32,8 @@ condition), `source`.
 **PersonalExemption**: `id` (`former_student_researcher`, `temporary_protection`,
 `healthcare_licensing`, `young_tech_company`), `label`, `conditions: str`, `source`.
 
-**Registry**: all of the above; `median_on(date) -> MedianRecord`, `rule(id)`,
+**Registry**: all of the above (`LegalFlag` gains an optional `checked_on`, filled from the
+registry; the committed profiles stay valid); `median_on(date) -> MedianRecord`, `rule(id)`,
 `codes_on(kind, date)`, `timeline() -> list[TimelineEvent]`.
 Validation on load: every row has a source and `checked_on`; medians are contiguous; amounts for
 every median × percent reproduce the published table (R6).
@@ -59,16 +68,23 @@ every median × percent reproduce the published table (R6).
 | `sources` | `list[Source]` |
 | `disclaimer` | `str` (collective agreements not checked; information, not legal advice) |
 
-**Warning**: `kind: "part_time" | "stale_median" | "partial_ban"`, `message`, `source | None`.
+**Warning**: `kind: "part_time" | "stale_median" | "partial_ban"`, `message`, `source` (required:
+every warning is a legal statement, Principle III).
 
-Rule selection, in order:
+Rule selection, in order. Every date comes from a registry row; none is written in code (Principle
+II, SC-002):
 1. Code banned on `decided_on` → `not_permitted`.
-2. First permit decided before 2026-06-01, or extension filed before 2026-06-01 → `out_of_scope`.
-3. Extension filed 2026-06-01 … 2026-12-01 with current permit granted before 2026-06-01 →
+2. First permit decided before `salary_90.effective_from`, or extension filed before it →
+   `out_of_scope`.
+3. Extension filed within `transition_maintenance_80.effective_from … effective_to` with the current
+   permit granted before `transition_maintenance_80.permits_granted_before` →
    `transition_maintenance_80`.
 4. Code exempt on `decided_on` (first permits and extensions), or any declared exemption →
    `salary_75_exempt`.
 5. Otherwise `salary_90`.
+Stale median: warn when `decided_on` falls on or after the year's
+`median_publication_window.earliest` and no median took effect that year (FR-005).
+`registry_is_current(today)` fails from the day after `median_publication_window.latest` (FR-005a).
 Median: `median_on(filed_on)`, in force from its `effective_from` inclusive. The transition window
 is inclusive at both ends. Threshold: `round_half_up(percent × median)`. Pass when
 salary ≥ threshold.
@@ -101,7 +117,7 @@ salary ≥ threshold.
 `formula: "percentile × age_band_mean ÷ all_ages_mean"`, `inputs: list[{table, reference_year}]`.
 Any null input gives a null output.
 
-**SalaryPayload**: `code`, `title_sv`, `title_en`, `distributions: list[SalaryDistribution]`
+**SalaryPayload** (thresholds computed for `on`, which defaults to today): `code`, `title_sv`, `title_en`, `distributions: list[SalaryDistribution]`
 (every year, nulls kept), `age_bands: list[AgeBandSalary]` (latest year), `thresholds:
 list[ThresholdLine]` (90 %, 75 %, and the code's own on the request date), `simulated:
 SimulatedPercentiles | None`, `no_occupation_data: bool`.
@@ -111,7 +127,9 @@ SimulatedPercentiles | None`, `no_occupation_data: bool`.
 **CompareRequest**: `codes: list[str]` (deduplicated, then 2–5), `offer: EligibilityRequest minus
 code | None`.
 
-**CompareColumn**: `code`, `titles`, `tasks_sv`, `tasks_en` (official descriptions), `latest:
+**CompareColumn**: `code`, `titles`, `tasks_sv: list[Text]`, `tasks_en: list[Text]` (each `Text`
+keeps its source: Swedish from SCB's MIS publication where present, otherwise JobTech's SSYK
+definition; English from ESCO), `latest:
 SalaryDistribution | None`, `legal_flags`, `threshold: ThresholdLine`, `eligibility:
 EligibilityAnswer | None`.
 

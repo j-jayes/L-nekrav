@@ -83,7 +83,7 @@ each answer with Migrationsverket's published amounts and SFS 2026:605 by hand.
 7. **Given** an offer of 40 000 SEK at 80 % of full time, **When** eligibility is evaluated, **Then**
    the threshold is not reduced for part-time and the answer carries a part-time warning that says
    so in plain words.
-8. **Given** an evaluation date after mid-June of a year for which the registry holds no newer SCB
+8. **Given** a decision date after mid-June of a year for which the registry holds no newer SCB
    median, **When** eligibility is evaluated, **Then** the answer carries a stale-data warning
    saying a newer median may have been published and naming the median it used.
 9. **Given** a user who declares a personal exemption (for example an employee of a young tech
@@ -313,7 +313,7 @@ but nothing in this feature depends on it.
   half up to whole kronor, and MUST
   equal the amounts Migrationsverket publishes for every median in the registry (for example
   34 470, 28 725, 33 390 and, for the 80 % rule, 30 640 SEK).
-- **FR-005**: The system MUST warn when the evaluation date is on or after 16 June of a year (the
+- **FR-005**: The system MUST warn when the decision date (default today) is on or after 16 June of a year (the
   earliest date a median has taken effect) and the registry holds no median that took effect that
   year. The warning MUST name the median used.
 - **FR-005a**: A test of the registry MUST fail from 23 June of a year (the day after the latest
@@ -339,8 +339,9 @@ but nothing in this feature depends on it.
   threshold or margin, and with the ban's source. For 9210 the answer MUST be judged normally at
   75 % and carry a warning that permits cannot be granted for forest berry picking under this
   code, while other jobs in the code are covered by the exemption.
-- **FR-010**: When the share of full time is below 100 %, the answer MUST say that the threshold
-  applies to the monthly salary actually paid and is not reduced for part-time.
+- **FR-010**: When the share of full time is below 100 %, the answer MUST say that the requirement
+  applies to the monthly salary actually paid and that Migrationsverket gives no reduction for
+  part-time work, citing Migrationsverket's page for employees.
 - **FR-011**: Every answer MUST state that the salary must also be in line with the relevant
   collective agreement or industry practice, which this tool does not check, and that the result is
   information, not legal advice.
@@ -350,7 +351,7 @@ but nothing in this feature depends on it.
 
 **Search**
 
-- **FR-013**: Search MUST accept free text in English or Swedish (other languages best effort) and
+- **FR-013**: Search MUST accept free text in English or Swedish and
   return the top k codes (default 5, at most 20), each with code, Swedish and English titles,
   fused rank, per-method score and rank, the matched official text, and the code's legal flags.
 - **FR-013a**: When the search text is a list of titles joined by "/", search MUST treat each part
@@ -361,7 +362,7 @@ but nothing in this feature depends on it.
 - **FR-015**: Search results MUST NOT be ordered, filtered or labelled by salary threshold, and
   every answer MUST carry the honest-fit statement.
 - **FR-016**: Search MUST return a low-confidence note when no result scores well enough to be
-  useful. The cut-off MUST be set from the benchmark, not guessed.
+  useful, using the cut-off defined in FR-017a.
 - **FR-017**: The search and the benchmark MUST use the same ranking code, so benchmark numbers
   describe what users get.
 
@@ -420,7 +421,9 @@ but nothing in this feature depends on it.
 **Comparison**
 
 - **FR-027**: Comparison MUST accept 2–5 distinct codes and return, per code in the given order,
-  titles, official task descriptions in both languages, the latest salary summary, legal flags,
+  titles, official task descriptions in both languages (Swedish from SCB's SSYK publication where
+  it has the code, otherwise JobTech's SSYK definition; English from ESCO; each labelled with its
+  source), the latest salary summary, legal flags,
   the applicable threshold and, when an offer context is given, the eligibility answer.
 - **FR-028**: Comparison MUST carry the honest-fit statement and MUST NOT rank or recommend codes
   by threshold.
@@ -472,7 +475,7 @@ but nothing in this feature depends on it.
 - **SC-003**: Fast search returns within 50 ms for 95 % of single-title queries, and full search
   within 1 second for 95 % of queries up to the length of a typical ad, measured on the
   maintainer's laptop with models loaded.
-- **SC-004**: In full mode the benchmark gates pass: top-five recall ≥ 80 % in each language, English–Swedish
+- **SC-004**: The gates in FR-020 and FR-020a pass. In full mode: top-five recall ≥ 80 % in each language, English–Swedish
   gap ≤ 5 points, fused at least as good as each single method, and hand-written English–Swedish
   pairs sharing at least three of their top five codes in ≥ 80 % of pairs. In fast mode, top-five
   recall is ≥ 80 % in each language.
