@@ -157,7 +157,7 @@ and a discrepancy report.
 - [X] T056 Write `data/processed/data-dict.yaml` with the data-dict skill: profile it, interview the maintainer on anything guessed, record the licence and attribution for SCB, JobTech, ILO and ESCO (confirm the ESCO wording), and validate against the real files
 - [X] T057 [P] Write `docs/walkthroughs/001-data-pipeline.md` with the walkthrough skill (snippets emitted with sed, never retyped)
 - [X] T058 [P] Compound step: update `CLAUDE.md` (bf16 gotcha, fixture workflow) and `references/` with any trick worked out; tick the tasks in this file
-- [ ] T059 Run `uv run ruff check .`, `uv run pytest` and `uv run pytest -m benchmark`; open the PR for `001-data-taxonomy-index` with the evidence from T027, T034, T044, T051 and T055
+- [X] T059 Run `uv run ruff check .`, `uv run pytest` and `uv run pytest -m benchmark`; open the PR for `001-data-taxonomy-index` with the evidence from T027, T034, T044, T051 and T055
 
 ---
 
