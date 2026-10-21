@@ -1,0 +1,32 @@
+{
+ "uri": "http://data.europa.eu/esco/occupation/3e7bf729-4442-4b9f-ad5e-83111963795c",
+ "code": "3512.4",
+ "preferredLabel": {
+  "sv": "it-tekniker",
+  "en": "ICT technician"
+ },
+ "alternativeLabel": {
+  "sv": [
+   "IKT-tekniker",
+   "IKT-expert",
+   "it-expert"
+  ],
+  "en": [
+   "ICT technicians",
+   "IT engineer",
+   "computer operator",
+   "IT technician",
+   "ICT engineer"
+  ]
+ },
+ "description": {
+  "sv": {
+   "literal": "IT-tekniker installerar, utför underhåll på, reparerar och hanterar informationssystem och all IKT-relaterad utrustning (bärbara datorer, stationära datorer, servrar, surfplattor, smarttelefoner, kommunikationsutrustning, skrivare och alla typer av datorrelaterade perifera nätverk) samt alla typer av programvara (drivrutiner, operativsystem, applikationer).",
+   "mimetype": "plain/text"
+  },
+  "en": {
+   "literal": "ICT technicians install, maintain, repair and operate information systems and any ICT related equipment (laptops, desktops, servers, tablets, smart phones, communications equipment, printers and any piece of computer related peripheral networks), and any type of software (drivers, operating systems, applications).",
+   "mimetype": "plain/text"
+  }
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "uri": "http://data.europa.eu/esco/occupation/30f3ea93-882a-4525-841c-1d5b4b64076f",
+ "code": "1211.1",
+ "preferredLabel": {
+  "sv": "ekonomichef",
+  "en": "financial manager"
+ },
+ "alternativeLabel": {
+  "sv": [
+   "finansdirektör"
+  ],
+  "en": [
+   "financial administrator",
+   "finance chief",
+   "corporate finance manager",
+   "financial controller",
+   "CFO",
+   "finance manager",
+   "financial director"
+  ]
+ },
+ "description": {
+  "sv": {
+   "literal": "Ekonomichefer hanterar alla frågor som rör ett företags finansiering och investeringar. De förvaltar företagens finansiella transaktioner såsom tillgångar, skulder, eget kapital och kassaflöden i syfte att upprätthålla företagets ekonomiska hälsa och operativa bärkraft. De utvärderar företagets strategiska planer ur finansiell synvinkel, upprätthåller transparenta finansiella transaktioner med skatte- och revisionsorgan och upprättar företagets finansiella rapporter i slutet av räkenskapsåret.",
+   "mimetype": "plain/text"
+  },
+  "en": {
+   "literal": "Financial managers handle all the matters in reference to the finance and investments of a company. They manage financial operations of companies such as the assets, liabilities, equity and cash flow aiming to maintain the financial health of the company and operative viability. Financial managers evaluate the strategic plans of the company in financial terms, maintain transparent financial operations for taxation and auditing bodies, and create the financial statements of the company at the end of the fiscal year.",
+   "mimetype": "plain/text"
+  }
+ }
+}

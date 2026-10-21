@@ -1,0 +1,239 @@
+# Hand-written cross-lingual benchmark queries (spec FR-018a).
+# Each pair says the same thing in English and Swedish. expected_codes lists every SSYK 2012 code
+# that is an acceptable answer. Swedish wording to be reviewed by a native speaker before results
+# are published (spec Assumptions).
+
+# --- short titles -------------------------------------------------------------------------------
+- id: t-backend
+  type: title
+  text_en: backend developer
+  text_sv: backendutvecklare
+  expected_codes: ["2512"]
+- id: t-nurse
+  type: title
+  text_en: registered nurse
+  text_sv: legitimerad sjuksköterska
+  expected_codes: ["2221"]
+- id: t-mgmt-consultant
+  type: title
+  text_en: management consultant
+  text_sv: managementkonsult
+  expected_codes: ["2421"]
+- id: t-accountant
+  type: title
+  text_en: chartered accountant
+  text_sv: auktoriserad revisor
+  expected_codes: ["2411"]
+- id: t-welder
+  type: title
+  text_en: welder
+  text_sv: svetsare
+  expected_codes: ["7212"]
+- id: t-chef
+  type: title
+  text_en: restaurant cook
+  text_sv: restaurangkock
+  expected_codes: ["5120"]
+- id: t-truck
+  type: title
+  text_en: long-haul truck driver
+  text_sv: fjärrlastbilschaufför
+  expected_codes: ["8332"]
+- id: t-preschool
+  type: title
+  text_en: preschool teacher
+  text_sv: förskollärare
+  expected_codes: ["2343"]
+
+# --- one sentence of duties ---------------------------------------------------------------------
+- id: d-civil-eng
+  type: duty_sentence
+  text_en: Designs bridges and road structures and calculates loads for construction projects.
+  text_sv: Konstruerar broar och vägkonstruktioner och beräknar laster i byggprojekt.
+  expected_codes: ["2142"]
+- id: d-payroll
+  type: duty_sentence
+  text_en: Handles monthly payroll, holiday pay and employee records for the company.
+  text_sv: Hanterar månadslöner, semesterersättning och personaluppgifter för företaget.
+  expected_codes: ["4112"]
+- id: d-it-support
+  type: duty_sentence
+  text_en: Helps employees with laptop, password and printer problems by phone and in person.
+  text_sv: Hjälper anställda med problem med datorer, lösenord och skrivare via telefon och på plats.
+  expected_codes: ["3512"]
+- id: d-buyer
+  type: duty_sentence
+  text_en: Negotiates contracts with suppliers and runs public procurement tenders.
+  text_sv: Förhandlar avtal med leverantörer och genomför offentliga upphandlingar.
+  expected_codes: ["3323"]
+- id: d-translator
+  type: duty_sentence
+  text_en: Translates legal and technical documents between English and Swedish.
+  text_sv: Översätter juridiska och tekniska dokument mellan engelska och svenska.
+  expected_codes: ["2643"]
+- id: d-physio
+  type: duty_sentence
+  text_en: Assesses patients after injuries and plans exercise programmes to restore movement.
+  text_sv: Bedömer patienter efter skador och planerar träningsprogram för att återställa rörligheten.
+  expected_codes: ["2272"]
+- id: d-cleaner
+  type: duty_sentence
+  text_en: Cleans offices, hotel rooms and stairwells on a daily schedule.
+  text_sv: Städar kontor, hotellrum och trapphus enligt ett dagligt schema.
+  expected_codes: ["9111"]
+- id: d-electrician
+  type: duty_sentence
+  text_en: Installs and repairs wiring, sockets and lighting in homes and offices.
+  text_sv: Installerar och reparerar elledningar, uttag och belysning i bostäder och kontor.
+  expected_codes: ["7411"]
+
+# --- multi-sentence descriptions ----------------------------------------------------------------
+- id: p-backend-app
+  type: description
+  text_en: >-
+    You will build and maintain the services behind our mobile app. Day to day you write Python
+    and Go, design REST APIs and database schemas, review pull requests and keep our cloud
+    deployments healthy. You work in a cross-functional team with designers and product owners.
+  text_sv: >-
+    Du kommer att bygga och underhålla tjänsterna bakom vår mobilapp. I vardagen skriver du
+    Python och Go, designar REST-API:er och databasscheman, granskar pull requests och ser till
+    att våra molndriftsättningar mår bra. Du arbetar i ett tvärfunktionellt team med designers
+    och produktägare.
+  expected_codes: ["2512"]
+- id: p-hr
+  type: description
+  text_en: >-
+    As HR business partner you support managers with recruitment, salary reviews and labour law
+    questions. You run onboarding, follow up the work environment and lead negotiations with the
+    unions.
+  text_sv: >-
+    Som HR-partner stöttar du chefer i rekrytering, lönerevision och arbetsrättsliga frågor. Du
+    ansvarar för introduktion av nyanställda, följer upp arbetsmiljön och leder förhandlingar med
+    facken.
+  expected_codes: ["2423"]
+- id: p-controller
+  type: description
+  text_en: >-
+    You own the monthly closing, budget and forecast for two business units. You analyse
+    deviations, build financial models and present results to management.
+  text_sv: >-
+    Du ansvarar för månadsbokslut, budget och prognos för två affärsenheter. Du analyserar
+    avvikelser, bygger ekonomiska modeller och presenterar resultat för ledningen.
+  expected_codes: ["2412"]
+- id: p-assistant-nurse-elder
+  type: description
+  text_en: >-
+    You care for older people in their own homes. You help with personal hygiene, meals and
+    medication as delegated by the nurse, and you document each visit.
+  text_sv: >-
+    Du vårdar äldre personer i deras egna hem. Du hjälper till med personlig hygien, måltider och
+    läkemedel enligt sjuksköterskans delegering och dokumenterar varje besök.
+  expected_codes: ["5321"]
+- id: p-marketing
+  type: description
+  text_en: >-
+    You plan and run digital campaigns across search, social and email, analyse conversion data
+    and work with agencies on content. You report campaign results to the marketing director.
+  text_sv: >-
+    Du planerar och genomför digitala kampanjer i sök, sociala medier och e-post, analyserar
+    konverteringsdata och arbetar med byråer kring innehåll. Du rapporterar kampanjresultat till
+    marknadschefen.
+  expected_codes: ["2431"]
+- id: p-warehouse
+  type: description
+  text_en: >-
+    You pick and pack orders, load and unload trucks with a forklift, and keep stock counts
+    accurate in the warehouse system. Shift work.
+  text_sv: >-
+    Du plockar och packar order, lastar och lossar lastbilar med truck och håller lagersaldot
+    korrekt i lagersystemet. Skiftarbete.
+  expected_codes: ["4322"]
+
+# --- look-alikes: neighbouring codes the matcher must tell apart --------------------------------
+- id: l-architect-vs-dev
+  type: lookalike
+  text_en: >-
+    Defines the overall IT architecture, chooses platforms and integration patterns and writes
+    technical guidelines that development teams follow.
+  text_sv: >-
+    Definierar den övergripande IT-arkitekturen, väljer plattformar och integrationsmönster och
+    skriver tekniska riktlinjer som utvecklingsteamen följer.
+  expected_codes: ["2511"]
+- id: l-tester-vs-dev
+  type: lookalike
+  text_en: >-
+    Writes test plans, runs manual and automated regression tests and reports defects before each
+    release.
+  text_sv: >-
+    Skriver testplaner, kör manuella och automatiserade regressionstester och rapporterar fel inför
+    varje release.
+  expected_codes: ["2514"]
+- id: l-security
+  type: lookalike
+  text_en: >-
+    Monitors systems for intrusions, runs penetration tests and leads the response to security
+    incidents.
+  text_sv: >-
+    Övervakar system efter intrång, utför penetrationstester och leder hanteringen av
+    säkerhetsincidenter.
+  expected_codes: ["2516"]
+- id: l-statistician
+  type: lookalike
+  text_en: >-
+    Designs survey samples, estimates population figures and produces official statistics with
+    margins of error.
+  text_sv: >-
+    Utformar urval för undersökningar, skattar populationsvärden och tar fram officiell statistik
+    med felmarginaler.
+  expected_codes: ["2122"]
+- id: l-actuary
+  type: lookalike
+  text_en: >-
+    Calculates insurance premiums and pension reserves from mortality and risk models.
+  text_sv: >-
+    Beräknar försäkringspremier och pensionsavsättningar utifrån dödlighets- och riskmodeller.
+  expected_codes: ["2121"]
+- id: l-org-dev
+  type: lookalike
+  text_en: >-
+    Maps business processes, proposes organisational changes and leads improvement projects for
+    clients.
+  text_sv: >-
+    Kartlägger verksamhetsprocesser, föreslår organisationsförändringar och leder
+    förbättringsprojekt åt kunder.
+  expected_codes: ["2421"]
+- id: l-icu-nurse
+  type: lookalike
+  text_en: >-
+    Specialist nurse caring for critically ill patients on ventilators in the intensive care unit.
+  text_sv: >-
+    Specialistsjuksköterska som vårdar kritiskt sjuka patienter i respirator på
+    intensivvårdsavdelningen.
+  expected_codes: ["2228"]
+- id: l-assistant-nurse-ward
+  type: lookalike
+  text_en: >-
+    Assistant nurse on a hospital ward who takes temperature, pulse and blood pressure and helps
+    patients with hygiene.
+  text_sv: >-
+    Undersköterska på en vårdavdelning som tar temperatur, puls och blodtryck och hjälper
+    patienter med hygien.
+  expected_codes: ["5323"]
+- id: l-finance-mgr-l1
+  type: lookalike
+  text_en: >-
+    Chief financial officer reporting to the CEO, leading the finance function and the managers
+    of accounting and treasury.
+  text_sv: >-
+    Ekonomidirektör underställd VD som leder ekonomifunktionen och cheferna för redovisning och
+    finans.
+  expected_codes: ["1211"]
+- id: l-finance-mgr-l2
+  type: lookalike
+  text_en: >-
+    Team leader of the accounting department, managing the accountants day to day and reporting to
+    the finance manager.
+  text_sv: >-
+    Gruppchef på redovisningsavdelningen som leder redovisningsekonomerna i det dagliga arbetet och
+    rapporterar till ekonomichefen.
+  expected_codes: ["1212"]
