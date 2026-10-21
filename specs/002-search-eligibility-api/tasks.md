@@ -183,7 +183,7 @@ optional simulated age block.
 - [X] T057 [P] Measure peak memory of the running server after one full-mode request with both models loaded and add it to `references/embedding-benchmark.md` (plan constraint: 4 GB)
 - [X] T058 [P] Write `docs/walkthroughs/002-search-eligibility-api.md` with the walkthrough skill (snippets emitted from disk)
 - [X] T059 [P] Compound step: add the leak rule, the in-memory dense search finding and the one-thread encoding finding to `CLAUDE.md`; update `references/benchmark-fusion-diagnostic.txt` (outdated since 001) or delete it in favour of `references/benchmark-diagnosis-002.md`
-- [ ] T060 Final gate: `uv run ruff check .`, `uv run pytest`, `uv run pytest -m benchmark` all green; then open the PR for `002-search-eligibility-api` with the evidence from T017, T020, T028, T040, T054, T055 and T057
+- [X] T060 Final gate: `uv run ruff check .`, `uv run pytest`, `uv run pytest -m benchmark` all green; then open the PR for `002-search-eligibility-api` with the evidence from T017, T020, T028, T040, T054, T055 and T057
 
 ---
 

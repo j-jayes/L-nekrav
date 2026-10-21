@@ -100,3 +100,17 @@ Choice: **bm25 weight 0.3, kblab and Harrier 1.0** (top of the generated ranking
 one method changes). On the hand-written pairs Recall@5 rises from 0.969/0.906 to 1.0/1.0 and
 top-5 overlap from 0.688 to 0.875. The next-best candidate with kblab at 0.2 scores the same on the
 generated set but drops hand-written overlap to 0.53, which is why the confirmation set matters.
+
+## 3. Final gate (T060, 2026-10-21)
+
+`uv run pytest -m benchmark`: 9 passed (7 retrieval gates, 2 ad-parsing checks). From
+`data/processed/benchmark_results.json`, all paired queries:
+
+```text
+kblab      R@5 en 0.870  sv 0.826  n 184
+harrier    R@5 en 0.924  sv 0.913  n 184
+bm25       R@5 en 0.848  sv 0.560  n 184
+fused      R@5 en 0.940  sv 0.935  n 184
+fused_fast R@5 en 0.897  sv 0.842  n 184
+gap (full) 0.005; hand-written overlap 0.875; low-confidence cut-off 0.545 (nonsense max 0.494)
+```
