@@ -181,7 +181,7 @@ optional simulated age block.
 - [X] T055 [P] Write `scripts/api_smoke.py`: calls every route in contracts/api-v1.md once with made-up offers and public example text, and writes requests and responses as markdown; run it against `lonekrav-serve` into `references/api-smoke.md` (SC-008, SC-001)
 - [X] T056 [P] Test in `tests/unit/test_legal.py` (SC-002): no median amount, threshold amount, rule percentage or rule date from the registry appears in `src/` outside `legal_constants.yaml`, found by loading the registry and searching each `.py` file for each value (amounts with and without a thousands space; dates in ISO form)
 - [X] T057 [P] Measure peak memory of the running server after one full-mode request with both models loaded and add it to `references/embedding-benchmark.md` (plan constraint: 4 GB)
-- [ ] T058 [P] Write `docs/walkthroughs/002-search-eligibility-api.md` with the walkthrough skill (snippets emitted from disk)
+- [X] T058 [P] Write `docs/walkthroughs/002-search-eligibility-api.md` with the walkthrough skill (snippets emitted from disk)
 - [ ] T059 [P] Compound step: add the leak rule, the in-memory dense search finding and the one-thread encoding finding to `CLAUDE.md`; update `references/benchmark-fusion-diagnostic.txt` (outdated since 001) or delete it in favour of `references/benchmark-diagnosis-002.md`
 - [ ] T060 Final gate: `uv run ruff check .`, `uv run pytest`, `uv run pytest -m benchmark` all green; then open the PR for `002-search-eligibility-api` with the evidence from T017, T020, T028, T040, T054, T055 and T057
 
