@@ -18,6 +18,7 @@ from pymilvus import DataType, Function, FunctionType, MilvusClient
 # isort: on
 
 from lonekrav.core.chunks import MAX_CHARS, Chunk
+from lonekrav.core.text import analyze, profile_vocab
 
 COLLECTION = "occupation_chunks"
 DEFAULT_DB = Path("data/lonekrav_milvus.db")
@@ -30,12 +31,14 @@ def bm25_score(distance: float) -> float:
 
 
 class Store:
-    def __init__(self, uri: str | Path | None = None, dims: dict[str, int] | None = None):
+    def __init__(self, uri: str | Path | None = None, dims: dict[str, int] | None = None,
+                 vocab: frozenset[str] | None = None):
         self.uri = os.environ.get("MILVUS_URI") or str(uri or DEFAULT_DB)
         if not self.uri.startswith("http"):
             Path(self.uri).parent.mkdir(parents=True, exist_ok=True)
         self.client = MilvusClient(self.uri)
         self.dims = dims or {}
+        self._vocab = vocab
         if self.client.has_collection(COLLECTION):
             self.client.load_collection(COLLECTION)  # a reopened index starts "released"
 
@@ -47,11 +50,12 @@ class Store:
         s.add_field("code", DataType.VARCHAR, max_length=4)
         s.add_field("kind", DataType.VARCHAR, max_length=16)
         s.add_field("lang", DataType.VARCHAR, max_length=8)
-        s.add_field("text", DataType.VARCHAR, max_length=MAX_CHARS * 4, enable_analyzer=True,
-                    analyzer_params={"type": "standard"})
+        s.add_field("text", DataType.VARCHAR, max_length=MAX_CHARS * 4)
+        s.add_field("bm25_text", DataType.VARCHAR, max_length=MAX_CHARS * 12,
+                    enable_analyzer=True, analyzer_params={"type": "standard"})
         s.add_field("bm25", DataType.SPARSE_FLOAT_VECTOR)
         s.add_function(Function(name="bm25_fn", function_type=FunctionType.BM25,
-                                input_field_names=["text"], output_field_names=["bm25"]))
+                                input_field_names=["bm25_text"], output_field_names=["bm25"]))
         ip = self.client.prepare_index_params()
         ip.add_index("bm25", index_type="SPARSE_INVERTED_INDEX", metric_type="BM25")
         for name, dim in self.dims.items():
@@ -62,7 +66,7 @@ class Store:
     def insert(self, chunks: list[Chunk], vectors: dict[str, np.ndarray], batch: int = 500) -> None:
         rows = []
         for i, c in enumerate(chunks):
-            row = c.model_dump()
+            row = c.model_dump() | {"bm25_text": analyze(c.text, self.vocab)}
             row |= {f"vec_{n}": v[i].tolist() for n, v in vectors.items()}
             rows.append(row)
         for i in range(0, len(rows), batch):
@@ -79,9 +83,18 @@ class Store:
         return self._hits(res, float)
 
     def search_bm25(self, text: str, limit: int) -> list[dict]:
-        res = self.client.search(COLLECTION, data=[text], anns_field="bm25", limit=limit,
+        res = self.client.search(COLLECTION, data=[analyze(text, self.vocab)], anns_field="bm25",
+                                 limit=limit,
                                  output_fields=list(FIELDS), search_params={"metric_type": "BM25"})
         return self._hits(res, bm25_score)
+
+    @property
+    def vocab(self) -> frozenset[str]:
+        if self._vocab is None:
+            from lonekrav.core.profiles import load_profiles
+
+            self._vocab = profile_vocab(load_profiles().values())
+        return self._vocab
 
     def count(self) -> int:
         return self.client.query(COLLECTION, filter="", output_fields=["count(*)"])[0]["count(*)"]

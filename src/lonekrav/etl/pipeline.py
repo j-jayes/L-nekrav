@@ -87,11 +87,13 @@ def index(models: list[str], db: Path | None = None, out: Path = PROCESSED,
     import time
 
     from lonekrav.core.chunks import chunk_profile
-    from lonekrav.core.embeddings import SPECS, get_embedder
+    from lonekrav.core.embeddings import SPECS, encode_documents_cached, get_embedder
     from lonekrav.core.store import Store
+    from lonekrav.core.text import profile_vocab
 
     held = holdout_titles(out)
     profiles = prof.load_profiles(out / "ssyk_profiles.json")
+    vocab = profile_vocab(profiles.values())  # from committed profiles, as at query time
     ilo_groups = ilo.parse(ilo.fetch(raw))  # cached after the first download
     profiles = prof.attach_ilo(profiles, ilo_groups, {c: p.isco_codes for c, p in profiles.items()})
     chunks = [c for p in profiles.values() for c in chunk_profile(p, holdout=held)]
@@ -99,9 +101,10 @@ def index(models: list[str], db: Path | None = None, out: Path = PROCESSED,
     vectors = {}
     for m in models:
         t = time.perf_counter()
-        vectors[m] = get_embedder(m).encode_documents([c.text for c in chunks])
+        vectors[m] = encode_documents_cached(get_embedder(m), [c.text for c in chunks],
+                                             raw / "embeddings")
         print(f"  {m}: {time.perf_counter() - t:.0f} s")
-    store = Store(db, dims={m: SPECS[m].dim for m in models})
+    store = Store(db, dims={m: SPECS[m].dim for m in models}, vocab=vocab)
     store.create()
     store.insert(chunks, vectors)
     print(f"  wrote {store.count()} chunks to {store.uri}")

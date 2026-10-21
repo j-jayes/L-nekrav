@@ -5,12 +5,13 @@ from lonekrav.core.embeddings import FakeEmbedder
 from lonekrav.core.profiles import build_profiles
 from lonekrav.core.search import search
 from lonekrav.core.store import Store
+from lonekrav.core.text import profile_vocab
 
 
 def build_index(profiles, db):
     emb = FakeEmbedder(dim=128, name="kblab")
     chunks = [c for p in profiles.values() for c in chunk_profile(p)]
-    store = Store(db, dims={"kblab": emb.dim})
+    store = Store(db, dims={"kblab": emb.dim}, vocab=profile_vocab(profiles.values()))
     store.create()
     store.insert(chunks, {"kblab": emb.encode_documents([c.text for c in chunks])})
     titles = {c: (p.title_sv, p.title_en) for c, p in profiles.items()}
@@ -87,3 +88,14 @@ def test_titles_are_loaded_once_not_per_search(inputs, tmp_path, monkeypatch):
     for q in ("mjukvaruutvecklare", "organisationsutvecklare"):
         search(q, methods=("bm25",), store=store)
     assert len(calls) == 1
+
+
+def test_bm25_matches_swedish_compound_and_inflection(inputs, tmp_path):
+    """BM25 alone had Recall@5 0.60 on Swedish: compounds and inflections did not match."""
+    store, _, titles, _ = build_index(build_profiles(inputs), tmp_path / "t.db")
+    for query in ("backendutvecklaren", "Officerarna"):
+        hits = search(query, methods=("bm25",), store=store, titles=titles)
+        assert hits, query
+    assert search("backendutvecklaren", methods=("bm25",), store=store,
+                  titles=titles)[0].code == "2512"
+    assert search("Officerarna", methods=("bm25",), store=store, titles=titles)[0].code == "0110"

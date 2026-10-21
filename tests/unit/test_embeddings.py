@@ -26,3 +26,32 @@ def test_registry_specs_without_loading_models():
     assert h.hf_id == "microsoft/harrier-oss-v1-0.6b" and h.dim == 1024
     assert h.query_prompt_name == "web_search_query"
     assert h.dtype == "float32"  # bf16 is ~10x slower on CPU (references/embedding-benchmark.md)
+
+
+def test_document_cache_only_encodes_new_texts(tmp_path):
+    from lonekrav.core.embeddings import encode_documents_cached
+
+    class Counting(FakeEmbedder):
+        def __init__(self):
+            super().__init__(dim=16, name="count")
+            self.seen = []
+
+        def encode_documents(self, texts):
+            self.seen += texts
+            return super().encode_documents(texts)
+
+    e = Counting()
+    first = encode_documents_cached(e, ["a b", "c d"], tmp_path)
+    again = encode_documents_cached(e, ["c d", "e f", "a b"], tmp_path)
+    assert e.seen == ["a b", "c d", "e f"]  # "a b" and "c d" came from the cache
+    np.testing.assert_allclose(again[0], first[1])
+    np.testing.assert_allclose(again[2], first[0])
+    assert again.shape == (3, 16) and again.dtype == np.float32
+
+
+def test_document_cache_is_per_model(tmp_path):
+    from lonekrav.core.embeddings import encode_documents_cached
+
+    a = encode_documents_cached(FakeEmbedder(dim=8, name="a"), ["x"], tmp_path)
+    b = encode_documents_cached(FakeEmbedder(dim=16, name="b"), ["x"], tmp_path)
+    assert a.shape == (1, 8) and b.shape == (1, 16)

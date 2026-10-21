@@ -6,6 +6,7 @@ import hashlib
 import re
 from dataclasses import dataclass
 from functools import cache
+from pathlib import Path
 from typing import Protocol
 
 import numpy as np
@@ -77,3 +78,23 @@ class FakeEmbedder:
         return np.stack([self._vec(t) for t in texts])
 
     encode_documents = encode_queries
+
+
+def encode_documents_cached(emb: Embedder, texts: list[str], cache_dir: Path) -> np.ndarray:
+    """Encode documents, reusing vectors cached by (model, text hash) under `cache_dir`.
+
+    A rebuild then re-embeds only chunks whose text changed (Harrier: ~20 min for a full pass).
+    """
+    path = cache_dir / f"{emb.name}.npz"
+    cached: dict[str, np.ndarray] = {}
+    if path.exists():
+        with np.load(path) as z:
+            cached = dict(zip(z["keys"].tolist(), z["vectors"], strict=True))
+    keys = [hashlib.sha256(t.encode()).hexdigest() for t in texts]
+    todo = list({k: t for k, t in zip(keys, texts, strict=True) if k not in cached}.items())
+    if todo:
+        new = emb.encode_documents([t for _, t in todo])
+        cached.update(zip([k for k, _ in todo], new, strict=True))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        np.savez(path, keys=np.array(list(cached)), vectors=np.stack(list(cached.values())))
+    return np.stack([cached[k] for k in keys]).astype(np.float32)
