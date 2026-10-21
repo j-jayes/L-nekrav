@@ -2,6 +2,8 @@
 
 Real slices cut by `scripts/cut_fixtures.py` for codes 0000, 0110, 1211, 1212, 2421, 2512, 3511, 4430, 5322, 5343, 9210.
 
+Except `ilo/isco08_en.xlsx`: the ILO reserves reproduction rights, so it keeps only the real layout, codes and titles, and every text cell is synthetic.
+
 | URL | Fetched |
 |---|---|
 | https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk-2012-koder.xlsx | 2026-10-20 |

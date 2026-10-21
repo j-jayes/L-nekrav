@@ -130,8 +130,25 @@ def jobtech() -> list[str]:
 
 
 def ilo(isco: set[str]) -> None:
-    keep_rows(get(ILO_URL).content, OUT / "ilo" / "isco08_en.xlsx",
-              lambda r: r and str(r[1]).strip() in isco)
+    """ILO reserves reproduction rights, so keep only the real layout, levels, codes and titles;
+    every text cell is synthetic."""
+    src = openpyxl.load_workbook(io.BytesIO(get(ILO_URL).content), read_only=True).worksheets[0]
+    out = openpyxl.Workbook()
+    ws = out.active
+    ws.title = src.title
+    keep = isco | {c[:n] for c in isco for n in (1, 2, 3)}  # unit groups and their parents
+    for i, r in enumerate(src.iter_rows(values_only=True)):
+        if i == 0:
+            ws.append(list(r))
+        elif r and (code := str(r[1]).strip()) in keep:
+            ws.append([r[0], r[1], r[2],
+                       f"Synthetic definition of ISCO-08 {code} (not ILO text).",
+                       (f"Tasks include -\n(a)  synthetic task one of {code};\n"
+                        f"(b)  synthetic task two of {code}."),
+                       ("Examples of the occupations classified here:\n"
+                        f"- Synthetic example A of {code}\n- Synthetic example B of {code}"),
+                       None, None])
+    out.save(OUT / "ilo" / "isco08_en.xlsx")
 
 
 def esco(uris: list[str]) -> None:
@@ -163,7 +180,10 @@ def main() -> None:
     esco(uris)
     mis2012()
     lines = ["# Test fixtures", "", "Real slices cut by `scripts/cut_fixtures.py` for codes "
-             + ", ".join(CODES) + ".", "", "| URL | Fetched |", "|---|---|"]
+             + ", ".join(CODES) + ".", "",
+             ("Except `ilo/isco08_en.xlsx`: the ILO reserves reproduction rights, so it keeps "
+              "only the real layout, codes and titles, and every text cell is synthetic."), "",
+             "| URL | Fetched |", "|---|---|"]
     lines += [f"| {u} | {d} |" for u, d in sources]
     (OUT / "README.md").write_text("\n".join(lines) + "\n")
     print(f"wrote fixtures from {len(sources)} requests to {OUT}")
