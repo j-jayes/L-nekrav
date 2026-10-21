@@ -43,7 +43,7 @@ every median × percent reproduce the published table (R6).
 | `filed_on` | `date` | |
 | `decided_on` | `date \| None` | default today; ≥ `filed_on` |
 | `current_permit_granted_on` | `date \| None` | required for extensions, forbidden otherwise |
-| `exemptions` | `list[PersonalExemption id]` | unique |
+| `exemptions` | `list[PersonalExemption id]` | unique; `former_student_researcher` only on first permits |
 
 **EligibilityAnswer**
 | Field | Type |
@@ -66,9 +66,11 @@ Rule selection, in order:
 2. First permit decided before 2026-06-01, or extension filed before 2026-06-01 → `out_of_scope`.
 3. Extension filed 2026-06-01 … 2026-12-01 with current permit granted before 2026-06-01 →
    `transition_maintenance_80`.
-4. Code exempt on `decided_on`, or any declared exemption → `salary_75_exempt`.
+4. Code exempt on `decided_on` (first permits and extensions), or any declared exemption →
+   `salary_75_exempt`.
 5. Otherwise `salary_90`.
-Median: `median_on(filed_on)`. Threshold: `round_half_up(percent × median)`. Pass when
+Median: `median_on(filed_on)`, in force from its `effective_from` inclusive. The transition window
+is inclusive at both ends. Threshold: `round_half_up(percent × median)`. Pass when
 salary ≥ threshold.
 
 ## Search (`core/search.py`, extended)

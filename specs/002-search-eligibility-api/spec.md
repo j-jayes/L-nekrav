@@ -87,16 +87,18 @@ each answer with Migrationsverket's published amounts and SFS 2026:605 by hand.
    median, **When** eligibility is evaluated, **Then** the answer carries a stale-data warning
    saying a newer median may have been published and naming the median it used.
 9. **Given** a user who declares a personal exemption (for example an employee of a young tech
-   company), **When**
-   eligibility is evaluated for a non-exempt code, **Then** the 75 % level applies and the answer
-   names the declared exemption as the reason, with its conditions and source.
-
+   company), **When** eligibility is evaluated for a non-exempt code, **Then** the 75 % level
+   applies and the answer names the declared exemption as the reason, with its conditions and
+   source.
 10. **Given** an extension for code 3511 filed on 30 November 2026 on a permit granted before 1
     June 2026, **When** eligibility is evaluated, **Then** the 80 % maintenance requirement applies
     (30 640 SEK), not the 75 % exemption.
 11. **Given** a first-permit application filed on 20 May 2026 and decided after 1 June 2026,
     **When** eligibility is evaluated, **Then** the 90 % rule applies to the median in force on 20
     May 2026 (37 100), giving 33 390 SEK.
+12. **Given** an extension filed on 30 November 2026 on a permit granted on 10 July 2026, **When**
+    eligibility is evaluated, **Then** the 90 % rule applies, because the transition covers only
+    permits granted before 1 June 2026.
 
 ---
 
@@ -264,6 +266,12 @@ but nothing in this feature depends on it.
 - An exempt code (75 %) on an extension filed in the transition window: judged at 80 %, because
   the 75 % exemption belongs to the new rule, which does not apply to these extensions (FR-012).
 - A declared personal exemption on a banned code: banned wins.
+- An extension for a code that was exempt when the current permit was granted but is no longer on
+  the list on the decision date: the list on the decision date applies (90 %).
+- Invalid combinations (an extension without a current-permit date, a first permit with one, a
+  decision date before the filing date, the former-student exemption on an extension): refused
+  with a message naming the fields.
+- A code with no occupation profile: refused as unknown, naming the code.
 - Salary exactly at the threshold: passes (the requirement is "at least").
 - Share of full time of zero, above 100 % or not a number; negative salary; unknown or malformed
   code: refused with a message naming the field.
@@ -298,12 +306,19 @@ but nothing in this feature depends on it.
 - **FR-003**: Which rule applies MUST follow Migrationsverket: for a first permit, the decision date
   (new rule from 1 June 2026); for an extension, the filing date and the date the current permit
   was granted. The median MUST be the one in force on the filing date. The exempt-code list MUST
-  be the one in force on the decision date.
-- **FR-004**: Threshold amounts MUST be derived from the registry's percentage and median and MUST
+  be the one in force on the decision date, for first permits and extensions alike. A median is
+  in force from the day it takes effect, inclusive. The transition window 1 June–1 December 2026
+  is inclusive at both ends. "Granted" means the decision date of the current permit.
+- **FR-004**: Threshold amounts MUST be derived from the registry's percentage and median, rounded
+  half up to whole kronor, and MUST
   equal the amounts Migrationsverket publishes for every median in the registry (for example
   34 470, 28 725, 33 390 and, for the 80 % rule, 30 640 SEK).
-- **FR-005**: The system MUST warn when the evaluation date is after 16 June of a year and the
-  registry holds no median published that year. The warning MUST name the median used.
+- **FR-005**: The system MUST warn when the evaluation date is on or after 16 June of a year (the
+  earliest date a median has taken effect) and the registry holds no median that took effect that
+  year. The warning MUST name the median used.
+- **FR-005a**: A test of the registry MUST fail from 23 June of a year (the day after the latest
+  date a median has taken effect) if the registry holds no median for that year, so the yearly
+  update is noticed even when no one evaluates an application.
 
 **Eligibility**
 
@@ -311,13 +326,19 @@ but nothing in this feature depends on it.
   full time, application type (first permit or extension), filing date, expected decision date
   (default today), prior-permit grant date (extensions only), and zero or more declared personal
   exemptions.
+- **FR-006a**: Each personal exemption MUST be stored with its conditions and shown with them. The
+  former-student-or-researcher exemption MUST apply to first permits only; the other three apply
+  to first permits and extensions.
 - **FR-007**: It MUST return: whether a permit is possible for the code, the rule applied, the
   percentage, the median and its SCB reference year, the threshold in SEK, pass or fail, margin in
   SEK and percent, the reason for the rule chosen, warnings, and every source with its checked-on
-  date.
+  date: the registry row for the rule, the median, and any code list or personal exemption that
+  decided the outcome.
 - **FR-008**: Salary at exactly the threshold MUST pass.
-- **FR-009**: For banned codes the answer MUST be "not permitted", independent of salary. For the
-  partial ban on 9210 the answer MUST carry a warning naming the banned job.
+- **FR-009**: For banned codes the answer MUST be "not permitted", independent of salary, with no
+  threshold or margin, and with the ban's source. For 9210 the answer MUST be judged normally at
+  75 % and carry a warning that permits cannot be granted for forest berry picking under this
+  code, while other jobs in the code are covered by the exemption.
 - **FR-010**: When the share of full time is below 100 %, the answer MUST say that the threshold
   applies to the monthly salary actually paid and is not reduced for part-time.
 - **FR-011**: Every answer MUST state that the salary must also be in line with the relevant
@@ -346,17 +367,33 @@ but nothing in this feature depends on it.
 
 **Search quality**
 
+- **FR-017a**: The low-confidence cut-off MUST be the top hit's KBLab similarity, set to the
+  highest value that keeps at least 95 % of benchmark queries (both languages) above it, and every
+  query in a committed list of nonsense queries MUST fall below it. If no value does both, the
+  benchmark MUST report that and the maintainer decides.
 - **FR-018**: A diagnosis MUST break benchmark recall down by language, query origin (hand-written
   or generated) and query form (single title or slash-joined), and report how much of the English–
   Swedish gap each accounts for. Its output MUST be saved beside the benchmark results.
+- **FR-018a**: A query counts as leaked when its text, case-insensitively, appears in the indexed
+  text of one of its expected codes as a whole phrase followed by at most three word characters
+  (so plurals and Swedish definite forms count). The rule MUST apply to both languages. A generated
+  pair whose English side leaks MUST try the next clean ESCO label and otherwise become
+  Swedish-only.
 - **FR-019**: Slash-joined benchmark queries MUST stay as they are; the slash handling in FR-013a
   is the fix for them. Any other correction to the benchmark queries MUST be justified by the
   diagnosis, recorded with its reason, and keep generated query titles out of the indexed text. The results from
   before the correction MUST be kept for comparison.
-- **FR-020**: Before this feature is merged, full mode MUST pass every benchmark gate (top-five
-  recall ≥ 80 % per language, English–Swedish gap ≤ 5 points, fused at least as good as each single
-  method, hand-written pair overlap ≥ 80 %), and fast mode MUST reach top-five recall ≥ 80 % in
-  each language. The benchmark MUST report both modes.
+- **FR-020**: Before this feature is merged, full mode MUST pass every benchmark gate, each
+  measured on all paired queries (hand-written plus generated queries that have both languages) in
+  each language: top-five recall ≥ 80 %, English–Swedish gap ≤ 5 points, and fused top-five
+  recall at least that of each single method. Hand-written pairs MUST share at least three of
+  their full-mode top five codes in ≥ 80 % of pairs. Fast mode MUST reach top-five recall ≥ 80 %
+  in each language on the same queries. The benchmark MUST report both modes and n beside every
+  figure.
+- **FR-020a**: The gap gate counts only when there are at least 60 paired queries. Any search
+  tuning MUST be chosen on the generated queries and confirmed on the hand-written ones. If the
+  gates are not met after the fixes in research R1, or paired n falls below 60, work MUST stop and
+  the maintainer decides; a gate's target changes only through a spec amendment.
 
 **Job-ad parsing**
 
@@ -428,7 +465,8 @@ but nothing in this feature depends on it.
 ### Measurable Outcomes
 
 - **SC-001**: Every eligibility boundary case in User Story 1 and the edge cases gives the answer
-  Migrationsverket and SFS 2026:605 give, checked by hand against the sources.
+  Migrationsverket and SFS 2026:605 give, checked by hand against the sources, with the requests
+  and answers recorded in the smoke transcript (SC-008).
 - **SC-002**: No threshold amount, percentage, median or date appears anywhere outside the registry
   except in tests of the registry.
 - **SC-003**: Fast search returns within 50 ms for 95 % of single-title queries, and full search
@@ -468,7 +506,7 @@ but nothing in this feature depends on it.
 - The ten real ads for the parsing test are taken from public JobTech job ads and labelled by the
   maintainer.
 - The Swedish hand-written benchmark queries still await a native speaker's review; the gates are
-  measured on them as they stand, and the review may change them later.
+  measured on them as they stand, and the benchmark is re-run after the review.
 - Out of scope: MCP and A2A (Feature 003), the web client and Docker (Feature 004), live job-ad
   counts (Feature 005), checking collective agreements, the 001 cold-rebuild time, the data
   dictionary source errors, and Milvus server-mode vocabulary.
