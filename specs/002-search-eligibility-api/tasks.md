@@ -59,12 +59,12 @@ Done first because the diagnosis could change the search design (plan, implement
 **Independent test**: `uv run lonekrav-etl benchmark` prints the diagnosis and both modes;
 `uv run pytest -m benchmark` passes (final run in T060 after US2).
 
-- [ ] T011 [P] [US3] Test `tests/unit/test_leak_check.py` for the FR-018a rule: "business manager" leaks into "Business managers are responsible…" (+1); "sjuksköterska" leaks into "sjuksköterskan" (+1); "manage" does not leak into "management" (+4); a phrase that starts mid-word ("chef" in "kökschef") does not count; matching is case-insensitive in both languages
-- [ ] T012 [US3] Make `_Leaks` in `src/lonekrav/etl/benchmark.py` use the FR-018a rule for both languages until T011 passes
-- [ ] T013 [P] [US3] Test `tests/unit/test_generated_set.py` (extend): a generated pair whose English label leaks takes the next exact/close ESCO label that does not leak; if none, the query keeps its Swedish text and `text_en` is None
-- [ ] T014 [US3] Implement T013 in `generate_queries` in `src/lonekrav/etl/benchmark.py`
-- [ ] T015 [P] [US3] Test `tests/unit/test_metrics.py` (extend): `diagnose(per_query_ranks)` returns recall@5 by language × origin × form (`single` or `slash`) with n, and the share of the fused gap each group explains; `evaluate` keeps per-query ranks so diagnose can run
-- [ ] T016 [US3] Implement `diagnose` and per-query ranks in `src/lonekrav/etl/benchmark.py`; `run()` writes `diagnosis`, `n` beside every metric, and `previous` (headline numbers read from `benchmark_results_001.json`); `table()` prints old beside new (T015)
+- [X] T011 [P] [US3] Test `tests/unit/test_leak_check.py` for the FR-018a rule: "business manager" leaks into "Business managers are responsible…" (+1); "sjuksköterska" leaks into "sjuksköterskan" (+1); "manage" does not leak into "management" (+4); a phrase that starts mid-word ("chef" in "kökschef") does not count; matching is case-insensitive in both languages
+- [X] T012 [US3] Make `_Leaks` in `src/lonekrav/etl/benchmark.py` use the FR-018a rule for both languages until T011 passes
+- [X] T013 [P] [US3] Test `tests/unit/test_generated_set.py` (extend): a generated pair whose English label leaks takes the next exact/close ESCO label that does not leak; if none, the query keeps its Swedish text and `text_en` is None
+- [X] T014 [US3] Implement T013 in `generate_queries` in `src/lonekrav/etl/benchmark.py`
+- [X] T015 [P] [US3] Test `tests/unit/test_metrics.py` (extend): `diagnose(per_query_ranks)` returns recall@5 by language × origin × form (`single` or `slash`) with n, and the share of the fused gap each group explains; `evaluate` keeps per-query ranks so diagnose can run
+- [X] T016 [US3] Implement `diagnose` and per-query ranks in `src/lonekrav/etl/benchmark.py`; `run()` writes `diagnosis`, `n` beside every metric, and `previous` (headline numbers read from `benchmark_results_001.json`); `table()` prints old beside new (T015)
 - [ ] T017 [US3] Run for real: `lonekrav-etl build && lonekrav-etl index && lonekrav-etl benchmark`. Record paired n, the diagnosis table and old vs new in `references/benchmark-diagnosis-002.md`. If paired n < 60, stop and ask the maintainer (FR-020a)
 - [ ] T018 [P] [US3] Test `tests/unit/test_fusion.py` (extend): `fuse(per_method, weights={"bm25": 0.5})` scales each method's RRF term by its weight; default weights reproduce today's ranking exactly
 - [ ] T019 [US3] Add `weights` to `fuse` in `src/lonekrav/core/search.py` with a module constant `WEIGHTS` (default all 1.0) until T018 passes

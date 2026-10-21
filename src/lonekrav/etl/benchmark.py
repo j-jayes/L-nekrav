@@ -24,6 +24,19 @@ def _owners(profiles: dict[str, OccupationProfile], lang: str) -> dict[str, set[
     return owners
 
 
+INFLECTION = 3  # trailing word characters still counted as the same word (FR-018a)
+
+
+def _pattern(phrase: str) -> re.Pattern:
+    return re.compile(rf"(?<!\w){re.escape(phrase.casefold().strip())}\w{{0,{INFLECTION}}}(?!\w)")
+
+
+def phrase_in(phrase: str, text: str) -> bool:
+    """Does `phrase` occur in `text` as whole words, allowing a short inflectional ending?
+    "business manager" is in "Business managers are…"; "manage" is not in "management"."""
+    return bool(_pattern(phrase).search(text.casefold()))
+
+
 class _Leaks:
     """Does a phrase survive in the indexed text of its answer once its own labels are held out?
     Mirrors `chunk_profile`: titles and descriptions always stay, synonyms go by whole label."""
@@ -35,7 +48,7 @@ class _Leaks:
                        for c, p in profiles.items()}
 
     def __call__(self, phrase: str, codes: list[str], held: set[str]) -> bool:
-        pat = re.compile(rf"(?<!\w){re.escape(phrase.casefold().strip())}(?!\w)")
+        pat = _pattern(phrase)
         return any(pat.search(self.fixed[c])
                    or any(pat.search(lab) for lab in self.labels[c] if lab not in held)
                    for c in codes)
@@ -71,12 +84,16 @@ def generate_queries(inputs: Inputs, profiles: dict[str, OccupationProfile],
             continue
         name = rng.choice(candidates)
         text_en = None
-        for m in name.esco:
+        for m in name.esco:  # preferred label first, then ESCO's other English labels
             occ = inputs.esco.get(m.uri)
-            label = occ.label.get("en") if occ and m.match_type in ("exact", "close") else None
-            if (label and owners_en.get(label.casefold(), set()) <= set(expected)
-                    and not leaks(label, expected, own(name, label))):
-                text_en = label
+            if not occ or m.match_type not in ("exact", "close"):
+                continue
+            for label in filter(None, (occ.label.get("en"), *occ.alt.get("en", []))):
+                if (owners_en.get(label.casefold(), set()) <= set(expected)
+                        and not leaks(label, expected, own(name, label))):
+                    text_en = label
+                    break
+            if text_en:
                 break
         queries.append(BenchmarkQuery(id=f"gen-{jt_code}", origin="generated", type="title",
                                       text_sv=name.label, text_en=text_en,
@@ -89,7 +106,10 @@ def generate_queries(inputs: Inputs, profiles: dict[str, OccupationProfile],
 
 def evaluate(queries: list[BenchmarkQuery], store, embedders: dict, methods: tuple[str, ...],
              depth: int = 10) -> dict:
-    """Rank every query in each language; return metrics and per-query fused top-5 lists."""
+    """Rank every query in each language; return metrics, per-query ranks and fused top-5 lists.
+
+    "fused" fuses every method (full mode); with three methods, "fused_fast" fuses kblab and bm25
+    only (fast mode), from the same per-method rankings."""
     from lonekrav.core.benchmark import first_rank, mrr, recall_at
     from lonekrav.core.search import POOL, ChunkHit, fuse, reduce_to_codes
 
@@ -97,6 +117,9 @@ def evaluate(queries: list[BenchmarkQuery], store, embedders: dict, methods: tup
              for lang in ("en", "sv")}
     ranks: dict = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
     top5: dict = defaultdict(dict)
+    rows = {q.id: {"id": q.id, "origin": q.origin, "paired": bool(q.text_en),
+                   "form": "slash" if "/" in q.text_sv else "single", "ranks": {}}
+            for q in queries}
     for lang, items in texts.items():
         vecs = {m: embedders[m].encode_queries([t for _, t in items]) for m in methods if m != "bm25"}
         for i, (q, text) in enumerate(items):
@@ -107,10 +130,15 @@ def evaluate(queries: list[BenchmarkQuery], store, embedders: dict, methods: tup
                 per[m] = reduce_to_codes([ChunkHit(**h) for h in raw])
             ranked = {m: [c for c, _ in per[m][:depth]] for m in methods}
             ranked["fused"] = [h.code for h in fuse(per, k=depth)]
+            if len(methods) > 2 and {"kblab", "bm25"} <= set(methods):
+                fast = {m: per[m] for m in ("kblab", "bm25")}
+                ranked["fused_fast"] = [h.code for h in fuse(fast, k=depth)]
+            rows[q.id]["ranks"][lang] = {}
             paired = bool(q.text_en)
             origin = q.origin if paired else f"{q.origin}_sv_only"
             for m, codes in ranked.items():
                 r = first_rank(codes, set(q.expected_codes))
+                rows[q.id]["ranks"][lang][m] = r
                 ranks[m][lang][origin].append(r)
                 if paired:
                     ranks[m][lang]["all_paired"].append(r)
@@ -123,7 +151,35 @@ def evaluate(queries: list[BenchmarkQuery], store, embedders: dict, methods: tup
     hw = [q for q in queries if q.origin == "handwritten"]
     overlap = sum(len(set(top5[q.id]["en"]) & set(top5[q.id]["sv"])) >= 3 for q in hw)
     return {"metrics": metrics, "gap_recall_at_5": gap,
-            "handwritten_top5_overlap_ge3": overlap / len(hw) if hw else None, "top5": top5}
+            "handwritten_top5_overlap_ge3": overlap / len(hw) if hw else None,
+            "diagnosis": diagnose(list(rows.values())), "top5": top5,
+            "per_query": list(rows.values())}
+
+
+def diagnose(rows: list[dict], method: str = "fused") -> dict:
+    """Split the English–Swedish Recall@5 gap over paired queries by origin and query form.
+
+    The gap is a mean of per-query differences (hit in English − hit in Swedish), so each group's
+    share adds up exactly to the whole (FR-018)."""
+    paired = [r for r in rows if r["paired"]]
+
+    def hit(r, lang):
+        rank = r["ranks"].get(lang, {}).get(method)
+        return rank is not None and rank <= 5
+
+    n = len(paired)
+    gap = sum(hit(r, "en") - hit(r, "sv") for r in paired) / n if n else None
+    groups = defaultdict(list)
+    for r in paired:
+        groups[(r["origin"], r["form"])].append(r)
+    out = []
+    for (origin, form), rs in sorted(groups.items()):
+        points = sum(hit(r, "en") - hit(r, "sv") for r in rs) / n
+        out.append({"origin": origin, "form": form, "n": len(rs),
+                    "recall_at_5": {lang: sum(hit(r, lang) for r in rs) / len(rs)
+                                    for lang in ("en", "sv")},
+                    "gap_points": points, "share_of_gap": points / gap if gap else None})
+    return {"method": method, "n_paired": n, "gap": gap, "groups": out}
 
 
 def run(db=None, out=None, methods=("kblab", "harrier", "bm25")) -> dict:
@@ -147,10 +203,26 @@ def run(db=None, out=None, methods=("kblab", "harrier", "bm25")) -> dict:
                       "generated": sum(q.origin == "generated" for q in queries),
                       "generated_with_english": sum(q.origin == "generated" and bool(q.text_en)
                                                     for q in queries)},
-        **{k: v for k, v in result.items() if k != "top5"},
+        **{k: v for k, v in result.items() if k not in ("top5", "per_query")},
+        "previous": _headline(out / "benchmark_results_001.json"),
     }
     (out / "benchmark_results.json").write_text(json.dumps(result, indent=1) + "\n")
     return result
+
+
+def _headline(path: Path) -> dict | None:
+    """The numbers a run is compared against: the Feature 001 baseline (FR-019)."""
+    import json
+
+    if not path.exists():
+        return None
+    r = json.loads(path.read_text())
+    fused = r["metrics"]["fused"]
+    return {"source": path.name, "run_at": r["run_at"],
+            "fused_recall_at_5": {lang: fused[lang]["all_paired"]["recall_at_5"] for lang in fused},
+            "n_paired": fused["en"]["all_paired"]["n"],
+            "gap": r["gap_recall_at_5"]["fused"]["all_paired"],
+            "handwritten_top5_overlap_ge3": r["handwritten_top5_overlap_ge3"]}
 
 
 def table(result: dict) -> str:
@@ -160,4 +232,24 @@ def table(result: dict) -> str:
             for o, v in sorted(by_o.items()):
                 rows.append(f"{m:<8} {lang:<5} {o:<13} {v['recall_at_1']:.3f}  "
                             f"{v['recall_at_5']:.3f}  {v['mrr']:.3f}  {v['n']}")
+    d = result.get("diagnosis")
+    if d:
+        rows += ["", f"gap diagnosis ({d['method']}, paired n={d['n_paired']}, gap={d['gap']:.3f})",
+                 "origin       form    n    R@5 en  R@5 sv  gap pts  share"]
+        for g in d["groups"]:
+            share = f"{g['share_of_gap']:.2f}" if g["share_of_gap"] is not None else "-"
+            rows.append(f"{g['origin']:<12} {g['form']:<7} {g['n']:<4} "
+                        f"{g['recall_at_5']['en']:.3f}   {g['recall_at_5']['sv']:.3f}   "
+                        f"{g['gap_points']:+.3f}   {share}")
+    p = result.get("previous")
+    if p:
+        f, gap = result["metrics"]["fused"], result["gap_recall_at_5"]["fused"]["all_paired"]
+        now = {lang: f[lang]["all_paired"]["recall_at_5"] for lang in ("en", "sv")}
+        recall = (f"fused R@5 en {p['fused_recall_at_5']['en']:.3f} -> {now['en']:.3f}; "
+                  f"sv {p['fused_recall_at_5']['sv']:.3f} -> {now['sv']:.3f}")
+        rest = (f"paired n {p['n_paired']} -> {f['en']['all_paired']['n']}; "
+                f"gap {p['gap']:.3f} -> {gap:.3f}; overlap "
+                f"{p['handwritten_top5_overlap_ge3']:.3f} -> "
+                f"{result['handwritten_top5_overlap_ge3']:.3f}")
+        rows += ["", f"vs {p['source']} ({p['run_at']})", recall, rest]
     return "\n".join(rows)
