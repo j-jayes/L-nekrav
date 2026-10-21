@@ -148,7 +148,7 @@ and a discrepancy report.
 - [X] T052 [P] [US5] `tests/unit/test_measure.py`: the measurement writer renders the markdown table from a dict of fake results
 - [X] T053 [US5] `src/lonekrav/etl/measure.py` plus the `measure-models` subcommand: run each model fp32 (and Harrier bf16 for comparison) and regenerate `references/embedding-benchmark.md` (T052)
 - [X] T054 [US5] `tests/integration/test_idempotent.py`: build twice from fixtures gives byte-identical files; build with `OPENROUTER_KEY` unset succeeds
-- [ ] T055 [US5] Run for real: delete `data/processed/*` and the index, run all steps, time each one against SC-007, and run quickstart checks 10 and 11
+- [X] T055 [US5] Run for real: delete `data/processed/*` and the index, run all steps, time each one against SC-007, and run quickstart checks 10 and 11
 
 ---
 
@@ -156,7 +156,7 @@ and a discrepancy report.
 
 - [X] T056 Write `data/processed/data-dict.yaml` with the data-dict skill: profile it, interview the maintainer on anything guessed, record the licence and attribution for SCB, JobTech, ILO and ESCO (confirm the ESCO wording), and validate against the real files
 - [X] T057 [P] Write `docs/walkthroughs/001-data-pipeline.md` with the walkthrough skill (snippets emitted with sed, never retyped)
-- [ ] T058 [P] Compound step: update `CLAUDE.md` (bf16 gotcha, fixture workflow) and `references/` with any trick worked out; tick the tasks in this file
+- [X] T058 [P] Compound step: update `CLAUDE.md` (bf16 gotcha, fixture workflow) and `references/` with any trick worked out; tick the tasks in this file
 - [ ] T059 Run `uv run ruff check .`, `uv run pytest` and `uv run pytest -m benchmark`; open the PR for `001-data-taxonomy-index` with the evidence from T027, T034, T044, T051 and T055
 
 ---
