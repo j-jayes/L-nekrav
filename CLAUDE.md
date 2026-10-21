@@ -109,8 +109,10 @@ Rules that are specific to this project:
 
 - Never fabricate or interpolate SCB figures. Nulls stay null; derived numbers carry
   `is_simulated: true`; every salary payload names its SCB table and reference year.
-- Legal thresholds live only in the `LegalConstants` registry, each row with an effective date and a
-  source URL. Current floor: 34 470 SEK (90 % of SCB median 38 300, from 16 June 2026).
+- Legal thresholds live only in the `LegalConstants` registry (`src/lonekrav/core/legal_constants.yaml`),
+  each row with an effective date, a source URL and a checked-on date; a test fails if any of its
+  amounts or dates appears in code. Current floor: 34 470 SEK (90 % of SCB median 38 300, from 16
+  June 2026). Every June, add the new median there; a test fails from 23 June until you do.
 - Framing is honest fit: show consequences of each plausible code, never advise picking a code that
   does not match the real duties.
 - The OpenRouter key is `OPENROUTER_KEY` in `.env` (gitignored). Anything that needs it must be
@@ -132,3 +134,23 @@ Things worked out once (Feature 001) — reuse, don't rediscover:
 - **Data dictionary**: validate with `data-dict validate-data data/processed/data-dict.yaml`
   (install: `cargo install --locked --git https://github.com/tidyverse/data-dict data-dict-cli`).
 - The shell condenses pytest output; use `rtk proxy uv run pytest -q` to see the summary line.
+
+Things worked out in Feature 002:
+
+- **Benchmark queries leak through inflections.** ESCO descriptions open with their own label in
+  the plural ("business managers are…"), so an exact-match hold-out let 104 of 111 English queries
+  through and inflated English by ~7 points. `etl.benchmark.phrase_in` allows three trailing word
+  characters; use it for any new query set.
+- **Choose search weights on one query set and confirm on another**: `references/fusion_weight_sweep.py`
+  caches chunk hits once and re-fuses per weight in seconds. Results in
+  `references/benchmark-diagnosis-002.md`.
+- **Dense search in numpy, not Milvus Lite**: 0.5 ms against 26 ms for 9 551 chunks
+  (`SearchEngine.search_dense`). Milvus Lite has no `query_iterator`; load vectors with paged `query`.
+- **KBLab queries are faster on one torch thread, Harrier is slower** (`Spec.query_threads`);
+  Harrier dominates full mode on long text, so search pasted ads with `parse_ad`
+  (`references/search-latency.md`).
+- **Milvus Lite locks its directory**: stop `lonekrav-serve` before running a script or the
+  benchmark against the same index.
+- **Do not `git commit -a` while a build runs**: it writes `data/processed/` as it goes.
+- Every route, with real responses: `references/api-smoke.md` (regenerate with
+  `scripts/api_smoke.py` against a running server).
