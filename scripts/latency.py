@@ -4,8 +4,9 @@
     uv run python scripts/latency.py > references/search-latency.md
 
 Fast: 200 single-title queries (benchmark titles, both languages). Full: 50 queries, half titles
-and half long texts of about 600 words (official occupation descriptions joined, standing in for a
-pasted ad). Times are client-side round trips over HTTP on localhost, after one warm-up request per
+and half long texts of about 600 words (official occupation descriptions joined, searched as they
+are). Ads: the ten made-up ads in tests/fixtures/ads, five times each, in full mode with
+`parse_ad`, the way a pasted ad is meant to be searched (research R3). Times are client-side round trips over HTTP on localhost, after one warm-up request per
 mode (the first full request loads Harrier).
 """
 
@@ -42,12 +43,14 @@ def long_texts(n: int, words: int = 600) -> list[str]:
     return texts
 
 
-def measure(client: httpx.Client, texts: list[str], mode: str) -> list[float]:
-    client.post("/search", json={"text": texts[0], "mode": mode}).raise_for_status()  # warm-up
+def measure(client: httpx.Client, texts: list[str], mode: str,
+            parse_ad: bool = False) -> list[float]:
+    body = {"mode": mode, "parse_ad": parse_ad}
+    client.post("/search", json={"text": texts[0], **body}).raise_for_status()  # warm-up
     ms = []
     for t in texts:
         start = time.perf_counter()
-        r = client.post("/search", json={"text": t, "mode": mode})
+        r = client.post("/search", json={"text": t, **body})
         ms.append((time.perf_counter() - start) * 1000)
         r.raise_for_status()
         assert r.json()["mode_used"] == mode, r.json().get("fallback_reason")
@@ -66,6 +69,8 @@ def main() -> None:
     with httpx.Client(base_url=BASE + "/api/v1", timeout=60) as c:
         fast = measure(c, fast_q, "fast")
         full = measure(c, full_q, "full")
+        ads = measure(c, [p.read_text() for p in sorted(Path("tests/fixtures/ads").glob("*.txt"))]
+                      * 5, "full", parse_ad=True)
     print("# Search latency\n")
     print(f"Run {time.strftime('%Y-%m-%d %H:%M')} on {platform.machine()} {platform.system()} "
           "by `scripts/latency.py` (client-side round trips, models warm).\n")
@@ -74,6 +79,7 @@ def main() -> None:
     print(row("full (all)", full, 1000))
     print(row("full: titles", full[:25], 1000))
     print(row("full: ~600-word texts", full[25:], 1000))
+    print(row("full + parse_ad: pasted ads", ads, 1000))
 
 
 if __name__ == "__main__":

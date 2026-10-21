@@ -172,7 +172,7 @@ optional simulated age block.
 - [X] T051 [US4] Implement `src/lonekrav/core/adparse.py` and `src/lonekrav/core/adparse_anchors.yaml` (a few anchor sentences per label and language) until T050 passes
 - [X] T052 [US4] `tests/integration/test_search_modes.py`: `parse_ad=True` searches the kept text, returns `passages` and `searched_text`, and falls back to the whole ad when nothing is kept; implement in `run()` in `src/lonekrav/core/search.py`
 - [X] T053 [US4] Add `POST /parse-job-ad` to `src/lonekrav/api/v1.py` with a test in `tests/integration/test_api.py`
-- [ ] T054 [US4] `tests/eval/test_adparse_accuracy.py` (benchmark marker, real KBLab): passage label agreement ≥ 85 % on the ten ads, and search on kept text puts the expected code in the top five at least as often as on the raw ad (SC-005). Run it and record the result. Real JobTech ads replace the made-up ones only after the licence is confirmed (research R5); until then SC-005 stays open and the PR says so
+- [X] T054 [US4] `tests/eval/test_adparse_accuracy.py` (benchmark marker, real KBLab): passage label agreement ≥ 85 % on the ten ads, and search on kept text puts the expected code in the top five at least as often as on the raw ad (SC-005). Run it and record the result. Real JobTech ads replace the made-up ones only after the licence is confirmed (research R5); until then SC-005 stays open and the PR says so
 
 ---
 
