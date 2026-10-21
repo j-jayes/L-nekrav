@@ -32,3 +32,14 @@ def test_rrf_order_and_missing_methods():
     c = hits[2]
     assert c.scores["kblab"] is None and c.ranks["kblab"] is None
     assert c.matched_chunk.kind == "title"
+
+
+def test_weights_scale_each_methods_rrf_term():  # research R1, T018
+    per = {"kblab": [("A", hit("A", 0.9)), ("B", hit("B", 0.8))],
+           "bm25": [("B", hit("B", 9.0)), ("A", hit("A", 8.0))]}
+    unweighted = [h.model_dump() for h in fuse(per, k=2, weights={})]
+    assert [h.model_dump() for h in fuse(per, k=2, weights={"kblab": 1, "bm25": 1})] == unweighted
+    weighted = fuse(per, k=2, weights={"bm25": 0.5})
+    a = next(h for h in weighted if h.code == "A")
+    assert a.fused_score == pytest.approx(1 / (RRF_K + 1) + 0.5 / (RRF_K + 2))
+    assert [h.code for h in weighted] == ["A", "B"]  # kblab's order wins once bm25 counts half

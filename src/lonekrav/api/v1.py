@@ -5,6 +5,7 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException, Request
 
 from lonekrav.core.eligibility import EligibilityAnswer, EligibilityRequest, UnknownCode, evaluate
+from lonekrav.core.search import SearchAnswer, SearchRequest, run
 
 router = APIRouter()
 
@@ -26,3 +27,8 @@ def eligibility(body: EligibilityRequest, request: Request) -> EligibilityAnswer
         return evaluate(body, known_codes=_known(request))
     except UnknownCode as e:
         raise HTTPException(404, str(e)) from e
+
+
+@router.post("/search")
+def search(body: SearchRequest, request: Request) -> SearchAnswer:
+    return run(body, request.app.state.engine)

@@ -66,3 +66,15 @@ def test_eligibility_invalid_body_names_the_field(api_client):
 def test_eligibility_unknown_code_is_404(api_client):
     r = api_client.post("/api/v1/eligibility", json=OFFER | {"code": "1234"})
     assert r.status_code == 404 and "1234" in r.json()["detail"]
+
+
+def test_search_route(api_client):
+    r = api_client.post("/api/v1/search", json={"text": "mjukvaruutvecklare"})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["mode_used"] == "fast" and body["hits"] and body["honest_fit"]
+
+
+def test_search_rejects_oversized_text(api_client):
+    r = api_client.post("/api/v1/search", json={"text": "x" * 20001})
+    assert r.status_code == 422 and r.json()["detail"][0]["loc"][-1] == "text"

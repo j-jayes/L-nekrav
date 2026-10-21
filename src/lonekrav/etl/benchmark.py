@@ -253,3 +253,10 @@ def table(result: dict) -> str:
                 f"{result['handwritten_top5_overlap_ge3']:.3f}")
         rows += ["", f"vs {p['source']} ({p['run_at']})", recall, rest]
     return "\n".join(rows)
+
+
+def load_cutoff(path: Path = Path("data/processed/benchmark_results.json")) -> float | None:
+    """The low-confidence cut-off chosen by the last benchmark run (FR-017a), if there is one."""
+    import json
+
+    return json.loads(path.read_text()).get("low_confidence", {}).get("cutoff") if path.exists() else None
