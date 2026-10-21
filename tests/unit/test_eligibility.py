@@ -15,8 +15,9 @@ KNOWN = {"2512", "3511", "5343", "9210"}
 
 
 def req(**kw) -> EligibilityRequest:
-    base = dict(code="2512", monthly_salary_sek=40000, fte_percent=100,
-                application_type="first_permit", filed_on=D(2026, 6, 16), decided_on=D(2026, 7, 1))
+    base = {"code": "2512", "monthly_salary_sek": 40000, "fte_percent": 100,
+            "application_type": "first_permit", "filed_on": D(2026, 6, 16),
+            "decided_on": D(2026, 7, 1)}
     return EligibilityRequest(**(base | kw))
 
 
