@@ -15,6 +15,7 @@ import numpy as np
 class Embedder(Protocol):
     name: str
     dim: int
+    identity: str  # model id, revision and settings: what the document cache is keyed by
 
     def encode_queries(self, texts: list[str]) -> np.ndarray: ...
     def encode_documents(self, texts: list[str]) -> np.ndarray: ...
@@ -23,15 +24,18 @@ class Embedder(Protocol):
 @dataclass(frozen=True)
 class Spec:
     hf_id: str
+    revision: str  # pinned, so an index and its queries always use the same weights
     dim: int
     query_prompt_name: str | None
     dtype: str = "float32"
 
 
 SPECS = {
-    "kblab": Spec("KBLab/sentence-bert-swedish-cased", 768, None),
+    "kblab": Spec("KBLab/sentence-bert-swedish-cased", "6b5e83cd29c03729cfdc33d13b1423399b0efb5c",
+                  768, None),
     # Harrier ships bf16 weights; on CPU they are ~10x slower than fp32 (measured 2026-10-20).
-    "harrier": Spec("microsoft/harrier-oss-v1-0.6b", 1024, "web_search_query"),
+    "harrier": Spec("microsoft/harrier-oss-v1-0.6b", "f9b9dc8d367d443f2479d27aa5d8d2850c0774ee",
+                    1024, "web_search_query"),
 }
 
 
@@ -41,7 +45,8 @@ class SentenceTransformerEmbedder:
         from sentence_transformers import SentenceTransformer
 
         self.name, self.dim, self.spec, self.batch_size = name, spec.dim, spec, batch_size
-        self.model = SentenceTransformer(spec.hf_id, device="cpu",
+        self.identity = f"{spec.hf_id}@{spec.revision}:{spec.dim}:{spec.dtype}"
+        self.model = SentenceTransformer(spec.hf_id, revision=spec.revision, device="cpu",
                                          model_kwargs={"torch_dtype": getattr(torch, spec.dtype)})
 
     def _encode(self, texts, **kw) -> np.ndarray:
@@ -66,6 +71,7 @@ class FakeEmbedder:
 
     def __init__(self, dim: int = 64, name: str = "fake"):
         self.name, self.dim = name, dim
+        self.identity = f"fake:{dim}"
 
     def _vec(self, text: str) -> np.ndarray:
         v = np.zeros(self.dim, dtype=np.float32)
@@ -81,11 +87,11 @@ class FakeEmbedder:
 
 
 def encode_documents_cached(emb: Embedder, texts: list[str], cache_dir: Path) -> np.ndarray:
-    """Encode documents, reusing vectors cached by (model, text hash) under `cache_dir`.
+    """Encode documents, reusing vectors cached by (model identity, text hash) under `cache_dir`.
 
     A rebuild then re-embeds only chunks whose text changed (Harrier: ~20 min for a full pass).
     """
-    path = cache_dir / f"{emb.name}.npz"
+    path = cache_dir / f"{emb.name}-{hashlib.sha256(emb.identity.encode()).hexdigest()[:12]}.npz"
     cached: dict[str, np.ndarray] = {}
     if path.exists():
         with np.load(path) as z:

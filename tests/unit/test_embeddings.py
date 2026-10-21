@@ -55,3 +55,17 @@ def test_document_cache_is_per_model(tmp_path):
     a = encode_documents_cached(FakeEmbedder(dim=8, name="a"), ["x"], tmp_path)
     b = encode_documents_cached(FakeEmbedder(dim=16, name="b"), ["x"], tmp_path)
     assert a.shape == (1, 8) and b.shape == (1, 16)
+
+
+def test_document_cache_is_keyed_by_model_identity_not_alias(tmp_path):
+    """Copilot review on PR #1: same alias, different model must not reuse vectors."""
+    from lonekrav.core.embeddings import encode_documents_cached
+
+    a = encode_documents_cached(FakeEmbedder(dim=8, name="kblab"), ["x"], tmp_path)
+    b = encode_documents_cached(FakeEmbedder(dim=16, name="kblab"), ["x"], tmp_path)
+    assert a.shape == (1, 8) and b.shape == (1, 16)
+
+
+def test_real_models_are_pinned_to_a_revision():
+    for spec in SPECS.values():
+        assert len(spec.revision) == 40
