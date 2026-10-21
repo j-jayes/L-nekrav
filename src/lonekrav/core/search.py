@@ -24,7 +24,8 @@ POOL = 200  # chunks fetched per method before reducing to occupations
 FAST_POOL = 50  # fast mode: research R2 (BM25 at 50 is 8 ms p95 against 16 at 200)
 METHODS = ("kblab", "harrier", "bm25")
 MODES = {"fast": ("kblab", "bm25"), "full": METHODS}
-WEIGHTS: dict[str, float] = {}  # per-method RRF weight; a missing method counts 1.0 (research R1)
+WEIGHTS: dict[str, float] = {"bm25": 0.3}  # chosen on generated queries, confirmed on
+# hand-written ones (references/benchmark-diagnosis-002.md §2); a missing method counts 1.0
 HONEST_FIT = ("The SSYK code on a work-permit offer must match the duties actually performed. "
               "These are the occupations whose official descriptions best match the text, not "
               "advice on which code to choose.")

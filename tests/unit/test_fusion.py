@@ -23,7 +23,7 @@ def test_rrf_order_and_missing_methods():
         "kblab": [("A", hit("A", .9)), ("B", hit("B", .8))],
         "bm25": [("B", hit("B", 3.0)), ("C", hit("C", 2.0))],
     }
-    hits = fuse(per, k=3)
+    hits = fuse(per, k=3, weights={})  # plain RRF
     assert [h.code for h in hits] == ["B", "A", "C"]  # B: 1/62 + 1/61 beats A: 1/61
     b = hits[0]
     assert b.fused_rank == 1

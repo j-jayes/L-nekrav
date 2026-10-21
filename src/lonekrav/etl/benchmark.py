@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import random
 import re
 from collections import defaultdict
@@ -13,6 +14,7 @@ from lonekrav.core.profiles import Inputs, attach_ilo
 
 SEED = 2026
 HANDWRITTEN = Path(__file__).parents[3] / "tests" / "eval" / "queries_handwritten.yaml"
+NONSENSE = HANDWRITTEN.with_name("nonsense.yaml")
 
 
 def _owners(profiles: dict[str, OccupationProfile], lang: str) -> dict[str, set[str]]:
@@ -127,7 +129,10 @@ def evaluate(queries: list[BenchmarkQuery], engine, methods: tuple[str, ...],
             hits = engine.chunk_hits(title_parts(text) or [text], methods, POOL)
             per = engine.ranking(hits, POOL)
             ranked = {m: [c for c, _ in per[m][:depth]] for m in methods}
-            ranked["fused"] = [h.code for h in engine.fused(per, depth)]
+            fused = engine.fused(per, depth)
+            ranked["fused"] = [h.code for h in fused]
+            rows[q.id].setdefault("top_kblab", {})[lang] = (
+                fused[0].scores.get("kblab") if fused else None)
             if fast_methods:
                 fast = engine.ranking({m: hits[m] for m in fast_methods}, FAST_POOL)
                 ranked["fused_fast"] = [h.code for h in engine.fused(fast, depth)]
@@ -152,6 +157,25 @@ def evaluate(queries: list[BenchmarkQuery], engine, methods: tuple[str, ...],
             "handwritten_top5_overlap_ge3": overlap / len(hw) if hw else None,
             "diagnosis": diagnose(list(rows.values())), "top5": top5,
             "per_query": list(rows.values())}
+
+
+KEEP_ABOVE = 0.95  # share of benchmark queries the low-confidence cut-off must keep above it
+
+
+def choose_cutoff(scores: list[float | None], nonsense: list[float | None]) -> dict:
+    """The highest top-hit KBLab similarity that keeps 95 % of benchmark queries at or above it,
+    valid only if every nonsense query falls below it (FR-017a). A missing score counts lowest."""
+    ranked = sorted((s if s is not None else float("-inf") for s in scores), reverse=True)
+    cutoff = ranked[math.ceil(KEEP_ABOVE * len(ranked)) - 1]
+    worst = max((s for s in nonsense if s is not None), default=float("-inf"))
+    out = {"share_above": sum(s >= cutoff for s in ranked) / len(ranked),
+           "nonsense_max": worst, "n": len(ranked), "n_nonsense": len(nonsense)}
+    if cutoff == float("-inf") or worst >= cutoff:
+        return {**out, "ok": False, "cutoff": None,
+                "note": f"a nonsense query scores {worst:.3f}, at or above the 95 % level "
+                        f"{cutoff:.3f}: the maintainer decides (FR-017a)"}
+    return {**out, "ok": True, "cutoff": cutoff,
+            "note": "top fused hit's KBLab similarity, full mode, both languages"}
 
 
 def diagnose(rows: list[dict], method: str = "fused") -> dict:
@@ -192,11 +216,17 @@ def run(db=None, out=None, methods=("kblab", "harrier", "bm25")) -> dict:
     queries = load_handwritten(HANDWRITTEN) + [
         BenchmarkQuery.model_validate(q)
         for q in json.loads((out / "benchmark_generated.json").read_text())]
-    from lonekrav.core.search import SearchEngine
+    import yaml
+
+    from lonekrav.core.search import POOL, SearchEngine
 
     embedders = {m: get_embedder(m) for m in methods if m != "bm25"}
     engine = SearchEngine(store=Store(db), embedders=embedders, titles={})
     result = evaluate(queries, engine, tuple(methods))
+    nonsense = [engine.rank(t, methods, POOL, 1)[0] for t in yaml.safe_load(NONSENSE.read_text())]
+    result["low_confidence"] = choose_cutoff(
+        [s for r in result["per_query"] for s in r["top_kblab"].values()],
+        [h[0].scores.get("kblab") if h else None for h in nonsense])
     result = {
         "run_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
         "models": {m: f"{SPECS[m].hf_id}@{SPECS[m].revision[:12]}" for m in embedders},
@@ -260,4 +290,6 @@ def load_cutoff(path: Path = Path("data/processed/benchmark_results.json")) -> f
     """The low-confidence cut-off chosen by the last benchmark run (FR-017a), if there is one."""
     import json
 
-    return json.loads(path.read_text()).get("low_confidence", {}).get("cutoff") if path.exists() else None
+    if not path.exists():
+        return None
+    return json.loads(path.read_text()).get("low_confidence", {}).get("cutoff")

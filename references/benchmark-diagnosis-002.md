@@ -66,3 +66,37 @@ Reading:
 - **Slash-joined queries are not the problem**: 23 paired slash queries score 0.957 in both languages.
 - **Still failing**: fused (0.918) is below Harrier alone (0.924) in both languages, and hand-written
   top-5 overlap is 0.688 against 0.80. Swedish BM25 (0.560 paired) is the weak method.
+
+## 2. Fusion weights (T020, 2026-10-21)
+
+Swedish BM25 (0.546 Recall@5 on generated Swedish) pulled the equal-weight fusion below Harrier
+alone. Sweep: RRF weight 0.0–1.0 in steps of 0.1 for kblab and bm25, Harrier fixed at 1.0, chosen
+on the 152 generated paired queries by the higher worst-language Recall@5, then the higher mean;
+confirmed on the 32 hand-written pairs, which played no part in the choice (FR-020a). Script:
+`sweep.py` in the session scratchpad; output:
+
+```text
+single methods (gen en/sv | hw en/sv): {'kblab': ([0.8486842105263158, 0.7960526315789473], [0.96875, 0.96875]), 'harrier': ([0.9144736842105263, 0.9013157894736842], [0.96875, 0.96875]), 'bm25': ([0.8421052631578947, 0.5460526315789473], [0.875, 0.625])}
+top 10 on generated (min, mean, w_kblab, w_bm25, en, sv):
+   [0.921, 0.924, 1.0, 0.3, 0.928, 0.921]
+   [0.921, 0.924, 0.2, 0.3, 0.928, 0.921]
+   [0.921, 0.921, 1.0, 0.6, 0.921, 0.921]
+   [0.921, 0.921, 1.0, 0.5, 0.921, 0.921]
+   [0.921, 0.921, 0.3, 0.3, 0.921, 0.921]
+   [0.921, 0.921, 0.2, 0.5, 0.921, 0.921]
+   [0.921, 0.921, 0.2, 0.4, 0.921, 0.921]
+   [0.921, 0.921, 0.2, 0.1, 0.921, 0.921]
+   [0.914, 0.921, 1.0, 0.8, 0.914, 0.928]
+   [0.914, 0.921, 1.0, 0.4, 0.928, 0.914]
+w_kblab=1.0 w_bm25=1.0: gen en/sv (0.9078947368421053, 0.9210526315789473)  hw en/sv/overlap (0.96875, 0.90625, 0.6875)  all (0.9184782608695652, 0.9184782608695652, 0.3695652173913043)
+w_kblab=1.0 w_bm25=0.3: gen en/sv (0.9276315789473685, 0.9210526315789473)  hw en/sv/overlap (1.0, 1.0, 0.875)  all (0.9402173913043478, 0.9347826086956522, 0.44565217391304346)
+w_kblab=0.2 w_bm25=0.3: gen en/sv (0.9276315789473685, 0.9210526315789473)  hw en/sv/overlap (1.0, 1.0, 0.53125)  all (0.9402173913043478, 0.9347826086956522, 0.34782608695652173)
+w_kblab=1.0 w_bm25=0.6: gen en/sv (0.9210526315789473, 0.9210526315789473)  hw en/sv/overlap (1.0, 1.0, 0.78125)  all (0.9347826086956522, 0.9347826086956522, 0.40217391304347827)
+w_kblab=1.0 w_bm25=0.5: gen en/sv (0.9210526315789473, 0.9210526315789473)  hw en/sv/overlap (1.0, 1.0, 0.84375)  all (0.9347826086956522, 0.9347826086956522, 0.43478260869565216)
+w_kblab=0.3 w_bm25=0.3: gen en/sv (0.9210526315789473, 0.9210526315789473)  hw en/sv/overlap (1.0, 1.0, 0.625)  all (0.9347826086956522, 0.9347826086956522, 0.3641304347826087)
+```
+
+Choice: **bm25 weight 0.3, kblab and Harrier 1.0** (top of the generated ranking and the simplest:
+one method changes). On the hand-written pairs Recall@5 rises from 0.969/0.906 to 1.0/1.0 and
+top-5 overlap from 0.688 to 0.875. The next-best candidate with kblab at 0.2 scores the same on the
+generated set but drops hand-written overlap to 0.53, which is why the confirmation set matters.

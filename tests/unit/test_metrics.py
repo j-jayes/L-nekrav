@@ -41,3 +41,25 @@ def test_diagnose_splits_the_gap_by_origin_and_form():  # FR-018
     assert g[("generated", "single")]["share_of_gap"] == pytest.approx(0.5)  # one of two misses
     assert g[("handwritten", "single")]["gap_points"] == 0
     assert sum(r["gap_points"] for r in d["groups"]) == pytest.approx(d["gap"])
+
+
+def test_low_confidence_cutoff_keeps_95_percent_above():  # FR-017a
+    from lonekrav.etl.benchmark import choose_cutoff
+
+    scores = [i / 100 for i in range(40, 100)]  # 60 benchmark queries: 0.40 … 0.99
+    c = choose_cutoff(scores, nonsense=[0.10, 0.25])
+    assert c["ok"] and c["cutoff"] == pytest.approx(0.43)  # 57 of 60 (95 %) at or above
+    assert c["share_above"] >= 0.95 and c["nonsense_max"] == 0.25
+
+
+def test_low_confidence_cutoff_reports_when_nonsense_scores_too_high():
+    from lonekrav.etl.benchmark import choose_cutoff
+
+    c = choose_cutoff([0.5, 0.6, 0.7, 0.8], nonsense=[0.65])
+    assert not c["ok"] and c["cutoff"] is None and "nonsense" in c["note"]
+
+
+def test_missing_top_score_counts_as_lowest():
+    from lonekrav.etl.benchmark import choose_cutoff
+
+    assert choose_cutoff([None, *([0.9] * 19)], nonsense=[0.1])["cutoff"] == pytest.approx(0.9)
