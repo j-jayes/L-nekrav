@@ -308,11 +308,27 @@ def attach_ilo(profiles: dict[str, OccupationProfile], ilo: dict,
 ## 4. Index: chunks, two dense fields and BM25 in one Milvus Lite collection
 
 KBLab truncates at 384 tokens, so a profile is split into chunks (titles, each description,
-synonym blocks of at most 40 labels). Benchmark hold-out titles are dropped here.
+synonym blocks of at most 40 labels and 2 000 characters). Benchmark hold-out titles are dropped
+here. The store saves the analysis vocabulary beside a local index (`<db>.vocab.json`), so a
+reopened or copied index analyses queries exactly as its documents were analysed.
 
-`src/lonekrav/core/chunks.py` lines 44-62:
+`src/lonekrav/core/chunks.py` lines 44-76:
 
 ```python
+def _batches(labels: list[str]) -> list[str]:
+    """Join labels with '; ', at most MAX_LABELS and MAX_CHARS per batch."""
+    out, cur = [], []
+    for label in labels:
+        label = label[:MAX_CHARS]
+        if cur and (len(cur) == MAX_LABELS or len("; ".join([*cur, label])) > MAX_CHARS):
+            out.append("; ".join(cur))
+            cur = []
+        cur.append(label)
+    if cur:
+        out.append("; ".join(cur))
+    return out
+
+
 def chunk_profile(p: OccupationProfile, holdout: set[str] = frozenset()) -> list[Chunk]:
     """`holdout`: case-folded titles used as benchmark queries, kept out of the indexed text."""
     chunks: list[Chunk] = []
@@ -329,13 +345,13 @@ def chunk_profile(p: OccupationProfile, holdout: set[str] = frozenset()) -> list
     for lang in ("sv", "en"):
         labels = [s.label for s in p.synonyms
                   if s.lang == lang and s.label.casefold().strip() not in holdout]
-        for i in range(0, len(labels), MAX_LABELS):
-            add(f"synonyms_{lang}", lang, "; ".join(labels[i:i + MAX_LABELS]))
+        for batch in _batches(labels):
+            add(f"synonyms_{lang}", lang, batch)
     return chunks
 ```
 
 
-`src/lonekrav/core/store.py` lines 35-54:
+`src/lonekrav/core/store.py` lines 52-74:
 
 ```python
     def create(self) -> None:
@@ -346,17 +362,20 @@ def chunk_profile(p: OccupationProfile, holdout: set[str] = frozenset()) -> list
         s.add_field("code", DataType.VARCHAR, max_length=4)
         s.add_field("kind", DataType.VARCHAR, max_length=16)
         s.add_field("lang", DataType.VARCHAR, max_length=8)
-        s.add_field("text", DataType.VARCHAR, max_length=MAX_CHARS * 4, enable_analyzer=True,
-                    analyzer_params={"type": "standard"})
+        s.add_field("text", DataType.VARCHAR, max_length=MAX_CHARS * 4)
+        s.add_field("bm25_text", DataType.VARCHAR, max_length=MAX_CHARS * 12,
+                    enable_analyzer=True, analyzer_params={"type": "standard"})
         s.add_field("bm25", DataType.SPARSE_FLOAT_VECTOR)
         s.add_function(Function(name="bm25_fn", function_type=FunctionType.BM25,
-                                input_field_names=["text"], output_field_names=["bm25"]))
+                                input_field_names=["bm25_text"], output_field_names=["bm25"]))
         ip = self.client.prepare_index_params()
         ip.add_index("bm25", index_type="SPARSE_INVERTED_INDEX", metric_type="BM25")
         for name, dim in self.dims.items():
             s.add_field(f"vec_{name}", DataType.FLOAT_VECTOR, dim=dim)
             ip.add_index(f"vec_{name}", index_type="FLAT", metric_type="COSINE")
         self.client.create_collection(COLLECTION, schema=s, index_params=ip)
+        if self._vocab_file:
+            self._vocab_file.write_text(json.dumps(sorted(self.vocab), ensure_ascii=False))
 
 ```
 
@@ -408,32 +427,58 @@ def fuse(per_method: Mapping[str, list[tuple[str, ChunkHit]]], k: int = 5) -> li
 ## 6. Benchmark: generated titles that the index has never seen
 
 Generated queries are one JobTech occupation-name per group, with the official code as the
-answer. Titles equal to an official SSYK title are never sampled (the title chunk cannot be held
-out), and every sampled title, its alternative labels and its English ESCO label are written to
-`benchmark_holdout.json` and removed from the index. Without that, the benchmark would measure
-lookup, not matching.
+answer. Every sampled title, its alternative labels and its English ESCO label are written to
+`benchmark_holdout.json` and removed from the index. Hold-out removes whole labels only, so a
+title that would still appear in its answer's indexed text (its official title, a description,
+ILO text, or a longer label such as `Minister, statsråd`) is never sampled. Without that, the
+benchmark would measure lookup, not matching.
 
-`src/lonekrav/etl/benchmark.py` lines 26-60:
+`src/lonekrav/etl/benchmark.py` lines 27-87:
 
 ```python
+class _Leaks:
+    """Does a phrase survive in the indexed text of its answer once its own labels are held out?
+    Mirrors `chunk_profile`: titles and descriptions always stay, synonyms go by whole label."""
+
+    def __init__(self, profiles: dict[str, OccupationProfile]):
+        self.fixed = {c: " ".join([p.title_sv, p.title_en, *(d.text for d in p.descriptions)])
+                      .casefold() for c, p in profiles.items()}
+        self.labels = {c: [s.label.casefold().strip() for s in p.synonyms]
+                       for c, p in profiles.items()}
+
+    def __call__(self, phrase: str, codes: list[str], held: set[str]) -> bool:
+        pat = re.compile(rf"(?<!\w){re.escape(phrase.casefold().strip())}(?!\w)")
+        return any(pat.search(self.fixed[c])
+                   or any(pat.search(lab) for lab in self.labels[c] if lab not in held)
+                   for c in codes)
+
+
 def generate_queries(inputs: Inputs, profiles: dict[str, OccupationProfile],
                      seed: int = SEED) -> tuple[list[BenchmarkQuery], set[str]]:
     """One title query per JobTech group, labelled with its official SSYK code(s).
 
-    Skips titles equal to an official occupation title (the title chunk cannot be held out)
-    and titles that also belong to other occupations. Returns the queries and the case-folded
-    titles to hold out of the index.
+    Skips official occupation titles, titles that also belong to other occupations, and titles that would still appear in
+    the indexed text of their answer after hold-out (in its title, a description, ILO text or a
+    longer label), since those test lookup rather than retrieval. Returns the queries and the
+    case-folded titles to hold out of the index.
     """
     rng = random.Random(seed)
     official = {p.title_sv.casefold() for p in profiles.values()}
+    leaks = _Leaks(attach_ilo(profiles, inputs.ilo, inputs.isco_key))
     owners_sv, owners_en = _owners(profiles, "sv"), _owners(profiles, "en")
     queries, held = [], set()
     for jt_code, group in sorted(inputs.jobtech.items()):
         expected = sorted(c for c, g in inputs.jobtech_by_scb.items()
                           if g.concept_id == group.concept_id and c in profiles)
+
+        def own(n, *extra):
+            return {n.label.casefold().strip(), *(a.casefold().strip() for a in n.alt_labels),
+                    *(e.casefold().strip() for e in extra)}
+
         candidates = [n for n in group.names
                       if (k := n.label.casefold().strip()) not in official
-                      and owners_sv.get(k, set()) <= set(expected)]
+                      and owners_sv.get(k, set()) <= set(expected)
+                      and not leaks(n.label, expected, own(n))]
         if not expected or not candidates:
             continue
         name = rng.choice(candidates)
@@ -441,7 +486,8 @@ def generate_queries(inputs: Inputs, profiles: dict[str, OccupationProfile],
         for m in name.esco:
             occ = inputs.esco.get(m.uri)
             label = occ.label.get("en") if occ and m.match_type in ("exact", "close") else None
-            if label and owners_en.get(label.casefold(), set()) <= set(expected):
+            if (label and owners_en.get(label.casefold(), set()) <= set(expected)
+                    and not leaks(label, expected, own(name, label))):
                 text_en = label
                 break
         queries.append(BenchmarkQuery(id=f"gen-{jt_code}", origin="generated", type="title",

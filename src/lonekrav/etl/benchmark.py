@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import random
+import re
 from collections import defaultdict
 from pathlib import Path
 
 from lonekrav.core.benchmark import BenchmarkQuery
 from lonekrav.core.models import OccupationProfile
-from lonekrav.core.profiles import Inputs
+from lonekrav.core.profiles import Inputs, attach_ilo
 
 SEED = 2026
 HANDWRITTEN = Path(__file__).parents[3] / "tests" / "eval" / "queries_handwritten.yaml"
@@ -23,24 +24,49 @@ def _owners(profiles: dict[str, OccupationProfile], lang: str) -> dict[str, set[
     return owners
 
 
+class _Leaks:
+    """Does a phrase survive in the indexed text of its answer once its own labels are held out?
+    Mirrors `chunk_profile`: titles and descriptions always stay, synonyms go by whole label."""
+
+    def __init__(self, profiles: dict[str, OccupationProfile]):
+        self.fixed = {c: " ".join([p.title_sv, p.title_en, *(d.text for d in p.descriptions)])
+                      .casefold() for c, p in profiles.items()}
+        self.labels = {c: [s.label.casefold().strip() for s in p.synonyms]
+                       for c, p in profiles.items()}
+
+    def __call__(self, phrase: str, codes: list[str], held: set[str]) -> bool:
+        pat = re.compile(rf"(?<!\w){re.escape(phrase.casefold().strip())}(?!\w)")
+        return any(pat.search(self.fixed[c])
+                   or any(pat.search(lab) for lab in self.labels[c] if lab not in held)
+                   for c in codes)
+
+
 def generate_queries(inputs: Inputs, profiles: dict[str, OccupationProfile],
                      seed: int = SEED) -> tuple[list[BenchmarkQuery], set[str]]:
     """One title query per JobTech group, labelled with its official SSYK code(s).
 
-    Skips titles equal to an official occupation title (the title chunk cannot be held out)
-    and titles that also belong to other occupations. Returns the queries and the case-folded
-    titles to hold out of the index.
+    Skips official occupation titles, titles that also belong to other occupations, and titles that would still appear in
+    the indexed text of their answer after hold-out (in its title, a description, ILO text or a
+    longer label), since those test lookup rather than retrieval. Returns the queries and the
+    case-folded titles to hold out of the index.
     """
     rng = random.Random(seed)
     official = {p.title_sv.casefold() for p in profiles.values()}
+    leaks = _Leaks(attach_ilo(profiles, inputs.ilo, inputs.isco_key))
     owners_sv, owners_en = _owners(profiles, "sv"), _owners(profiles, "en")
     queries, held = [], set()
     for jt_code, group in sorted(inputs.jobtech.items()):
         expected = sorted(c for c, g in inputs.jobtech_by_scb.items()
                           if g.concept_id == group.concept_id and c in profiles)
+
+        def own(n, *extra):
+            return {n.label.casefold().strip(), *(a.casefold().strip() for a in n.alt_labels),
+                    *(e.casefold().strip() for e in extra)}
+
         candidates = [n for n in group.names
                       if (k := n.label.casefold().strip()) not in official
-                      and owners_sv.get(k, set()) <= set(expected)]
+                      and owners_sv.get(k, set()) <= set(expected)
+                      and not leaks(n.label, expected, own(n))]
         if not expected or not candidates:
             continue
         name = rng.choice(candidates)
@@ -48,7 +74,8 @@ def generate_queries(inputs: Inputs, profiles: dict[str, OccupationProfile],
         for m in name.esco:
             occ = inputs.esco.get(m.uri)
             label = occ.label.get("en") if occ and m.match_type in ("exact", "close") else None
-            if label and owners_en.get(label.casefold(), set()) <= set(expected):
+            if (label and owners_en.get(label.casefold(), set()) <= set(expected)
+                    and not leaks(label, expected, own(name, label))):
                 text_en = label
                 break
         queries.append(BenchmarkQuery(id=f"gen-{jt_code}", origin="generated", type="title",
@@ -58,13 +85,6 @@ def generate_queries(inputs: Inputs, profiles: dict[str, OccupationProfile],
         if text_en:
             held.add(text_en.casefold().strip())
     return queries, held
-
-
-def _revision(hf_id: str) -> str:
-    from huggingface_hub import try_to_load_from_cache
-
-    path = try_to_load_from_cache(hf_id, "config.json")
-    return f"{hf_id}@{Path(path).parent.name[:12]}" if isinstance(path, str) else hf_id
 
 
 def evaluate(queries: list[BenchmarkQuery], store, embedders: dict, methods: tuple[str, ...],
@@ -122,7 +142,7 @@ def run(db=None, out=None, methods=("kblab", "harrier", "bm25")) -> dict:
     result = evaluate(queries, Store(db), embedders, tuple(methods))
     result = {
         "run_at": dt.datetime.now(dt.UTC).isoformat(timespec="seconds"),
-        "models": {m: _revision(SPECS[m].hf_id) for m in embedders},
+        "models": {m: f"{SPECS[m].hf_id}@{SPECS[m].revision[:12]}" for m in embedders},
         "n_queries": {"handwritten": sum(q.origin == "handwritten" for q in queries),
                       "generated": sum(q.origin == "generated" for q in queries),
                       "generated_with_english": sum(q.origin == "generated" and bool(q.text_en)

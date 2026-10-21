@@ -129,7 +129,9 @@ session log; the Milvus spike is saved as `references/milvus_lite_hybrid.py`.
   (b) Generated set: a seeded stratified sample of at least 200 JobTech occupation-names, at most one
   per SSYK code, with Swedish text from JobTech and English text from the matched ESCO preferred label
   where one exists. Hold-out titles are written to `data/processed/benchmark_holdout.json` and
-  excluded from chunk text, including the alternative labels of the same occupation-name.
+  excluded from chunk text, including the alternative labels of the same occupation-name. A title
+  that would survive hold-out in its answer's indexed text (title, descriptions, ILO text, a
+  longer label) is not sampled (PR #1 review).
 - **Metrics**: Recall@1, Recall@5 and MRR per method (kblab, harrier, bm25, fused) × language ×
   origin, plus the EN−SV gap.
 
