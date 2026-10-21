@@ -156,8 +156,8 @@ optional simulated age block.
 
 **Goal**: `GET /api/v1/legal/timeline` and `GET /api/v1/benchmark`.
 
-- [ ] T047 [P] [US7] `tests/integration/test_api.py`: the timeline route returns `registry.timeline()` with every event's source and `checked_on`; the benchmark route returns the results file, or 404 with a message when it is missing
-- [ ] T048 [US7] Add both routes to `src/lonekrav/api/v1.py` until T047 passes
+- [X] T047 [P] [US7] `tests/integration/test_api.py`: the timeline route returns `registry.timeline()` with every event's source and `checked_on`; the benchmark route returns the results file, or 404 with a message when it is missing
+- [X] T048 [US7] Add both routes to `src/lonekrav/api/v1.py` until T047 passes
 
 ---
 

@@ -119,3 +119,23 @@ def test_occupation_route(api_client):
     assert body["code"] == "3511" and body["legal_flags"][0]["kind"] == "exempt_75"
     assert not any(d["source"]["source"] == "ilo_isco08" for d in body["descriptions"])
     assert api_client.get("/api/v1/occupations/1234").status_code == 404
+
+
+def test_timeline_route(api_client):
+    from lonekrav.core.legal import load_registry
+
+    r = api_client.get("/api/v1/legal/timeline")
+    assert r.status_code == 200
+    events = r.json()
+    assert len(events) == len(load_registry().timeline())
+    assert all(e["source"]["url"] and e["source"]["checked_on"] for e in events)
+
+
+def test_benchmark_route(api_client, tmp_path, monkeypatch):
+    from lonekrav.api import v1
+
+    monkeypatch.setattr(v1, "BENCHMARK_RESULTS", tmp_path / "missing.json")
+    r = api_client.get("/api/v1/benchmark")
+    assert r.status_code == 404 and "lonekrav-etl benchmark" in r.json()["detail"]
+    (tmp_path / "missing.json").write_text('{"run_at": "x"}')
+    assert api_client.get("/api/v1/benchmark").json() == {"run_at": "x"}

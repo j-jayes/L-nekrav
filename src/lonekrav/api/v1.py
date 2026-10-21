@@ -3,17 +3,21 @@
 from __future__ import annotations
 
 import datetime as dt
+import json
+from pathlib import Path
 
 from fastapi import APIRouter, HTTPException, Request
 
 from lonekrav.core.compare import CompareRequest, Comparison, compare
 from lonekrav.core.eligibility import EligibilityAnswer, EligibilityRequest, UnknownCode, evaluate
+from lonekrav.core.legal import TimelineEvent, load_registry
 from lonekrav.core.legal_flags import flags_for
 from lonekrav.core.models import OccupationProfile
 from lonekrav.core.salary import SalaryPayload, payload
 from lonekrav.core.search import SearchAnswer, SearchRequest, run
 
 router = APIRouter()
+BENCHMARK_RESULTS = Path("data/processed/benchmark_results.json")
 
 
 def _known(request: Request) -> dict:
@@ -75,3 +79,15 @@ def compare_codes(body: CompareRequest, request: Request) -> Comparison:
     return compare(body, profiles=request.app.state.profiles,
                    distributions=request.app.state.distributions,
                    age_bands=request.app.state.age_bands)
+
+
+@router.get("/legal/timeline")
+def timeline() -> list[TimelineEvent]:
+    return load_registry().timeline()
+
+
+@router.get("/benchmark")
+def benchmark() -> dict:
+    if not BENCHMARK_RESULTS.exists():
+        raise HTTPException(404, "no benchmark results yet: run `lonekrav-etl benchmark`")
+    return json.loads(BENCHMARK_RESULTS.read_text())
