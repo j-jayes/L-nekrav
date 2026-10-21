@@ -146,9 +146,9 @@ optional simulated age block.
 
 **Independent test**: quickstart §3 compare rows.
 
-- [ ] T044 [P] [US6] `tests/unit/test_compare.py` on fixture profiles: three codes come back in request order with Swedish descriptions (SCB MIS where present, else JobTech) and English descriptions (ESCO), each labelled with its source, latest salary, legal flags and threshold; with an offer each column has an eligibility answer equal to calling `evaluate` for that code; duplicates are dropped before counting; one code or six codes raise a validation error stating 2–5; `honest_fit` is present and no column is ordered or labelled by threshold
-- [ ] T045 [US6] Implement `CompareRequest`, `CompareColumn`, `Comparison` and `compare()` in `src/lonekrav/core/compare.py` until T044 passes
-- [ ] T046 [US6] Add `POST /compare` and `GET /occupations/{code}` (profile without ILO text) to `src/lonekrav/api/v1.py` with tests in `tests/integration/test_api.py`
+- [X] T044 [P] [US6] `tests/unit/test_compare.py` on fixture profiles: three codes come back in request order with Swedish descriptions (SCB MIS where present, else JobTech) and English descriptions (ESCO), each labelled with its source, latest salary, legal flags and threshold; with an offer each column has an eligibility answer equal to calling `evaluate` for that code; duplicates are dropped before counting; one code or six codes raise a validation error stating 2–5; `honest_fit` is present and no column is ordered or labelled by threshold
+- [X] T045 [US6] Implement `CompareRequest`, `CompareColumn`, `Comparison` and `compare()` in `src/lonekrav/core/compare.py` until T044 passes
+- [X] T046 [US6] Add `POST /compare` and `GET /occupations/{code}` (profile without ILO text) to `src/lonekrav/api/v1.py` with tests in `tests/integration/test_api.py`
 
 ---
 

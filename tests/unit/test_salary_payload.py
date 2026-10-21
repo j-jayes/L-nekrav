@@ -58,7 +58,7 @@ def test_simulated_age_band_percentiles(salaries):
 
 
 def test_a_null_input_gives_a_null_simulated_value(salaries):
-    dists, ages = salaries
+    dists, _ = salaries
     code = next(d.code for d in dists if d.suppressed and d.year == 2025 and d.median is not None)
     s = make(salaries, code, age_band="25-34").simulated
     missing = next(d for d in dists if d.code == code and d.year == s.year).suppressed

@@ -94,3 +94,28 @@ def test_salary_route_errors(api_client):
     assert api_client.get("/api/v1/occupations/1234/salary").status_code == 404
     r = api_client.get("/api/v1/occupations/2512/salary", params={"age_band": "12-17"})
     assert r.status_code == 422 and "age_band" in r.text
+
+
+def test_compare_route(api_client):
+    r = api_client.post("/api/v1/compare", json={"codes": ["3511", "2512"],
+                                                 "offer": OFFER | {"monthly_salary_sek": 32000}})
+    assert r.status_code == 200
+    body = r.json()
+    assert [c["code"] for c in body["columns"]] == ["3511", "2512"]
+    assert [c["eligibility"]["status"] for c in body["columns"]] == ["pass", "fail"]
+    assert body["honest_fit"]
+
+
+def test_compare_route_errors(api_client):
+    r = api_client.post("/api/v1/compare", json={"codes": ["2512"]})
+    assert r.status_code == 422 and "2–5" in r.text
+    assert api_client.post("/api/v1/compare", json={"codes": ["2512", "1234"]}).status_code == 404
+
+
+def test_occupation_route(api_client):
+    r = api_client.get("/api/v1/occupations/3511")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["code"] == "3511" and body["legal_flags"][0]["kind"] == "exempt_75"
+    assert not any(d["source"]["source"] == "ilo_isco08" for d in body["descriptions"])
+    assert api_client.get("/api/v1/occupations/1234").status_code == 404
