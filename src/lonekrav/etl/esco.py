@@ -29,7 +29,7 @@ def path_for(raw: Path, uri: str) -> Path:
 
 class FetchResult(BaseModel):
     paths: list[Path]
-    missing: list[str]  # URIs JobTech links to that ESCO no longer publishes (HTTP 404)
+    missing: list[str]  # URIs JobTech links to that ESCO cannot serve (see _unservable)
 
 
 def _unservable(e: FetchError) -> bool:
