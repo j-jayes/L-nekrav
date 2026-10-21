@@ -43,3 +43,26 @@ def test_serves_without_an_openrouter_key(fixture_engine, monkeypatch):  # FR-03
     engine, profiles = fixture_engine
     with TestClient(create_app(engine=engine, profiles=profiles)) as client:
         assert client.get("/api/v1/health").status_code == 200
+
+
+OFFER = {"code": "2512", "monthly_salary_sek": 40000, "fte_percent": 100,
+         "application_type": "first_permit", "filed_on": "2026-06-16", "decided_on": "2026-07-01"}
+
+
+def test_eligibility_returns_the_core_answer(api_client):
+    from lonekrav.core.eligibility import EligibilityRequest, evaluate
+
+    r = api_client.post("/api/v1/eligibility", json=OFFER)
+    assert r.status_code == 200
+    assert r.json() == evaluate(EligibilityRequest(**OFFER)).model_dump(mode="json")
+
+
+def test_eligibility_invalid_body_names_the_field(api_client):
+    r = api_client.post("/api/v1/eligibility", json=OFFER | {"fte_percent": 0})
+    assert r.status_code == 422
+    assert r.json()["detail"][0]["loc"][-1] == "fte_percent"
+
+
+def test_eligibility_unknown_code_is_404(api_client):
+    r = api_client.post("/api/v1/eligibility", json=OFFER | {"code": "1234"})
+    assert r.status_code == 404 and "1234" in r.json()["detail"]
