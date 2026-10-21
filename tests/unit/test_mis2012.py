@@ -32,3 +32,16 @@ def test_entry_does_not_continue_across_missing_pages(fixtures):
     d = mis2012.parse(pages(fixtures))  # fixture holds pages 76 and 81 but not 77-80
     assert "tryck, tar prover" not in d["4430"]
     assert d["4430"].endswith("(1113)")
+
+
+def test_entry_with_single_space_after_code():
+    """Seen on the real page 38: '1311 IT-chefer' has one space, '1312  IT-chefer' two."""
+    page = ("Yrkesområde 1 Standard för svensk yrkesklassificering (SSYK) 2012 \n"
+            "37 Statistiska centralbyrån \n"
+            "1311 IT-chefer  \n nivå 1 \nFunktionschef eller chef på mellanchefsnivå. \n"
+            "Utför arbete enligt 2014 års riktlinjer. \n"
+            "1312  IT-chefer \n nivå 2 \nVerksamhetsnära chef. \n")
+    d = mis2012.parse({38: page})
+    assert d["1311"].startswith("Funktionschef eller chef på mellanchefsnivå.")
+    assert "2014 års riktlinjer" in d["1311"]
+    assert d["1312"] == "Verksamhetsnära chef."

@@ -28,7 +28,7 @@ uv run pytest -m benchmark                 # asserts SC-004, SC-005, SC-006
 | 8 | Years present | 2014 to 2025; 2014–2022 rows from TAB4265 and TAB4264 with null CIs |
 | 9 | Ten-code spot check against statistikdatabasen.scb.se | exact match (SC-002) |
 | 10 | Re-run `build` | `git diff --stat data/processed` shows no changes |
-| 11 | Delete `data/lonekrav_milvus.db`, run `index` with the network off (models cached) | it rebuilds |
+| 11 | Delete `data/lonekrav_milvus.db`, run `index` with models and the ILO file cached and the network off | it rebuilds |
 | 12 | Size of `data/lonekrav_milvus.db` | under 200 MB (SC-008) |
 | 13 | Spot queries through `core.search` | "backend developer" → 2512 in the top 5; "sjuksköterska" → a 222x code in the top 5; "management consultant" → 2421 in the top 5 |
 | 14 | `benchmark_results.json` | fused Recall@5 ≥ 0.80 in both languages; EN−SV gap ≤ 5 points; fused ≥ each single method |

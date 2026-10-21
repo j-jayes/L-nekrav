@@ -22,6 +22,9 @@ a cross-lingual benchmark, a data dictionary, and a repeatable pipeline that run
   SCB SSYK 2012 tables.
 - Q: How does a fresh machine or image get the index? → A: Commit the small processed data; rebuild
   the index from it locally or during the image build. Nothing large in git.
+- Q: How is ILO ISCO-08 text handled, given ILO reserves reproduction rights? → A: Not
+  committed. Build writes profiles without ILO definitions, tasks or example titles; the index
+  step attaches them from the cached (or freshly downloaded) ILO file. (2026-10-21)
 - Q: Does the benchmark run in the normal test suite? → A: No. The default suite stays fast and
   offline with a tiny fixture index; a separately marked benchmark run gates changes to data and
   search.
@@ -161,7 +164,8 @@ previous run.
 2. **Given** a completed build, **When** the build step is re-run with cached downloads, **Then** the
    outputs are byte-identical.
 3. **Given** a fresh clone with the committed processed data, **When** the index step runs, **Then**
-   it rebuilds the index without fetching from SCB, JobTech, ILO or ESCO.
+   it rebuilds the index, fetching only the ILO definitions file and nothing from SCB, JobTech or
+   ESCO.
 4. **Given** a source is unreachable, **When** fetch runs, **Then** it fails with a message naming the
    source and URL, and leaves earlier cached data intact.
 
@@ -225,7 +229,8 @@ previous run.
 **Search index**
 
 - **FR-014**: The system MUST build a single portable index file, rebuildable from the committed
-  processed data alone, that ranks occupations against a
+  processed data plus one download of the ILO ISCO-08 definitions file (ILO text is not committed;
+  decision 2026-10-21), that ranks occupations against a
   query by each of three methods: a Swedish-centred meaning model, a multilingual meaning model, and
   keyword matching over Swedish and English text.
 - **FR-015**: The index MUST also return a fused ranking that combines the three methods.

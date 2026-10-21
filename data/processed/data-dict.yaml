@@ -1,0 +1,426 @@
+$version: 0.1.0
+$learn_more: https://data-dict.tidyverse.org/
+
+name: lonekrav_processed
+label: Lönekrav processed data (Feature 001)
+description: >
+  Canonical SSYK 2012 occupation profiles and official Swedish salary statistics for every
+  4-digit occupation, built by `uv run lonekrav-etl build` from SCB, JobTech, ESCO and the SCB
+  SSYK 2012 publication. Salary figures are copied from SCB without imputation; a missing value
+  means SCB suppressed or did not publish it.
+details: >
+  Sources and licences. SCB statistical database and SSYK files: CC0 1.0 (SCB's terms ask that
+  statistics SCB publishes for another agency credit that agency; the salary tables name
+  Medlingsinstitutet, the Swedish National Mediation Office, as producer, so credit
+  "Medlingsinstitutet / SCB lönestrukturstatistik (AM0110)"). JobTech Taxonomy
+  (Arbetsförmedlingen): published as open data; the exact licence was not found on 2026-10-21
+  and is recorded here as unconfirmed. ESCO v1.2.1 (European Commission): reusable under
+  Commission Decision 2011/833/EU with attribution ("ESCO, European Commission"); ESCO's own
+  licence page was not found and the general Commission reuse terms are assumed. ILO ISCO-08
+  definitions: ILO reserves reproduction rights, so ILO definition and task texts and ILO example
+  titles are NOT stored in these files; they are attached only when the search index is built
+  (decision 2026-10-21). ILO unit-group titles are used as the English title of the three
+  military codes only. Legal flags cite SFS 2026:605 (Swedish public law, not subject to
+  copyright).
+  The SCB PxWeb API allows 10 calls per 10 seconds and caps the number of values per call;
+  the age-band table for 2014-2022 is close to that cap, so a fetch that starts failing on it
+  should be split by year.
+origin: ../../src/lonekrav/etl/pipeline.py
+version:
+  date: 2026-10-21
+
+tables:
+  - name: salary_distributions
+    label: Monthly salary distribution by occupation and year
+    source:
+      parquet: salary_distributions.parquet
+    description: >
+      One row per SSYK 2012 occupation and year, 2014 to the latest SCB year: all sectors and
+      both sexes combined. 429 occupations plus code 0000, the national all-occupations row used
+      for the work-permit threshold (its 2025 median, 38 300 SEK, is the one Migrationsverket
+      uses from 16 June 2026). Codes 0001 (other) and 0002 (unknown) are excluded.
+    details: >
+      "Månadslön" as defined by SCB's salary structure statistics (AM0110); see SCB's
+      documentation for what it includes. All salary values are rounded by SCB to the
+      nearest 100 SEK (verified: every value is a multiple of 100). Each year comes from exactly
+      one SCB table: TAB4265 for 2014-2022 (no confidence intervals published) and TAB5932 for
+      2023 onwards.
+    constraints:
+      - assert: p10 <= p25 AND p25 <= median AND median <= p75 AND p75 <= p90
+        description: Percentiles are ordered wherever all five are published. The build fails
+          rather than reorder them.
+      - assert: reference_year = year
+      - assert: year >= 2023 OR mean_ci95 IS NULL
+        description: TAB4265 (2014-2022) publishes no confidence intervals.
+    columns:
+      - name: code
+        label: SSYK 2012 code
+        type: string
+        constraints: [primary_key]
+        description: >
+          Four-digit SSYK 2012 occupation code, stored as a string because codes have leading
+          zeros (military codes 0110, 0210, 0310). 0000 is all occupations.
+        examples: ["0000", "0110", "2512", "5343", "9629"]
+      - name: year
+        type: number(ordinal)
+        constraints: [primary_key]
+        description: Survey year of SCB's salary structure statistics. SCB publishes each year the following June.
+        range: [2014, 2025]
+      - name: mean
+        label: Mean monthly salary
+        type: number(quantity)
+        units: SEK per month
+        description: Mean monthly salary. Null where SCB suppressed the cell (~8% of rows).
+        range: [18800, 158900]
+      - name: median
+        type: number(quantity)
+        units: SEK per month
+        description: Median monthly salary. Null where suppressed (~10%).
+        range: [19400, 129000]
+      - name: p10
+        label: 10th percentile
+        type: number(quantity)
+        units: SEK per month
+        description: >
+          10th percentile, the figure closest to an entry-level benchmark. Suppressed more often
+          than the median (~14% of rows) because small occupations cannot publish tails.
+        range: [13100, 93500]
+      - name: p25
+        type: number(quantity)
+        units: SEK per month
+        description: 25th percentile. Null where suppressed (~13%).
+        range: [17600, 104000]
+      - name: p75
+        type: number(quantity)
+        units: SEK per month
+        range: [20200, 191800]
+      - name: p90
+        type: number(quantity)
+        units: SEK per month
+        range: [21200, 287900]
+      - name: mean_ci95
+        type: number(quantity)
+        units: SEK per month
+        description: >
+          Half-width of SCB's 95% confidence interval for the mean (mean ± this). 2023 onwards
+          only. 0 appears for 26 rows, all state-sector occupations such as officers and judges;
+          read as a full count with no sampling error (inferred from the data, not confirmed in
+          SCB documentation).
+        range: [0, 21690]
+      - name: median_ci95
+        type: number(quantity)
+        units: SEK per month
+        description: Half-width of the 95% confidence interval for the median. 2023 onwards.
+        range: [0, 14240]
+      - name: p10_ci95
+        type: number(quantity)
+        units: SEK per month
+        range: [0, 11650]
+      - name: p25_ci95
+        type: number(quantity)
+        units: SEK per month
+        range: [0, 16020]
+      - name: p75_ci95
+        type: number(quantity)
+        units: SEK per month
+        range: [0, 20380]
+      - name: p90_ci95
+        type: number(quantity)
+        units: SEK per month
+        range: [0, 23640]
+      - name: source_table
+        type: enum
+        constraints: [required]
+        values:
+          TAB4265: Genomsnittlig månadslön och lönespridning ... År 2014-2022
+          TAB5932: Genomsnittlig månadslön och lönespridning ... År 2023-2025
+      - name: reference_year
+        type: number(ordinal)
+        constraints: [required]
+        description: The SCB reference year the figures describe. Always equal to `year`; kept so every payload names its year (constitution, principle II).
+        range: [2014, 2025]
+      - name: fetched_at
+        type: datetime
+        time_zone: UTC
+        constraints: [required]
+        description: When the raw SCB table was downloaded (from its .meta.json), not when the build ran, so rebuilds from cache are byte-identical.
+        range: [2026-10-20T20:54:47, 2026-10-20T20:54:50]
+
+  - name: salary_age
+    label: Mean monthly salary and headcount by age band
+    source:
+      parquet: salary_age.parquet
+    description: >
+      One row per occupation, year and age band, all sectors and both sexes combined. SCB
+      publishes only means (not percentiles) by age, so age-adjusted distributions computed later
+      are estimates and must be flagged `is_simulated`.
+    details: >
+      Mean salaries are rounded to 100 SEK. Headcounts are SCB's weighted estimates of the number
+      of employees; they are not all multiples of 100. The SCB band 65-66 is dropped because SCB
+      replaced it with 65-68; `all` is SCB's "totalt ålder". 2014-2022 come from TAB4264 (no
+      confidence intervals), 2023 onwards from TAB5844.
+    constraints:
+      - assert: reference_year = year
+    columns:
+      - name: code
+        type: string
+        constraints: [primary_key]
+        examples: ["0000", "0110", "2512", "5343", "9629"]
+      - name: year
+        type: number(ordinal)
+        constraints: [primary_key]
+        range: [2014, 2025]
+      - name: age_band
+        type: enum
+        constraints: [primary_key]
+        values: ["18-24", "25-34", "35-44", "45-54", "55-64", "65-68", "all"]
+      - name: mean_monthly
+        type: number(quantity)
+        units: SEK per month
+        description: Mean monthly salary in the band. Null where suppressed (~35% of rows; young and old bands of small occupations are often suppressed).
+        range: [14900, 182600]
+      - name: headcount
+        type: number(quantity)
+        units: employees
+        description: Estimated number of employees in the band. Suppressed more often than the mean (~50%); a null headcount does not mean zero employees.
+        range: [100, 4616500]
+      - name: mean_ci95
+        type: number(quantity)
+        units: SEK per month
+        description: Half-width of the 95% confidence interval for the mean. 2023 onwards.
+        range: [0, 25400]
+      - name: source_table
+        type: enum
+        constraints: [required]
+        values:
+          TAB4264: Genomsnittlig grund- och månadslön ... efter ... ålder. År 2014-2022
+          TAB5844: Genomsnittlig grund- och månadslön ... efter ... ålder. År 2023-2025
+      - name: reference_year
+        type: number(ordinal)
+        constraints: [required]
+        range: [2014, 2025]
+      - name: fetched_at
+        type: datetime
+        time_zone: UTC
+        constraints: [required]
+        range: [2026-10-20T20:54:52, 2026-10-20T20:55:38]
+
+  - name: ssyk_profiles
+    label: Occupation profiles (ssyk_profiles.json)
+    description: >
+      One JSON object per SSYK 2012 occupation (429), sorted by code: titles, descriptions and
+      synonyms in Swedish and English with the source of each, ISCO-08 links and legal flags.
+      Not Parquet, so only the structure here is checked, not the values. Fields at their default
+      value (empty list, null, false) are omitted from the file.
+    details: >
+      Source precedence: SCB, then JobTech, then ESCO. Swedish descriptions come from JobTech's
+      definition (SCB's own wording) or, for the 54 codes JobTech lacks or merges, from the SCB
+      publication SSYK 2012 (MIS 2012:1). ESCO labels are attached only through JobTech's exact,
+      close and narrow occupation-name matches; broad matches are excluded because a broader ESCO
+      concept can span other SSYK codes. ILO text is not stored (see dataset details).
+    columns:
+      - name: code
+        type: string
+        constraints: [primary_key]
+        examples: ["0110", "1212", "2512", "5343", "9210"]
+      - name: title_sv
+        type: string
+        constraints: [required]
+        description: Official Swedish title from the SCB structure workbook; for the three military codes, the salary-table label.
+        examples: ["Mjukvaru- och systemutvecklare m.fl.", "Officerare"]
+      - name: title_en
+        type: string
+        constraints: [required]
+        description: Official SCB English title; ILO ISCO-08 title for 0110, 0210 and 0310.
+        examples: ["Software- and system developers", "Commissioned Armed Forces Officers"]
+      - name: isco_codes
+        type: list(string)
+        description: ISCO-08 unit groups from SCB's SSYK-ISCO key. One SSYK code can map to several (2512 maps to five).
+        examples: ["2512", "0110", "1211"]
+      - name: jobtech_concept_id
+        type: string
+        description: JobTech Taxonomy concept id; absent for 4430, 5322, 5324 and 7619, which JobTech lacks.
+        examples: ["DJh5_yyF_hEM"]
+      - name: jobtech_shared
+        type: boolean
+        description: True for the 50 manager codes JobTech merges into one level-0 code (1211 and 1212 into 1210).
+      - name: descriptions
+        type: list(struct)
+        fields:
+          - name: lang
+            type: enum
+            values: [sv, en]
+          - name: kind
+            type: enum
+            values: [definition, tasks, included_occupations, excluded]
+          - name: text
+            type: string
+            examples: ["Analyserar, designar och utvecklar IT-system eller delar av system."]
+          - name: source
+            type: string
+            description: A SourceRef object (source, ref, url).
+            examples: ["jobtech", "scb_mis2012", "esco"]
+          - name: isco_code
+            type: string
+            examples: ["2512"]
+          - name: shared_with
+            type: list(string)
+            examples: ["1211"]
+      - name: synonyms
+        type: list(struct)
+        description: Job titles in Swedish and English, deduplicated per language case-insensitively, official sources first.
+        fields:
+          - name: lang
+            type: enum
+            values: [sv, en]
+          - name: label
+            type: string
+            examples: ["Backend-utvecklare", "software engineer"]
+          - name: source
+            type: string
+            description: A SourceRef object. ESCO synonyms share one ESCO dataset reference; the occupation is in esco_uri.
+            examples: ["scb_title_index", "jobtech", "esco"]
+          - name: jobtech_id
+            type: string
+            examples: ["7wdX_4rv_33z"]
+          - name: esco_uri
+            type: string
+            examples: ["http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1"]
+          - name: match_type
+            type: enum
+            values: [exact, close, narrow]
+      - name: legal_flags
+        type: list(struct)
+        description: Occupation rules from SFS 2026:605 (utlänningsförordningen 5 kap. 5-6 §§), effective 2026-06-01.
+        fields:
+          - name: kind
+            type: enum
+            values:
+              exempt_75: the 90% salary requirement does not apply; 75% of the median applies (27 codes)
+              banned: work permits may not be granted (5343 personal assistants)
+              partially_banned: banned for part of the code (9210, forest berry pickers only)
+          - name: note
+            type: string
+            examples: ["forest berry pickers only (bärplockare i skog)"]
+          - name: effective_from
+            type: date
+            range: [2026-06-01, 2026-06-01]
+          - name: source
+            type: string
+            examples: ["SFS 2026:605, 5 kap. 6 §"]
+      - name: sources
+        type: list(string)
+        description: SourceRef objects for every source that contributed to the profile, including each ESCO occupation URI.
+        examples: ["scb_structure", "jobtech", "esco"]
+
+  - name: discrepancies
+    label: Source coverage per code (discrepancies.csv)
+    description: >
+      One row per occupation in the salary tables (429), saying which official sources contain
+      the code. CSV for readable diffs; structure only. Booleans are written as True/False.
+    columns:
+      - name: code
+        type: string
+        constraints: [primary_key]
+        examples: ["0110", "1212", "5322"]
+      - name: in_structure
+        type: boolean
+        description: In the SCB structure workbook (426 codes; the three military codes are missing).
+      - name: in_english
+        type: boolean
+      - name: in_salary_table
+        type: boolean
+        description: Always true; the salary table defines the canonical code set.
+      - name: in_isco_key
+        type: boolean
+      - name: in_title_index
+        type: boolean
+      - name: in_jobtech
+        type: boolean
+        description: JobTech publishes this exact code (400 codes in total).
+      - name: jobtech_code
+        type: string
+        description: The JobTech code this one is merged into, empty when not merged.
+        examples: ["1210", "1310"]
+      - name: note
+        type: string
+        examples: ["JobTech merges 1211, 1212 into 1210", "not in JobTech taxonomy"]
+
+  - name: benchmark_generated
+    label: Generated benchmark queries (benchmark_generated.json)
+    description: >
+      One title query per JobTech occupation group, sampled with a fixed seed: Swedish text from
+      a JobTech occupation-name, English text from its exact or close ESCO match where one
+      exists. expected_codes is the official SSYK code (both levels for merged manager codes).
+      Titles equal to an official SSYK title, or shared with other occupations, are never
+      sampled.
+    columns:
+      - name: id
+        type: string
+        constraints: [primary_key]
+        examples: ["gen-2512", "gen-1210"]
+      - name: origin
+        type: enum
+        values: [generated]
+      - name: type
+        type: enum
+        values: [title]
+      - name: text_en
+        type: string
+        description: Null for about 45% of queries, which have no exact or close ESCO match.
+        examples: ["software developer"]
+      - name: text_sv
+        type: string
+        constraints: [required]
+        examples: ["Backend-utvecklare"]
+      - name: expected_codes
+        type: list(string)
+        examples: ["2512", "1211"]
+
+  - name: benchmark_holdout
+    label: Titles kept out of the index (benchmark_holdout.json)
+    description: >
+      Case-folded titles used as generated benchmark queries, including the alternative labels of
+      the same occupation-name and the English ESCO label used. They are removed from every chunk
+      before indexing, so the benchmark measures matching rather than lookup.
+    columns:
+      - name: title
+        type: string
+        examples: ["backend-utvecklare", "software developer"]
+
+  - name: benchmark_results
+    label: Cross-lingual benchmark results (benchmark_results.json)
+    description: >
+      Written by `lonekrav-etl benchmark`. Recall@1, Recall@5 and MRR per method (kblab, harrier,
+      bm25, fused), language and query set, plus the English-minus-Swedish Recall@5 gap. The
+      `all_paired` set holds only queries that exist in both languages, so the gap compares like
+      with like.
+    columns:
+      - name: run_at
+        type: datetime
+        time_zone: UTC
+        range: [2026-10-21T00:00:00, .inf]
+      - name: models
+        type: string
+        description: Hugging Face model id with cache revision per dense model.
+        examples: ["KBLab/sentence-bert-swedish-cased@1234abcd5678"]
+      - name: metrics
+        type: string
+        description: Nested object metrics[method][lang][set] = {recall_at_1, recall_at_5, mrr, n}.
+        examples: ["fused.en.all_paired.recall_at_5"]
+
+glossary:
+  SSYK 2012: >
+    Standard för svensk yrkesklassificering, Sweden's occupational classification (SCB). The
+    4-digit level has 429 codes; Migrationsverket and trade unions judge salary offers against
+    the code written on the employment offer.
+  ISCO-08: The ILO's International Standard Classification of Occupations, which SSYK 2012 maps onto.
+  ESCO: European Skills, Competences, Qualifications and Occupations, the EU's multilingual occupation taxonomy built on ISCO-08.
+  JobTech: Arbetsförmedlingen's open-data programme; its Taxonomy links job titles to SSYK codes.
+  nivå 1 / nivå 2: >
+    SSYK splits most manager groups by level. Nivå 1 is a function or middle manager reporting to
+    the CEO; nivå 2 is an operational manager reporting to a middle manager.
+  MIS 2012:1: SCB's publication describing SSYK 2012, the source of descriptions for codes JobTech lacks.
+  suppressed: SCB withholds a cell (status "..") when too few observations support it. Stored as null, never estimated.
+  Medlingsinstitutet: The Swedish National Mediation Office, which produces the salary structure statistics that SCB publishes.
+  SFS 2026:605: The ordinance amending utlänningsförordningen that set the occupation exemptions and bans from 1 June 2026.

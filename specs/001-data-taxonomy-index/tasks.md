@@ -68,8 +68,8 @@ and a discrepancy report.
 - [X] T023 [P] [US1] `src/lonekrav/etl/esco.py`: fetch per URI for en and sv, cached under `data/raw/esco/`, polite rate limit (T016)
 - [X] T024 [P] [US1] `src/lonekrav/etl/mis2012.py`: description-section parser used only for gap codes (T017)
 - [X] T025 [US1] `src/lonekrav/core/profiles.py`: assemble profiles from parsed sources with source precedence (SCB, then JobTech, ILO, ESCO), synonym dedup, and `load_profiles()`; write `ssyk_profiles.json` and `discrepancies.csv` (T018)
-- [ ] T026 [US1] Wire `fetch` (scb_files, jobtech, ilo, esco, mis2012) and the profile half of `build` into `src/lonekrav/etl/cli.py`
-- [ ] T027 [US1] Run for real: `lonekrav-etl fetch && lonekrav-etl build`, then quickstart checks 1–4. Paste the output into the PR notes. Any bug found becomes a failing test first.
+- [X] T026 [US1] Wire `fetch` (scb_files, jobtech, ilo, esco, mis2012) and the profile half of `build` into `src/lonekrav/etl/cli.py`
+- [X] T027 [US1] Run for real: `lonekrav-etl fetch && lonekrav-etl build`, then quickstart checks 1–4. Paste the output into the PR notes. Any bug found becomes a failing test first.
 
 ---
 
@@ -89,8 +89,8 @@ and a discrepancy report.
 
 - [X] T031 [US2] `src/lonekrav/etl/scb_pxweb.py`: GET json-stat2 for TAB4265, TAB5932, TAB4264 and TAB5844 with Sektor=0 and Kon=1+2, all codes and years (T028)
 - [X] T032 [US2] `src/lonekrav/core/salary.py`: json-stat2 to SalaryDistribution and AgeBandSalary, validation, `load_distributions()` and `load_age_bands()`; write the parquet files (T029, T030)
-- [ ] T033 [US2] Wire `fetch --only scb_pxweb` and the salary half of `build` into the CLI
-- [ ] T034 [US2] Run for real: quickstart checks 5–8, then check 9 by comparing 10 codes against statistikdatabasen.scb.se by hand (record the codes and URLs in the PR)
+- [X] T033 [US2] Wire `fetch --only scb_pxweb` and the salary half of `build` into the CLI
+- [X] T034 [US2] Run for real: quickstart checks 5–8, then check 9 by comparing 10 codes against statistikdatabasen.scb.se by hand (record the codes and URLs in the PR)
 
 ---
 
@@ -147,14 +147,14 @@ and a discrepancy report.
 
 - [X] T052 [P] [US5] `tests/unit/test_measure.py`: the measurement writer renders the markdown table from a dict of fake results
 - [X] T053 [US5] `src/lonekrav/etl/measure.py` plus the `measure-models` subcommand: run each model fp32 (and Harrier bf16 for comparison) and regenerate `references/embedding-benchmark.md` (T052)
-- [ ] T054 [US5] `tests/integration/test_idempotent.py`: build twice from fixtures gives byte-identical files; build with `OPENROUTER_KEY` unset succeeds
+- [X] T054 [US5] `tests/integration/test_idempotent.py`: build twice from fixtures gives byte-identical files; build with `OPENROUTER_KEY` unset succeeds
 - [ ] T055 [US5] Run for real: delete `data/processed/*` and the index, run all steps, time each one against SC-007, and run quickstart checks 10 and 11
 
 ---
 
 ## Phase 8: Polish
 
-- [ ] T056 Write `data/processed/data-dict.yaml` with the data-dict skill: profile it, interview the maintainer on anything guessed, record the licence and attribution for SCB, JobTech, ILO and ESCO (confirm the ESCO wording), and validate against the real files
+- [X] T056 Write `data/processed/data-dict.yaml` with the data-dict skill: profile it, interview the maintainer on anything guessed, record the licence and attribution for SCB, JobTech, ILO and ESCO (confirm the ESCO wording), and validate against the real files
 - [ ] T057 [P] Write `docs/walkthroughs/001-data-pipeline.md` with the walkthrough skill (snippets emitted with sed, never retyped)
 - [ ] T058 [P] Compound step: update `CLAUDE.md` (bf16 gotcha, fixture workflow) and `references/` with any trick worked out; tick the tasks in this file
 - [ ] T059 Run `uv run ruff check .`, `uv run pytest` and `uv run pytest -m benchmark`; open the PR for `001-data-taxonomy-index` with the evidence from T027, T034, T044, T051 and T055

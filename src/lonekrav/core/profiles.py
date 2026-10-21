@@ -54,11 +54,14 @@ class Inputs:
     mis: dict[str, str]
 
 
+ESCO = SourceRef(source="esco", ref="ESCO v1.2.1", url="https://esco.ec.europa.eu/en/use-esco/download")
+
+
 def _esco_ref(uri: str) -> SourceRef:
     return SourceRef(source="esco", ref=uri, url=uri)
 
 
-def _profile(code: str, inp: Inputs, isco_owners: dict[str, list[str]]) -> OccupationProfile:
+def _profile(code: str, inp: Inputs) -> OccupationProfile:
     jt = inp.jobtech_by_scb.get(code)
     shared = bool(jt and jt.shared_with)
     isco = inp.isco_key.get(code) or []
@@ -77,15 +80,8 @@ def _profile(code: str, inp: Inputs, isco_owners: dict[str, list[str]]) -> Occup
         if jt and jt.definition:
             descriptions.append(Text(lang="sv", kind="definition", text=jt.definition,
                                      source=REFS["jobtech"], shared_with=jt.shared_with))
-    for g in ilo_groups:
-        if g.definition:
-            descriptions.append(Text(lang="en", kind="definition", text=g.definition,
-                                     source=REFS["ilo_isco08"], isco_code=g.code))
-        if g.tasks:
-            descriptions.append(Text(lang="en", kind="tasks", text=g.tasks,
-                                     source=REFS["ilo_isco08"], isco_code=g.code))
-    if ilo_groups:
-        sources.append(REFS["ilo_isco08"])
+    if ilo_groups and code not in inp.english:
+        sources.append(REFS["ilo_isco08"])  # English title only (military codes)
     if code in inp.english:
         sources.append(REFS["scb_english"])
     if jt:
@@ -105,12 +101,9 @@ def _profile(code: str, inp: Inputs, isco_owners: dict[str, list[str]]) -> Occup
             esco_seen.append(occ)
             for lang in ("en", "sv"):
                 labels = [occ.label.get(lang)] + occ.alt.get(lang, [])
-                synonyms += [Synonym(lang=lang, label=lab, source=_esco_ref(occ.uri),
-                                     esco_uri=occ.uri, match_type=m.match_type)
+                synonyms += [Synonym(lang=lang, label=lab, source=ESCO, esco_uri=occ.uri,
+                                     match_type=m.match_type)
                              for lab in labels if lab]
-    for g in ilo_groups:
-        if isco_owners.get(g.code) == [code]:  # unambiguous: this ISCO group maps only here
-            synonyms += [Synonym(lang="en", label=t, source=REFS["ilo_isco08"]) for t in g.included]
     for occ in {o.uri: o for o in esco_seen}.values():
         for lang, text in occ.description.items():
             if text:
@@ -138,11 +131,36 @@ def _profile(code: str, inp: Inputs, isco_owners: dict[str, list[str]]) -> Occup
 
 
 def build_profiles(inp: Inputs) -> dict[str, OccupationProfile]:
+    """Profiles as committed to git: no ILO definitions, tasks or titles (ILO reserves
+    reproduction rights; decision 2026-10-21). `attach_ilo` adds them for the index."""
+    return {c: _profile(c, inp) for c in sorted(inp.salary_labels)}
+
+
+def attach_ilo(profiles: dict[str, OccupationProfile], ilo: dict,
+               isco_key: dict[str, list[str]]) -> dict[str, OccupationProfile]:
+    """Add ILO ISCO-08 English definitions, tasks and example titles. Example titles are added
+    only where the ISCO group maps to this one SSYK code, so they cannot point elsewhere."""
     owners: dict[str, list[str]] = defaultdict(list)
-    for code in sorted(inp.salary_labels):
-        for i in inp.isco_key.get(code, []):
+    for code in sorted(profiles):
+        for i in isco_key.get(code, []):
             owners[i].append(code)
-    return {c: _profile(c, inp, owners) for c in sorted(inp.salary_labels)}
+    out = {}
+    for code, p in profiles.items():
+        groups = [ilo[i] for i in p.isco_codes if i in ilo]
+        if not groups:
+            out[code] = p
+            continue
+        ref = REFS["ilo_isco08"]
+        texts = [Text(lang="en", kind=kind, text=text, source=ref, isco_code=g.code)
+                 for g in groups for kind, text in (("definition", g.definition), ("tasks", g.tasks))
+                 if text]
+        titles = [Synonym(lang="en", label=t, source=ref)
+                  for g in groups if owners.get(g.code) == [code] for t in g.included]
+        sources = p.sources if ref in p.sources else [*p.sources, ref]
+        out[code] = p.model_copy(update={"descriptions": [*p.descriptions, *texts],
+                                         "synonyms": dedupe_synonyms([*p.synonyms, *titles]),
+                                         "sources": sources})
+    return out
 
 
 def discrepancies(inp: Inputs) -> list[dict]:
@@ -150,6 +168,14 @@ def discrepancies(inp: Inputs) -> list[dict]:
     rows = []
     for code in sorted(inp.salary_labels):
         jt = by_scb.get(code)
+        if code not in inp.structure:
+            note = "military code: in SCB salary tables and ISCO key, not in the SCB structure workbook"
+        elif jt and jt.code != code:
+            note = f"JobTech merges {', '.join(jt.shared_with)} into {jt.code}"
+        elif code not in inp.jobtech:
+            note = "not in JobTech taxonomy"
+        else:
+            note = ""
         rows.append({
             "code": code,
             "in_structure": code in inp.structure,
@@ -159,14 +185,14 @@ def discrepancies(inp: Inputs) -> list[dict]:
             "in_title_index": code in inp.title_index,
             "in_jobtech": code in inp.jobtech,
             "jobtech_code": jt.code if jt and jt.code != code else "",
-            "note": "",
+            "note": note,
         })
     return rows
 
 
 def write_profiles(profiles: dict[str, OccupationProfile], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    data = [p.model_dump(mode="json") for _, p in sorted(profiles.items())]
+    data = [p.model_dump(mode="json", exclude_defaults=True) for _, p in sorted(profiles.items())]
     path.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n")
 
 

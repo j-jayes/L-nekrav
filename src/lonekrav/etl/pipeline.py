@@ -81,7 +81,9 @@ def holdout_titles(out: Path = PROCESSED) -> set[str]:
     return set(json.loads(p.read_text())) if p.exists() else set()
 
 
-def index(models: list[str], db: Path | None = None, out: Path = PROCESSED) -> None:
+def index(models: list[str], db: Path | None = None, out: Path = PROCESSED,
+          raw: Path = RAW) -> None:
+    """Index the committed profiles plus ILO text (not committed; fetched here if missing)."""
     import time
 
     from lonekrav.core.chunks import chunk_profile
@@ -90,6 +92,8 @@ def index(models: list[str], db: Path | None = None, out: Path = PROCESSED) -> N
 
     held = holdout_titles(out)
     profiles = prof.load_profiles(out / "ssyk_profiles.json")
+    ilo_groups = ilo.parse(ilo.fetch(raw))  # cached after the first download
+    profiles = prof.attach_ilo(profiles, ilo_groups, {c: p.isco_codes for c, p in profiles.items()})
     chunks = [c for p in profiles.values() for c in chunk_profile(p, holdout=held)]
     print(f"index {len(chunks)} chunks from {len(profiles)} profiles ({len(held)} held out)")
     vectors = {}

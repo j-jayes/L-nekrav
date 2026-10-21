@@ -18,7 +18,7 @@ from lonekrav.etl.http import cached_get
 
 URL = ("https://www.scb.se/contentassets/c9d055b6f2114b62bd23c33602b56da5/"
        "ov9999_2012a01_br_x70br1201.pdf")
-ENTRY = re.compile(r"^(\d{4})\s{2,}(\S.*)$")
+ENTRY = re.compile(r"^(\d{4})\s+([A-ZÅÄÖ].*)$")
 HEADING = re.compile(r"^(Yrkesgrupp \d{3}|Huvudgrupp \d{2}|Yrkesområde \d)\b")
 FOOTER = re.compile(r"^(\d+\s+)?Statistiska centralbyrån(\s+\d+)?\s*$")
 

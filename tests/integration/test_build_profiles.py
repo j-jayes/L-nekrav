@@ -1,4 +1,4 @@
-from lonekrav.core.profiles import build_profiles, discrepancies, write_profiles
+from lonekrav.core.profiles import attach_ilo, build_profiles, discrepancies, write_profiles
 from lonekrav.etl import jobtech
 
 FIXTURE_CODES = {"0110", "1211", "1212", "2421", "2512", "3511", "4430", "5322", "5343", "9210"}
@@ -15,8 +15,25 @@ def test_military_code_titles_from_salary_table_and_ilo(inputs):
     assert p.title_en == "Commissioned Armed Forces Officers"
 
 
+def test_committed_profiles_hold_no_ilo_text(inputs):
+    """ILO reserves reproduction rights for ISCO-08 definitions (decision 2026-10-21)."""
+    for p in build_profiles(inputs).values():
+        assert all(d.source.source != "ilo_isco08" for d in p.descriptions)
+        assert all(s.source.source != "ilo_isco08" for s in p.synonyms)
+
+
+def test_attach_ilo_adds_definitions_tasks_and_unambiguous_titles(inputs):
+    profiles = attach_ilo(build_profiles(inputs), inputs.ilo, inputs.isco_key)
+    p = profiles["2512"]
+    ilo_texts = [d for d in p.descriptions if d.source.source == "ilo_isco08"]
+    assert {d.isco_code for d in ilo_texts} >= {"2512"}
+    assert {d.kind for d in ilo_texts} == {"definition", "tasks"}
+    assert any(s.source.source == "ilo_isco08" for s in profiles["2421"].synonyms)
+    assert any(s.source == "ilo_isco08" for s in p.sources)
+
+
 def test_2512_profile(inputs):
-    p = build_profiles(inputs)["2512"]
+    p = attach_ilo(build_profiles(inputs), inputs.ilo, inputs.isco_key)["2512"]
     assert p.legal_flags == []
     assert p.isco_codes == ["2511", "2512", "2513", "2514", "2521"]
     assert {d.lang for d in p.descriptions} == {"sv", "en"}
@@ -46,7 +63,7 @@ def test_code_missing_from_jobtech_uses_mis(inputs):
 def test_missing_ilo_text_still_builds_and_records_absence(inputs):
     for isco in inputs.isco_key["5322"]:
         inputs.ilo.pop(isco, None)
-    p = build_profiles(inputs)["5322"]
+    p = attach_ilo(build_profiles(inputs), inputs.ilo, inputs.isco_key)["5322"]
     assert all(s.source != "ilo_isco08" for s in p.sources)
     assert p.title_en  # SCB English title still present
 
@@ -85,3 +102,11 @@ def test_esco_occupation_reached_only_by_broad_match_is_not_used(inputs):
     p = build_profiles(inputs)["2512"]
     assert all(s.esco_uri != uri for s in p.synonyms)
     assert all(src.ref != uri for src in p.sources)
+
+
+def test_discrepancy_notes_explain_each_gap(inputs):
+    rows = {r["code"]: r for r in discrepancies(inputs)}
+    assert rows["0110"]["note"] == "military code: in SCB salary tables and ISCO key, not in the SCB structure workbook"
+    assert rows["1212"]["note"] == "JobTech merges 1211, 1212 into 1210"
+    assert rows["5322"]["note"] == "not in JobTech taxonomy"
+    assert rows["2512"]["note"] == ""
