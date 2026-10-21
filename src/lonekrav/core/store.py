@@ -9,8 +9,13 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+# isort: off
+# torch must load before pymilvus: faiss (inside Milvus Lite) and torch each bundle libomp on
+# macOS, and if faiss's loads first the first torch operation segfaults.
+import torch  # noqa: F401
 import numpy as np
 from pymilvus import DataType, Function, FunctionType, MilvusClient
+# isort: on
 
 from lonekrav.core.chunks import MAX_CHARS, Chunk
 
@@ -31,6 +36,8 @@ class Store:
             Path(self.uri).parent.mkdir(parents=True, exist_ok=True)
         self.client = MilvusClient(self.uri)
         self.dims = dims or {}
+        if self.client.has_collection(COLLECTION):
+            self.client.load_collection(COLLECTION)  # a reopened index starts "released"
 
     def create(self) -> None:
         if self.client.has_collection(COLLECTION):

@@ -7,6 +7,7 @@ RRFRanker would fuse chunk lists, which is the wrong unit (research R7).
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
+from functools import cache
 
 from pydantic import BaseModel
 
@@ -75,6 +76,14 @@ def fuse(per_method: Mapping[str, list[tuple[str, ChunkHit]]], k: int = 5) -> li
     return out
 
 
+@cache
+def _titles() -> dict[str, tuple[str, str]]:
+    """Titles for display, read once per process (the profiles file is ~19 MB)."""
+    from lonekrav.core import profiles
+
+    return {c: (p.title_sv, p.title_en) for c, p in profiles.load_profiles().items()}
+
+
 def search(
     query: str,
     *,
@@ -95,10 +104,7 @@ def search(
             raw = store.search_dense(m, emb.encode_queries([query])[0], POOL)
         per[m] = reduce_to_codes([ChunkHit(**h) for h in raw])
     hits = fuse(per, k=k)
-    if titles is None:
-        from lonekrav.core.profiles import load_profiles
-
-        titles = {c: (p.title_sv, p.title_en) for c, p in load_profiles().items()}
+    titles = _titles() if titles is None else titles
     for h in hits:
         h.title_sv, h.title_en = titles.get(h.code, ("", ""))
     return hits
