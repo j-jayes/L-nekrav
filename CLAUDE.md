@@ -115,3 +115,20 @@ Rules that are specific to this project:
   does not match the real duties.
 - The OpenRouter key is `OPENROUTER_KEY` in `.env` (gitignored). Anything that needs it must be
   skippable without it.
+
+Things worked out once (Feature 001) — reuse, don't rediscover:
+
+- **Fixtures** come from `scripts/cut_fixtures.py`: real slices of every source, cut before any
+  parser exists. Add a code to its `CODES` list rather than hand-writing fixture data.
+- **Milvus Lite**: `references/milvus_lite_hybrid.py` is the working pattern. The `.db` path is a
+  directory, not a file; BM25 distances come back negative (`core.store.bm25_score`).
+- **Harrier must load in fp32 on CPU**; its bf16 checkpoint is ~10× slower
+  (`references/embedding-benchmark.md`, regenerate with `lonekrav-etl measure-models`).
+- **Live sources break in ways fixtures do not**: ESCO serves 404s and permanent 500s for some
+  linked occupations; SCB's SSYK publication prints some codes with one space. Run the real
+  `fetch` and `build` before trusting a parser, and turn each surprise into a test.
+- **ILO ISCO-08 text is never committed** (ILO reserves reproduction rights); `attach_ilo` adds it
+  at index time. Salary tables must credit Medlingsinstitutet (see `data/processed/data-dict.yaml`).
+- **Data dictionary**: validate with `data-dict validate-data data/processed/data-dict.yaml`
+  (install: `cargo install --locked --git https://github.com/tidyverse/data-dict data-dict-cli`).
+- The shell condenses pytest output; use `rtk proxy uv run pytest -q` to see the summary line.
