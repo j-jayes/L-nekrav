@@ -85,3 +85,19 @@ def test_skip_list_is_saved_even_when_fetch_aborts(tmp_path, monkeypatch):
         esco.fetch(tmp_path, ["http://esco/gone", "http://esco/down"], delay=0)
     import json
     assert json.loads((tmp_path / "esco" / "missing.json").read_text()) == ["http://esco/gone"]
+
+
+def test_load_skips_uris_recorded_as_missing(fixtures, tmp_path):
+    """Copilot review on PR #1: a URI that 404s on `fetch --force` keeps its old cached file;
+    the build must still leave it out, as a fresh-cache build would."""
+    import shutil
+
+    uris = []
+    for f in sorted((fixtures / "esco").glob("*.json"))[:2]:
+        uri = json.loads(f.read_text())["uri"]
+        dest = esco.path_for(tmp_path, uri)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(f, dest)
+        uris.append(uri)
+    (tmp_path / "esco" / "missing.json").write_text(json.dumps([uris[1]]))
+    assert list(esco.load(tmp_path, [*uris, "http://esco/never-fetched"])) == [uris[0]]

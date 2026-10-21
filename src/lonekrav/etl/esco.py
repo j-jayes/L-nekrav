@@ -80,6 +80,15 @@ def fetch(raw: Path, uris: list[str], force: bool = False, delay: float = 0.1) -
     return FetchResult(paths=paths, missing=sorted(missing))
 
 
+def load(raw: Path, uris: list[str]) -> dict[str, Occupation]:
+    """Parse the cached occupations, leaving out any recorded in `missing.json`: after a forced
+    re-fetch a 404 keeps the old file, but the occupation is gone from ESCO."""
+    known = raw / "esco" / "missing.json"
+    missing = set(json.loads(known.read_text())) if known.exists() else set()
+    return {u: parse(p) for u in uris
+            if u not in missing and (p := path_for(raw, u)).exists()}
+
+
 def parse(path: Path) -> Occupation:
     d = json.loads(path.read_text())
     desc = d.get("description") or {}

@@ -37,11 +37,6 @@ def fetch(only: list[str] | None = None, force: bool = False, raw: Path = RAW) -
 def load_inputs(raw: Path = RAW) -> prof.Inputs:
     labels = scb_pxweb.occupation_labels(raw / "pxweb" / "TAB5932.json")
     groups = jobtech.parse(raw / "jobtech" / "ssyk_level_4.json")
-    occs = {}
-    for uri in esco_uris(groups):
-        path = esco.path_for(raw, uri)
-        if path.exists():
-            occs[uri] = esco.parse(path)
     s = raw / "scb"
     return prof.Inputs(
         salary_labels=labels,
@@ -52,7 +47,7 @@ def load_inputs(raw: Path = RAW) -> prof.Inputs:
         jobtech=groups,
         jobtech_by_scb=jobtech.expand_merged(groups, set(labels)),
         ilo=ilo.parse(raw / "ilo" / "isco08_en.xlsx"),
-        esco=occs,
+        esco=esco.load(raw, esco_uris(groups)),
         mis=mis2012.parse(mis2012.load_pages(raw / "mis2012" / "pages.json")),
     )
 
