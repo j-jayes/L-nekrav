@@ -108,3 +108,15 @@ def search(
     for h in hits:
         h.title_sv, h.title_en = titles.get(h.code, ("", ""))
     return hits
+
+
+class SearchEngine:
+    """Everything a search needs, loaded once per process: the store, the embedders and titles."""
+
+    def __init__(self, store: Store, embedders: Mapping[str, Embedder],
+                 titles: Mapping[str, tuple[str, str]]):
+        self.store, self.embedders, self.titles = store, dict(embedders), titles
+
+    @classmethod
+    def load(cls) -> SearchEngine:
+        return cls(store=Store(), embedders={"kblab": get_embedder("kblab")}, titles=_titles())

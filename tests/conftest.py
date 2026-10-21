@@ -2,7 +2,11 @@ from pathlib import Path
 
 import pytest
 
-from lonekrav.core.profiles import Inputs
+from lonekrav.core.chunks import chunk_profile
+from lonekrav.core.embeddings import FakeEmbedder
+from lonekrav.core.profiles import Inputs, build_profiles
+from lonekrav.core.store import Store
+from lonekrav.core.text import profile_vocab
 from lonekrav.etl import esco, ilo, jobtech, mis2012, scb_files, scb_pxweb
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -30,3 +34,41 @@ def inputs(fixtures) -> Inputs:
         esco={o.uri: o for o in map(esco.parse, sorted((f / "esco").glob("*.json")))},
         mis=mis2012.parse(mis2012.load_pages(f / "mis2012/pages.json")),
     )
+
+
+def _build_index(profiles, db):
+    emb = FakeEmbedder(dim=128, name="kblab")
+    chunks = [c for p in profiles.values() for c in chunk_profile(p)]
+    store = Store(db, dims={"kblab": emb.dim}, vocab=profile_vocab(profiles.values()))
+    store.create()
+    store.insert(chunks, {"kblab": emb.encode_documents([c.text for c in chunks])})
+    titles = {c: (p.title_sv, p.title_en) for c, p in profiles.items()}
+    return store, {"kblab": emb}, titles, len(chunks)
+
+
+@pytest.fixture
+def build_index():
+    """Index fixture profiles with the FakeEmbedder: (store, embedders, titles, n_chunks)."""
+    return _build_index
+
+
+@pytest.fixture
+def fixture_engine(inputs, tmp_path):
+    """A SearchEngine over the fixture index, with the FakeEmbedder standing in for KBLab."""
+    from lonekrav.core.search import SearchEngine
+
+    profiles = build_profiles(inputs)
+    store, embedders, titles, _ = _build_index(profiles, tmp_path / "api.db")
+    return SearchEngine(store=store, embedders=embedders, titles=titles), profiles
+
+
+@pytest.fixture
+def api_client(fixture_engine):
+    from fastapi.testclient import TestClient
+
+    from lonekrav.app import create_app
+
+    engine, profiles = fixture_engine
+    with TestClient(create_app(engine=engine, profiles=profiles),
+                    raise_server_exceptions=False) as client:
+        yield client

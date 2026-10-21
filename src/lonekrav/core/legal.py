@@ -8,6 +8,7 @@ them itself, so the yearly June update touches only the YAML file.
 from __future__ import annotations
 
 import datetime as dt
+import itertools
 from decimal import ROUND_HALF_UP, Decimal
 from functools import cache
 from pathlib import Path
@@ -167,7 +168,7 @@ def load_registry(path: Path = REGISTRY_FILE) -> Registry:
     sources = {k: Source(key=k, **v) for k, v in raw["sources"].items()}
     medians = [_with_source("medians", i, r, sources) for i, r in enumerate(raw["medians"])]
     medians.sort(key=lambda r: r["effective_from"])
-    for a, b in zip(medians, medians[1:]):
+    for a, b in itertools.pairwise(medians):
         a["effective_to"] = b["effective_from"] - dt.timedelta(days=1)
     keyed = {name: {k: _with_source(name, k, {"id": k, **v}, sources)
                     for k, v in raw[name].items()}
