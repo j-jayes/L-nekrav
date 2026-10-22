@@ -43,16 +43,31 @@ def _request(message: Message) -> AdvisorRequest | str:
     texts = [t for t in get_text_parts(message.parts) if t.strip()]
     if datas := get_data_parts(message.parts):
         data = dict(datas[0])
-        if texts:
-            data["background"] = "\n\n".join(filter(None, [data.get("background"), *texts]))
+        background = data.get("background")
+        if texts and (background is None or isinstance(background, str)):  # else: let it fail
+            data["background"] = "\n\n".join([background, *texts] if background else texts)
         return AdvisorRequest.model_validate(data)
     return AdText(text="\n\n".join(texts)).text
 
 
+def _values(x) -> list[str]:
+    """Every string and number in one field's value (a scalar or a list of them)."""
+    if isinstance(x, list | tuple):
+        return [v for item in x for v in _values(item)]
+    return [str(x)] if isinstance(x, str | int | float) and not isinstance(x, bool) else []
+
+
 def _invalid(e: ValidationError) -> str:
-    """Field and rule only: pydantic's `input` would echo the request (FR-005)."""
-    return "Invalid input: " + "; ".join(
-        f"{'.'.join(map(str, err['loc'])) or 'message'}: {err['msg']}" for err in e.errors())
+    """Field and rule only (FR-005). pydantic's `input` is dropped, and any value a field
+    validator wrote into its message (unknown exemption ids, say) is cut out of it. Model-level
+    validators get the whole object as input and state rules, so their text is kept."""
+    def message(err) -> str:
+        text = err["msg"]
+        for value in sorted(set(_values(err.get("input"))), key=len, reverse=True):
+            if len(value) > 1:
+                text = text.replace(value, "…")
+        return f"{'.'.join(map(str, err['loc'])) or 'message'}: {text}"
+    return "Invalid input: " + "; ".join(message(err) for err in e.errors())
 
 
 class AdvisorExecutor(AgentExecutor):

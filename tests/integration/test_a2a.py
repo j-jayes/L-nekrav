@@ -236,6 +236,23 @@ def test_request_content_is_not_logged(advisor, fake_model, caplog):  # FR-005
     assert "41234" not in status_text(failed[-1]) and "PRIVATE" not in status_text(failed[-1])
 
 
+def test_validator_messages_do_not_echo_values(advisor, fake_model):  # Copilot review on PR #3
+    offer = OFFER | {"exemptions": ["PRIVATE-AD-TEXT"]}
+    events = stream(advisor(fake_model()), [{"data": {"ad": AD, "offer": offer}}])
+    text = status_text(events[-1])
+    assert kind(events[-1]) == "status:TASK_STATE_FAILED"
+    assert "exemptions" in text and "unknown exemptions" in text and "PRIVATE" not in text
+
+
+@pytest.mark.parametrize("background", [123, 0])
+def test_a_non_string_background_is_rejected_with_text_parts(advisor, fake_model, background):
+    model = fake_model(Reply("Memo.", []))  # Copilot review on PR #3
+    events = stream(advisor(model), [{"data": {"ad": AD, "background": background}},
+                                     {"text": "Also speaks Swedish."}])
+    assert kind(events[-1]) == "status:TASK_STATE_FAILED"
+    assert "background" in status_text(events[-1]) and model.seen == []
+
+
 @pytest.fixture
 def no_key_app(fixture_engine, salaries, monkeypatch):
     from lonekrav.app import create_app
