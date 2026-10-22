@@ -60,11 +60,17 @@ def generate_queries(inputs: Inputs, profiles: dict[str, OccupationProfile],
                      seed: int = SEED) -> tuple[list[BenchmarkQuery], set[str]]:
     """One title query per JobTech group, labelled with its official SSYK code(s).
 
-    Skips official occupation titles, titles that also belong to other occupations, and titles that would still appear in
-    the indexed text of their answer after hold-out (in its title, a description, ILO text or a
-    longer label), since those test lookup rather than retrieval. Returns the queries and the
-    case-folded titles to hold out of the index.
+    Skips official occupation titles, titles that also belong to other occupations, and titles that
+    would still appear in the indexed text of their answer after hold-out (in its title, a
+    description, ILO text or a longer label), since those test lookup rather than retrieval. A
+    slash-joined title is checked and held out part by part, because search tries each part on its
+    own (`search.title_parts`). Returns the queries and the case-folded titles to hold out.
     """
+    from lonekrav.core.search import title_parts
+
+    def alts(label: str) -> list[str]:
+        return [a.casefold().strip() for a in title_parts(label) or [label]]
+
     rng = random.Random(seed)
     official = {p.title_sv.casefold() for p in profiles.values()}
     leaks = _Leaks(attach_ilo(profiles, inputs.ilo, inputs.isco_key))
@@ -76,12 +82,15 @@ def generate_queries(inputs: Inputs, profiles: dict[str, OccupationProfile],
 
         def own(n, *extra):
             return {n.label.casefold().strip(), *(a.casefold().strip() for a in n.alt_labels),
-                    *(e.casefold().strip() for e in extra)}
+                    *alts(n.label), *(e.casefold().strip() for e in extra)}
+
+        def clean(label, owners, held_too, expected=expected):
+            return all(owners.get(a, set()) <= set(expected) and not leaks(a, expected, held_too)
+                       for a in {label.casefold().strip(), *alts(label)})
 
         candidates = [n for n in group.names
-                      if (k := n.label.casefold().strip()) not in official
-                      and owners_sv.get(k, set()) <= set(expected)
-                      and not leaks(n.label, expected, own(n))]
+                      if n.label.casefold().strip() not in official
+                      and clean(n.label, owners_sv, own(n))]
         if not expected or not candidates:
             continue
         name = rng.choice(candidates)
@@ -91,8 +100,7 @@ def generate_queries(inputs: Inputs, profiles: dict[str, OccupationProfile],
             if not occ or m.match_type not in ("exact", "close"):
                 continue
             for label in filter(None, (occ.label.get("en"), *occ.alt.get("en", []))):
-                if (owners_en.get(label.casefold(), set()) <= set(expected)
-                        and not leaks(label, expected, own(name, label))):
+                if clean(label, owners_en, own(name, label, *alts(label))):
                     text_en = label
                     break
             if text_en:
@@ -100,9 +108,9 @@ def generate_queries(inputs: Inputs, profiles: dict[str, OccupationProfile],
         queries.append(BenchmarkQuery(id=f"gen-{jt_code}", origin="generated", type="title",
                                       text_sv=name.label, text_en=text_en,
                                       expected_codes=expected))
-        held |= {name.label.casefold().strip(), *(a.casefold().strip() for a in name.alt_labels)}
+        held |= own(name)
         if text_en:
-            held.add(text_en.casefold().strip())
+            held |= {text_en.casefold().strip(), *alts(text_en)}
     return queries, held
 
 
