@@ -80,6 +80,19 @@ describe("SearchSession", () => {
     expect(last().answer).toBe(FAST);
   });
 
+  it("shows a fast answer for a query that was accurate before the box was cleared", async () => {  // Copilot on PR #4
+    const { calls, session, last } = harness();
+    session.setText("backend");
+    await vi.advanceTimersByTimeAsync(PAUSE_MS);
+    calls[1].resolve(FULL);
+    await flush();
+    session.setText("");
+    session.setText("backend");
+    calls[2].resolve(FAST);
+    await flush();
+    expect(last().answer).toBe(FAST);
+  });
+
   it("parses a pasted ad but not a typed title", () => {
     expect(wantsParseAd("backend developer")).toBe(false);
     expect(wantsParseAd("Backend Developer\nYou will build APIs")).toBe(true);

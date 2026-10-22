@@ -48,7 +48,10 @@ export class SearchSession {
     this.fast?.abort();
     this.full?.abort();
     clearTimeout(this.timer);
-    if (!text.trim()) return this.set({ text, answer: null, answerFor: null, shown: null, refining: false, error: null });
+    if (!text.trim()) {
+      this.fullFor = null;
+      return this.set({ text, answer: null, answerFor: null, shown: null, refining: false, error: null });
+    }
     if (text.length > MAX_TEXT)
       return this.set({ text, refining: false, error: "The text is too long: the limit is 20 000 characters." });
     this.set({ text, refining: true, error: null });

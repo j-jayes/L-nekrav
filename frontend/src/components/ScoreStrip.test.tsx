@@ -14,6 +14,14 @@ it("shows one rank per method, and a method that did not run as not run", () => 
   expect(cells).toEqual([`Swedish model#${fast.ranks.kblab}`, `Keywords#${fast.ranks.bm25}`, "Accurate modelnot run"]);
 });
 
+it("tells a method that ran but did not rank the code from one that did not run", () => {  // Copilot on PR #4
+  const hit = (fixture("search-ad-fast").body as SearchAnswer).hits.find((h) => h.code === "3512")!;
+  expect(hit.ranks.bm25).toBeNull();
+  render(<ScoreStrip hit={hit} />);
+  expect(screen.getByText("Keywords").parentElement).toHaveTextContent("Keywordsnot ranked");
+  expect(screen.getByText("Accurate model").parentElement).toHaveTextContent("Accurate modelnot run");
+});
+
 it("shows the accurate model's rank once it has run", () => {
   render(<ScoreStrip hit={full} />);
   expect(screen.getByText("Accurate model").parentElement).toHaveTextContent(`#${full.ranks.harrier}`);
