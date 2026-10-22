@@ -7,6 +7,7 @@ RRFRanker would fuse chunk lists, which is the wrong unit (research R7).
 from __future__ import annotations
 
 import re
+import threading
 from collections.abc import Callable, Mapping, Sequence
 from functools import cache
 from typing import Literal
@@ -174,6 +175,7 @@ class SearchEngine:
         self.store, self.embedders, self.titles = store, dict(embedders), titles
         self.harrier_loader = harrier_loader or (lambda: get_embedder("harrier"))
         self.low_confidence_cutoff = low_confidence_cutoff
+        self._harrier_lock = threading.Lock()  # sync routes run in worker threads
         self._load_vectors()
 
     @classmethod
@@ -214,11 +216,12 @@ class SearchEngine:
         """Load Harrier for full mode; the reason it is unavailable, or None."""
         if "harrier" not in self._matrix:
             return "the index has no Harrier vectors"
-        if "harrier" not in self.embedders:
-            try:
-                self.embedders["harrier"] = self.harrier_loader()
-            except Exception as e:  # noqa: BLE001 - any load failure degrades to fast mode (FR-014)
-                return f"Harrier could not be loaded ({type(e).__name__})"
+        with self._harrier_lock:  # one load, however many first full requests arrive together
+            if "harrier" not in self.embedders:
+                try:
+                    self.embedders["harrier"] = self.harrier_loader()
+                except Exception as e:  # noqa: BLE001 - any failure degrades to fast mode (FR-014)
+                    return f"Harrier could not be loaded ({type(e).__name__})"
         return None
 
     def chunk_hits(self, queries: Sequence[str], methods: Sequence[str],

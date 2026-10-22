@@ -111,3 +111,29 @@ def test_parse_ad_falls_back_to_the_whole_text(fixture_engine):
 def test_without_parse_ad_there_are_no_passages(fixture_engine):
     engine, _ = fixture_engine
     assert run(SearchRequest(text="mjukvaruutvecklare"), engine).passages is None
+
+
+def test_concurrent_first_full_requests_load_harrier_once(fixture_engine):
+    """Copilot review on PR #2: FastAPI runs sync routes in worker threads, so two first
+    full-mode requests could each load a 2.5 GB model."""
+    import threading
+    import time
+
+    from lonekrav.core.embeddings import FakeEmbedder
+
+    engine, _ = fixture_engine
+    engine._matrix["harrier"] = engine._matrix["kblab"]  # the fixture index has one model
+    calls = []
+
+    def slow_loader():
+        calls.append(1)
+        time.sleep(0.2)
+        return FakeEmbedder(dim=128, name="harrier")
+
+    engine.harrier_loader = slow_loader
+    threads = [threading.Thread(target=engine._ensure_harrier) for _ in range(4)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    assert len(calls) == 1 and "harrier" in engine.embedders
