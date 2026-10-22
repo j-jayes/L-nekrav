@@ -217,7 +217,7 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 - [X] T050 [P] Regenerate `references/api-smoke.md` with `scripts/api_smoke.py`. The only differences allowed are the timestamp and the new `/legal/registry` route, if the smoke script lists routes
 - [X] T051 Write `docs/walkthroughs/004-web-client-docker.md` with the walkthrough skill (snippets emitted with `sed`). Update CLAUDE.md ("Things worked out in Feature 004"; the `/` serving note; the frontend commands) and `references/development-plan.md` ("As built")
 - [X] T052 Run `/speckit-converge`, then run the full gates: `rtk proxy uv run pytest -q`, `uv run pytest -m benchmark -q` (with the server stopped), `npm test`, `npm run build`, and `ruff`
-- [ ] T053 Open the PR with the evidence (screenshots, memory, e2e, smoke). Request a Copilot review with the `gh api` command in memory, then fix or answer every comment
+- [X] T053 Open the PR with the evidence (screenshots, memory, e2e, smoke). Request a Copilot review with the `gh api` command in memory, then fix or answer every comment
 
 ---
 
