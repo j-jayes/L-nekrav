@@ -39,6 +39,7 @@ class ChunkHit(BaseModel):
     kind: str
     text: str
     score: float
+    ilo: bool = False
 
 
 class MatchedChunk(BaseModel):
@@ -67,9 +68,18 @@ def reduce_to_codes(hits: Sequence[ChunkHit]) -> list[tuple[str, ChunkHit]]:
     return sorted(best.items(), key=lambda kv: (-kv[1].score, kv[0]))
 
 
+def displayable(hits: Sequence[ChunkHit]) -> dict[str, ChunkHit]:
+    """Best chunk per occupation that may be shown: ILO ISCO-08 text ranks but is never served."""
+    return dict(reduce_to_codes([h for h in hits if not h.ilo]))
+
+
 def fuse(per_method: Mapping[str, list[tuple[str, ChunkHit]]], k: int = 5,
-         weights: Mapping[str, float] | None = None) -> list[SearchHit]:
+         weights: Mapping[str, float] | None = None,
+         shown: Mapping[str, Mapping[str, ChunkHit]] | None = None) -> list[SearchHit]:
+    """`shown`: per method, the best displayable chunk per code (`displayable`). A code whose
+    ranking chunk is ILO text shows that instead, or its title when there is none."""
     weights = WEIGHTS if weights is None else weights
+    shown = shown or {}
     methods = list(per_method)
     ranks = {m: {code: r for r, (code, _) in enumerate(lst, 1)} for m, lst in per_method.items()}
     chunks = {m: dict(lst) for m, lst in per_method.items()}
@@ -84,6 +94,11 @@ def fuse(per_method: Mapping[str, list[tuple[str, ChunkHit]]], k: int = 5,
     out = []
     for i, (fused, code, top) in enumerate(scored[:k], 1):
         best = chunks[top][code]
+        if best.ilo:
+            by_rank = sorted((m for m in methods if code in ranks[m]), key=lambda m: ranks[m][code])
+            best = next((shown[m][code] for m in by_rank if code in shown.get(m, {})),
+                        ChunkHit(chunk_id=f"{code}:title:0", code=code, kind="title", text="",
+                                 score=0.0))
         out.append(SearchHit(
             code=code,
             scores={m: chunks[m][code].score if code in chunks[m] else None for m in methods},
@@ -114,6 +129,7 @@ def search(
     """Top-k occupations. `methods=("kblab", "bm25")` is the fast path for live typing."""
     store = store or Store()
     per: dict[str, list[tuple[str, ChunkHit]]] = {}
+    shown: dict[str, dict[str, ChunkHit]] = {}
     for m in methods:
         if m == "bm25":
             raw = store.search_bm25(query, POOL)
@@ -121,11 +137,19 @@ def search(
             emb = (embedders or {}).get(m) or get_embedder(m)
             raw = store.search_dense(m, emb.encode_queries([query])[0], POOL)
         per[m] = reduce_to_codes([ChunkHit(**h) for h in raw])
-    hits = fuse(per, k=k)
+        shown[m] = displayable([ChunkHit(**h) for h in raw])
+    hits = fuse(per, k=k, shown=shown)
     titles = _titles() if titles is None else titles
     for h in hits:
         h.title_sv, h.title_en = titles.get(h.code, ("", ""))
+        _title_if_empty(h)
     return hits
+
+
+def _title_if_empty(h: SearchHit) -> None:
+    """The title chunk's text, for a hit whose only matching chunks are ILO text."""
+    if h.matched_chunk.kind == "title" and not h.matched_chunk.text:
+        h.matched_chunk.text = f"{h.title_sv} / {h.title_en}"
 
 
 _SENTENCE = re.compile(r"[.!?\n]")
@@ -244,19 +268,23 @@ class SearchEngine:
         return {m: reduce_to_codes([ChunkHit(**h) for per_q in lists for h in per_q[:pool]])
                 for m, lists in hits.items()}
 
-    def fused(self, per: Mapping[str, list[tuple[str, ChunkHit]]], k: int) -> list[SearchHit]:
-        hits = fuse(per, k=k)
+    def fused(self, per: Mapping[str, list[tuple[str, ChunkHit]]], k: int,
+              shown: Mapping[str, Mapping[str, ChunkHit]] | None = None) -> list[SearchHit]:
+        hits = fuse(per, k=k, shown=shown)
         for h in hits:
             h.title_sv, h.title_en = self.titles.get(h.code, ("", ""))
             h.legal_flags = flags_for(h.code)
+            _title_if_empty(h)
         return hits
 
     def rank(self, text: str, methods: Sequence[str], pool: int,
              k: int) -> tuple[list[SearchHit], list[str] | None]:
         """Fused top-k for a text; a title list searches each part and pools the chunk hits."""
         parts = title_parts(text)
-        per = self.ranking(self.chunk_hits(parts or [text], methods, pool), pool)
-        return self.fused(per, k), parts
+        hits = self.chunk_hits(parts or [text], methods, pool)
+        shown = {m: displayable([ChunkHit(**h) for per_q in lists for h in per_q[:pool]])
+                 for m, lists in hits.items()}
+        return self.fused(self.ranking(hits, pool), k, shown), parts
 
 
 def run(req: SearchRequest, engine: SearchEngine) -> SearchAnswer:

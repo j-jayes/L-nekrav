@@ -23,7 +23,7 @@ from lonekrav.core.text import analyze, profile_vocab
 
 COLLECTION = "occupation_chunks"
 DEFAULT_DB = Path("data/lonekrav_milvus.db")
-FIELDS = ("chunk_id", "code", "kind", "lang", "text")
+FIELDS = ("chunk_id", "code", "kind", "lang", "text", "ilo")
 
 
 def bm25_score(distance: float) -> float:
@@ -58,6 +58,7 @@ class Store:
         s.add_field("kind", DataType.VARCHAR, max_length=16)
         s.add_field("lang", DataType.VARCHAR, max_length=8)
         s.add_field("text", DataType.VARCHAR, max_length=MAX_CHARS * 4)
+        s.add_field("ilo", DataType.BOOL)
         s.add_field("bm25_text", DataType.VARCHAR, max_length=MAX_CHARS * 12,
                     enable_analyzer=True, analyzer_params={"type": "standard"})
         s.add_field("bm25", DataType.SPARSE_FLOAT_VECTOR)

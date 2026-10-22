@@ -153,8 +153,8 @@
         "fused_score": 0.03701996927803379,
         "fused_rank": 2,
         "matched_chunk": {
-          "kind": "desc_en",
-          "text": "(a)  designing and developing database architecture, data structures, tables, dictionaries and naming conventions for information systems projects; (b)  designing, constructing, modifying, integrating, implementing and testing database management systems; (c)  conducting research and providing advice on the selection, application and implementation of database management tools; (d)  developing and implementing data administration policy, documentation, standards and models; (e)  developing policies and procedures for database access and usage and for the backup and recovery of data; (f)  performing the operational establishment and preventive maintenance of backups, recovery procedures, and enforcing security and integrity controls."
+          "kind": "synonyms_sv",
+          "text": "Databasadministratör; Databastekniker; DBA; IT-leveranskoordinator; Nätverksadministratör; Nätverksansvarig; Systemadministratör, dataspecialist; Systemadministratör, datatekniker; databasadministratörer; administratör av databas; databasansvarig; databaskonfigurator; ansvarig för databasen; Systemadministratör; IKT-systemadministratör; system- och nätverksadministratör; system- och nätverkshanterare; nätverkshanterare; administratör; hanterare; systemhanterare; serverhanterare; serveradministratör; nätverksspecialist; nätverkssupport; nätverksingenjör; nätverksadministratörer; nätadministratörer; nätverkschef; nätadministratör"
         },
         "legal_flags": [
           {
@@ -231,8 +231,8 @@
         "fused_score": 0.033138112775639425,
         "fused_rank": 5,
         "matched_chunk": {
-          "kind": "desc_en",
-          "text": "(a)  receiving and registering invoices, forms, records and other documents for data capture; (b)  entering numerical data, codes and text from source material into computer-compatible storage and processing devices; (c)  verifying accuracy and completeness of data and correcting entered data, if needed; (d)  operating bookkeeping and calculating machines; (e)  importing and exporting data between different database systems and software."
+          "kind": "synonyms_en",
+          "text": "data-entry clerk; data steward; data entry inspector; data-entry officer; data entry operator; data entry clerks; data entry officer; statistical clerk; data-entry clerks; engineering assistant; tech assistant; technical assistant; technical support worker; technological assistant; technology assistant; project aide; technical support; technical supporter; project support; technical aide; project supporter; engineering project assistant; project support worker; membership administrator; regional membership administrator; membership sales administrator; administrative support officer; membership and subscription administrator; membership officer; account administrator; foreign language correspondence clerk; foreign language correspondence officer; foreign correspondence clerk; foreign language correspondence assistant; foreign language correspondent clerk; foreign language correspondence secretary; foreign correspondent secretary; foreign correspondent assistant; phonotypist; data entry typist"
         },
         "legal_flags": []
       }

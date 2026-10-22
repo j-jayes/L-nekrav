@@ -149,8 +149,8 @@
         "fused_score": 0.020890937019969278,
         "fused_rank": 2,
         "matched_chunk": {
-          "kind": "desc_en",
-          "text": "(a)  designing and developing database architecture, data structures, tables, dictionaries and naming conventions for information systems projects; (b)  designing, constructing, modifying, integrating, implementing and testing database management systems; (c)  conducting research and providing advice on the selection, application and implementation of database management tools; (d)  developing and implementing data administration policy, documentation, standards and models; (e)  developing policies and procedures for database access and usage and for the backup and recovery of data; (f)  performing the operational establishment and preventive maintenance of backups, recovery procedures, and enforcing security and integrity controls."
+          "kind": "title",
+          "text": "Systemadministratörer / System administrators"
         },
         "legal_flags": [
           {
@@ -221,8 +221,8 @@
         "fused_score": 0.015384615384615385,
         "fused_rank": 5,
         "matched_chunk": {
-          "kind": "desc_en",
-          "text": "(a)  answering user inquiries regarding software or hardware operation to resolve problems; (b)  entering commands and observing system functioning to verify correct operations and detect errors; (c)  installing and performing minor repairs to hardware, software or peripheral equipment, following design or installation specifications; (d)  overseeing the daily performance of communications and computer systems; (e)  setting up equipment for employee use and performing or ensuring proper installation of cables, operating systems or appropriate software; (f)  maintaining records of daily data communication transactions, problems and remedial actions taken, or installation activities. (g)  emulating or reproducing technical problems encountered by users; (h)  consulting user guides, technical manuals and other documents to research and implement solutions; (i)  assisting applications programmers, systems developers and other ICT professionals to develop and test ICT products and services."
+          "kind": "title",
+          "text": "Supporttekniker, IT / ICT support technicians"
         },
         "legal_flags": [
           {

@@ -43,3 +43,19 @@ def test_weights_scale_each_methods_rrf_term():  # research R1, T018
     a = next(h for h in weighted if h.code == "A")
     assert a.fused_score == pytest.approx(1 / (RRF_K + 1) + 0.5 / (RRF_K + 2))
     assert [h.code for h in weighted] == ["A", "B"]  # kblab's order wins once bm25 counts half
+
+
+def test_an_ilo_chunk_ranks_but_the_best_other_chunk_is_shown():  # Feature 004
+    ilo = hit("A", 0.9, "desc_en").model_copy(update={"ilo": True, "text": "ILO task text"})
+    esco = hit("A", 0.6, "desc_en").model_copy(update={"text": "ESCO text"})
+    per = {"kblab": reduce_to_codes([ilo, esco])}
+    shown = {"kblab": {"A": esco}}
+    (a,) = fuse(per, k=1, weights={}, shown=shown)
+    assert a.scores["kblab"] == 0.9  # ranked on the ILO chunk
+    assert a.matched_chunk.text == "ESCO text"
+
+
+def test_with_no_other_chunk_the_title_is_shown():
+    ilo = hit("A", 0.9, "desc_en").model_copy(update={"ilo": True, "text": "ILO task text"})
+    (a,) = fuse({"kblab": reduce_to_codes([ilo])}, k=1, weights={}, shown={})
+    assert a.matched_chunk.kind == "title" and "ILO" not in a.matched_chunk.text

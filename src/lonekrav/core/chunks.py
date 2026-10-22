@@ -22,6 +22,7 @@ class Chunk(BaseModel):
     kind: Literal["title", "desc_sv", "desc_en", "synonyms_sv", "synonyms_en"]
     lang: Literal["sv", "en", "mixed"]
     text: str
+    ilo: bool = False  # holds ILO ISCO-08 text: used for ranking, never shown (ILO reserves rights)
 
 
 def _split(text: str, limit: int = MAX_CHARS) -> list[str]:
@@ -41,17 +42,17 @@ def _split(text: str, limit: int = MAX_CHARS) -> list[str]:
     return pieces
 
 
-def _batches(labels: list[str]) -> list[str]:
-    """Join labels with '; ', at most MAX_LABELS and MAX_CHARS per batch."""
+def _batches(labels: list[str]) -> list[list[str]]:
+    """Group labels for joining with '; ', at most MAX_LABELS and MAX_CHARS per batch."""
     out, cur = [], []
     for label in labels:
         label = label[:MAX_CHARS]
         if cur and (len(cur) == MAX_LABELS or len("; ".join([*cur, label])) > MAX_CHARS):
-            out.append("; ".join(cur))
+            out.append(cur)
             cur = []
         cur.append(label)
     if cur:
-        out.append("; ".join(cur))
+        out.append(cur)
     return out
 
 
@@ -59,18 +60,19 @@ def chunk_profile(p: OccupationProfile, holdout: set[str] = frozenset()) -> list
     """`holdout`: case-folded titles used as benchmark queries, kept out of the indexed text."""
     chunks: list[Chunk] = []
 
-    def add(kind, lang, text):
+    def add(kind, lang, text, ilo=False):
         n = sum(c.kind == kind for c in chunks)
         chunks.append(Chunk(chunk_id=f"{p.code}:{kind}:{n}", code=p.code, kind=kind, lang=lang,
-                            text=text))
+                            text=text, ilo=ilo))
 
     add("title", "mixed", f"{p.title_sv} / {p.title_en}")
     for d in p.descriptions:
         for piece in _split(d.text):
-            add(f"desc_{d.lang}", d.lang, piece)
+            add(f"desc_{d.lang}", d.lang, piece, d.source.source == "ilo_isco08")
     for lang in ("sv", "en"):
-        labels = [s.label for s in p.synonyms
-                  if s.lang == lang and s.label.casefold().strip() not in holdout]
-        for batch in _batches(labels):
-            add(f"synonyms_{lang}", lang, batch)
+        keep = [s for s in p.synonyms
+                if s.lang == lang and s.label.casefold().strip() not in holdout]
+        ilo = {s.label[:MAX_CHARS] for s in keep if s.source.source == "ilo_isco08"}
+        for batch in _batches([s.label for s in keep]):
+            add(f"synonyms_{lang}", lang, "; ".join(batch), bool(ilo.intersection(batch)))
     return chunks
