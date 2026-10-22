@@ -125,11 +125,15 @@ async def run(request: AdvisorRequest | str, model: ChatModel,
         for c in reply.tool_calls:
             yield Progress(f"Calling {c.name}")
             try:
-                args = _decode_objects(json.loads(c.arguments or "{}"), parameters.get(c.name, {}))
+                args = json.loads(c.arguments or "{}")
             except json.JSONDecodeError as e:
                 is_error, payload = True, f"Arguments are not valid JSON: {e}"
             else:
-                is_error, payload = await tools.call(c.name, args)
+                if isinstance(args, dict):
+                    args = _decode_objects(args, parameters.get(c.name, {}))
+                    is_error, payload = await tools.call(c.name, args)
+                else:
+                    is_error, payload = True, "Arguments must be a JSON object."
             if is_error:
                 yield Progress(f"{c.name} failed; the model is told why")
             else:

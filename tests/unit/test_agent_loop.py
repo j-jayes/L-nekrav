@@ -49,8 +49,8 @@ TOOLS = {"search_occupations": (False, SEARCH), "get_occupation_salary": (False,
 
 def test_two_tools_then_a_memo(fake_model):
     model = fake_model(call("search_occupations", {"request": {"text": "dev"}}),
-                      call("get_occupation_salary", {"code": "2512"}, "c2"),
-                      Reply("Code 2512 fits.", []))
+                       call("get_occupation_salary", {"code": "2512"}, "c2"),
+                       Reply("Code 2512 fits.", []))
     out = events(AdvisorRequest(ad="dev"), model, FakeTools(TOOLS))
     assert [type(e) for e in out] == [Progress, ToolResult, Progress, ToolResult, Memo]
     assert out[1] == ToolResult("search_occupations", {"request": {"text": "dev"}}, SEARCH)
@@ -72,13 +72,15 @@ def test_a_tool_error_goes_to_the_model_not_the_ui(fake_model):
     assert "not based on any Lönekrav result" in out[-1].text  # no tool succeeded
 
 
-def test_arguments_that_are_not_json_are_reported_to_the_model(fake_model):
+@pytest.mark.parametrize(("sent", "error"), [("{not json", "not valid JSON"),
+                                             ("[1, 2]", "must be a JSON object")])
+def test_arguments_that_are_not_a_json_object_are_reported_to_the_model(fake_model, sent, error):
     tools = FakeTools(TOOLS)
-    model = fake_model(Reply(None, [ToolCall("c1", "search_occupations", "{not json")]),
-                      Reply("Done.", []))
+    model = fake_model(Reply(None, [ToolCall("c1", "search_occupations", sent)]),
+                       Reply("Done.", []))
     events(AdvisorRequest(ad="dev"), model, tools)
     assert tools.calls == []
-    assert "not valid JSON" in model.seen[1][0][-1]["content"]
+    assert error in model.seen[1][0][-1]["content"]
 
 
 def test_a_model_that_never_stops_hits_the_round_limit(fake_model):

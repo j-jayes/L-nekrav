@@ -175,9 +175,9 @@ running server.
 
 ## Phase 6: Polish and cross-cutting
 
-- [ ] T025 Regenerate `references/api-smoke.md` with `scripts/api_smoke.py` against a live server, and diff it against the committed file. Only timestamps may differ (FR-001)
-- [ ] T026 [P] Run `rtk proxy uv run pytest -q` (the new total, all passing), `uv run pytest -m benchmark -q` (9 passed, with the server stopped), `uv run pytest -m live -q` and `uv run ruff check src tests scripts`
-- [ ] T027 [P] Check `src/lonekrav/protocols/` against Principle I. Every function must only validate, call `Service` or the loop, and serialise. Move any rule found there into `core/`, test-first
+- [X] T025 Regenerate `references/api-smoke.md` with `scripts/api_smoke.py` against a live server, and diff it against the committed file. Only timestamps may differ (FR-001)
+- [X] T026 [P] Run `rtk proxy uv run pytest -q` (the new total, all passing), `uv run pytest -m benchmark -q` (9 passed, with the server stopped), `uv run pytest -m live -q` and `uv run ruff check src tests scripts`
+- [X] T027 [P] Check `src/lonekrav/protocols/` against Principle I. Every function must only validate, call `Service` or the loop, and serialise. Move any rule found there into `core/`, test-first
 - [X] T028 [P] Measure the advisor's latency over three live runs of the quickstart §4 ad, recording the total time and the model's share, and add the results to `references/a2a-stream.md` (SC-006)
 - [ ] T029 Update `references/development-plan.md` §003 for the actual decisions: fastmcp 4.1.3, `SendStreamingMessage`, the rejected state, Haiku 5.5 as the default, and the in-memory MCP client in the agent
 - [ ] T030 [P] Write `docs/walkthroughs/003-mcp-a2a-protocols.md` with the walkthrough skill (snippets emitted from disk)
