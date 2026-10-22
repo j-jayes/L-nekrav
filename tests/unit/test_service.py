@@ -77,6 +77,12 @@ def test_timeline_is_the_registry_timeline(service):
     assert service.timeline() == load_registry().timeline()
 
 
+def test_registry_is_the_loaded_registry(service):  # Feature 004 research R9
+    from lonekrav.core.legal import load_registry
+
+    assert service.registry() == load_registry()
+
+
 def test_search_runs_core_search(service):
     from lonekrav.core.search import SearchRequest, run
 

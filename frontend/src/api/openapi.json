@@ -1,0 +1,2824 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Lönekrav",
+    "version": "1"
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_api_v1_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Health Api V1 Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/eligibility": {
+      "post": {
+        "summary": "Eligibility",
+        "operationId": "eligibility_api_v1_eligibility_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EligibilityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EligibilityAnswer"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/search": {
+      "post": {
+        "summary": "Search",
+        "operationId": "search_api_v1_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchAnswer"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/occupations/{code}/salary": {
+      "get": {
+        "summary": "Salary",
+        "operationId": "salary_api_v1_occupations__code__salary_get",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Code"
+            }
+          },
+          {
+            "name": "age_band",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Age Band"
+            }
+          },
+          {
+            "name": "on",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "On"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalaryPayload"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/occupations/{code}": {
+      "get": {
+        "summary": "Occupation",
+        "operationId": "occupation_api_v1_occupations__code__get",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OccupationProfile"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/compare": {
+      "post": {
+        "summary": "Compare Codes",
+        "operationId": "compare_codes_api_v1_compare_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompareRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comparison"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/legal/timeline": {
+      "get": {
+        "summary": "Timeline",
+        "operationId": "timeline_api_v1_legal_timeline_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TimelineEvent"
+                  },
+                  "type": "array",
+                  "title": "Response Timeline Api V1 Legal Timeline Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/legal/registry": {
+      "get": {
+        "summary": "Registry",
+        "description": "Every rule, median, code list, exemption and statement, with sources: the legal guide's data.",
+        "operationId": "registry_api_v1_legal_registry_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Registry"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/benchmark": {
+      "get": {
+        "summary": "Benchmark",
+        "operationId": "benchmark_api_v1_benchmark_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Benchmark Api V1 Benchmark Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/parse-job-ad": {
+      "post": {
+        "summary": "Parse Job Ad",
+        "operationId": "parse_job_ad_api_v1_parse_job_ad_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdText"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParsedAd"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/.well-known/agent-card.json": {
+      "get": {
+        "tags": [
+          "A2A: Agent Card"
+        ],
+        "summary": " Get Agent Card",
+        "description": "Returns the public AgentCard describing this agent's capabilities, supported transports, and skills.",
+        "operationId": "_get_agent_card__well_known_agent_card_json_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/a2a": {
+      "post": {
+        "tags": [
+          "A2A: JSON-RPC"
+        ],
+        "summary": "A2A JSON-RPC endpoint",
+        "description": "A2A JSON-RPC 2.0 endpoint. The `method` field selects the operation;\n`params` must match that method's schema (see the `oneOf` below).\n\n**Supported methods:**\n\n- `SendMessage` — Send a message to the agent (returns a Task or response Message).\n- `SendStreamingMessage` — Send a message and receive a Server-Sent Events stream.\n- `GetTask` — Fetch a task by ID.\n- `ListTasks` — List tasks with pagination and filtering.\n- `CancelTask` — Cancel an in-progress task.\n- `CreateTaskPushNotificationConfig` — Register a push-notification config on a task.\n- `GetTaskPushNotificationConfig` — Read a single push-notification config.\n- `ListTaskPushNotificationConfigs` — List all push-notification configs for a task.\n- `DeleteTaskPushNotificationConfig` — Delete a push-notification config.\n- `SubscribeToTask` — Subscribe to task events via Server-Sent Events.\n- `GetExtendedAgentCard` — Fetch the authenticated extended agent card.\n",
+        "operationId": "handle_requests_a2a_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "description": "A2A JSON-RPC 2.0 request",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/A2ARequest"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "header",
+            "name": "A2A-Version",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1.0"
+              ]
+            },
+            "example": "1.0"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AdPassage": {
+        "properties": {
+          "index": {
+            "type": "integer",
+            "title": "Index"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "label": {
+            "type": "string",
+            "enum": [
+              "title",
+              "duty",
+              "skill",
+              "company",
+              "benefits",
+              "other"
+            ],
+            "title": "Label"
+          },
+          "keep": {
+            "type": "boolean",
+            "title": "Keep"
+          },
+          "by": {
+            "type": "string",
+            "enum": [
+              "heading",
+              "anchor",
+              "position"
+            ],
+            "title": "By"
+          }
+        },
+        "type": "object",
+        "required": [
+          "index",
+          "text",
+          "label",
+          "keep",
+          "by"
+        ],
+        "title": "AdPassage"
+      },
+      "AdText": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 20000,
+            "minLength": 1,
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "AdText"
+      },
+      "AgeBandSalary": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^\\d{4}$",
+            "title": "Code"
+          },
+          "year": {
+            "type": "integer",
+            "minimum": 2014.0,
+            "title": "Year"
+          },
+          "age_band": {
+            "type": "string",
+            "enum": [
+              "18-24",
+              "25-34",
+              "35-44",
+              "45-54",
+              "55-64",
+              "65-68",
+              "all"
+            ],
+            "title": "Age Band"
+          },
+          "mean_monthly": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mean Monthly"
+          },
+          "headcount": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Headcount"
+          },
+          "mean_ci95": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mean Ci95"
+          },
+          "source_table": {
+            "type": "string",
+            "enum": [
+              "TAB4264",
+              "TAB5844"
+            ],
+            "title": "Source Table"
+          },
+          "reference_year": {
+            "type": "integer",
+            "title": "Reference Year"
+          },
+          "fetched_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Fetched At"
+          },
+          "suppressed": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Suppressed",
+            "readOnly": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "year",
+          "age_band",
+          "mean_monthly",
+          "headcount",
+          "source_table",
+          "reference_year",
+          "fetched_at",
+          "suppressed"
+        ],
+        "title": "AgeBandSalary"
+      },
+      "CodeList": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "exempt_75",
+              "banned",
+              "partially_banned"
+            ],
+            "title": "Kind"
+          },
+          "codes": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Codes"
+          },
+          "effective_from": {
+            "type": "string",
+            "format": "date",
+            "title": "Effective From"
+          },
+          "effective_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective To"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          }
+        },
+        "type": "object",
+        "required": [
+          "kind",
+          "codes",
+          "effective_from",
+          "note",
+          "source"
+        ],
+        "title": "CodeList"
+      },
+      "CompareColumn": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title_sv": {
+            "type": "string",
+            "title": "Title Sv"
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En"
+          },
+          "tasks_sv": {
+            "items": {
+              "$ref": "#/components/schemas/Text"
+            },
+            "type": "array",
+            "title": "Tasks Sv"
+          },
+          "tasks_en": {
+            "items": {
+              "$ref": "#/components/schemas/Text"
+            },
+            "type": "array",
+            "title": "Tasks En"
+          },
+          "latest": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SalaryDistribution"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "legal_flags": {
+            "items": {
+              "$ref": "#/components/schemas/LegalFlag"
+            },
+            "type": "array",
+            "title": "Legal Flags"
+          },
+          "threshold": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ThresholdLine"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "eligibility": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/EligibilityAnswer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "title_sv",
+          "title_en",
+          "tasks_sv",
+          "tasks_en",
+          "latest",
+          "legal_flags",
+          "threshold"
+        ],
+        "title": "CompareColumn"
+      },
+      "CompareRequest": {
+        "properties": {
+          "codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Codes",
+            "description": "2–5 distinct SSYK codes, in the order to show them"
+          },
+          "offer": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Offer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "codes"
+        ],
+        "title": "CompareRequest"
+      },
+      "Comparison": {
+        "properties": {
+          "columns": {
+            "items": {
+              "$ref": "#/components/schemas/CompareColumn"
+            },
+            "type": "array",
+            "title": "Columns"
+          },
+          "honest_fit": {
+            "type": "string",
+            "title": "Honest Fit",
+            "default": "The SSYK code on a work-permit offer must match the duties actually performed. These are the occupations whose official descriptions best match the text, not advice on which code to choose."
+          }
+        },
+        "type": "object",
+        "required": [
+          "columns"
+        ],
+        "title": "Comparison"
+      },
+      "EligibilityAnswer": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "not_permitted",
+              "out_of_scope"
+            ],
+            "title": "Status"
+          },
+          "rule_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rule Id"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "percent": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Percent"
+          },
+          "median": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MedianRecord"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "threshold_sek": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Threshold Sek"
+          },
+          "margin_sek": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Margin Sek"
+          },
+          "margin_percent": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Margin Percent"
+          },
+          "warnings": {
+            "items": {
+              "$ref": "#/components/schemas/Warning"
+            },
+            "type": "array",
+            "title": "Warnings",
+            "default": []
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/Source"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer",
+            "default": "The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice."
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "reason",
+          "sources"
+        ],
+        "title": "EligibilityAnswer"
+      },
+      "EligibilityRequest": {
+        "properties": {
+          "monthly_salary_sek": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Monthly Salary Sek",
+            "description": "Gross monthly salary actually paid"
+          },
+          "fte_percent": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Fte Percent",
+            "description": "Share of full time"
+          },
+          "application_type": {
+            "type": "string",
+            "enum": [
+              "first_permit",
+              "extension"
+            ],
+            "title": "Application Type"
+          },
+          "filed_on": {
+            "type": "string",
+            "format": "date",
+            "title": "Filed On"
+          },
+          "decided_on": {
+            "type": "string",
+            "format": "date",
+            "title": "Decided On",
+            "description": "Expected decision date; defaults to today"
+          },
+          "current_permit_granted_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Permit Granted On",
+            "description": "Decision date of the current permit (extensions only)"
+          },
+          "exemptions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Exemptions",
+            "description": "Declared personal exemption ids",
+            "default": []
+          },
+          "code": {
+            "type": "string",
+            "pattern": "^\\d{4}$",
+            "title": "Code"
+          }
+        },
+        "type": "object",
+        "required": [
+          "monthly_salary_sek",
+          "fte_percent",
+          "application_type",
+          "filed_on",
+          "code"
+        ],
+        "title": "EligibilityRequest"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "LegalFlag": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "exempt_75",
+              "banned",
+              "partially_banned"
+            ],
+            "title": "Kind"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note",
+            "default": ""
+          },
+          "effective_from": {
+            "type": "string",
+            "format": "date",
+            "title": "Effective From"
+          },
+          "source": {
+            "$ref": "#/components/schemas/SourceRef"
+          },
+          "checked_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checked On"
+          }
+        },
+        "type": "object",
+        "required": [
+          "kind",
+          "effective_from",
+          "source"
+        ],
+        "title": "LegalFlag"
+      },
+      "MatchedChunk": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "kind",
+          "text"
+        ],
+        "title": "MatchedChunk"
+      },
+      "MedianPublicationWindow": {
+        "properties": {
+          "earliest": {
+            "type": "string",
+            "title": "Earliest"
+          },
+          "latest": {
+            "type": "string",
+            "title": "Latest"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          }
+        },
+        "type": "object",
+        "required": [
+          "earliest",
+          "latest",
+          "source"
+        ],
+        "title": "MedianPublicationWindow"
+      },
+      "MedianRecord": {
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "title": "Amount"
+          },
+          "scb_reference_year": {
+            "type": "integer",
+            "title": "Scb Reference Year"
+          },
+          "effective_from": {
+            "type": "string",
+            "format": "date",
+            "title": "Effective From"
+          },
+          "effective_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective To"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          }
+        },
+        "type": "object",
+        "required": [
+          "amount",
+          "scb_reference_year",
+          "effective_from",
+          "source"
+        ],
+        "title": "MedianRecord"
+      },
+      "OccupationProfile": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^\\d{4}$",
+            "title": "Code"
+          },
+          "title_sv": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Title Sv"
+          },
+          "title_en": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Title En"
+          },
+          "isco_codes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Isco Codes"
+          },
+          "jobtech_concept_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jobtech Concept Id"
+          },
+          "jobtech_shared": {
+            "type": "boolean",
+            "title": "Jobtech Shared",
+            "default": false
+          },
+          "descriptions": {
+            "items": {
+              "$ref": "#/components/schemas/Text"
+            },
+            "type": "array",
+            "title": "Descriptions"
+          },
+          "synonyms": {
+            "items": {
+              "$ref": "#/components/schemas/Synonym"
+            },
+            "type": "array",
+            "title": "Synonyms",
+            "default": []
+          },
+          "legal_flags": {
+            "items": {
+              "$ref": "#/components/schemas/LegalFlag"
+            },
+            "type": "array",
+            "title": "Legal Flags",
+            "default": []
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceRef"
+            },
+            "type": "array",
+            "title": "Sources"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "title_sv",
+          "title_en",
+          "isco_codes",
+          "descriptions",
+          "sources"
+        ],
+        "title": "OccupationProfile"
+      },
+      "Offer": {
+        "properties": {
+          "monthly_salary_sek": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Monthly Salary Sek",
+            "description": "Gross monthly salary actually paid"
+          },
+          "fte_percent": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Fte Percent",
+            "description": "Share of full time"
+          },
+          "application_type": {
+            "type": "string",
+            "enum": [
+              "first_permit",
+              "extension"
+            ],
+            "title": "Application Type"
+          },
+          "filed_on": {
+            "type": "string",
+            "format": "date",
+            "title": "Filed On"
+          },
+          "decided_on": {
+            "type": "string",
+            "format": "date",
+            "title": "Decided On",
+            "description": "Expected decision date; defaults to today"
+          },
+          "current_permit_granted_on": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Permit Granted On",
+            "description": "Decision date of the current permit (extensions only)"
+          },
+          "exemptions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Exemptions",
+            "description": "Declared personal exemption ids",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "monthly_salary_sek",
+          "fte_percent",
+          "application_type",
+          "filed_on"
+        ],
+        "title": "Offer",
+        "description": "Everything about an offer except the code; comparison tries one offer against each code."
+      },
+      "ParsedAd": {
+        "properties": {
+          "passages": {
+            "items": {
+              "$ref": "#/components/schemas/AdPassage"
+            },
+            "type": "array",
+            "title": "Passages"
+          },
+          "kept_text": {
+            "type": "string",
+            "title": "Kept Text"
+          },
+          "fallback_to_whole": {
+            "type": "boolean",
+            "title": "Fallback To Whole"
+          }
+        },
+        "type": "object",
+        "required": [
+          "passages",
+          "kept_text",
+          "fallback_to_whole"
+        ],
+        "title": "ParsedAd"
+      },
+      "PersonalExemption": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "conditions": {
+            "type": "string",
+            "title": "Conditions"
+          },
+          "first_permit_only": {
+            "type": "boolean",
+            "title": "First Permit Only"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "conditions",
+          "first_permit_only",
+          "source"
+        ],
+        "title": "PersonalExemption"
+      },
+      "Registry": {
+        "properties": {
+          "medians": {
+            "items": {
+              "$ref": "#/components/schemas/MedianRecord"
+            },
+            "type": "array",
+            "title": "Medians"
+          },
+          "median_publication_window": {
+            "$ref": "#/components/schemas/MedianPublicationWindow"
+          },
+          "rules": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Rule"
+            },
+            "type": "object",
+            "title": "Rules"
+          },
+          "code_lists": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/CodeList"
+            },
+            "type": "object",
+            "title": "Code Lists"
+          },
+          "exemptions": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/PersonalExemption"
+            },
+            "type": "object",
+            "title": "Exemptions"
+          },
+          "statements": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Statement"
+            },
+            "type": "object",
+            "title": "Statements"
+          }
+        },
+        "type": "object",
+        "required": [
+          "medians",
+          "median_publication_window",
+          "rules",
+          "code_lists",
+          "exemptions",
+          "statements"
+        ],
+        "title": "Registry"
+      },
+      "Rule": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "flat",
+              "share_of_median"
+            ],
+            "title": "Kind"
+          },
+          "percent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Percent"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "effective_from": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective From"
+          },
+          "effective_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective To"
+          },
+          "permits_granted_before": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Permits Granted Before"
+          },
+          "applies_to": {
+            "type": "string",
+            "title": "Applies To"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "effective_from",
+          "applies_to",
+          "source"
+        ],
+        "title": "Rule"
+      },
+      "SalaryDistribution": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^\\d{4}$",
+            "title": "Code"
+          },
+          "year": {
+            "type": "integer",
+            "minimum": 2014.0,
+            "title": "Year"
+          },
+          "mean": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mean"
+          },
+          "median": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median"
+          },
+          "p10": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P10"
+          },
+          "p25": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P25"
+          },
+          "p75": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P75"
+          },
+          "p90": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P90"
+          },
+          "mean_ci95": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mean Ci95"
+          },
+          "median_ci95": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Ci95"
+          },
+          "p10_ci95": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P10 Ci95"
+          },
+          "p25_ci95": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P25 Ci95"
+          },
+          "p75_ci95": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P75 Ci95"
+          },
+          "p90_ci95": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P90 Ci95"
+          },
+          "source_table": {
+            "type": "string",
+            "enum": [
+              "TAB4265",
+              "TAB5932"
+            ],
+            "title": "Source Table"
+          },
+          "reference_year": {
+            "type": "integer",
+            "title": "Reference Year"
+          },
+          "fetched_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Fetched At"
+          },
+          "suppressed": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Suppressed",
+            "readOnly": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "year",
+          "mean",
+          "median",
+          "p10",
+          "p25",
+          "p75",
+          "p90",
+          "source_table",
+          "reference_year",
+          "fetched_at",
+          "suppressed"
+        ],
+        "title": "SalaryDistribution"
+      },
+      "SalaryPayload": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title_sv": {
+            "type": "string",
+            "title": "Title Sv"
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En"
+          },
+          "distributions": {
+            "items": {
+              "$ref": "#/components/schemas/SalaryDistribution"
+            },
+            "type": "array",
+            "title": "Distributions"
+          },
+          "age_bands": {
+            "items": {
+              "$ref": "#/components/schemas/AgeBandSalary"
+            },
+            "type": "array",
+            "title": "Age Bands"
+          },
+          "thresholds": {
+            "items": {
+              "$ref": "#/components/schemas/ThresholdLine"
+            },
+            "type": "array",
+            "title": "Thresholds"
+          },
+          "applicable_rule_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicable Rule Id"
+          },
+          "simulated": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SimulatedPercentiles"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "no_occupation_data": {
+            "type": "boolean",
+            "title": "No Occupation Data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "title_sv",
+          "title_en",
+          "distributions",
+          "age_bands",
+          "thresholds",
+          "applicable_rule_id",
+          "no_occupation_data"
+        ],
+        "title": "SalaryPayload"
+      },
+      "SearchAnswer": {
+        "properties": {
+          "mode_used": {
+            "type": "string",
+            "enum": [
+              "fast",
+              "full"
+            ],
+            "title": "Mode Used"
+          },
+          "fallback_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fallback Reason"
+          },
+          "searched_text": {
+            "type": "string",
+            "title": "Searched Text"
+          },
+          "title_list": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title List"
+          },
+          "passages": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/AdPassage"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Passages"
+          },
+          "low_confidence": {
+            "type": "boolean",
+            "title": "Low Confidence"
+          },
+          "hits": {
+            "items": {
+              "$ref": "#/components/schemas/SearchHit"
+            },
+            "type": "array",
+            "title": "Hits"
+          },
+          "honest_fit": {
+            "type": "string",
+            "title": "Honest Fit",
+            "default": "The SSYK code on a work-permit offer must match the duties actually performed. These are the occupations whose official descriptions best match the text, not advice on which code to choose."
+          }
+        },
+        "type": "object",
+        "required": [
+          "mode_used",
+          "searched_text",
+          "low_confidence",
+          "hits"
+        ],
+        "title": "SearchAnswer"
+      },
+      "SearchHit": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title_sv": {
+            "type": "string",
+            "title": "Title Sv",
+            "default": ""
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En",
+            "default": ""
+          },
+          "scores": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Scores"
+          },
+          "ranks": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Ranks"
+          },
+          "fused_score": {
+            "type": "number",
+            "title": "Fused Score"
+          },
+          "fused_rank": {
+            "type": "integer",
+            "title": "Fused Rank"
+          },
+          "matched_chunk": {
+            "$ref": "#/components/schemas/MatchedChunk"
+          },
+          "legal_flags": {
+            "items": {
+              "$ref": "#/components/schemas/LegalFlag"
+            },
+            "type": "array",
+            "title": "Legal Flags",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "scores",
+          "ranks",
+          "fused_score",
+          "fused_rank",
+          "matched_chunk"
+        ],
+        "title": "SearchHit"
+      },
+      "SearchRequest": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 20000,
+            "minLength": 1,
+            "title": "Text"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "fast",
+              "full"
+            ],
+            "title": "Mode",
+            "default": "fast"
+          },
+          "k": {
+            "type": "integer",
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "K",
+            "default": 5
+          },
+          "parse_ad": {
+            "type": "boolean",
+            "title": "Parse Ad",
+            "description": "Search only the passages that describe the job",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "text"
+        ],
+        "title": "SearchRequest"
+      },
+      "SimulatedPercentiles": {
+        "properties": {
+          "age_band": {
+            "type": "string",
+            "title": "Age Band"
+          },
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "p10": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P10"
+          },
+          "p25": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P25"
+          },
+          "median": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median"
+          },
+          "p75": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P75"
+          },
+          "p90": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P90"
+          },
+          "is_simulated": {
+            "type": "boolean",
+            "const": true,
+            "title": "Is Simulated",
+            "default": true
+          },
+          "formula": {
+            "type": "string",
+            "title": "Formula",
+            "default": "percentile × age_band_mean ÷ all_ages_mean"
+          },
+          "inputs": {
+            "items": {
+              "$ref": "#/components/schemas/TableRef"
+            },
+            "type": "array",
+            "title": "Inputs"
+          }
+        },
+        "type": "object",
+        "required": [
+          "age_band",
+          "year",
+          "p10",
+          "p25",
+          "median",
+          "p75",
+          "p90",
+          "inputs"
+        ],
+        "title": "SimulatedPercentiles",
+        "description": "Not an SCB figure: SCB publishes percentiles for all ages and means per age band, so this\nscales each percentile by the band's mean relative to the all-ages mean."
+      },
+      "Source": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "checked_on": {
+            "type": "string",
+            "format": "date",
+            "title": "Checked On"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "title",
+          "url",
+          "checked_on"
+        ],
+        "title": "Source"
+      },
+      "SourceRef": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "enum": [
+              "scb_structure",
+              "scb_english",
+              "scb_title_index",
+              "scb_isco_key",
+              "scb_mis2012",
+              "scb_pxweb",
+              "jobtech",
+              "ilo_isco08",
+              "esco",
+              "sfs"
+            ],
+            "title": "Source"
+          },
+          "ref": {
+            "type": "string",
+            "title": "Ref"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source",
+          "ref",
+          "url"
+        ],
+        "title": "SourceRef"
+      },
+      "Statement": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "text",
+          "source"
+        ],
+        "title": "Statement"
+      },
+      "Synonym": {
+        "properties": {
+          "lang": {
+            "type": "string",
+            "enum": [
+              "sv",
+              "en"
+            ],
+            "title": "Lang"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Label"
+          },
+          "source": {
+            "$ref": "#/components/schemas/SourceRef"
+          },
+          "jobtech_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jobtech Id"
+          },
+          "esco_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Esco Uri"
+          },
+          "match_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "exact",
+                  "close",
+                  "broad",
+                  "narrow"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Match Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "lang",
+          "label",
+          "source"
+        ],
+        "title": "Synonym"
+      },
+      "TableRef": {
+        "properties": {
+          "table": {
+            "type": "string",
+            "title": "Table"
+          },
+          "reference_year": {
+            "type": "integer",
+            "title": "Reference Year"
+          }
+        },
+        "type": "object",
+        "required": [
+          "table",
+          "reference_year"
+        ],
+        "title": "TableRef"
+      },
+      "Text": {
+        "properties": {
+          "lang": {
+            "type": "string",
+            "enum": [
+              "sv",
+              "en"
+            ],
+            "title": "Lang"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "definition",
+              "tasks",
+              "included_occupations",
+              "excluded"
+            ],
+            "title": "Kind"
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Text"
+          },
+          "source": {
+            "$ref": "#/components/schemas/SourceRef"
+          },
+          "isco_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Isco Code"
+          },
+          "shared_with": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Shared With",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "lang",
+          "kind",
+          "text",
+          "source"
+        ],
+        "title": "Text"
+      },
+      "ThresholdLine": {
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "title": "Rule Id"
+          },
+          "percent": {
+            "type": "number",
+            "title": "Percent"
+          },
+          "amount_sek": {
+            "type": "integer",
+            "title": "Amount Sek"
+          },
+          "median_sek": {
+            "type": "integer",
+            "title": "Median Sek"
+          },
+          "median_reference_year": {
+            "type": "integer",
+            "title": "Median Reference Year"
+          },
+          "on": {
+            "type": "string",
+            "format": "date",
+            "title": "On"
+          }
+        },
+        "type": "object",
+        "required": [
+          "rule_id",
+          "percent",
+          "amount_sek",
+          "median_sek",
+          "median_reference_year",
+          "on"
+        ],
+        "title": "ThresholdLine"
+      },
+      "TimelineEvent": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "median",
+              "rule",
+              "code_list"
+            ],
+            "title": "Kind"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "kind",
+          "summary",
+          "source"
+        ],
+        "title": "TimelineEvent"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "Warning": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "part_time",
+              "stale_median",
+              "partial_ban"
+            ],
+            "title": "Kind"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
+          }
+        },
+        "type": "object",
+        "required": [
+          "kind",
+          "message",
+          "source"
+        ],
+        "title": "Warning"
+      },
+      "SendMessageRequest": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "example": ""
+          },
+          "message": {
+            "$ref": "#/components/schemas/Message"
+          },
+          "configuration": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SendMessageConfiguration"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "example": null
+          },
+          "metadata": {
+            "type": "object"
+          }
+        }
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "example": "message_id"
+          },
+          "context_id": {
+            "type": "string",
+            "example": ""
+          },
+          "task_id": {
+            "type": "string",
+            "example": ""
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "ROLE_UNSPECIFIED",
+              "ROLE_USER",
+              "ROLE_AGENT"
+            ],
+            "example": "ROLE_USER"
+          },
+          "parts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Part"
+            },
+            "example": [
+              {
+                "text": ""
+              }
+            ]
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "extensions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": ""
+            },
+            "example": [
+              ""
+            ]
+          },
+          "reference_task_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": ""
+            },
+            "example": [
+              ""
+            ]
+          }
+        }
+      },
+      "Part": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "metadata": {
+                "type": "object"
+              },
+              "filename": {
+                "type": "string",
+                "example": ""
+              },
+              "media_type": {
+                "type": "string",
+                "example": ""
+              }
+            }
+          },
+          {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "example": ""
+                  }
+                },
+                "required": [
+                  "text"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "raw": {
+                    "type": "string",
+                    "format": "byte"
+                  }
+                },
+                "required": [
+                  "raw"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "example": ""
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "data": {}
+                },
+                "required": [
+                  "data"
+                ]
+              }
+            ]
+          }
+        ],
+        "example": {
+          "text": ""
+        }
+      },
+      "SendMessageConfiguration": {
+        "type": "object",
+        "properties": {
+          "accepted_output_modes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": ""
+            },
+            "example": [
+              ""
+            ]
+          },
+          "task_push_notification_config": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TaskPushNotificationConfig"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "example": null
+          },
+          "history_length": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "return_immediately": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "TaskPushNotificationConfig": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "example": ""
+          },
+          "id": {
+            "type": "string",
+            "example": ""
+          },
+          "task_id": {
+            "type": "string",
+            "example": ""
+          },
+          "url": {
+            "type": "string",
+            "example": "url"
+          },
+          "token": {
+            "type": "string",
+            "example": ""
+          },
+          "authentication": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/AuthenticationInfo"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "example": null
+          }
+        }
+      },
+      "AuthenticationInfo": {
+        "type": "object",
+        "properties": {
+          "scheme": {
+            "type": "string",
+            "example": "scheme"
+          },
+          "credentials": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      },
+      "GetTaskRequest": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "example": ""
+          },
+          "id": {
+            "type": "string",
+            "example": "id"
+          },
+          "history_length": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ListTasksRequest": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "example": ""
+          },
+          "context_id": {
+            "type": "string",
+            "example": ""
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "TASK_STATE_UNSPECIFIED",
+              "TASK_STATE_SUBMITTED",
+              "TASK_STATE_WORKING",
+              "TASK_STATE_COMPLETED",
+              "TASK_STATE_FAILED",
+              "TASK_STATE_CANCELED",
+              "TASK_STATE_INPUT_REQUIRED",
+              "TASK_STATE_REJECTED",
+              "TASK_STATE_AUTH_REQUIRED"
+            ],
+            "example": "TASK_STATE_SUBMITTED"
+          },
+          "page_size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page_token": {
+            "type": "string",
+            "example": ""
+          },
+          "history_length": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status_timestamp_after": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "include_artifacts": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "CancelTaskRequest": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "example": ""
+          },
+          "id": {
+            "type": "string",
+            "example": "id"
+          },
+          "metadata": {
+            "type": "object"
+          }
+        }
+      },
+      "GetTaskPushNotificationConfigRequest": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "example": ""
+          },
+          "task_id": {
+            "type": "string",
+            "example": "task_id"
+          },
+          "id": {
+            "type": "string",
+            "example": "id"
+          }
+        }
+      },
+      "ListTaskPushNotificationConfigsRequest": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "example": ""
+          },
+          "task_id": {
+            "type": "string",
+            "example": "task_id"
+          },
+          "page_size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "page_token": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      },
+      "DeleteTaskPushNotificationConfigRequest": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "example": ""
+          },
+          "task_id": {
+            "type": "string",
+            "example": "task_id"
+          },
+          "id": {
+            "type": "string",
+            "example": "id"
+          }
+        }
+      },
+      "SubscribeToTaskRequest": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "example": ""
+          },
+          "id": {
+            "type": "string",
+            "example": "id"
+          }
+        }
+      },
+      "GetExtendedAgentCardRequest": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      },
+      "A2ARequest": {
+        "type": "object",
+        "required": [
+          "jsonrpc",
+          "method"
+        ],
+        "properties": {
+          "jsonrpc": {
+            "type": "string",
+            "enum": [
+              "2.0"
+            ]
+          },
+          "id": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "SendMessage",
+              "SendStreamingMessage",
+              "GetTask",
+              "ListTasks",
+              "CancelTask",
+              "CreateTaskPushNotificationConfig",
+              "GetTaskPushNotificationConfig",
+              "ListTaskPushNotificationConfigs",
+              "DeleteTaskPushNotificationConfig",
+              "SubscribeToTask",
+              "GetExtendedAgentCard"
+            ]
+          },
+          "params": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SendMessageRequest"
+              },
+              {
+                "$ref": "#/components/schemas/GetTaskRequest"
+              },
+              {
+                "$ref": "#/components/schemas/ListTasksRequest"
+              },
+              {
+                "$ref": "#/components/schemas/CancelTaskRequest"
+              },
+              {
+                "$ref": "#/components/schemas/TaskPushNotificationConfig"
+              },
+              {
+                "$ref": "#/components/schemas/GetTaskPushNotificationConfigRequest"
+              },
+              {
+                "$ref": "#/components/schemas/ListTaskPushNotificationConfigsRequest"
+              },
+              {
+                "$ref": "#/components/schemas/DeleteTaskPushNotificationConfigRequest"
+              },
+              {
+                "$ref": "#/components/schemas/SubscribeToTaskRequest"
+              },
+              {
+                "$ref": "#/components/schemas/GetExtendedAgentCardRequest"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

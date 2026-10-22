@@ -137,6 +137,19 @@ def test_timeline_route(api_client):
     assert all(e["source"]["url"] and e["source"]["checked_on"] for e in events)
 
 
+def test_registry_route(api_client):  # Feature 004 research R9: the legal guide's data
+    from lonekrav.core.legal import load_registry
+
+    r = api_client.get("/api/v1/legal/registry")
+    assert r.status_code == 200
+    body = r.json()
+    assert body == load_registry().model_dump(mode="json")
+    rows = [*body["medians"], body["median_publication_window"], *body["rules"].values(),
+            *body["code_lists"].values(), *body["exemptions"].values(),
+            *body["statements"].values()]
+    assert rows and all(row["source"]["url"] and row["source"]["checked_on"] for row in rows)
+
+
 def test_benchmark_route(api_client, tmp_path, monkeypatch):
     from lonekrav.api import v1
 

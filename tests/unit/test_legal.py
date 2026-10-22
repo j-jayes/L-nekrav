@@ -150,3 +150,16 @@ def test_no_legal_literal_outside_the_registry():  # SC-002, Principle II
     found = {str(p.relative_to(SRC)): hits for p in sorted(SRC.rglob("*.py"))
              if (hits := legal_literals(p.read_text()))}
     assert found == {}
+
+
+FRONTEND = SRC.parents[1] / "frontend" / "src"
+# Recorded API responses carry registry figures by design, and src/api/ is generated from the schema.
+FRONTEND_SKIP = ("test/fixtures/", "api/")
+
+
+def test_no_legal_literal_in_the_page():  # Feature 004: legal text reaches the page only from the API
+    found = {rel: hits for p in sorted(FRONTEND.rglob("*"))
+             if p.suffix in {".ts", ".tsx", ".css"}
+             and not (rel := str(p.relative_to(FRONTEND))).startswith(FRONTEND_SKIP)
+             if (hits := legal_literals(p.read_text()))}
+    assert found == {}

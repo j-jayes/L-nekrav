@@ -51,10 +51,10 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
   
   Add a test in `tests/unit/test_app_main.py` that `main()` passes `HOST` and `PORT` to `uvicorn.run`, by monkeypatching `uvicorn.run` (R3). Both must fail first
 - [X] T007 Implement `card(base_url)` in `src/lonekrav/protocols/a2a_server.py`, with `add_a2a` reading `LONEKRAV_PUBLIC_URL`. Make `main()` in `src/lonekrav/app.py` read `HOST` and `PORT`. T006 passes
-- [ ] T008 [P] Write tests for `GET /api/v1/legal/registry` in `tests/integration/test_api.py` and `Service.registry()` in `tests/unit/test_service.py`. The JSON equals `load_registry().model_dump(mode="json")`, and every row has a source with `checked_on`. They must fail first (R9)
-- [ ] T009 Implement `Service.registry()` in `src/lonekrav/core/service.py` and the route in `src/lonekrav/api/v1.py`. T008 passes
-- [ ] T010 [P] Extend the literal scan in `tests/unit/test_legal.py` to `frontend/src/**/*.{ts,tsx,css}`, excluding `src/test/fixtures/` and the generated `src/api/`. Plant a literal to see it fail, then remove the plant
-- [ ] T011 Write `scripts/export_openapi.py`, which writes `create_app().openapi()` without the lifespan to `frontend/src/api/openapi.json`, and `tests/integration/test_openapi_drift.py`, which fails while the file is missing or stale. Run the export and `npm run gen`. Write `frontend/src/api/client.ts` (`createClient<paths>({baseUrl: ""})`) and commit the generated `openapi.json` and `schema.d.ts` (R6)
+- [X] T008 [P] Write tests for `GET /api/v1/legal/registry` in `tests/integration/test_api.py` and `Service.registry()` in `tests/unit/test_service.py`. The JSON equals `load_registry().model_dump(mode="json")`, and every row has a source with `checked_on`. They must fail first (R9)
+- [X] T009 Implement `Service.registry()` in `src/lonekrav/core/service.py` and the route in `src/lonekrav/api/v1.py`. T008 passes
+- [X] T010 [P] Extend the literal scan in `tests/unit/test_legal.py` to `frontend/src/**/*.{ts,tsx,css}`, excluding `src/test/fixtures/` and the generated `src/api/`. Plant a literal to see it fail, then remove the plant
+- [X] T011 Write `scripts/export_openapi.py`, which writes `create_app().openapi()` without the lifespan to `frontend/src/api/openapi.json`, and `tests/integration/test_openapi_drift.py`, which fails while the file is missing or stale. Run the export and `npm run gen`. Write `frontend/src/api/client.ts` (`createClient<paths>({baseUrl: ""})`) and commit the generated `openapi.json` and `schema.d.ts` (R6)
 - [ ] T012 Write `scripts/record_api_fixtures.py`, which runs against a live `lonekrav-serve` and writes real responses to `frontend/src/test/fixtures/`:
   - search fast and full for a title and for `tests/fixtures/ads/en1_backend.txt`;
   - salary for 2512 (with and without `age_band=25-34`), for an exempt code and for a banned code;

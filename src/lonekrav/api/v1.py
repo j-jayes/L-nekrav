@@ -11,7 +11,7 @@ from fastapi import APIRouter, HTTPException, Request
 from lonekrav.core.adparse import AdText, ParsedAd
 from lonekrav.core.compare import CompareRequest, Comparison
 from lonekrav.core.eligibility import EligibilityAnswer, EligibilityRequest
-from lonekrav.core.legal import TimelineEvent
+from lonekrav.core.legal import Registry, TimelineEvent
 from lonekrav.core.models import OccupationProfile
 from lonekrav.core.salary import SalaryPayload
 from lonekrav.core.search import SearchAnswer, SearchRequest
@@ -64,6 +64,12 @@ def compare_codes(body: CompareRequest, request: Request) -> Comparison:
 @router.get("/legal/timeline")
 def timeline(request: Request) -> list[TimelineEvent]:
     return _service(request).timeline()
+
+
+@router.get("/legal/registry")
+def registry(request: Request) -> Registry:
+    """Every rule, median, code list, exemption and statement, with sources: the legal guide's data."""
+    return _service(request).registry()
 
 
 @router.get("/benchmark")

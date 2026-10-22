@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from lonekrav.core.adparse import AdText, ParsedAd, parse
 from lonekrav.core.compare import CompareRequest, Comparison, compare
 from lonekrav.core.eligibility import EligibilityAnswer, EligibilityRequest, UnknownCode, evaluate
-from lonekrav.core.legal import TimelineEvent, load_registry
+from lonekrav.core.legal import Registry, TimelineEvent, load_registry
 from lonekrav.core.legal_flags import flags_for
 from lonekrav.core.models import AgeBandSalary, OccupationProfile, SalaryDistribution
 from lonekrav.core.salary import SalaryPayload, payload
@@ -63,3 +63,6 @@ class Service:
 
     def timeline(self) -> list[TimelineEvent]:
         return load_registry().timeline()
+
+    def registry(self) -> Registry:
+        return load_registry()
