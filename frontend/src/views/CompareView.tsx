@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { api, type CompareColumn, type Comparison, type Offer } from "../api/client";
+import { api, type CompareColumn, type Comparison, type Offer, type Registry, type Source } from "../api/client";
 import { EligibilityResult } from "../components/EligibilityResult";
 import { Notice } from "../components/Notice";
 import { Flags } from "../components/ResultList";
 import { sek } from "../components/SalaryChart";
+import { SourceLink } from "../components/SourceLink";
 
 type Text = CompareColumn["tasks_sv"][number];
 const SOURCE: Record<string, string> = { scb_mis2012: "SCB", jobtech: "JobTech", esco: "ESCO", scb_structure: "SCB" };
@@ -59,10 +60,29 @@ function Column({ c }: { c: CompareColumn }) {
   );
 }
 
-type Props = { codes: string[]; offer: Offer | null; onSearch: () => void };
+/** The legal sources behind the columns, once: the eligibility answers' sources with an offer, or
+ * each threshold rule's source without one, and the disclaimer (Principle III, FR-016). */
+function LegalSources({ answer, rules }: { answer: Comparison; rules?: Registry["rules"] }) {
+  const withOffer = answer.columns.map((c) => c.eligibility).filter((e) => e != null);
+  const sources: Source[] = withOffer.length
+    ? withOffer.flatMap((e) => e.sources)
+    : answer.columns.flatMap((c) => (c.threshold && rules?.[c.threshold.rule_id] ? [rules[c.threshold.rule_id].source] : []));
+  const unique = [...new Map(sources.map((s) => [s.key, s])).values()];
+  return (
+    <section aria-label="Legal sources" className="space-y-1 text-sm">
+      <h3 className="text-xs font-semibold uppercase text-muted">Legal sources</h3>
+      <ul>{unique.map((s) => <li key={s.key}><SourceLink source={s} /></li>)}</ul>
+      <p className="text-xs text-muted">
+        {withOffer[0]?.disclaimer ?? "This is information, not legal advice."}
+      </p>
+    </section>
+  );
+}
+
+type Props = { codes: string[]; offer: Offer | null; onSearch: () => void; rules?: Registry["rules"] };
 
 /** The selected codes side by side, in the order selected, never ranked by threshold (FR-011, FR-012). */
-export function CompareView({ codes, offer, onSearch }: Props) {
+export function CompareView({ codes, offer, onSearch, rules }: Props) {
   const [answer, setAnswer] = useState<Comparison | null>(null);
   const [error, setError] = useState<string | null>(null);
   const enough = codes.length >= 2;
@@ -91,6 +111,7 @@ export function CompareView({ codes, offer, onSearch }: Props) {
           <div className="flex flex-col gap-3 md:flex-row md:flex-wrap">
             {answer?.columns.map((c) => <Column key={c.code} c={c} />)}
           </div>
+          {answer && <LegalSources answer={answer} rules={rules} />}
         </>
       )}
     </section>

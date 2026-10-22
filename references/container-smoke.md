@@ -1,6 +1,6 @@
 # Container smoke test
 
-Run 2026-10-22T15:57:14 against `http://127.0.0.1:8001` by `scripts/container_smoke.py`.
+Run 2026-10-22T16:36:37 against `http://127.0.0.1:8001` by `scripts/container_smoke.py`.
 
 Image `lonekrav:latest`: 3.85 GB.
 
@@ -28,6 +28,6 @@ $ # SendStreamingMessage with no key: states and text
 "text": "Agent unavailable: no model key is configured (set OPENROUTER_KEY in .env)."
 ```
 
-Build: 166 s for `docker compose build` after a Dockerfile change that re-ran the Python and
-model layers (the node stage and base images were cached). Start-up to a healthy
-`/api/v1/health`: 36 s.
+Build: about 3 minutes for `docker compose build` when the Python and model layers re-run (the node stage
+and base images cached). Start-up to a healthy `/api/v1/health`: 36 to 43 s. The first accurate
+search on a fresh container loads the second model: 17 s.

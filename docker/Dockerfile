@@ -23,7 +23,8 @@ RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev --no-ins
 COPY src/ src/
 RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev
 # The pinned models, downloaded once here; the container then never goes to the network for them.
-RUN lonekrav-etl fetch-models
+# huggingface_hub writes its cache metadata owner-only; the app user must be able to read it.
+RUN lonekrav-etl fetch-models && chmod -R a+rX /models
 COPY --chown=app data/processed/ data/processed/
 COPY --chown=app data/lonekrav_milvus.db/ data/lonekrav_milvus.db/
 COPY --chown=app data/lonekrav_milvus.db.vocab.json data/

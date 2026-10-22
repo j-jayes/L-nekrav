@@ -11,7 +11,7 @@ const VIEWS: { name: string; url: string; ready: (p: Page) => Promise<void> }[] 
     url: "/?view=search&codes=2512,3511",
     ready: async (p) => {
       await p.getByRole("textbox", { name: /job title or ad/i }).fill("backend developer");
-      await expect(p.getByText(/^Accurate results/)).toBeVisible({ timeout: 30_000 });
+      await expect(p.getByText(/^Accurate results/)).toBeVisible({ timeout: 60_000 }); // a cold container loads Harrier (~17 s)
       await expect(p.getByRole("group", { name: /^3511 / })).toBeVisible();
     },
   },

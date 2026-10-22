@@ -1,11 +1,12 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import type { Comparison, Offer } from "../api/client";
+import type { Comparison, Offer, Registry } from "../api/client";
 import { fixture, serve } from "../test/fakeApi";
 import { CompareView } from "./CompareView";
 
 const withOffer = fixture("compare-offer").body as Comparison;
+const rules = (fixture("registry").body as Registry).rules;
 const OFFER = { monthly_salary_sek: 30000, fte_percent: 100, application_type: "first_permit",
   filed_on: "2026-10-01", decided_on: "2026-10-22" } as Offer;
 
@@ -13,7 +14,7 @@ function setup(codes: string[], offer: Offer | null) {
   const seen = serve({ "POST /api/v1/compare": (body) =>
     (body as { offer?: unknown }).offer ? fixture("compare-offer") : fixture("compare-2512-2511") });
   const toSearch = vi.fn();
-  render(<CompareView codes={codes} offer={offer} onSearch={toSearch} />);
+  render(<CompareView codes={codes} offer={offer} onSearch={toSearch} rules={rules} />);
   return { seen, toSearch };
 }
 
@@ -43,6 +44,23 @@ describe("CompareView", () => {
     setup(["2512", "2511", "3511"], OFFER);
     const [fail, , pass] = await screen.findAllByRole("article");
     expect(pass.className).toBe(fail.className);
+  });
+
+  it("lists the legal sources with checked-on dates and the disclaimer once (Principle III)", async () => {
+    setup(["2512", "2511", "3511"], OFFER);
+    const legal = await screen.findByRole("region", { name: /legal sources/i });
+    const sources = withOffer.columns.flatMap((c) => c.eligibility!.sources);
+    for (const src of sources) expect(within(legal).getByRole("link", { name: src.title })).toHaveAttribute("href", src.url);
+    expect(legal).toHaveTextContent(`checked ${sources[0].checked_on}`);
+    expect(screen.getAllByText(withOffer.columns[0].eligibility!.disclaimer)).toHaveLength(1);
+  });
+
+  it("without an offer, links each threshold's rule source", async () => {
+    setup(["2512", "2511"], null);
+    const legal = await screen.findByRole("region", { name: /legal sources/i });
+    const src = rules.salary_90.source;
+    expect(within(legal).getByRole("link", { name: src.title })).toHaveAttribute("href", src.url);
+    expect(legal).toHaveTextContent(/information, not legal advice/i);
   });
 
   it("works without an offer", async () => {

@@ -216,7 +216,7 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 - [X] T049 Measure SC-001 and SC-002 in Playwright on the reference machine (keystroke to list update; pause to full ranking for the 600-word ad), and record the numbers in `references/web-client-e2e.md`
 - [X] T050 [P] Regenerate `references/api-smoke.md` with `scripts/api_smoke.py`. The only differences allowed are the timestamp and the new `/legal/registry` route, if the smoke script lists routes
 - [X] T051 Write `docs/walkthroughs/004-web-client-docker.md` with the walkthrough skill (snippets emitted with `sed`). Update CLAUDE.md ("Things worked out in Feature 004"; the `/` serving note; the frontend commands) and `references/development-plan.md` ("As built")
-- [ ] T052 Run `/speckit-converge`, then run the full gates: `rtk proxy uv run pytest -q`, `uv run pytest -m benchmark -q` (with the server stopped), `npm test`, `npm run build`, and `ruff`
+- [X] T052 Run `/speckit-converge`, then run the full gates: `rtk proxy uv run pytest -q`, `uv run pytest -m benchmark -q` (with the server stopped), `npm test`, `npm run build`, and `ruff`
 - [ ] T053 Open the PR with the evidence (screenshots, memory, e2e, smoke). Request a Copilot review with the `gh api` command in memory, then fix or answer every comment
 
 ---
@@ -242,3 +242,11 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 The MVP is Phases 1–4: search plus the chart, served by `lonekrav-serve`. Then the container (US6)
 makes it portable. Compare and legal follow, and the advisor drawer last. Each phase ends with a
 by-hand proof in a browser.
+
+---
+
+## Phase 10: Convergence
+
+- [X] T054 CRITICAL: Link each chart floor line's label to its rule's source and checked-on date (from `/legal/registry`), and state on the chart that it is information, not legal advice, in `frontend/src/components/SalaryChart.tsx` per Constitution III, FR-016 (contradicts)
+- [X] T055 CRITICAL: Show the legal sources (the eligibility answers' sources, or each threshold rule's source without an offer), with checked-on dates and the disclaimer, once under the comparison in `frontend/src/views/CompareView.tsx` per Constitution III, FR-016 (contradicts)
+- [X] T056 Record that SC-003 is not met on two real ads, with both cases, as a leftover for an ad-level cross-lingual benchmark (ranking is out of 004's scope per the spec's Assumptions), in `references/web-client-e2e.md` and the PR per SC-003 (partial)

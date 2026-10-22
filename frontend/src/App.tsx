@@ -77,9 +77,11 @@ export default function App() {
             onApplied={(d, o) => { setDraft(d); setOffer(o); }} onClear={() => setOffer(null)} />
         )}
         {view === "search" && (
-          <SearchView selection={selection} dispatch={dispatch} age={age} setAge={setAge} offer={offer} />
+          <SearchView selection={selection} dispatch={dispatch} age={age} setAge={setAge} offer={offer}
+            rules={registry?.rules} />
         )}
-        {view === "compare" && <CompareView codes={selection.codes} offer={offer} onSearch={() => setView("search")} />}
+        {view === "compare" && <CompareView codes={selection.codes} offer={offer} onSearch={() => setView("search")}
+          rules={registry?.rules} />}
         {view === "legal" && <LegalView registry={registry} draft={draft} onApplied={(d, o) => { setDraft(d); setOffer(o); }} />}
       </main>
       {/* Hidden, not unmounted, when closed: a run keeps going and its answer is still there. */}

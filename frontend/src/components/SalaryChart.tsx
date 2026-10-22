@@ -3,8 +3,9 @@
 // page computes positions, never figures. Marks follow the dataviz skill: bars <= 24 px, 2 px
 // lines, >= 8 px dots with a 2 px surface ring, recessive hairline grid.
 import { useLayoutEffect, useRef, useState } from "react";
-import type { EligibilityAnswer, SalaryPayload } from "../api/client";
+import type { EligibilityAnswer, Registry, SalaryPayload } from "../api/client";
 import { scale } from "../lib/chartScale";
+import { SourceLink } from "./SourceLink";
 
 export const CHART_WIDTH = 600; // until the figure is measured (and in tests, where nothing is)
 const ROW_H = 36;
@@ -177,9 +178,10 @@ type Props = {
   payloads: SalaryPayload[];
   eligibility: Record<string, EligibilityAnswer | null>;
   simulated: Record<string, boolean>;
+  rules?: Registry["rules"]; // each floor links its rule's source (Principle III)
 };
 
-export function SalaryChart({ payloads, eligibility, simulated }: Props) {
+export function SalaryChart({ payloads, eligibility, simulated, rules }: Props) {
   const [shown, setShown] = useState<Mark | null>(null);
   const [asTable, setAsTable] = useState(false);
   const { ref, width } = useWidth();
@@ -201,6 +203,7 @@ export function SalaryChart({ payloads, eligibility, simulated }: Props) {
               <p data-floor-label className="text-xs">
                 Salary floor {sek(r.floor.amount)}
                 {r.floor.percent != null && ` (${r.floor.percent} % of the median)`}
+                {rules?.[r.floor.rule] && <>{" · "}<SourceLink source={rules[r.floor.rule].source} /></>}
               </p>
             )}
           </div>
@@ -227,6 +230,7 @@ export function SalaryChart({ payloads, eligibility, simulated }: Props) {
       <p role="status" className="min-h-5 text-sm">{shown?.text ?? "Hover, tap or tab to a mark to read its value."}</p>
       <figcaption className="text-xs text-muted">
         Monthly salary, SEK. Source: SCB {tables.join(", ")}. Medlingsinstitutet / SCB lönestrukturstatistik (AM0110).
+        {" "}The floors are information, not legal advice.
       </figcaption>
       <div>
         <button type="button" className="text-sm text-accent underline" onClick={() => setAsTable(!asTable)}

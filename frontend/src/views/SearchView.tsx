@@ -1,5 +1,5 @@
 import { type Dispatch, useEffect, useMemo, useRef, useState } from "react";
-import { api, type EligibilityAnswer, type Offer } from "../api/client";
+import { api, type EligibilityAnswer, type Offer, type Registry } from "../api/client";
 import { AdPassages } from "../components/AdPassages";
 import { Notice } from "../components/Notice";
 import { ResultList } from "../components/ResultList";
@@ -14,6 +14,7 @@ export type SearchViewProps = {
   age: AgeBand | null;
   setAge: (age: AgeBand | null) => void;
   offer?: Offer | null; // when given, each code's floor is the one its eligibility answer used
+  rules?: Registry["rules"];
 };
 
 function useSearch() {
@@ -73,7 +74,7 @@ function useEligibility(codes: string[], offer: Offer | null | undefined) {
 }
 
 function Selected(props: SearchViewProps) {
-  const { selection, dispatch, age, setAge, offer } = props;
+  const { selection, dispatch, age, setAge, offer, rules } = props;
   usePayloads(props);
   const eligibility = useEligibility(selection.codes, offer);
   if (!selection.codes.length)
@@ -106,7 +107,7 @@ function Selected(props: SearchViewProps) {
         </label>
       </div>
       {payloads.length > 0 && (
-        <SalaryChart payloads={payloads} eligibility={eligibility} simulated={age ? selection.simulated : {}} />
+        <SalaryChart payloads={payloads} eligibility={eligibility} rules={rules} simulated={age ? selection.simulated : {}} />
       )}
     </section>
   );

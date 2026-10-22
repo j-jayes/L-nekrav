@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import type { EligibilityAnswer, SalaryPayload } from "../api/client";
+import type { EligibilityAnswer, Registry, SalaryPayload } from "../api/client";
 import { scale } from "../lib/chartScale";
 import { fixture } from "../test/fakeApi";
 import { CHART_WIDTH, chartRows, SalaryChart, sek } from "./SalaryChart";
@@ -68,6 +68,16 @@ describe("SalaryChart", () => {
     const label = screen.getByText(/salary floor/i, { selector: "[data-floor-label]" });
     expect(label.textContent).toContain(`${floor.percent} % of the median`);
     expect(label.textContent?.replace(/\s/g, "")).toContain(String(floor.amount_sek));
+  });
+
+  it("links each floor to its rule's source and checked-on date, and says it is not legal advice", () => {
+    const rules = (fixture("registry").body as Registry).rules;
+    render(<SalaryChart payloads={[s2512]} eligibility={{}} simulated={{}} rules={rules} />);
+    const label = screen.getByText(/salary floor/i, { selector: "[data-floor-label]" });
+    const source = rules[s2512.applicable_rule_id!].source;
+    expect(label.querySelector("a")).toHaveAttribute("href", source.url);
+    expect(label).toHaveTextContent(`checked ${source.checked_on}`);
+    expect(screen.getByText(/information, not legal advice/i)).toBeInTheDocument();
   });
 
   it("draws the simulated bar dashed and labelled, with its formula on request", () => {
