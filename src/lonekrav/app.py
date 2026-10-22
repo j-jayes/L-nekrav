@@ -1,4 +1,4 @@
-"""The Lönekrav web app: one FastAPI app serving /api/v1 (Feature 003 mounts /mcp and /a2a here)."""
+"""The Lönekrav web app: one FastAPI app serving /api/v1, /mcp, /a2a and the page at / (Feature 004)."""
 
 from __future__ import annotations
 
@@ -6,9 +6,11 @@ import logging
 import os
 import time
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from fastmcp.utilities.lifespan import combine_lifespans
 
 from lonekrav.api import v1
@@ -21,12 +23,15 @@ log = logging.getLogger("lonekrav.access")
 # Libraries that log request or response bodies at DEBUG: tool arguments (fastmcp), JSON-RPC
 # requests (a2a) and every streamed chunk (sse_starlette). They never go below INFO (FR-005).
 CONTENT_LOGGERS = ("fastmcp", "a2a", "sse_starlette")
+FRONTEND_DIST = Path("frontend/dist")  # `npm run build` in frontend/; the image copies it here
 
 
-def create_app(engine=None, profiles=None, salaries=None, chat_model=None) -> FastAPI:
+def create_app(engine=None, profiles=None, salaries=None, chat_model=None,
+               frontend_dist: Path = FRONTEND_DIST) -> FastAPI:
     """`engine`, `profiles` and `salaries` (distributions, age bands) are injected by tests; the
     server loads the real ones at start-up. `chat_model` is the advisor's model; by default it is
-    OpenRouter's when OPENROUTER_KEY is set, and None (the advisor declines) when it is not."""
+    OpenRouter's when OPENROUTER_KEY is set, and None (the advisor declines) when it is not.
+    `frontend_dist` is the built page, served at / when its index.html exists."""
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -73,8 +78,26 @@ def create_app(engine=None, profiles=None, salaries=None, chat_model=None) -> Fa
         log.error("%s %s failed: %s", request.method, request.url.path, type(exc).__name__)
         return JSONResponse({"detail": "internal error"}, status_code=500)
 
+    _add_frontend(app, Path(frontend_dist))
     app.mount("/", mcp_app)  # last: a root mount takes every path registered after it
     return app
+
+
+def _add_frontend(app: FastAPI, dist: Path) -> None:
+    """The page keeps its state in the query string, so it needs only / and /assets: no catch-all
+    route that would take /mcp from the root mount (research R2)."""
+    index = dist / "index.html"
+    if not index.is_file():
+        @app.get("/", include_in_schema=False)
+        def not_built():
+            return JSONResponse({"detail": "frontend not built: run npm ci && npm run build in "
+                                           "frontend/"}, status_code=404)
+        return
+
+    @app.get("/", include_in_schema=False)
+    def page():
+        return FileResponse(index)
+    app.mount("/assets", StaticFiles(directory=dist / "assets"), name="assets")
 
 
 def main() -> None:
@@ -84,4 +107,5 @@ def main() -> None:
     load_dotenv()  # OPENROUTER_KEY and LONEKRAV_LLM_MODEL from .env; tests never read it
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
-    uvicorn.run(create_app(), host="127.0.0.1", port=8000, access_log=False)
+    uvicorn.run(create_app(), host=os.environ.get("HOST", "127.0.0.1"),
+                port=int(os.environ.get("PORT", "8000")), access_log=False)

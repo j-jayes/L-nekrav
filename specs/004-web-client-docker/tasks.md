@@ -37,20 +37,20 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 
 ### Backend: serving, settings, registry, schema
 
-- [ ] T004 [P] Write the test `tests/integration/test_frontend_serving.py`, using `create_app(..., frontend_dist=tmp_path)` with a fake `index.html` and `assets/app.js`:
+- [X] T004 [P] Write the test `tests/integration/test_frontend_serving.py`, using `create_app(..., frontend_dist=tmp_path)` with a fake `index.html` and `assets/app.js`:
   - `GET /` and `GET /?view=compare&codes=2512` return the index.
   - `GET /assets/app.js` returns 200, and an unknown asset returns 404.
   - With no build, `GET /` returns 404 with the "frontend not built" detail.
   - `POST /mcp` initialize still answers, and `/api/v1/health` is unchanged, with and without a build.
   
   It must fail first (contracts/http.md)
-- [ ] T005 Implement `create_app(frontend_dist=FRONTEND_DIST)` in `src/lonekrav/app.py`: `GET /` and the `/assets` `StaticFiles` mount, registered before the MCP root mount (R2). T004 passes
-- [ ] T006 [P] Write tests in `tests/integration/test_a2a.py`:
+- [X] T005 Implement `create_app(frontend_dist=FRONTEND_DIST)` in `src/lonekrav/app.py`: `GET /` and the `/assets` `StaticFiles` mount, registered before the MCP root mount (R2). T004 passes
+- [X] T006 [P] Write tests in `tests/integration/test_a2a.py`:
   - with `LONEKRAV_PUBLIC_URL=https://x.test/` (monkeypatched), the card's `supportedInterfaces[0].url` is `https://x.test/a2a`;
   - with it unset, the URL is `http://localhost:8000/a2a`.
   
   Add a test in `tests/unit/test_app_main.py` that `main()` passes `HOST` and `PORT` to `uvicorn.run`, by monkeypatching `uvicorn.run` (R3). Both must fail first
-- [ ] T007 Implement `card(base_url)` in `src/lonekrav/protocols/a2a_server.py`, with `add_a2a` reading `LONEKRAV_PUBLIC_URL`. Make `main()` in `src/lonekrav/app.py` read `HOST` and `PORT`. T006 passes
+- [X] T007 Implement `card(base_url)` in `src/lonekrav/protocols/a2a_server.py`, with `add_a2a` reading `LONEKRAV_PUBLIC_URL`. Make `main()` in `src/lonekrav/app.py` read `HOST` and `PORT`. T006 passes
 - [ ] T008 [P] Write tests for `GET /api/v1/legal/registry` in `tests/integration/test_api.py` and `Service.registry()` in `tests/unit/test_service.py`. The JSON equals `load_registry().model_dump(mode="json")`, and every row has a source with `checked_on`. They must fail first (R9)
 - [ ] T009 Implement `Service.registry()` in `src/lonekrav/core/service.py` and the route in `src/lonekrav/api/v1.py`. T008 passes
 - [ ] T010 [P] Extend the literal scan in `tests/unit/test_legal.py` to `frontend/src/**/*.{ts,tsx,css}`, excluding `src/test/fixtures/` and the generated `src/api/`. Plant a literal to see it fail, then remove the plant
