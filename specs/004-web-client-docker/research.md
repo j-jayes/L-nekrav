@@ -176,7 +176,7 @@ put legal text outside the registry (Principle II).
    - It sets `HF_HUB_OFFLINE=1`, `HOST=0.0.0.0` and `PYTHONUNBUFFERED=1`.
    - It runs as a non-root user, with `CMD ["lonekrav-serve"]`.
 
-`docker-compose.yml` defines one service on port 8000 with `mem_limit: 4g`. Its environment is
+`docker-compose.yml` defines one service on port 8000 with `mem_limit: 5g` (4g until measurement, R11). Its environment is
 `OPENROUTER_KEY`, `LONEKRAV_LLM_MODEL` and `LONEKRAV_PUBLIC_URL`, interpolated from the shell or
 `.env`, so the key reaches the container only at run time (FR-030). A `.dockerignore` keeps out
 `.env`, `data/raw/`, `.venv/`, `frontend/node_modules/`, `.git/` and `reports/`.
@@ -199,12 +199,17 @@ because the container has its own copy.
 **Decision**: `scripts/container_memory.py` samples `docker stats --no-stream` once a second while
 it sends, in turn, a fast search, a full search with a pasted ad (which loads the accurate model),
 an eligibility check and a compare. It writes the peak and a per-step table to
-`references/container-memory.md`. If the peak is at or above 4 GB, the work stops and the numbers
+`references/container-memory.md`. If the peak is at or above the cap, the work stops and the numbers
 go to the maintainer (clarification 2).
 
 **Rationale**: the 001 measurements (KBLab about 1 GB, Harrier about 2.6 GB peak RSS) add up to
 about 3.6 GB, close to the cap. The measurement has to come from the real container under the real
 `mem_limit`.
+
+**Outcome (2026-10-22)**: under the 4 GB cap the container sat at 3.98 GiB, with 4.23 GB of anon
+memory and 3 825 `memory.max` events: swap absorbed it, and nothing was OOM-killed. Uncapped, it
+measured 4.20 GiB steady and a 4.54 GiB cgroup peak once Harrier had loaded. The maintainer raised
+the cap to 5 GB (`references/container-memory.md`).
 
 ## R12. Testing strategy
 

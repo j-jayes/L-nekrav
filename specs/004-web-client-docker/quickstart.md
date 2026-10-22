@@ -53,7 +53,7 @@ it. Record the timings and a screenshot in `references/web-client-e2e.md` (SC-00
 ## 6. Container
 
 ```bash
-docker compose up --build                  # one service, port 8000, mem_limit 4g
+docker compose up --build                  # one service, port 8000 (LONEKRAV_PORT), mem_limit 5g
 uv run python scripts/container_memory.py  # fast, full (loads the accurate model), eligibility, compare
 curl -s localhost:8000/.well-known/agent-card.json | jq '.supportedInterfaces[0].url'
 LONEKRAV_PUBLIC_URL=https://example.test docker compose up -d && curl -s localhost:8000/.well-known/agent-card.json | jq '.supportedInterfaces[0].url'
@@ -61,7 +61,7 @@ OPENROUTER_KEY= docker compose up -d       # the advisor reports unavailable; th
 ```
 
 Expected result:
-- the peak is under 4 GB and is recorded in `references/container-memory.md`; if it is not, stop
+- the peak is under the 5 GB cap and is recorded in `references/container-memory.md`; if it is not, stop
   and report;
 - the card's URL follows `LONEKRAV_PUBLIC_URL`;
 - the Playwright views suite also passes against the container

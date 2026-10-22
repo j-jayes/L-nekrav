@@ -50,7 +50,7 @@ carries the Milvus Lite index and `data/processed/` (R10).
 - No figure is computed in the page (FR-007).
 - No legal text or amount is hard-coded in the page (Principle II); the legal-literal scan is
   extended to `frontend/src`.
-- Container memory stays under 4 GB, and an overrun goes to the maintainer (FR-027).
+- Container memory stays under the 5 GB cap (raised from 4 GB after measurement), and an overrun goes to the maintainer (FR-027).
 - The key only arrives at run time (FR-030).
 - No request content is logged (unchanged).
 
@@ -66,7 +66,7 @@ carries the Milvus Lite index and `data/processed/` (R10).
 | II. Data integrity | Every figure comes from an API payload. A null draws nothing and adds a note. The simulated bar is off by default, marked as simulated, and shows its formula (FR-007, FR-008). Legal text comes from `/legal/registry`. The legal-literal test now also scans `frontend/src`, excluding recorded fixtures. The chart credits SCB and Medlingsinstitutet. |
 | III. Honest fit | Results and comparison show `honest_fit` from the payloads. Columns keep the user's order and are never sorted by threshold (FR-012). The drawer shows the memo's footer unchanged. |
 | IV. Test first, proven by hand | Each behaviour gets a failing Vitest or pytest first (R12). The evidence covers the Playwright screenshots at two widths, axe, the EN/SV top three, the drawer run, the container's memory and the transcripts in `references/`. |
-| V. Compact and portable | One image, one port and one compose service with `mem_limit: 4g`. The models and index are in the image. Without the key, everything works except the advisor. `MILVUS_URI` still switches the store. |
+| V. Compact and portable | One image, one port and one compose service with `mem_limit: 5g` (raised from 4g by the maintainer after measurement). The models and index are in the image. Without the key, everything works except the advisor. `MILVUS_URI` still switches the store. |
 | VI. Simplicity | There is no router, chart library or state library. The URL is the router (R4), and `openapi-fetch` is the client. The new settings are `LONEKRAV_PUBLIC_URL`, `HOST` and `PORT`, which the spec and Cloud Run need. |
 
 Result: pass. Complexity Tracking lists one judgement call.

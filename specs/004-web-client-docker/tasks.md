@@ -135,16 +135,16 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 
 **Independent test**: `docker compose up --build` on a clean checkout; the page, REST, MCP, the card and both searches work on port 8000; peak memory recorded.
 
-- [ ] T031 [P] [US6] Write `scripts/fetch_models.py`, which downloads each `core.embeddings.SPECS` model at its pinned revision into `HF_HOME` with `huggingface_hub.snapshot_download`. Write a unit test that it requests exactly the SPECS ids and revisions, with `snapshot_download` monkeypatched
-- [ ] T032 [US6] Write `docker/Dockerfile` (multi-stage, as in research R10), `.dockerignore` (it must not exclude `data/lonekrav_milvus.db` or `data/processed/`, though `data/*.db` is gitignored) and `docker-compose.yml` (one service, `8000:8000`, `mem_limit: 4g`, environment `OPENROUTER_KEY`, `LONEKRAV_LLM_MODEL` and `LONEKRAV_PUBLIC_URL` interpolated, no `env_file`). Start Docker Desktop, then run `docker compose up --build` and time the build and the start-up (SC-006)
-- [ ] T033 [US6] Check the running container by hand:
+- [X] T031 [P] [US6] Write `scripts/fetch_models.py`, which downloads each `core.embeddings.SPECS` model at its pinned revision into `HF_HOME` with `huggingface_hub.snapshot_download`. Write a unit test that it requests exactly the SPECS ids and revisions, with `snapshot_download` monkeypatched
+- [X] T032 [US6] Write `docker/Dockerfile` (multi-stage, as in research R10), `.dockerignore` (it must not exclude `data/lonekrav_milvus.db` or `data/processed/`, though `data/*.db` is gitignored) and `docker-compose.yml` (one service, `8000:8000`, `mem_limit: 4g`, environment `OPENROUTER_KEY`, `LONEKRAV_LLM_MODEL` and `LONEKRAV_PUBLIC_URL` interpolated, no `env_file`). Start Docker Desktop, then run `docker compose up --build` and time the build and the start-up (SC-006)
+- [X] T033 [US6] Check the running container by hand:
   - `GET /`, `/api/v1/health`, the card, an MCP `initialize` with `tools/list`, a fast search and a full search;
   - then `docker compose exec` to confirm that `.env` is absent and that the key is only in the environment when given;
   - then cut networking (`docker network disconnect`) and repeat both searches (Story 6 AC5).
   
   Save the commands and output to `references/container-smoke.md`
-- [ ] T034 [US6] Write `scripts/container_memory.py`, which samples `docker stats` while running a fast search, a full search with `parse_ad` on the en1 ad, an eligibility check and a compare, and writes `references/container-memory.md` (R11). If the peak is ≥ 4 GB, stop and report to the maintainer (FR-027)
-- [ ] T035 [US6] Write `README.md`: what Lönekrav is; local run (`uv sync`, `lonekrav-etl`, `npm ci && npm run build`, `lonekrav-serve`); `docker compose up --build`; every environment variable from data-model.md; the Cloud Run variant (build and push, `gcloud run deploy` with `--memory 4Gi --port` default and `LONEKRAV_PUBLIC_URL`, plus the amd64 CPU-torch note), marked "documented, not deployed"; licences and credits as in `data-dict.yaml`
+- [X] T034 [US6] Write `scripts/container_memory.py`, which samples `docker stats` while running a fast search, a full search with `parse_ad` on the en1 ad, an eligibility check and a compare, and writes `references/container-memory.md` (R11). If the peak is ≥ 4 GB, stop and report to the maintainer (FR-027)
+- [X] T035 [US6] Write `README.md`: what Lönekrav is; local run (`uv sync`, `lonekrav-etl`, `npm ci && npm run build`, `lonekrav-serve`); `docker compose up --build`; every environment variable from data-model.md; the Cloud Run variant (build and push, `gcloud run deploy` with `--memory 4Gi --port` default and `LONEKRAV_PUBLIC_URL`, plus the amd64 CPU-torch note), marked "documented, not deployed"; licences and credits as in `data-dict.yaml`
 
 ---
 

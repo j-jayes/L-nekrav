@@ -15,18 +15,19 @@ COPY --from=ghcr.io/astral-sh/uv:0.9.9 /uv /bin/uv
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_PYTHON_DOWNLOADS=never \
     HF_HOME=/models PATH=/app/.venv/bin:$PATH
 WORKDIR /app
+# Milvus Lite writes a lock and its log beside the index, so the app user owns data/.
+RUN useradd --create-home app && install -d -o app /app/data
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-dev --no-install-project
+# uv's download cache stays in a build cache, not in the image (it was 1.5 GB).
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev --no-install-project
 COPY src/ src/
-RUN uv sync --frozen --no-dev
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev
 # The pinned models, downloaded once here; the container then never goes to the network for them.
 RUN lonekrav-etl fetch-models
-COPY data/processed/ data/processed/
-COPY data/lonekrav_milvus.db/ data/lonekrav_milvus.db/
-COPY data/lonekrav_milvus.db.vocab.json data/
+COPY --chown=app data/processed/ data/processed/
+COPY --chown=app data/lonekrav_milvus.db/ data/lonekrav_milvus.db/
+COPY --chown=app data/lonekrav_milvus.db.vocab.json data/
 COPY --from=page /frontend/dist/ frontend/dist/
-# Milvus Lite writes a lock and its log beside the index, so the app user owns data/.
-RUN useradd --create-home app && chown -R app data
 USER app
 ENV HF_HUB_OFFLINE=1 HOST=0.0.0.0 PORT=8000 PYTHONUNBUFFERED=1
 EXPOSE 8000

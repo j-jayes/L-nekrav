@@ -36,6 +36,9 @@ top-3 codes; A2A drawer updates the chart."
 - Q: Are the selected codes and the current view kept in the page address? → A: Yes. The view
   and the selected codes are in the address, so a reload or a shared link restores them. The ad,
   background and offer never go in the address.
+- Q (during implementation): the measured container needs about 4.2 GiB once the accurate model is
+  loaded, with a 4.54 GiB peak, so a 4 GB cap stays at its limit and leans on swap. What should the
+  budget be? → A: Raise the cap to 5 GB, about 10 % above the measured peak; search is unchanged.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -377,9 +380,10 @@ on the one port; record the container's peak memory.
   with no other services. The search models and the index MUST be inside the image (models
   downloaded at build time, the locally built index copied in), so the image needs no volume or
   network download at start-up.
-- **FR-027**: The container's memory MUST be capped at 4 GB, and its measured peak during an
-  accurate search MUST be recorded in the repository. If the peak exceeds 4 GB, the cap MUST NOT be
-  raised, and no model may be dropped, without the maintainer's decision.
+- **FR-027**: The container's memory MUST be capped at 5 GB (raised from 4 GB by the maintainer
+  after measurement; see Clarifications), and its measured peak during an accurate search MUST be
+  recorded in the repository. If the peak exceeds the cap, the cap MUST NOT be raised, and no model
+  may be dropped, without the maintainer's decision.
 - **FR-028**: The advisor's public address in its agent card MUST be settable by configuration,
   defaulting to the local address; a trailing slash in the setting is ignored.
 - **FR-029**: The container MUST start and serve everything except the advisor when no model key
@@ -419,7 +423,7 @@ on the one port; record the container's peak memory.
 - **SC-006**: From a clean checkout with the index built, the one command serves the page within
   10 minutes of build time and 60 seconds of start-up on the reference machine.
 - **SC-007**: The container's peak memory during an accurate search on a pasted ad stays under
-  4 GB, and is recorded.
+  the 5 GB cap, and is recorded.
 - **SC-008**: With the advisor on, the chart's selection changes during the run, before the memo
   arrives, in a recorded end-to-end run.
 - **SC-009**: The page passes an automated accessibility check with no serious or critical
@@ -428,8 +432,9 @@ on the one port; record the container's peak memory.
 ## Assumptions
 
 - The reference machine is the maintainer's laptop (Apple M2 Pro, 16 GB), as in Features 001–003.
-- The memory budget is 4 GB, as the maintainer set in Feature 001 (measured peaks in 001: about
-  1 GB for the fast model and about 2.6 GB for the accurate model).
+- The memory budget was 4 GB, as the maintainer set in Feature 001 (measured peaks in 001: about
+  1 GB for the fast model and about 2.6 GB for the accurate model, each in its own process). The
+  container holding both plus the server measured 4.54 GiB, and the maintainer raised it to 5 GB.
 - The search index and processed data are built locally with `lonekrav-etl` before the container
   is built; the container does not run the data pipeline, which takes over an hour cold.
 - The page is served by the same server as the API, so there is no cross-origin setup and no

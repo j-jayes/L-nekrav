@@ -9,7 +9,7 @@ services:
     image: lonekrav:latest
     ports:
       - "${LONEKRAV_PORT:-8000}:8000"  # the host port; set it if 8000 is taken
-    mem_limit: 4g
+    mem_limit: 5g  # measured peak 4.54 GiB with both models loaded (references/container-memory.md)
     environment:
       OPENROUTER_KEY: ${OPENROUTER_KEY:-}
       LONEKRAV_LLM_MODEL: ${LONEKRAV_LLM_MODEL:-}
