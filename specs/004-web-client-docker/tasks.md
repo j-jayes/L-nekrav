@@ -152,14 +152,14 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 
 **Independent test**: compare three codes with an offer, and check each column against `POST /compare`.
 
-- [ ] T036 [P] [US3] Write `frontend/src/views/CompareView.test.tsx` on the recorded compare fixtures, which must fail first:
+- [X] T036 [P] [US3] Write `frontend/src/views/CompareView.test.tsx` on the recorded compare fixtures, which must fail first:
   - columns keep the selection order;
   - each shows sv/en tasks with source, latest salary, threshold, flags and, with an offer, status, margin and warnings;
   - pass and fail use the same styling apart from the status text and icon (FR-012);
   - a fifth code cannot be added (the shared four-code selection);
   - `honest_fit` is shown;
   - with fewer than two codes it explains and links to search.
-- [ ] T037 [US3] Implement `frontend/src/views/CompareView.tsx` and `components/EligibilityResult.tsx`. T036 passes. Prove it by hand with 2512, 2511 and 3511 and an offer
+- [X] T037 [US3] Implement `frontend/src/views/CompareView.tsx` and `components/EligibilityResult.tsx`. T036 passes. Prove it by hand with 2512, 2511 and 3511 and an offer
 
 ---
 
@@ -167,8 +167,8 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 
 **Independent test**: the guide and timeline equal the REST registry and timeline, and the calculator equals `POST /eligibility` for pass, part-time, extension and banned cases.
 
-- [ ] T038 [P] [US4] Write `frontend/src/components/OfferForm.test.tsx`, which must fail first. The fields follow the `Offer` schema; `current_permit_granted_on` appears only for an extension; a 422 detail is mapped to the named field in plain words; and the draft is shared state, never written to storage or the URL
-- [ ] T039 [US4] Implement `frontend/src/components/OfferForm.tsx`, with the offer draft in a context shared by compare, the calculator, the chart's floor line and the drawer. T038 passes
+- [X] T038 [P] [US4] Write `frontend/src/components/OfferForm.test.tsx`, which must fail first. The fields follow the `Offer` schema; `current_permit_granted_on` appears only for an extension; a 422 detail is mapped to the named field in plain words; and the draft is shared state, never written to storage or the URL
+- [X] T039 [US4] Implement `frontend/src/components/OfferForm.tsx`, with the offer draft in a context shared by compare, the calculator, the chart's floor line and the drawer. T038 passes
 - [ ] T040 [P] [US4] Write `frontend/src/views/LegalView.test.tsx` on the recorded registry, timeline and eligibility fixtures, which must fail first:
   - each rule, median, code list, exemption and statement shows its source link and checked-on date;
   - code-list entries show their Swedish titles from the registry next to the code, and rule and exemption names keep their Swedish legal terms where the registry gives them (FR-022);

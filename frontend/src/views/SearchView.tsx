@@ -1,5 +1,5 @@
 import { type Dispatch, useEffect, useMemo, useRef, useState } from "react";
-import { api } from "../api/client";
+import { api, type EligibilityAnswer, type Offer } from "../api/client";
 import { AdPassages } from "../components/AdPassages";
 import { Notice } from "../components/Notice";
 import { ResultList } from "../components/ResultList";
@@ -13,6 +13,7 @@ export type SearchViewProps = {
   dispatch: Dispatch<Action>;
   age: AgeBand | null;
   setAge: (age: AgeBand | null) => void;
+  offer?: Offer | null; // when given, each code's floor is the one its eligibility answer used
 };
 
 function useSearch() {
@@ -57,9 +58,24 @@ function usePayloads({ selection, dispatch, age }: SearchViewProps) {
   }, [selection.codes, selection.payloads, age, dispatch]);
 }
 
+/** With an offer, each selected code's eligibility answer: the chart's floor line follows it. */
+function useEligibility(codes: string[], offer: Offer | null | undefined) {
+  const [answers, setAnswers] = useState<Record<string, EligibilityAnswer | null>>({});
+  useEffect(() => {
+    if (!offer) return setAnswers({});
+    let live = true;
+    Promise.all(codes.map((code) => api.POST("/api/v1/eligibility", { body: { ...offer, code } })
+      .then(({ data }) => [code, data ?? null] as const)))
+      .then((pairs) => live && setAnswers(Object.fromEntries(pairs)));
+    return () => { live = false; };
+  }, [codes, offer]);
+  return answers;
+}
+
 function Selected(props: SearchViewProps) {
-  const { selection, dispatch, age, setAge } = props;
+  const { selection, dispatch, age, setAge, offer } = props;
   usePayloads(props);
+  const eligibility = useEligibility(selection.codes, offer);
   if (!selection.codes.length)
     return <p className="text-sm text-muted">Add up to four codes from the results to compare their salaries.</p>;
   const payloads = selection.codes.map((c) => selection.payloads[c]).filter(Boolean);
@@ -90,7 +106,7 @@ function Selected(props: SearchViewProps) {
         </label>
       </div>
       {payloads.length > 0 && (
-        <SalaryChart payloads={payloads} eligibility={{}} simulated={age ? selection.simulated : {}} />
+        <SalaryChart payloads={payloads} eligibility={eligibility} simulated={age ? selection.simulated : {}} />
       )}
     </section>
   );

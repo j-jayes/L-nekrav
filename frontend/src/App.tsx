@@ -1,6 +1,8 @@
 import { useEffect, useReducer, useState } from "react";
-import { api } from "./api/client";
+import { api, type Offer, type Registry } from "./api/client";
 import { Notice } from "./components/Notice";
+import { OfferBox } from "./components/OfferBox";
+import { type Draft, emptyDraft } from "./lib/offer";
 import { initial, select } from "./lib/selection";
 import { type AgeBand, parse, serialise, type View } from "./lib/urlState";
 import { CompareView } from "./views/CompareView";
@@ -26,6 +28,13 @@ export default function App() {
   const [age, setAge] = useState<AgeBand | null>(start.state.age);
   const [selection, dispatch] = useReducer(select, undefined, initial);
   const [loaded, setLoaded] = useState(start.state.codes.length === 0);
+  const [draft, setDraft] = useState<Draft>(emptyDraft);
+  const [offer, setOffer] = useState<Offer | null>(null);
+  const [registry, setRegistry] = useState<Registry | null>(null);
+
+  useEffect(() => {
+    api.GET("/api/v1/legal/registry").then(({ data }) => data && setRegistry(data));
+  }, []);
 
   useEffect(() => {
     if (loaded) return;
@@ -58,8 +67,14 @@ export default function App() {
       </nav>
       {selection.note && <Notice kind="warn">{selection.note}</Notice>}
       <main className="mt-4 space-y-6">
-        {view === "search" && <SearchView selection={selection} dispatch={dispatch} age={age} setAge={setAge} />}
-        {view === "compare" && <CompareView />}
+        {view !== "legal" && selection.codes.length > 0 && (
+          <OfferBox code={selection.codes[0]} draft={draft} offer={offer} registry={registry}
+            onApplied={(d, o) => { setDraft(d); setOffer(o); }} onClear={() => setOffer(null)} />
+        )}
+        {view === "search" && (
+          <SearchView selection={selection} dispatch={dispatch} age={age} setAge={setAge} offer={offer} />
+        )}
+        {view === "compare" && <CompareView codes={selection.codes} offer={offer} onSearch={() => setView("search")} />}
         {view === "legal" && <LegalView />}
       </main>
     </div>
