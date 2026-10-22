@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
 import { api, type Offer, type Registry } from "./api/client";
+import { AdvisorDrawer } from "./components/AdvisorDrawer";
 import { Notice } from "./components/Notice";
 import { OfferBox } from "./components/OfferBox";
 import { type Draft, emptyDraft } from "./lib/offer";
@@ -31,6 +32,7 @@ export default function App() {
   const [draft, setDraft] = useState<Draft>(emptyDraft);
   const [offer, setOffer] = useState<Offer | null>(null);
   const [registry, setRegistry] = useState<Registry | null>(null);
+  const [advisor, setAdvisor] = useState(false);
 
   useEffect(() => {
     api.GET("/api/v1/legal/registry").then(({ data }) => data && setRegistry(data));
@@ -49,12 +51,15 @@ export default function App() {
   }, [loaded, view, selection.codes, age]);
 
   return (
-    <div className="mx-auto max-w-5xl px-4 pb-16">
+    // On wide screens the open drawer sits beside the page rather than over the chart.
+    <div className={`mx-auto max-w-5xl px-4 pb-16 ${advisor ? "lg:mr-[28rem] lg:ml-4" : ""}`}>
       <header className="flex flex-wrap items-baseline justify-between gap-2 py-4">
         <div>
           <h1 className="text-2xl font-bold">Lönekrav</h1>
           <p className="text-sm text-muted">SSYK codes and the salary requirement for Swedish work permits</p>
         </div>
+        <button type="button" onClick={() => setAdvisor(!advisor)} aria-expanded={advisor}
+          className="rounded border border-accent px-3 py-1.5 text-sm text-accent">Ask the advisor</button>
       </header>
       <nav aria-label="Views" className="mb-4 flex gap-1 border-b border-line">
         {TABS.map((t) => (
@@ -77,6 +82,10 @@ export default function App() {
         {view === "compare" && <CompareView codes={selection.codes} offer={offer} onSearch={() => setView("search")} />}
         {view === "legal" && <LegalView registry={registry} draft={draft} onApplied={(d, o) => { setDraft(d); setOffer(o); }} />}
       </main>
+      {/* Hidden, not unmounted, when closed: a run keeps going and its answer is still there. */}
+      <div hidden={!advisor}>
+        <AdvisorDrawer offer={offer} dispatch={dispatch} onClose={() => setAdvisor(false)} />
+      </div>
     </div>
   );
 }

@@ -183,14 +183,14 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 
 **Independent test**: with the fake advisor, the chart selection follows the run before the memo arrives; with no key, the drawer explains and the page works.
 
-- [ ] T042 [P] [US5] Write `frontend/src/lib/a2aClient.test.ts`, which replays the captured `.sse` bytes from T013, split at awkward chunk boundaries. It must fail first:
+- [X] T042 [P] [US5] Write `frontend/src/lib/a2aClient.test.ts`, which replays the captured `.sse` bytes from T013, split at awkward chunk boundaries. It must fail first:
   - events come out as task, status, ui_sync, memo and final state;
   - a rejected stream gives the reason;
   - a JSON-RPC error and a broken stream give `failed` and `lost`;
   - cancel posts `CancelTask` with the task id and aborts;
   - the request carries `A2A-Version: 1.0` and one data part.
-- [ ] T043 [US5] Implement `frontend/src/lib/a2aClient.ts`. T042 passes
-- [ ] T044 [P] [US5] Write `frontend/src/components/AdvisorDrawer.test.tsx`, which must fail first:
+- [X] T043 [US5] Implement `frontend/src/lib/a2aClient.ts`. T042 passes
+- [X] T044 [P] [US5] Write `frontend/src/components/AdvisorDrawer.test.tsx`, which must fail first:
   - the third-party notice (from the card description) is shown before the first send;
   - a second send while running is refused with a note;
   - when the user changes the selection after an advisor update, the user's change stands, and a later advisor update wins again (most recent wins);
@@ -199,8 +199,8 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
   - the memo renders Markdown without raw HTML and with its footer;
   - unavailable, failed, lost and canceled each show a message and a retry;
   - the offer is sent only if "include my offer" is ticked.
-- [ ] T045 [US5] Implement `frontend/src/components/AdvisorDrawer.tsx`. T044 passes
-- [ ] T046 [US5] Write `scripts/serve_fake_advisor.py`, which runs `create_app(chat_model=...)` with a scripted model: search, then salary for 2512, then compare 2512,2511, then a short memo. Write `frontend/e2e/advisor.spec.ts` against it: 2512 and 2511 are selected on the chart before the memo arrives (SC-008). Then, if `OPENROUTER_KEY` is present, run the live drawer by hand with the en1 ad, record the full-run wire bytes for T013, and save the timings and a screenshot to `references/web-client-e2e.md`
+- [X] T045 [US5] Implement `frontend/src/components/AdvisorDrawer.tsx`. T044 passes
+- [X] T046 [US5] Write `scripts/serve_fake_advisor.py`, which runs `create_app(chat_model=...)` with a scripted model: search, then salary for 2512, then compare 2512,2511, then a short memo. Write `frontend/e2e/advisor.spec.ts` against it: 2512 and 2511 are selected on the chart before the memo arrives (SC-008). Then, if `OPENROUTER_KEY` is present, run the live drawer by hand with the en1 ad, record the full-run wire bytes for T013, and save the timings and a screenshot to `references/web-client-e2e.md`
 
 ---
 
