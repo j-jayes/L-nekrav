@@ -65,9 +65,9 @@ in T002, are the patterns to follow (research R2–R7).
 **Independent test**: `uv run pytest tests/integration/test_mcp.py`, then quickstart §3 against a
 running server.
 
-- [ ] T006 [US1] Write the test `tests/integration/test_mcp.py`. Its fixture runs `create_app(...)` under `TestClient` (for the lifespan) and opens `fastmcp.Client(app.state.mcp)` in memory. It checks that `list_tools` names exactly the five tools, each with a description and with input and output schemas, and that `list_resources` and `list_resource_templates` give `legal://timeline` and `ssyk://{code}`. Run it and see it fail
-- [ ] T007 [US1] Implement `src/lonekrav/protocols/__init__.py` and `src/lonekrav/protocols/mcp_server.py` (`build_mcp(app) -> FastMCP`, built with `mask_error_details=True`; tools and resources as in contracts/mcp.md, each a one-line call into `app.state.service`; `UnknownCode` and `ValueError` re-raised as `ToolError(str(e))`). In `create_app`, set `app.state.mcp`, combine the lifespans with `combine_lifespans`, and mount `mcp.http_app(path="/mcp")` at `/` last (research R2). Work until T006 passes
-- [ ] T008 [US1] Add parity tests to `tests/integration/test_mcp.py` (SC-001). Each tool's `structured_content` must equal the `api_client` JSON for the same input, using the same inputs as `test_api.py`:
+- [X] T006 [US1] Write the test `tests/integration/test_mcp.py`. Its fixture runs `create_app(...)` under `TestClient` (for the lifespan) and opens `fastmcp.Client(app.state.mcp)` in memory. It checks that `list_tools` names exactly the five tools, each with a description and with input and output schemas, and that `list_resources` and `list_resource_templates` give `legal://timeline` and `ssyk://{code}`. Run it and see it fail
+- [X] T007 [US1] Implement `src/lonekrav/protocols/__init__.py` and `src/lonekrav/protocols/mcp_server.py` (`build_mcp(app) -> FastMCP`, built with `mask_error_details=True`; tools and resources as in contracts/mcp.md, each a one-line call into `app.state.service`; `UnknownCode` and `ValueError` re-raised as `ToolError(str(e))`). In `create_app`, set `app.state.mcp`, combine the lifespans with `combine_lifespans`, and mount `mcp.http_app(path="/mcp")` at `/` last (research R2). Work until T006 passes
+- [X] T008 [US1] Add parity tests to `tests/integration/test_mcp.py` (SC-001). Each tool's `structured_content` must equal the `api_client` JSON for the same input, using the same inputs as `test_api.py`:
   - search in fast mode, with and without `parse_ad`
   - `extract_job_ad_signal`
   - salary for 2512, with and without an age band and a date
@@ -75,14 +75,14 @@ running server.
   - compare 2512 and 2421, with and without an offer
   
   Each resource's JSON text must equal the matching REST route (timeline, and the occupation 2512 without ILO text). Run it red if anything differs, then fix it in `mcp_server.py`
-- [ ] T009 [US1] Add error tests to `tests/integration/test_mcp.py` (FR-009):
+- [X] T009 [US1] Add error tests to `tests/integration/test_mcp.py` (FR-009):
   - An unknown code in salary, eligibility, compare and `ssyk://9999` gives `is_error` with REST's detail text.
   - An unknown age band gives REST's 422 message.
   - A 20 001-character ad and `k=21` are rejected with errors that name the field.
   - A tool that raises `RuntimeError("/secret/path")` gives a masked message without "secret".
   - The server keeps serving afterwards.
-- [ ] T010 [US1] Add a test to `tests/integration/test_mcp.py` (FR-005): with `caplog` at DEBUG, call search with the text `"PRIVATE-AD-TEXT"` and eligibility with salary 41234, and check that neither appears in the logs. Also add an HTTP-level test: with `TestClient(app)`, POST an MCP `initialize` request to exactly `/mcp`, which must answer 200 and not redirect, and check that `/api/v1/health` still answers 200
-- [ ] T011 [US1] Run quickstart §3 by hand. Start `uv run lonekrav-serve`, run `claude mcp add --transport http lonekrav http://localhost:8000/mcp` (local scope), then `claude mcp list`, then `claude -p ...` calling `search_occupations` and `get_occupation_salary`. Save the commands, the tool list, the answer and the time taken to `references/mcp-claude-code.md` (FR-021a)
+- [X] T010 [US1] Add a test to `tests/integration/test_mcp.py` (FR-005): with `caplog` at DEBUG, call search with the text `"PRIVATE-AD-TEXT"` and eligibility with salary 41234, and check that neither appears in the logs. Also add an HTTP-level test: with `TestClient(app)`, POST an MCP `initialize` request to exactly `/mcp`, which must answer 200 and not redirect, and check that `/api/v1/health` still answers 200
+- [X] T011 [US1] Run quickstart §3 by hand. Start `uv run lonekrav-serve`, run `claude mcp add --transport http lonekrav http://localhost:8000/mcp` (local scope), then `claude mcp list`, then `claude -p ...` calling `search_occupations` and `get_occupation_salary`. Save the commands, the tool list, the answer and the time taken to `references/mcp-claude-code.md` (FR-021a)
 
 **Checkpoint**: MCP works with no key. This is the MVP.
 
