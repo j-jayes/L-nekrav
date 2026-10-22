@@ -88,7 +88,7 @@ def render(results: list[Result], machine: str, date: str) -> str:
                      f"{r.peak_gb:.2f} GB | {r.short_ms[0]} / {r.short_ms[1]} ms | "
                      f"{r.ad_ms[0]} / {r.ad_ms[1]} ms | {r.doc_ms} ms |")
     lines += ["", "Harrier is loaded in float32: its bfloat16 checkpoint is far slower on CPU.",
-              "The container memory budget is 4 GB (decided 2026-10-20).", ""]
+              "The container memory cap is 5 GB (4 GB from 2026-10-20; raised on 2026-10-22 after measuring the container, references/container-memory.md).", ""]
     return "\n".join(lines)
 
 

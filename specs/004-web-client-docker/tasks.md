@@ -206,16 +206,16 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 
 ## Phase 9: Polish and evidence
 
-- [ ] T047 Write `frontend/e2e/views.spec.ts`. For search with two codes on the chart, compare and legal, at phone and desktop width:
+- [X] T047 Write `frontend/e2e/views.spec.ts`. For search with two codes on the chart, compare and legal, at phone and desktop width:
   - a screenshot to `references/web-client-screenshots/{view}-{project}.png`;
   - `document.documentElement.scrollWidth <= innerWidth`;
   - axe with no serious or critical violations (SC-005, SC-009).
   
   Run it against `lonekrav-serve` and against the container
-- [ ] T048 Find a real public job ad (an English-language ad from Platsbanken through the JobSearch API, or one the maintainer supplies) and translate it to Swedish (a model translation, recorded as such). Write `frontend/e2e/ad-languages.spec.ts`, which pastes each one and records the top three after the full search. They must be the same set (SC-003). Commit only the ad's source link and the codes, in `references/web-client-e2e.md`, and keep the ad text in the scratchpad
-- [ ] T049 Measure SC-001 and SC-002 in Playwright on the reference machine (keystroke to list update; pause to full ranking for the 600-word ad), and record the numbers in `references/web-client-e2e.md`
+- [X] T048 Find a real public job ad (an English-language ad from Platsbanken through the JobSearch API, or one the maintainer supplies) and translate it to Swedish (a model translation, recorded as such). Write `frontend/e2e/ad-languages.spec.ts`, which pastes each one and records the top three after the full search. They must be the same set (SC-003). Commit only the ad's source link and the codes, in `references/web-client-e2e.md`, and keep the ad text in the scratchpad
+- [X] T049 Measure SC-001 and SC-002 in Playwright on the reference machine (keystroke to list update; pause to full ranking for the 600-word ad), and record the numbers in `references/web-client-e2e.md`
 - [X] T050 [P] Regenerate `references/api-smoke.md` with `scripts/api_smoke.py`. The only differences allowed are the timestamp and the new `/legal/registry` route, if the smoke script lists routes
-- [ ] T051 Write `docs/walkthroughs/004-web-client-docker.md` with the walkthrough skill (snippets emitted with `sed`). Update CLAUDE.md ("Things worked out in Feature 004"; the `/` serving note; the frontend commands) and `references/development-plan.md` ("As built")
+- [X] T051 Write `docs/walkthroughs/004-web-client-docker.md` with the walkthrough skill (snippets emitted with `sed`). Update CLAUDE.md ("Things worked out in Feature 004"; the `/` serving note; the frontend commands) and `references/development-plan.md` ("As built")
 - [ ] T052 Run `/speckit-converge`, then run the full gates: `rtk proxy uv run pytest -q`, `uv run pytest -m benchmark -q` (with the server stopped), `npm test`, `npm run build`, and `ruff`
 - [ ] T053 Open the PR with the evidence (screenshots, memory, e2e, smoke). Request a Copilot review with the `gh api` command in memory, then fix or answer every comment
 

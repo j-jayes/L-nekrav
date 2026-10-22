@@ -98,7 +98,9 @@ The SSYK and salary navigator for Swedish work permits. Plan and verified facts:
 ```bash
 uv run pytest                 # the suite; run it first (first-run-the-tests skill)
 uv run lonekrav-etl --help    # fetch | build | index | benchmark
-uv run lonekrav-serve         # FastAPI: /api/v1, /mcp, /a2a, static frontend
+uv run lonekrav-serve         # FastAPI: /api/v1, /mcp, /a2a, and the page from frontend/dist
+(cd frontend && npm ci && npm test && npm run build)   # the page; npx playwright test for e2e
+docker compose up --build     # the whole stack on one port (LONEKRAV_PORT if 8000 is taken)
 ```
 
 Layout: `src/lonekrav/core/` (all domain logic, framework-free), `etl/`, `api/`, `protocols/`,
@@ -178,3 +180,31 @@ Things worked out in Feature 003:
   hundreds of them.
 - `claude mcp add --transport http lonekrav http://localhost:8000/mcp` connects Claude Code (removed
   again after 003); `claude -p ... --output-format stream-json` captures a tool transcript.
+
+Things worked out in Feature 004:
+
+- **The page sits beside the root MCP mount**: `GET /` and `/assets` are registered before
+  `app.mount("/", mcp_app)`. The page's state lives in the query string, so there is no catch-all
+  route to steal `/mcp`.
+- **Types come from the schema**: run `uv run python scripts/export_openapi.py && (cd frontend &&
+  npm run gen)` after any response-model change. `test_openapi_drift.py` fails until you do.
+- **Page tests use recorded real responses**: `scripts/record_api_fixtures.py` writes them, and
+  the A2A tests replay captured SSE bytes. The bytes use CRLF line endings, so read them in Python
+  with `newline=""`. The legal-literal scan covers `frontend/src`, so a test's sample number must
+  not be a legal amount.
+- **npm**: `frontend/.npmrc` sets `legacy-peer-deps` because npm 10's arborist crashes on vitest's
+  optional peers ("reading 'edgesOut'"). Pin versions that are at least two weeks old.
+- **Port 8000 is often taken by other projects' containers**: use `127.0.0.1` rather than
+  `localhost` (Docker listens on IPv6), run local servers on 8010, and test the container with
+  `LONEKRAV_PORT=8001`. Stopping a background task also kills a server started inside it.
+- **ILO text ranks but is never served**: chunks carry `ilo` (the index schema has the field), and
+  `search.displayable` picks what a hit shows. Re-indexing reuses cached embeddings (21 s). Any
+  image or artefact that holds the index holds ILO text, so keep it private.
+- **The container**: torch comes from the PyTorch CPU index on Linux (PyPI's wheels pull in CUDA),
+  uv's cache is a build mount, the models are baked in at their pinned revisions
+  (`lonekrav-etl fetch-models`), and the cap is 5 GB. Judge memory by anon memory and swap
+  (`scripts/container_memory.py`), not by "limit reached" events: the page cache fills to any cap.
+- **Charts**: load the `dataviz` skill and run its `validate_palette.js`. Draw SVG at the measured
+  width, so text keeps its size on a phone. One-off Playwright scripts in the scratchpad load
+  Playwright with `createRequire(process.cwd() + "/")` from `frontend/`.
+

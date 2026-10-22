@@ -11,4 +11,4 @@ descriptions in batches of 32. Peak is the model process's max RSS.
 | microsoft/harrier-oss-v1-0.6b | bfloat16 | 1024 | 32768 | 5 s | 1.54 GB | 139 / 181 ms | 5971 / 6112 ms | 1231 ms |
 
 Harrier is loaded in float32: its bfloat16 checkpoint is far slower on CPU.
-The container memory budget is 4 GB (decided 2026-10-20).
+The container memory cap is 5 GB (4 GB from 2026-10-20; raised on 2026-10-22 after measuring the container, references/container-memory.md).
