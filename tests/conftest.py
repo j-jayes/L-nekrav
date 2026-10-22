@@ -12,6 +12,26 @@ from lonekrav.etl import esco, ilo, jobtech, mis2012, scb_files, scb_pxweb
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
+@pytest.fixture(autouse=True)
+def _release_milvus_lite(tmp_path_factory):
+    """Stop the Milvus Lite server each test's temporary index started.
+
+    Milvus Lite runs one in-process gRPC server per database path until the process exits. With
+    hundreds of them alive, a test that starts a subprocess (test_openmp_order, test_index_search)
+    can crash in gRPC's fork handler. Only paths under pytest's temporary base are released, so
+    the benchmark's module-scoped index on data/index keeps running."""
+    yield
+    import sys
+
+    if "milvus_lite.server_manager" not in sys.modules:
+        return
+    from milvus_lite.server_manager import server_manager_instance as manager
+
+    base = str(tmp_path_factory.getbasetemp())
+    for path in [p for p in manager._servers if p.startswith(base)]:  # no public listing
+        manager.release_server(path)
+
+
 @pytest.fixture
 def fixtures() -> Path:
     return FIXTURES
@@ -59,7 +79,8 @@ def fixture_engine(inputs, tmp_path):
 
     profiles = build_profiles(inputs)
     store, embedders, titles, _ = _build_index(profiles, tmp_path / "api.db")
-    return SearchEngine(store=store, embedders=embedders, titles=titles), profiles
+    yield SearchEngine(store=store, embedders=embedders, titles=titles), profiles
+    store.client.close()
 
 
 @pytest.fixture
