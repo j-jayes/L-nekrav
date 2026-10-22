@@ -12,6 +12,7 @@ export type SearchFn = (req: SearchRequest, signal: AbortSignal) => Promise<Sear
 export type SessionState = {
   text: string;
   answer: SearchAnswer | null;
+  answerFor: string | null; // the text the shown answer is for
   shown: "fast" | "full" | null;
   refining: boolean; // a full search is waiting or running
   error: string | null;
@@ -30,7 +31,7 @@ export const apiSearch: SearchFn = async (body, signal) => {
 const aborted = (e: unknown) => e instanceof DOMException && e.name === "AbortError";
 
 export class SearchSession {
-  private state: SessionState = { text: "", answer: null, shown: null, refining: false, error: null };
+  private state: SessionState = { text: "", answer: null, answerFor: null, shown: null, refining: false, error: null };
   private fast?: AbortController;
   private full?: AbortController;
   private timer?: ReturnType<typeof setTimeout>;
@@ -47,7 +48,7 @@ export class SearchSession {
     this.fast?.abort();
     this.full?.abort();
     clearTimeout(this.timer);
-    if (!text.trim()) return this.set({ text, answer: null, shown: null, refining: false, error: null });
+    if (!text.trim()) return this.set({ text, answer: null, answerFor: null, shown: null, refining: false, error: null });
     if (text.length > MAX_TEXT)
       return this.set({ text, refining: false, error: "The text is too long: the limit is 20 000 characters." });
     this.set({ text, refining: true, error: null });
@@ -61,7 +62,7 @@ export class SearchSession {
       (answer) => {
         if (text !== this.state.text || (mode === "fast" && this.fullFor === text)) return;
         this.fullFor = mode === "full" ? text : null;
-        this.set({ answer, shown: mode, refining: mode === "fast" ? this.state.refining : false });
+        this.set({ answer, answerFor: text, shown: mode, refining: mode === "fast" ? this.state.refining : false });
       },
       (e) => {
         if (aborted(e) || text !== this.state.text) return;

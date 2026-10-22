@@ -134,11 +134,11 @@ export function SearchView(props: SearchViewProps) {
         )}
       </section>
       {state?.answer && (
-        <>
+        <div data-answer-for={state.answerFor ?? ""} className="space-y-6">
           <AdPassages answer={state.answer} />
           <ResultList answer={state.answer} selected={selection.codes}
             onSelect={(code) => dispatch({ type: "add", code })} />
-        </>
+        </div>
       )}
       <Selected {...props} />
     </>

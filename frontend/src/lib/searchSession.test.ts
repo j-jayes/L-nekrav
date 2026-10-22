@@ -51,6 +51,7 @@ describe("SearchSession", () => {
     await flush();
     expect(last().shown).toBe("fast");
     expect(last().answer?.searched_text).toBe("new");
+    expect(last().answerFor).toBe("new");
   });
 
   it("replaces fast with full, and a later fast answer does not undo it", async () => {

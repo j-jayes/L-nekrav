@@ -101,6 +101,8 @@ def parse(text: str, embedder: Embedder, anchors: dict[str, list[str]] | None = 
         if i == 0 and _is_title(line):
             rows.append((line.strip(), "title", "position"))
             continue
+        if section and _is_title(line) and not _BULLET.match(line):
+            section = None  # a heading not in HEADINGS ends the one before it; anchors decide
         for s in _sentences(line):
             rows.append((s, section, "heading") if section else (s, None, "anchor"))
 
