@@ -114,3 +114,20 @@ fused      R@5 en 0.940  sv 0.935  n 184
 fused_fast R@5 en 0.897  sv 0.842  n 184
 gap (full) 0.005; hand-written overlap 0.875; low-confidence cut-off 0.545 (nonsense max 0.494)
 ```
+
+## 4. After the PR #2 review (2026-10-22)
+
+Copilot found that the leak check tested a slash-joined title as one phrase while search tries
+each part on its own ("Aktuarie" is in the indexed title "Matematiker och aktuarier"). Parts are
+now checked and held out like whole titles. 10 paired slash queries were dropped as lookups
+(paired n 184 -> 174; paired slash queries 23 -> 8). The BM25 weight (0.3) was kept: chosen on the
+earlier set, it still passes every gate. `uv run pytest -m benchmark`: 9 passed.
+
+```text
+kblab      R@5 en 0.874  sv 0.851  n 174
+harrier    R@5 en 0.920  sv 0.885  n 174
+bm25       R@5 en 0.862  sv 0.546  n 174
+fused      R@5 en 0.931  sv 0.931  n 174
+fused_fast R@5 en 0.891  sv 0.868  n 174
+gap (full) 0.000; hand-written overlap 0.844; low-confidence cut-off 0.536 (nonsense max 0.494)
+```

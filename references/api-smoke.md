@@ -1,6 +1,6 @@
 # API smoke transcript
 
-Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py`. Lists are cut to three items for reading.
+Run 2026-10-22T09:45:42 against `http://127.0.0.1:8000` by `scripts/api_smoke.py`. Lists are cut to three items for reading.
 
 ## Eligibility, scenario 1: 2512 filed 16 June 2026
 
@@ -701,7 +701,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "title_en": "Software- and system developers",
    "scores": {
     "kblab": 0.6936643123626709,
-    "bm25": 7.139098644256592
+    "bm25": 7.139456748962402
    },
    "ranks": {
     "kblab": 2,
@@ -721,7 +721,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "title_en": "Games and digital media developers",
    "scores": {
     "kblab": 0.6162564754486084,
-    "bm25": 5.592464447021484
+    "bm25": 5.656832695007324
    },
    "ranks": {
     "kblab": 3,
@@ -731,7 +731,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "fused_rank": 2,
    "matched_chunk": {
     "kind": "synonyms_en",
-    "text": "digital games developer; computer games developer; virtual games developer; video games developer; games programmer; digital games developers"
+    "text": "digital games developer; digital game developer; computer games developer; virtual games developer; video games developer; games programmer; digital games developers"
    },
    "legal_flags": []
   },
@@ -741,7 +741,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "title_en": "Engineering professionals in electrical, electronics and telecommunications",
    "scores": {
     "kblab": 0.7121975421905518,
-    "bm25": 4.236775875091553
+    "bm25": 4.237313747406006
    },
    "ranks": {
     "kblab": 1,
@@ -785,7 +785,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "scores": {
     "kblab": 0.6936643123626709,
     "harrier": 0.5514954328536987,
-    "bm25": 7.139098644256592
+    "bm25": 7.139456748962402
    },
    "ranks": {
     "kblab": 2,
@@ -807,7 +807,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "scores": {
     "kblab": 0.6162564754486084,
     "harrier": 0.5051956176757812,
-    "bm25": 5.592464447021484
+    "bm25": 5.656832695007324
    },
    "ranks": {
     "kblab": 3,
@@ -818,7 +818,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "fused_rank": 2,
    "matched_chunk": {
     "kind": "synonyms_en",
-    "text": "digital games developer; computer games developer; virtual games developer; video games developer; games programmer; digital games developers"
+    "text": "digital games developer; digital game developer; computer games developer; virtual games developer; video games developer; games programmer; digital games developers"
    },
    "legal_flags": []
   },
@@ -827,9 +827,9 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "title_sv": "Övriga IT-specialister",
    "title_en": "ICT-specialist professionals not elsewhere classified",
    "scores": {
-    "kblab": 0.5773189067840576,
+    "kblab": 0.5830305218696594,
     "harrier": 0.47812601923942566,
-    "bm25": 4.0282392501831055
+    "bm25": 4.028755187988281
    },
    "ranks": {
     "kblab": 6,
@@ -840,7 +840,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "fused_rank": 3,
    "matched_chunk": {
     "kind": "synonyms_sv",
-    "text": "Agil coach, IT; Agile coach, IT; Datalingvist; Datastrateg; Interaktionsdesigner; IT-brottsutredare; IT-strateg; Processansvarig, ITIL; Release manager, IT; Scrum master, IT; Servicedesigner, IT; Systemexpert, IT; Systemingenjör, data; Systemman; Tjänstedesigner, IT; UX-designer; Servicedesigner/Tjänstedesigner; Servicedesigner; Tjänstedesigner; analytiker för användargränssnitt; analytiker för användarens upplevelse; användningsutvärderare; utvärderare av användarens upplevelse; användningsanalytiker; designer av användargränssnitt; ingenjör för användarförmågan; gränssnittsdesigner; hjälpmedelsdesigner; UI-designer; formgivare av intelligenta system; designer av maskininlärningssystem; AI-systemdesigner; designer av intelligenta IT-system; designer av artificiell intelligens; IKT-hjälpmedelstestare; hjälpmedelsprovare; testare av hjälpmedel; provare av hjälpmedel; IKT-användbarhetstestare; användbarhetsingenjör"
+    "text": "Agil coach, IT; Agile coach, IT; Datalingvist; Datastrateg; Forskare, IT; Interaktionsdesigner; IT-brottsutredare; Processansvarig, ITIL; Release manager, IT; Scrum master, IT; Servicedesigner, IT; Systemexpert, IT; Systemingenjör, data; Systemman; Tjänstedesigner, IT; UX-designer; Servicedesigner/Tjänstedesigner; Servicedesigner; Tjänstedesigner; analytiker för användargränssnitt; analytiker för användarens upplevelse; användningsutvärderare; utvärderare av användarens upplevelse; användningsanalytiker; designer av användargränssnitt; ingenjör för användarförmågan; gränssnittsdesigner; hjälpmedelsdesigner; UI-designer; formgivare av intelligenta system; designer av maskininlärningssystem; AI-systemdesigner; designer av intelligenta IT-system; designer av artificiell intelligens; IKT-hjälpmedelstestare; hjälpmedelsprovare; testare av hjälpmedel; provare av hjälpmedel; IKT-användbarhetstestare; användbarhetsingenjör"
    },
    "legal_flags": []
   },
@@ -873,7 +873,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "title_en": "Nurses - children",
    "scores": {
     "kblab": 0.8438960909843445,
-    "bm25": 20.99001693725586
+    "bm25": 20.991132736206055
    },
    "ranks": {
     "kblab": 1,
@@ -893,7 +893,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "title_en": "Psychiatry nurses",
    "scores": {
     "kblab": 0.8149264454841614,
-    "bm25": 20.99001693725586
+    "bm25": 20.991132736206055
    },
    "ranks": {
     "kblab": 3,
@@ -913,7 +913,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "title_en": "Assistant nurses, clinic",
    "scores": {
     "kblab": 0.8202250003814697,
-    "bm25": 6.951716423034668
+    "bm25": 6.952158451080322
    },
    "ranks": {
     "kblab": 2,
@@ -971,9 +971,9 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "title_sv": "Matematiker och aktuarier",
    "title_en": "Mathematicians and actuaries",
    "scores": {
-    "kblab": 0.7170548439025879,
-    "harrier": 0.7064918279647827,
-    "bm25": 13.456313133239746
+    "kblab": 0.7319021224975586,
+    "harrier": 0.7168887853622437,
+    "bm25": 16.971555709838867
    },
    "ranks": {
     "kblab": 3,
@@ -984,7 +984,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "fused_rank": 1,
    "matched_chunk": {
     "kind": "synonyms_sv",
-    "text": "Aktuarie, försäkringsbolag; Kryptolog, matematiker; Livförsäkringsaktuarie; Matematiker; aktuariekonsult"
+    "text": "Aktuarie, försäkringsbolag; Försäkringsaktuarie; Försäkringsmatematiker; Kryptolog, matematiker; Livförsäkringsaktuarie; Matematiker; Aktuarie/Försäkringsaktuarie/Försäkringsmatematiker; Aktuarie; aktuariekonsult"
    },
    "legal_flags": []
   },
@@ -1015,7 +1015,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "title_sv": "Skadereglerare och värderare",
    "title_en": "Claims assessor and valuers",
    "scores": {
-    "kblab": 0.785554051399231,
+    "kblab": 0.7788282632827759,
     "harrier": 0.6555026769638062,
     "bm25": null
    },
@@ -1028,7 +1028,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "fused_rank": 3,
    "matched_chunk": {
     "kind": "synonyms_en",
-    "text": "insurance fraud investigator; insurance policy processing worker; insurance examiners; insurance inspectors; insurance auditors; insurance fraud auditor; insurance policy processing workers; insurance fraud examiner; insurance claims handler; insurance claims assessor; claims processor; claims inspector; insurance claims processor; claims adjuster; property and casualty insurance claims examiner; claims examiner; insurance claims analyst; insurance claims examiner; insurance claims inspector; claims analyst; claims consultant; travelling insurance assessor; claims service supervisor; insurance claims officer; insurance claims consultant; claims handler; casualty insurance adjuster; claims representative; civil damages inspector; contract claims examiner; loss adjuster; vehicle damage appraiser; insurance loss adjuster; claims adjusters supervisor; damage appraiser; field appraiser; material damage appraiser; automobile claims technical adjuster; chartered loss adjuster; fire claims adjuster"
+    "text": "insurance fraud investigator; insurance fraud inspector; insurance policy processing worker; insurance examiners; insurance inspectors; insurance auditors; insurance fraud auditor; insurance policy processing workers; insurance fraud examiner; insurance claims handler; insurance claims assessor; claims processor; claims inspector; insurance claims processor; claims adjuster; property and casualty insurance claims examiner; claims examiner; insurance claims analyst; insurance claims examiner; insurance claims inspector; claims analyst; claims consultant; travelling insurance assessor; claims service supervisor; insurance claims officer; insurance claims consultant; claims handler; casualty insurance adjuster; claims representative; civil damages inspector; contract claims examiner; loss adjuster; vehicle damage appraiser; insurance loss adjuster; claims adjusters supervisor; damage appraiser; field appraiser; material damage appraiser; automobile claims technical adjuster; chartered loss adjuster"
    },
    "legal_flags": []
   },
@@ -1076,11 +1076,11 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "legal_flags": []
   },
   {
-   "code": "2282",
-   "title_sv": "Dietister",
-   "title_en": "Dieticians",
+   "code": "5419",
+   "title_sv": "Övrig bevaknings- och säkerhetspersonal",
+   "title_en": "Protective services workers not elsewhere classified",
    "scores": {
-    "kblab": 0.4486052989959717,
+    "kblab": 0.44977542757987976,
     "bm25": null
    },
    "ranks": {
@@ -1091,16 +1091,16 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "fused_rank": 2,
    "matched_chunk": {
     "kind": "synonyms_sv",
-    "text": "Dietist"
+    "text": "väktare; tillsynsväktare; ronderande väktare; rondväktare"
    },
    "legal_flags": []
   },
   {
-   "code": "9320",
-   "title_sv": "Handpaketerare och andra fabriksarbetare",
-   "title_en": "Manufacturing labourers",
+   "code": "2282",
+   "title_sv": "Dietister",
+   "title_en": "Dieticians",
    "scores": {
-    "kblab": 0.43584197759628296,
+    "kblab": 0.4486052989959717,
     "bm25": null
    },
    "ranks": {
@@ -1111,7 +1111,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "fused_rank": 3,
    "matched_chunk": {
     "kind": "synonyms_sv",
-    "text": "Packare; orderplockare"
+    "text": "Dietist"
    },
    "legal_flags": []
   },
@@ -1168,7 +1168,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "scores": {
     "kblab": 0.5985780954360962,
     "harrier": 0.5412302017211914,
-    "bm25": 78.03857421875
+    "bm25": 78.05026245117188
    },
    "ranks": {
     "kblab": 1,
@@ -1190,14 +1190,14 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "scores": {
     "kblab": 0.5628695487976074,
     "harrier": 0.5401063561439514,
-    "bm25": 63.028892517089844
+    "bm25": 63.039833068847656
    },
    "ranks": {
-    "kblab": 3,
+    "kblab": 2,
     "harrier": 2,
     "bm25": 3
    },
-   "fused_score": 0.03676395289298515,
+   "fused_score": 0.03701996927803379,
    "fused_rank": 2,
    "matched_chunk": {
     "kind": "desc_en",
@@ -1222,9 +1222,9 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "title_sv": "Övriga IT-specialister",
    "title_en": "ICT-specialist professionals not elsewhere classified",
    "scores": {
-    "kblab": 0.5564047694206238,
-    "harrier": 0.4986022710800171,
-    "bm25": 79.67957305908203
+    "kblab": 0.5557272434234619,
+    "harrier": 0.4972383379936218,
+    "bm25": 79.68771362304688
    },
    "ranks": {
     "kblab": 4,
@@ -2009,15 +2009,15 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
 
 ```json
 {
- "run_at": "2026-10-21T20:19:09+00:00",
+ "run_at": "2026-10-22T07:45:10+00:00",
  "models": {
   "kblab": "KBLab/sentence-bert-swedish-cased@6b5e83cd29c0",
   "harrier": "microsoft/harrier-oss-v1-0.6b@f9b9dc8d367d"
  },
  "n_queries": {
   "handwritten": 32,
-  "generated": 333,
-  "generated_with_english": 152
+  "generated": 323,
+  "generated_with_english": 142
  },
  "metrics": {
   "kblab": {
@@ -2025,20 +2025,20 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
     "handwritten": {
      "recall_at_1": 0.53125,
      "recall_at_5": 0.96875,
-     "mrr": 0.7274305555555556,
+     "mrr": 0.7278645833333334,
      "n": 32
     },
     "all_paired": {
-     "recall_at_1": 0.5380434782608695,
-     "recall_at_5": 0.8695652173913043,
-     "mrr": 0.68261516563147,
-     "n": 184
+     "recall_at_1": 0.5459770114942529,
+     "recall_at_5": 0.8735632183908046,
+     "mrr": 0.6869412515964239,
+     "n": 174
     },
     "generated": {
-     "recall_at_1": 0.5394736842105263,
-     "recall_at_5": 0.8486842105263158,
-     "mrr": 0.6731803467000835,
-     "n": 152
+     "recall_at_1": 0.5492957746478874,
+     "recall_at_5": 0.852112676056338,
+     "mrr": 0.6777190923317684,
+     "n": 142
     }
    },
    "sv": {
@@ -2049,22 +2049,22 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
      "n": 32
     },
     "all_paired": {
-     "recall_at_1": 0.5760869565217391,
-     "recall_at_5": 0.8260869565217391,
-     "mrr": 0.6754528985507247,
-     "n": 184
-    },
-    "generated_sv_only": {
-     "recall_at_1": 0.2983425414364641,
-     "recall_at_5": 0.6298342541436464,
-     "mrr": 0.43820485837060424,
-     "n": 181
+     "recall_at_1": 0.5632183908045977,
+     "recall_at_5": 0.8505747126436781,
+     "mrr": 0.6806741470534574,
+     "n": 174
     },
     "generated": {
-     "recall_at_1": 0.5592105263157895,
-     "recall_at_5": 0.7960526315789473,
-     "mrr": 0.6520833333333332,
-     "n": 152
+     "recall_at_1": 0.5422535211267606,
+     "recall_at_5": 0.823943661971831,
+     "mrr": 0.6568354571875699,
+     "n": 142
+    },
+    "generated_sv_only": {
+     "recall_at_1": 0.34806629834254144,
+     "recall_at_5": 0.6298342541436464,
+     "mrr": 0.4761532052968517,
+     "n": 181
     }
    }
   },
@@ -2077,42 +2077,42 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
      "n": 32
     },
     "all_paired": {
-     "recall_at_1": 0.7065217391304348,
-     "recall_at_5": 0.9239130434782609,
-     "mrr": 0.7980719461697723,
-     "n": 184
+     "recall_at_1": 0.7183908045977011,
+     "recall_at_5": 0.9195402298850575,
+     "mrr": 0.8000478927203065,
+     "n": 174
     },
     "generated": {
-     "recall_at_1": 0.7236842105263158,
-     "recall_at_5": 0.9144736842105263,
-     "mrr": 0.8074796365914787,
-     "n": 152
+     "recall_at_1": 0.7394366197183099,
+     "recall_at_5": 0.9084507042253521,
+     "mrr": 0.8105633802816901,
+     "n": 142
     }
    },
    "sv": {
     "handwritten": {
-     "recall_at_1": 0.625,
+     "recall_at_1": 0.65625,
      "recall_at_5": 0.96875,
-     "mrr": 0.7471354166666667,
+     "mrr": 0.7627604166666667,
      "n": 32
     },
     "all_paired": {
-     "recall_at_1": 0.6793478260869565,
-     "recall_at_5": 0.9130434782608695,
-     "mrr": 0.7777691511387164,
-     "n": 184
-    },
-    "generated_sv_only": {
-     "recall_at_1": 0.4198895027624309,
-     "recall_at_5": 0.7292817679558011,
-     "mrr": 0.5479829869332632,
-     "n": 181
+     "recall_at_1": 0.6379310344827587,
+     "recall_at_5": 0.8850574712643678,
+     "mrr": 0.7486407589855866,
+     "n": 174
     },
     "generated": {
-     "recall_at_1": 0.6907894736842105,
-     "recall_at_5": 0.9013157894736842,
-     "mrr": 0.78421835839599,
-     "n": 152
+     "recall_at_1": 0.6338028169014085,
+     "recall_at_5": 0.8661971830985915,
+     "mrr": 0.7454588642968925,
+     "n": 142
+    },
+    "generated_sv_only": {
+     "recall_at_1": 0.43646408839779005,
+     "recall_at_5": 0.7348066298342542,
+     "mrr": 0.551569762343243,
+     "n": 181
     }
    }
   },
@@ -2125,16 +2125,16 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
      "n": 32
     },
     "all_paired": {
-     "recall_at_1": 0.6413043478260869,
-     "recall_at_5": 0.8478260869565217,
-     "mrr": 0.7257009144237405,
-     "n": 184
+     "recall_at_1": 0.6494252873563219,
+     "recall_at_5": 0.8620689655172413,
+     "mrr": 0.7317597153804051,
+     "n": 174
     },
     "generated": {
-     "recall_at_1": 0.6776315789473685,
-     "recall_at_5": 0.8421052631578947,
-     "mrr": 0.7514515455304929,
-     "n": 152
+     "recall_at_1": 0.6901408450704225,
+     "recall_at_5": 0.8591549295774648,
+     "mrr": 0.7606891348088531,
+     "n": 142
     }
    },
    "sv": {
@@ -2145,22 +2145,22 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
      "n": 32
     },
     "all_paired": {
-     "recall_at_1": 0.40217391304347827,
-     "recall_at_5": 0.5597826086956522,
-     "mrr": 0.47613871635610766,
-     "n": 184
-    },
-    "generated_sv_only": {
-     "recall_at_1": 0.292817679558011,
-     "recall_at_5": 0.4088397790055249,
-     "mrr": 0.34308515302990444,
-     "n": 181
+     "recall_at_1": 0.41379310344827586,
+     "recall_at_5": 0.5459770114942529,
+     "mrr": 0.4733716475095785,
+     "n": 174
     },
     "generated": {
-     "recall_at_1": 0.4144736842105263,
-     "recall_at_5": 0.5460526315789473,
-     "mrr": 0.4766525689223058,
-     "n": 152
+     "recall_at_1": 0.4295774647887324,
+     "recall_at_5": 0.528169014084507,
+     "mrr": 0.4732981220657277,
+     "n": 142
+    },
+    "generated_sv_only": {
+     "recall_at_1": 0.2596685082872928,
+     "recall_at_5": 0.4088397790055249,
+     "mrr": 0.3195737963693765,
+     "n": 181
     }
    }
   },
@@ -2173,42 +2173,42 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
      "n": 32
     },
     "all_paired": {
-     "recall_at_1": 0.7391304347826086,
-     "recall_at_5": 0.9402173913043478,
-     "mrr": 0.822403381642512,
-     "n": 184
+     "recall_at_1": 0.7413793103448276,
+     "recall_at_5": 0.9310344827586207,
+     "mrr": 0.822053457398285,
+     "n": 174
     },
     "generated": {
-     "recall_at_1": 0.7368421052631579,
-     "recall_at_5": 0.9276315789473685,
-     "mrr": 0.8135233918128655,
-     "n": 152
+     "recall_at_1": 0.7394366197183099,
+     "recall_at_5": 0.9154929577464789,
+     "mrr": 0.8124692600044713,
+     "n": 142
     }
    },
    "sv": {
     "handwritten": {
      "recall_at_1": 0.75,
      "recall_at_5": 1.0,
-     "mrr": 0.8447916666666667,
+     "mrr": 0.8463541666666666,
      "n": 32
     },
     "all_paired": {
-     "recall_at_1": 0.7010869565217391,
-     "recall_at_5": 0.9347826086956522,
-     "mrr": 0.7955314009661835,
-     "n": 184
-    },
-    "generated_sv_only": {
-     "recall_at_1": 0.40331491712707185,
-     "recall_at_5": 0.7292817679558011,
-     "mrr": 0.5506818381127774,
-     "n": 181
+     "recall_at_1": 0.6896551724137931,
+     "recall_at_5": 0.9310344827586207,
+     "mrr": 0.7864303959131547,
+     "n": 174
     },
     "generated": {
-     "recall_at_1": 0.6907894736842105,
-     "recall_at_5": 0.9210526315789473,
-     "mrr": 0.7851608187134503,
-     "n": 152
+     "recall_at_1": 0.676056338028169,
+     "recall_at_5": 0.9154929577464789,
+     "mrr": 0.7729264475743349,
+     "n": 142
+    },
+    "generated_sv_only": {
+     "recall_at_1": 0.425414364640884,
+     "recall_at_5": 0.7348066298342542,
+     "mrr": 0.5636301850390247,
+     "n": 181
     }
    }
   },
@@ -2221,16 +2221,16 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
      "n": 32
     },
     "all_paired": {
-     "recall_at_1": 0.6358695652173914,
-     "recall_at_5": 0.8967391304347826,
-     "mrr": 0.746268978605935,
-     "n": 184
+     "recall_at_1": 0.6551724137931034,
+     "recall_at_5": 0.8908045977011494,
+     "mrr": 0.759786079182631,
+     "n": 174
     },
     "generated": {
-     "recall_at_1": 0.6381578947368421,
-     "recall_at_5": 0.881578947368421,
-     "mrr": 0.7402751670843776,
-     "n": 152
+     "recall_at_1": 0.6619718309859155,
+     "recall_at_5": 0.8732394366197183,
+     "mrr": 0.7564162754303599,
+     "n": 142
     }
    },
    "sv": {
@@ -2241,22 +2241,22 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
      "n": 32
     },
     "all_paired": {
-     "recall_at_1": 0.6521739130434783,
-     "recall_at_5": 0.842391304347826,
-     "mrr": 0.7323887163561077,
-     "n": 184
-    },
-    "generated_sv_only": {
-     "recall_at_1": 0.34806629834254144,
-     "recall_at_5": 0.6574585635359116,
-     "mrr": 0.4790669122160835,
-     "n": 181
+     "recall_at_1": 0.6264367816091954,
+     "recall_at_5": 0.867816091954023,
+     "mrr": 0.7307060755336617,
+     "n": 174
     },
     "generated": {
-     "recall_at_1": 0.6381578947368421,
-     "recall_at_5": 0.8289473684210527,
-     "mrr": 0.7176065162907268,
-     "n": 152
+     "recall_at_1": 0.6056338028169014,
+     "recall_at_5": 0.8591549295774648,
+     "mrr": 0.7145036887994635,
+     "n": 142
+    },
+    "generated_sv_only": {
+     "recall_at_1": 0.39779005524861877,
+     "recall_at_5": 0.6685082872928176,
+     "mrr": 0.5127247215645006,
+     "n": 181
     }
    }
   }
@@ -2264,57 +2264,57 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
  "gap_recall_at_5": {
   "kblab": {
    "handwritten": 0.0,
-   "all_paired": 0.04347826086956519,
-   "generated": 0.052631578947368474
+   "all_paired": 0.02298850574712652,
+   "generated": 0.028169014084507005
   },
   "harrier": {
    "handwritten": 0.0,
-   "all_paired": 0.010869565217391353,
-   "generated": 0.013157894736842146
+   "all_paired": 0.03448275862068961,
+   "generated": 0.04225352112676062
   },
   "bm25": {
    "handwritten": 0.25,
-   "all_paired": 0.2880434782608695,
-   "generated": 0.29605263157894735
+   "all_paired": 0.3160919540229884,
+   "generated": 0.33098591549295775
   },
   "fused": {
    "handwritten": 0.0,
-   "all_paired": 0.005434782608695565,
-   "generated": 0.006578947368421129
+   "all_paired": 0.0,
+   "generated": 0.0
   },
   "fused_fast": {
    "handwritten": 0.0625,
-   "all_paired": 0.05434782608695654,
-   "generated": 0.05263157894736836
+   "all_paired": 0.02298850574712641,
+   "generated": 0.014084507042253502
   }
  },
- "handwritten_top5_overlap_ge3": 0.875,
+ "handwritten_top5_overlap_ge3": 0.84375,
  "diagnosis": {
   "method": "fused",
-  "n_paired": 184,
-  "gap": 0.005434782608695652,
+  "n_paired": 174,
+  "gap": 0.0,
   "groups": [
    {
     "origin": "generated",
     "form": "single",
-    "n": 129,
+    "n": 134,
     "recall_at_5": {
-     "en": 0.9147286821705426,
-     "sv": 0.9224806201550387
+     "en": 0.9104477611940298,
+     "sv": 0.9253731343283582
     },
-    "gap_points": -0.005434782608695652,
-    "share_of_gap": -1.0
+    "gap_points": -0.011494252873563218,
+    "share_of_gap": null
    },
    {
     "origin": "generated",
     "form": "slash",
-    "n": 23,
+    "n": 8,
     "recall_at_5": {
      "en": 1.0,
-     "sv": 0.9130434782608695
+     "sv": 0.75
     },
-    "gap_points": 0.010869565217391304,
-    "share_of_gap": 2.0
+    "gap_points": 0.011494252873563218,
+    "share_of_gap": null
    },
    {
     "origin": "handwritten",
@@ -2325,17 +2325,17 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
      "sv": 1.0
     },
     "gap_points": 0.0,
-    "share_of_gap": 0.0
+    "share_of_gap": null
    }
   ]
  },
  "low_confidence": {
-  "share_above": 0.9508196721311475,
+  "share_above": 0.9508506616257089,
   "nonsense_max": 0.49406251311302185,
-  "n": 549,
+  "n": 529,
   "n_nonsense": 15,
   "ok": true,
-  "cutoff": 0.5454738736152649,
+  "cutoff": 0.5364890098571777,
   "note": "top fused hit's KBLab similarity, full mode, both languages"
  },
  "previous": {
@@ -2363,7 +2363,7 @@ Run 2026-10-21T22:38:01 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
   "harrier",
   "kblab"
  ],
- "index_chunks": 9551
+ "index_chunks": 9554
 }
 ```
 

@@ -40,43 +40,11 @@ reaches core and comes back as a 422 naming it. The only thing the route adds is
 
 ### 2. The request model refuses impossible combinations
 
-`src/lonekrav/core/eligibility.py:27`
+`src/lonekrav/core/eligibility.py:63`
 
 ```python
-class EligibilityRequest(BaseModel):
+class EligibilityRequest(Offer):
     code: str = Field(pattern=r"^\d{4}$")
-    monthly_salary_sek: int = Field(gt=0, description="Gross monthly salary actually paid")
-    fte_percent: int = Field(ge=1, le=100, description="Share of full time")
-    application_type: Literal["first_permit", "extension"]
-    filed_on: dt.date
-    decided_on: dt.date = Field(default_factory=dt.date.today,
-                                description="Expected decision date; defaults to today")
-    current_permit_granted_on: dt.date | None = Field(
-        default=None, description="Decision date of the current permit (extensions only)")
-    exemptions: list[str] = Field(default=[], description="Declared personal exemption ids")
-
-    @field_validator("exemptions")
-    @classmethod
-    def _known_and_unique(cls, v: list[str]) -> list[str]:
-        known = load_registry().exemptions
-        if unknown := [e for e in v if e not in known]:
-            raise ValueError(f"unknown exemptions {unknown}; expected some of {sorted(known)}")
-        if len(set(v)) != len(v):
-            raise ValueError("exemptions must be unique")
-        return v
-
-    @model_validator(mode="after")
-    def _consistent(self):
-        if (self.application_type == "extension") != (self.current_permit_granted_on is not None):
-            raise ValueError("current_permit_granted_on is required for an extension and only "
-                             "allowed for one")
-        if self.decided_on < self.filed_on:
-            raise ValueError("decided_on cannot be before filed_on")
-        exemptions = load_registry().exemptions
-        if self.application_type == "extension" and any(
-                exemptions[e].first_permit_only for e in self.exemptions):
-            raise ValueError("exemptions: former_student_researcher applies to first permits only")
-        return self
 ```
 
 Field rules cover single values (a 4-digit code, salary above zero, 1–100 % of full time). The
@@ -120,7 +88,7 @@ medians:
 `load_registry` turns this into pydantic models. It refuses a row without a source and fills each
 median's `effective_to` from the next row, so the medians cannot overlap or leave a gap:
 
-`src/lonekrav/core/legal.py:166`
+`src/lonekrav/core/legal.py:169`
 
 ```python
 def load_registry(path: Path = REGISTRY_FILE) -> Registry:
@@ -158,6 +126,9 @@ The lookups the eligibility code uses are small:
             return rule.amount
         return round_half_up(rule.percent * median.amount / 100)
 
+    def rule_active(self, rule_id: str, on: dt.date) -> bool:
+        return _active(self.rules[rule_id], on)
+
     def codes_on(self, kind: str, on: dt.date) -> dict[str, str]:
         cl = self.code_lists[kind]
         return dict(cl.codes) if _active(cl, on) else {}
@@ -170,7 +141,7 @@ reproduces every amount Migrationsverket publishes for 2021–2026.
 
 ### 4. Choosing the rule
 
-`src/lonekrav/core/eligibility.py:121`
+`src/lonekrav/core/eligibility.py:125`
 
 ```python
 def evaluate(req: EligibilityRequest, registry: Registry | None = None,
@@ -214,7 +185,7 @@ The order matters, and it follows data-model.md:
    from the registry, not with a date in code.
 3. **Then the rule itself:**
 
-`src/lonekrav/core/eligibility.py:103`
+`src/lonekrav/core/eligibility.py:107`
 
 ```python
 def _rule(req: EligibilityRequest, reg: Registry) -> tuple[str, str, list[Source]]:
@@ -241,7 +212,7 @@ requirement, which those extensions are not under (spec FR-012, research R6).
 
 ### 5. Warnings carry their sources
 
-`src/lonekrav/core/eligibility.py:87`
+`src/lonekrav/core/eligibility.py:91`
 
 ```python
 def _warnings(req: EligibilityRequest, reg: Registry, median: MedianRecord | None) -> list[Warning]:
@@ -324,7 +295,7 @@ $ sed -n '/^## Eligibility, scenario 1:/,/^## Eligibility, scenario 2/p' referen
 @router.post("/search")
 ```
 
-`src/lonekrav/core/search.py:259`
+`src/lonekrav/core/search.py:262`
 
 ```python
 def run(req: SearchRequest, engine: SearchEngine) -> SearchAnswer:
@@ -389,7 +360,7 @@ anchor sentences. Title, duty and skill are kept; if nothing is kept the whole a
 
 ### 9. Title lists
 
-`src/lonekrav/core/search.py:135`
+`src/lonekrav/core/search.py:136`
 
 ```python
 def title_parts(text: str) -> list[str] | None:
@@ -409,7 +380,7 @@ left alone.
 
 ### 10. The engine: one fetch, then rank
 
-`src/lonekrav/core/search.py:164`
+`src/lonekrav/core/search.py:165`
 
 ```python
 class SearchEngine:
@@ -425,10 +396,11 @@ class SearchEngine:
         self.store, self.embedders, self.titles = store, dict(embedders), titles
         self.harrier_loader = harrier_loader or (lambda: get_embedder("harrier"))
         self.low_confidence_cutoff = low_confidence_cutoff
+        self._harrier_lock = threading.Lock()  # sync routes run in worker threads
         self._load_vectors()
 ```
 
-`src/lonekrav/core/search.py:207`
+`src/lonekrav/core/search.py:209`
 
 ```python
     def search_dense(self, name: str, vector: np.ndarray, limit: int) -> list[dict]:
@@ -444,7 +416,7 @@ the store stays the source of truth, so a Milvus server works the same way. The 
 with paged `query` calls because Milvus Lite does not implement `query_iterator` (found by the
 first real run).
 
-`src/lonekrav/core/search.py:224`
+`src/lonekrav/core/search.py:227`
 
 ```python
     def chunk_hits(self, queries: Sequence[str], methods: Sequence[str],
@@ -488,7 +460,7 @@ The benchmark calls these same methods, so its numbers describe what users get (
 
 ### 11. Weighted fusion
 
-`src/lonekrav/core/search.py:69`
+`src/lonekrav/core/search.py:70`
 
 ```python
 def fuse(per_method: Mapping[str, list[tuple[str, ChunkHit]]], k: int = 5,
@@ -518,7 +490,7 @@ def fuse(per_method: Mapping[str, list[tuple[str, ChunkHit]]], k: int = 5,
     return out
 ```
 
-`src/lonekrav/core/search.py:28`
+`src/lonekrav/core/search.py:29`
 
 ```python
 WEIGHTS: dict[str, float] = {"bm25": 0.3}  # chosen on generated queries, confirmed on
@@ -533,12 +505,12 @@ hand-written ones; the sweep and the numbers are in `references/benchmark-diagno
 
 ````text
 $ uv run python -c "import json;d=json.load(open('data/processed/benchmark_results.json'));m=d['metrics'];[print(k, {l:...
-kblab {'en': 0.87, 'sv': 0.826} n 184
-harrier {'en': 0.924, 'sv': 0.913} n 184
-bm25 {'en': 0.848, 'sv': 0.56} n 184
-fused {'en': 0.94, 'sv': 0.935} n 184
-fused_fast {'en': 0.897, 'sv': 0.842} n 184
-gap 0.005 overlap 0.875 cutoff 0.545
+kblab {'en': 0.874, 'sv': 0.851} n 174
+harrier {'en': 0.92, 'sv': 0.885} n 174
+bm25 {'en': 0.862, 'sv': 0.546} n 174
+fused {'en': 0.931, 'sv': 0.931} n 174
+fused_fast {'en': 0.891, 'sv': 0.868} n 174
+gap 0.0 overlap 0.84375 cutoff 0.536
 ````
 
 ## Open questions
