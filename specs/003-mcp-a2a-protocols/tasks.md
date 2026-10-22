@@ -29,8 +29,8 @@ in T002, are the patterns to follow (research R2–R7).
 
 ## Phase 1: Setup
 
-- [ ] T001 Run `uv add "fastmcp>=4.1.3,<5" "a2a-sdk[fastapi]>=1.2.3,<2" "openai>=3.36.1,<4" python-dotenv`. Register the `live` marker in `[tool.pytest.ini_options]` and add `and not live` to the default `addopts` in `pyproject.toml`. Then run `rtk proxy uv run pytest -q`, which must still report 264 passed
-- [ ] T002 [P] Copy the research examples from the scratchpad to `references/fastmcp_mount.py` and `references/a2a_server_client.py`, each with a header docstring that says what it proves and how to run it. Point to them from CLAUDE.md in T035
+- [X] T001 Run `uv add "fastmcp>=4.1.3,<5" "a2a-sdk[fastapi]>=1.2.3,<2" "openai>=3.36.1,<4" python-dotenv`. Register the `live` marker in `[tool.pytest.ini_options]` and add `and not live` to the default `addopts` in `pyproject.toml`. Then run `rtk proxy uv run pytest -q`, which must still report 264 passed
+- [X] T002 [P] Copy the research examples from the scratchpad to `references/fastmcp_mount.py` and `references/a2a_server_client.py`, each with a header docstring that says what it proves and how to run it. Point to them from CLAUDE.md in T035
 
 ---
 
@@ -38,15 +38,15 @@ in T002, are the patterns to follow (research R2–R7).
 
 ### The shared service (FR-002)
 
-- [ ] T003 Write the test `tests/unit/test_service.py` over `fixture_engine` and `salaries`. It covers each `Service` method in data-model.md:
+- [X] T003 Write the test `tests/unit/test_service.py` over `fixture_engine` and `salaries`. It covers each `Service` method in data-model.md:
   - `occupation("2512")` has `legal_flags` and no `ilo_isco08` description, and `occupation("9999")` raises `UnknownCode`.
   - `salary("2512")` defaults `on` to today and carries the Swedish and English titles. An unknown age band raises `ValueError`, and an unknown code raises `UnknownCode`.
   - `compare` with one unknown code raises `UnknownCode` naming it.
   - `eligibility` with an unknown code raises `UnknownCode`.
   - `parse_ad(AdText(text=...))` equals `adparse.parse(..., engine.embedders["kblab"])`.
   - `timeline()` equals `load_registry().timeline()`.
-- [ ] T004 Move `AdText` from `src/lonekrav/api/v1.py` to `src/lonekrav/core/adparse.py`. Implement `src/lonekrav/core/service.py` (a frozen dataclass `Service` and its seven methods) until T003 passes
-- [ ] T005 Refactor `src/lonekrav/app.py` and `src/lonekrav/api/v1.py`:
+- [X] T004 Move `AdText` from `src/lonekrav/api/v1.py` to `src/lonekrav/core/adparse.py`. Implement `src/lonekrav/core/service.py` (a frozen dataclass `Service` and its seven methods) until T003 passes
+- [X] T005 Refactor `src/lonekrav/app.py` and `src/lonekrav/api/v1.py`:
   - The lifespan builds `app.state.service = Service(...)`.
   - The routes call `request.app.state.service`.
   - One app exception handler maps `UnknownCode` to a 404 with `{"detail": str(e)}`.

@@ -10,6 +10,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from lonekrav.api import v1
+from lonekrav.core.eligibility import UnknownCode
 
 log = logging.getLogger("lonekrav.access")
 
@@ -23,11 +24,13 @@ def create_app(engine=None, profiles=None, salaries=None) -> FastAPI:
         from lonekrav.core.profiles import load_profiles
         from lonekrav.core.salary import load_age_bands, load_distributions
         from lonekrav.core.search import SearchEngine
+        from lonekrav.core.service import Service
 
-        app.state.engine = engine or SearchEngine.load()
-        app.state.profiles = profiles if profiles is not None else load_profiles()
-        app.state.distributions, app.state.age_bands = salaries or (load_distributions(),
-                                                                    load_age_bands())
+        distributions, age_bands = salaries or (load_distributions(), load_age_bands())
+        app.state.service = Service(
+            engine=engine or SearchEngine.load(),
+            profiles=profiles if profiles is not None else load_profiles(),
+            distributions=distributions, age_bands=age_bands)
         yield
 
     app = FastAPI(title="Lönekrav", version="1", lifespan=lifespan,
@@ -42,6 +45,10 @@ def create_app(engine=None, profiles=None, salaries=None) -> FastAPI:
         log.info("%s %s %s %.1fms", request.method, request.url.path, response.status_code,
                  (time.perf_counter() - start) * 1000)
         return response
+
+    @app.exception_handler(UnknownCode)
+    async def unknown_code(request: Request, exc: UnknownCode):
+        return JSONResponse({"detail": str(exc)}, status_code=404)
 
     @app.exception_handler(Exception)
     async def internal_error(request: Request, exc: Exception):

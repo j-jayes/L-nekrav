@@ -13,7 +13,7 @@ from typing import Literal
 
 import numpy as np
 import yaml
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from lonekrav.core.embeddings import Embedder
 
@@ -47,6 +47,10 @@ class AdPassage(BaseModel):
     label: Label
     keep: bool
     by: Literal["heading", "anchor", "position"]
+
+
+class AdText(BaseModel):
+    text: str = Field(min_length=1, max_length=20_000)
 
 
 class ParsedAd(BaseModel):
