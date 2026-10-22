@@ -90,7 +90,7 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 
 **Independent test**: type a title and paste an ad in the page, and compare the codes with the REST search for the same text.
 
-- [ ] T019 [P] [US1] Write `frontend/src/lib/searchSession.test.ts` with fake timers and a fake fetch. It must fail first:
+- [X] T019 [P] [US1] Write `frontend/src/lib/searchSession.test.ts` with fake timers and a fake fetch. It must fail first:
   - every change sends fast at once and aborts the one in flight;
   - full is sent after 600 ms of no change;
   - an answer for older text is dropped;
@@ -99,14 +99,14 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
   - empty text sends nothing;
   - text over 20 000 characters is refused with the limit stated;
   - a failed request keeps the previous list and shows an error.
-- [ ] T020 [US1] Implement `frontend/src/lib/searchSession.ts`. T019 passes
-- [ ] T021 [P] [US1] Write `ScoreStrip.test.tsx`, `AdPassages.test.tsx` and `ResultList.test.tsx` on the recorded fixtures, which must fail first:
+- [X] T020 [US1] Implement `frontend/src/lib/searchSession.ts`. T019 passes
+- [X] T021 [P] [US1] Write `ScoreStrip.test.tsx`, `AdPassages.test.tsx` and `ResultList.test.tsx` on the recorded fixtures, which must fail first:
   - one cell per method, with `null` shown as "not run";
   - passages show kept or set aside with the reason in words;
   - each result shows the code, the sv/en titles, the matched passage, its flags with source links, `honest_fit` and a select button.
-- [ ] T022 [US1] Implement `frontend/src/components/ScoreStrip.tsx`, `AdPassages.tsx` and `ResultList.tsx`. T021 passes
-- [ ] T023 [US1] Write `SearchView.test.tsx` (it shows which speed is on screen, shows the fallback reason on a full answer with `fallback_reason`, and selecting a result adds it to the selection and the URL). Then implement `frontend/src/views/SearchView.tsx` until it passes
-- [ ] T024 [US1] Prove it by hand: run `npm run build`, start `uv run lonekrav-serve`, type "backend developer" and paste `tests/fixtures/ads/en1_backend.txt`. Take a desktop screenshot and compare the top 5 with `curl -s -XPOST localhost:8000/api/v1/search ...` for the same text and mode
+- [X] T022 [US1] Implement `frontend/src/components/ScoreStrip.tsx`, `AdPassages.tsx` and `ResultList.tsx`. T021 passes
+- [X] T023 [US1] Write `SearchView.test.tsx` (it shows which speed is on screen, shows the fallback reason on a full answer with `fallback_reason`, and selecting a result adds it to the selection and the URL). Then implement `frontend/src/views/SearchView.tsx` until it passes
+- [X] T024 [US1] Prove it by hand: run `npm run build`, start `uv run lonekrav-serve`, type "backend developer" and paste `tests/fixtures/ads/en1_backend.txt`. Take a desktop screenshot and compare the top 5 with `curl -s -XPOST localhost:8000/api/v1/search ...` for the same text and mode
 
 ---
 
@@ -214,7 +214,7 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
   Run it against `lonekrav-serve` and against the container
 - [ ] T048 Find a real public job ad (an English-language ad from Platsbanken through the JobSearch API, or one the maintainer supplies) and translate it to Swedish (a model translation, recorded as such). Write `frontend/e2e/ad-languages.spec.ts`, which pastes each one and records the top three after the full search. They must be the same set (SC-003). Commit only the ad's source link and the codes, in `references/web-client-e2e.md`, and keep the ad text in the scratchpad
 - [ ] T049 Measure SC-001 and SC-002 in Playwright on the reference machine (keystroke to list update; pause to full ranking for the 600-word ad), and record the numbers in `references/web-client-e2e.md`
-- [ ] T050 [P] Regenerate `references/api-smoke.md` with `scripts/api_smoke.py`. The only differences allowed are the timestamp and the new `/legal/registry` route, if the smoke script lists routes
+- [X] T050 [P] Regenerate `references/api-smoke.md` with `scripts/api_smoke.py`. The only differences allowed are the timestamp and the new `/legal/registry` route, if the smoke script lists routes
 - [ ] T051 Write `docs/walkthroughs/004-web-client-docker.md` with the walkthrough skill (snippets emitted with `sed`). Update CLAUDE.md ("Things worked out in Feature 004"; the `/` serving note; the frontend commands) and `references/development-plan.md` ("As built")
 - [ ] T052 Run `/speckit-converge`, then run the full gates: `rtk proxy uv run pytest -q`, `uv run pytest -m benchmark -q` (with the server stopped), `npm test`, `npm run build`, and `ruff`
 - [ ] T053 Open the PR with the evidence (screenshots, memory, e2e, smoke). Request a Copilot review with the `gh api` command in memory, then fix or answer every comment
