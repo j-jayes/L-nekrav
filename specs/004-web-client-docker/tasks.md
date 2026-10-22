@@ -68,19 +68,19 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 
 ### Frontend: shared state
 
-- [ ] T014 [P] Write `frontend/src/lib/urlState.test.ts`, which must fail first:
+- [X] T014 [P] Write `frontend/src/lib/urlState.test.ts`, which must fail first:
   - parse and serialise round-trip `view`, `codes` and `age`;
   - an unknown view falls back to search, duplicates are dropped, and codes past the limit are dropped with a note;
   - an unknown age is ignored;
   - no other key is ever written.
-- [ ] T015 Implement `frontend/src/lib/urlState.ts`. T014 passes
-- [ ] T016 [P] Write `frontend/src/lib/selection.test.ts`, which must fail first:
+- [X] T015 Implement `frontend/src/lib/urlState.ts`. T014 passes
+- [X] T016 [P] Write `frontend/src/lib/selection.test.ts`, which must fail first:
   - add, remove, and a duplicate with a note;
   - a fifth add on the chart is refused with a note;
   - an advisor select of several codes keeps the four most recent and lists those left out;
   - the payload is stored per code, and the simulated toggle works per code.
-- [ ] T017 Implement `frontend/src/lib/selection.ts` (a reducer). T016 passes
-- [ ] T018 Implement the `App.tsx` shell: a view switch from the URL state, navigation for the three views, a drawer toggle, the `Notice` and `SourceLink` components, and validation of URL codes against `/occupations/{code}`. Write the test `App.test.tsx`: a `?view=legal` render shows the legal view's heading, and an unknown code in the URL shows the dropped-code note
+- [X] T017 Implement `frontend/src/lib/selection.ts` (a reducer). T016 passes
+- [X] T018 Implement the `App.tsx` shell: a view switch from the URL state, navigation for the three views, a drawer toggle, the `Notice` and `SourceLink` components, and validation of URL codes against `/occupations/{code}`. Write the test `App.test.tsx`: a `?view=legal` render shows the legal view's heading, and an unknown code in the URL shows the dropped-code note
 
 **Checkpoint**: `pytest` is green, and `npm test` and `npm run build` are green.
 

@@ -3,7 +3,8 @@
 import createClient from "openapi-fetch";
 import type { components, paths } from "./schema";
 
-export const api = createClient<paths>({ baseUrl: "" });
+// `fetch` is looked up per call, so tests can stub globalThis.fetch after this module loads.
+export const api = createClient<paths>({ baseUrl: location.origin, fetch: (r) => globalThis.fetch(r) });
 
 type S = components["schemas"];
 export type SearchAnswer = S["SearchAnswer"];
@@ -20,3 +21,4 @@ export type TimelineEvent = S["TimelineEvent"];
 export type Registry = S["Registry"];
 export type Source = S["Source"];
 export type LegalFlag = S["LegalFlag"];
+export type OccupationProfile = S["OccupationProfile"];
