@@ -3,6 +3,12 @@
 import logging
 
 
+def add_route(app, path, endpoint):
+    """Add a probe route ahead of the MCP root mount, which takes every path added after it."""
+    app.add_api_route(path, endpoint, methods=["POST"])
+    app.router.routes.insert(0, app.router.routes.pop())
+
+
 def test_health(api_client):
     r = api_client.get("/api/v1/health")
     assert r.status_code == 200
@@ -19,7 +25,7 @@ def test_unexpected_error_hides_internals(api_client):
     def boom():
         raise RuntimeError("/Users/someone/secret/path.py exploded")
 
-    api_client.app.add_api_route("/api/v1/boom", boom, methods=["POST"])
+    add_route(api_client.app, "/api/v1/boom", boom)
     r = api_client.post("/api/v1/boom", json={"text": "x"})
     assert r.status_code == 500
     assert r.json() == {"detail": "internal error"}
@@ -27,7 +33,7 @@ def test_unexpected_error_hides_internals(api_client):
 
 
 def test_request_bodies_are_not_logged(api_client, caplog):  # FR-033, research R7
-    api_client.app.add_api_route("/api/v1/echo", lambda: {"ok": True}, methods=["POST"])
+    add_route(api_client.app, "/api/v1/echo", lambda: {"ok": True})
     with caplog.at_level(logging.DEBUG):
         api_client.post("/api/v1/echo", json={"text": "PRIVATE-AD-TEXT", "salary": 41234})
     assert "/api/v1/echo" in caplog.text  # the access line is there

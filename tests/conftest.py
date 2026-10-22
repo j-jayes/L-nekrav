@@ -12,6 +12,26 @@ from lonekrav.etl import esco, ilo, jobtech, mis2012, scb_files, scb_pxweb
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
+@pytest.fixture(autouse=True)
+def _release_milvus_lite(tmp_path_factory):
+    """Stop the Milvus Lite server each test's temporary index started.
+
+    Milvus Lite runs one in-process gRPC server per database path until the process exits. With
+    hundreds of them alive, a test that starts a subprocess (test_openmp_order, test_index_search)
+    can crash in gRPC's fork handler. Only paths under pytest's temporary base are released, so
+    the benchmark's module-scoped index on data/index keeps running."""
+    yield
+    import sys
+
+    if "milvus_lite.server_manager" not in sys.modules:
+        return
+    from milvus_lite.server_manager import server_manager_instance as manager
+
+    base = str(tmp_path_factory.getbasetemp())
+    for path in [p for p in manager._servers if p.startswith(base)]:  # no public listing
+        manager.release_server(path)
+
+
 @pytest.fixture
 def fixtures() -> Path:
     return FIXTURES
@@ -59,7 +79,8 @@ def fixture_engine(inputs, tmp_path):
 
     profiles = build_profiles(inputs)
     store, embedders, titles, _ = _build_index(profiles, tmp_path / "api.db")
-    return SearchEngine(store=store, embedders=embedders, titles=titles), profiles
+    yield SearchEngine(store=store, embedders=embedders, titles=titles), profiles
+    store.client.close()
 
 
 @pytest.fixture
@@ -83,3 +104,25 @@ def salaries(fixtures):
     px = fixtures / "pxweb"
     return (scb_pxweb.parse_distributions(px / "TAB5932.json", "TAB5932", t),
             scb_pxweb.parse_age_bands(px / "TAB5844.json", "TAB5844", t))
+
+
+class FakeModel:
+    """A chat model that replays scripted replies and records what it was sent (Feature 003)."""
+
+    def __init__(self, *replies, forever=None):
+        self.replies, self.forever, self.seen = list(replies), forever, []
+
+    async def __call__(self, messages, tools):
+        self.seen.append((list(messages), tools))
+        reply = self.replies.pop(0) if self.replies else self.forever
+        if isinstance(reply, BaseException):
+            raise reply
+        if callable(reply):
+            return await reply()
+        return reply
+
+
+@pytest.fixture
+def fake_model():
+    """The FakeModel class: `fake_model(Reply(...), ..., forever=None)`."""
+    return FakeModel
