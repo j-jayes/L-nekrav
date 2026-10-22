@@ -104,3 +104,25 @@ def salaries(fixtures):
     px = fixtures / "pxweb"
     return (scb_pxweb.parse_distributions(px / "TAB5932.json", "TAB5932", t),
             scb_pxweb.parse_age_bands(px / "TAB5844.json", "TAB5844", t))
+
+
+class FakeModel:
+    """A chat model that replays scripted replies and records what it was sent (Feature 003)."""
+
+    def __init__(self, *replies, forever=None):
+        self.replies, self.forever, self.seen = list(replies), forever, []
+
+    async def __call__(self, messages, tools):
+        self.seen.append((list(messages), tools))
+        reply = self.replies.pop(0) if self.replies else self.forever
+        if isinstance(reply, BaseException):
+            raise reply
+        if callable(reply):
+            return await reply()
+        return reply
+
+
+@pytest.fixture
+def fake_model():
+    """The FakeModel class: `fake_model(Reply(...), ..., forever=None)`."""
+    return FakeModel

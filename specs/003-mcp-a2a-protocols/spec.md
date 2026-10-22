@@ -202,9 +202,9 @@ must work, then send the advisor a message and check the answer.
 - **FR-005**: As with REST, logs MUST record only the method, path, status and duration of each
   request. They MUST NOT record ad text, background, offers or model messages. This applies to
   every new log source: the tool server, the A2A library, the advisor loop and the model client.
-  Texts that leave the caller's own exchange MUST NOT echo request content. These are the A2A
-  failed-state message and any error passed to the third-party model. They name the field and the
-  rule, not the value. A REST 422 or an MCP tool error returned to the same caller may echo that
+  The A2A failed-state message MUST NOT echo request content. It names the field and the rule,
+  not the value. (Errors sent back to the model may echo the arguments, because the model wrote
+  them and already holds the whole request.) A REST 422 or an MCP tool error returned to the same caller may echo that
   caller's own input, as REST does today (FR-001).
 
 **Tool server (MCP)**

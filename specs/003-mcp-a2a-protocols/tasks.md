@@ -94,13 +94,13 @@ running server.
 
 **Independent test**: `uv run pytest tests/unit/test_advisor.py tests/unit/test_agent_loop.py tests/integration/test_a2a.py`.
 
-- [ ] T012 [P] [US2] Write the test `tests/unit/test_advisor.py`:
+- [X] T012 [P] [US2] Write the test `tests/unit/test_advisor.py`:
   - `AdvisorRequest` accepts `{ad}` alone, and a full request with an offer whose salary is a float such as `52000.0`.
   - It rejects an empty ad, a 20 001-character ad, a background over 5 000 characters, and an offer that `Offer` rejects.
   - `finalise_memo` adds `HONEST_FIT` only when it is absent, adds `DISCLAIMER` only when "not legal advice" is absent, adds the no-results line when `tools_called` is empty, and always ends with `THIRD_PARTY_NOTICE`.
   - Running `finalise_memo` twice gives the same memo as running it once.
-- [ ] T013 [US2] Implement `src/lonekrav/core/advisor.py` (`AdvisorRequest`, `THIRD_PARTY_NOTICE`, `finalise_memo`) until T012 passes
-- [ ] T014 [US2] Write the test `tests/unit/test_agent_loop.py`. A `FakeModel` replays scripted `Reply`s and records the messages and tools it received. A fake `tools` object has `specs()` and `async call(name, args) -> (is_error, payload)`. Cover:
+- [X] T013 [US2] Implement `src/lonekrav/core/advisor.py` (`AdvisorRequest`, `THIRD_PARTY_NOTICE`, `finalise_memo`) until T012 passes
+- [X] T014 [US2] Write the test `tests/unit/test_agent_loop.py`. A `FakeModel` replays scripted `Reply`s and records the messages and tools it received. A fake `tools` object has `specs()` and `async call(name, args) -> (is_error, payload)`. Cover:
   - (a) A search call, then a salary call, then a memo. The events are `Progress`, `ToolResult(search)`, `Progress`, `ToolResult(salary)`, `Memo`, and the memo has passed through `finalise_memo`.
   - (b) A tool error goes back to the model as that tool's message and yields no `ToolResult`.
   - (c) Arguments that are not JSON are reported to the model as an error.
@@ -108,7 +108,7 @@ running server.
   - (e) A model exception propagates.
   - (f) The first two messages are the system prompt and a user message holding the ad, the background and the offer fields.
   - (g) A text-only request is passed through as the user message.
-- [ ] T015 [US2] Implement `src/lonekrav/protocols/agent/__init__.py` and `src/lonekrav/protocols/agent/loop.py` (data-model.md, "Advisor events" and "ChatModel"):
+- [X] T015 [US2] Implement `src/lonekrav/protocols/agent/__init__.py` and `src/lonekrav/protocols/agent/loop.py` (data-model.md, "Advisor events" and "ChatModel"):
   - `SYSTEM_PROMPT` (the honest-fit voice, with no figures)
   - `Reply`, `Progress`, `ToolResult`, `Memo` and `RoundLimit`
   - `MAX_ROUNDS = 8`
@@ -117,7 +117,7 @@ running server.
   - `run()`
   
   Work until T014 passes. Confirm that `test_no_legal_literal_outside_the_registry` covers `SYSTEM_PROMPT`: plant a literal in it once, watch the test fail, then remove the literal
-- [ ] T016 [US2] Write the test `tests/integration/test_a2a.py`. Build `create_app(..., chat_model=FakeModel(script))` under `TestClient`.
+- [X] T016 [US2] Write the test `tests/integration/test_a2a.py`. Build `create_app(..., chat_model=FakeModel(script))` under `TestClient`.
   - `GET /.well-known/agent-card.json` has the name `lonekrav-advisor`, `capabilities.streaming` true, one skill, input modes `text/plain` and `application/json`, an interface URL ending `/a2a` with protocol version `1.0`, and the third-party disclosure in the description.
   - A raw `SendStreamingMessage` POST to `/a2a` (header `A2A-Version: 1.0`) with a data part `{ad, offer}` gives the SSE events in the order in contracts/a2a.md.
   - Each `ui_sync` artifact's `result` equals the matching MCP tool result.
@@ -125,7 +125,7 @@ running server.
   - The last state is `TASK_STATE_COMPLETED`.
   
   Run it and see it fail
-- [ ] T017 [US2] Implement `src/lonekrav/protocols/agent/executor.py` (`AdvisorExecutor`):
+- [X] T017 [US2] Implement `src/lonekrav/protocols/agent/executor.py` (`AdvisorExecutor`):
   - Enqueue the Task first.
   - Take the data part as an `AdvisorRequest`, adding any text parts to `background`; otherwise use the text alone.
   - Map the events with `TaskUpdater` as in data-model.md.
@@ -134,7 +134,7 @@ running server.
   - Implement `cancel`.
   
   Then implement `src/lonekrav/protocols/a2a_server.py` (`CARD` and `add_a2a(app, mcp, chat_model)`, as in research R7), and wire it in `create_app`, which gains `chat_model=None` and calls it before the MCP mount. Work until T016 passes
-- [ ] T018 [US2] Add to `tests/integration/test_a2a.py`:
+- [X] T018 [US2] Add to `tests/integration/test_a2a.py`:
   - An invalid offer (`fte_percent: 0`) gives `TASK_STATE_FAILED` naming `fte_percent`, and the model is never called.
   - A model that loops gives `FAILED` with the round-limit text.
   - A model that raises gives `FAILED` without the exception's internals.
@@ -142,9 +142,9 @@ running server.
   - `CancelTask` on a running task (the fake model waits on an event) gives `TASK_STATE_CANCELED`.
   - Two concurrent streamed runs both complete (FR-018).
   - Two messages with the same `contextId` run independently: the second run's model receives exactly the system and user messages (FR-011a).
-- [ ] T019 [US2] Add a logging test to `tests/integration/test_a2a.py` (FR-005): with `caplog` at DEBUG, run a streamed message whose ad is `"PRIVATE-AD-TEXT"` and whose salary is 41234, plus one run that fails validation, and check that neither value, nor the `OPENROUTER_KEY` value (set to a sentinel), appears in the logs or in the failed-state text (FR-014)
-- [ ] T020 [P] [US2] Write `tests/integration/test_a2a_live.py` (`@pytest.mark.live`). It is skipped unless `OPENROUTER_KEY` is in the environment or in `.env`, read with `dotenv_values`. It runs the real model over the fixture app with a short English ad and an offer, and checks for at least one `ui_sync` artifact, a memo containing `HONEST_FIT` and `THIRD_PARTY_NOTICE`, and `COMPLETED`. Run `uv run pytest -m live`
-- [ ] T021 [US2] Write `scripts/a2a_stream.py`:
+- [X] T019 [US2] Add a logging test to `tests/integration/test_a2a.py` (FR-005): with `caplog` at DEBUG, run a streamed message whose ad is `"PRIVATE-AD-TEXT"` and whose salary is 41234, plus one run that fails validation, and check that neither value, nor the `OPENROUTER_KEY` value (set to a sentinel), appears in the logs or in the failed-state text (FR-014)
+- [X] T020 [P] [US2] Write `tests/integration/test_a2a_live.py` (`@pytest.mark.live`). It is skipped unless `OPENROUTER_KEY` is in the environment or in `.env`, read with `dotenv_values`. It runs the real model over the fixture app with a short English ad and an offer, and checks for at least one `ui_sync` artifact, a memo containing `HONEST_FIT` and `THIRD_PARTY_NOTICE`, and `COMPLETED`. Run `uv run pytest -m live`
+- [X] T021 [US2] Write `scripts/a2a_stream.py`:
   - It takes `--url` (default `http://localhost:8000`), `--ad` or `--ad-file`, `--background` and `--offer` (JSON).
   - It fetches the card with `A2ACardResolver` and streams with `ClientFactory(ClientConfig(streaming=True))`.
   - For each event it prints the time since the start, its kind, its state or artifact name, and the part kinds; it prints the memo in full and `ui_sync` results shortened.
@@ -162,14 +162,14 @@ running server.
 
 **Independent test**: `uv run pytest -k no_key`, then quickstart §2.
 
-- [ ] T022 [US3] Add tests to `tests/integration/test_a2a.py`. With `monkeypatch.delenv("OPENROUTER_KEY")` and `create_app(...)` with no `chat_model`:
+- [X] T022 [US3] Add tests to `tests/integration/test_a2a.py`. With `monkeypatch.delenv("OPENROUTER_KEY")` and `create_app(...)` with no `chat_model`:
   - The card is served.
   - A streamed message ends in `TASK_STATE_REJECTED` with the text "Agent unavailable" and `OPENROUTER_KEY`, within one second.
   - An MCP tool call and `/api/v1/health` succeed.
   
   Also test that `create_app` picks `openrouter_model` when the key is set (monkeypatched, without calling it), and that the key's value never appears in the card. Run the tests and see them fail
-- [ ] T023 [US3] In `create_app`, set `chat_model = openrouter_model(key, os.environ.get("LONEKRAV_LLM_MODEL", DEFAULT_MODEL))` if `OPENROUTER_KEY` is set and otherwise `None`. In `main()`, call `load_dotenv()`. Make `AdvisorExecutor` reject when the model is `None`. Work until T022 passes
-- [ ] T024 [US3] Run quickstart §2 by hand with no key in the environment, and append the output to `references/a2a-stream.md` under "Without a key"
+- [X] T023 [US3] In `create_app`, set `chat_model = openrouter_model(key, os.environ.get("LONEKRAV_LLM_MODEL", DEFAULT_MODEL))` if `OPENROUTER_KEY` is set and otherwise `None`. In `main()`, call `load_dotenv()`. Make `AdvisorExecutor` reject when the model is `None`. Work until T022 passes
+- [X] T024 [US3] Run quickstart §2 by hand with no key in the environment, and append the output to `references/a2a-stream.md` under "Without a key"
 
 ---
 
@@ -178,7 +178,7 @@ running server.
 - [ ] T025 Regenerate `references/api-smoke.md` with `scripts/api_smoke.py` against a live server, and diff it against the committed file. Only timestamps may differ (FR-001)
 - [ ] T026 [P] Run `rtk proxy uv run pytest -q` (the new total, all passing), `uv run pytest -m benchmark -q` (9 passed, with the server stopped), `uv run pytest -m live -q` and `uv run ruff check src tests scripts`
 - [ ] T027 [P] Check `src/lonekrav/protocols/` against Principle I. Every function must only validate, call `Service` or the loop, and serialise. Move any rule found there into `core/`, test-first
-- [ ] T028 [P] Measure the advisor's latency over three live runs of the quickstart §4 ad, recording the total time and the model's share, and add the results to `references/a2a-stream.md` (SC-006)
+- [X] T028 [P] Measure the advisor's latency over three live runs of the quickstart §4 ad, recording the total time and the model's share, and add the results to `references/a2a-stream.md` (SC-006)
 - [ ] T029 Update `references/development-plan.md` §003 for the actual decisions: fastmcp 4.1.3, `SendStreamingMessage`, the rejected state, Haiku 5.5 as the default, and the in-memory MCP client in the agent
 - [ ] T030 [P] Write `docs/walkthroughs/003-mcp-a2a-protocols.md` with the walkthrough skill (snippets emitted from disk)
 - [ ] T031 Run `/speckit-converge` and complete any tasks it appends

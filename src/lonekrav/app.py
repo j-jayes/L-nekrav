@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import os
 import time
 from contextlib import asynccontextmanager
 
@@ -12,14 +13,20 @@ from fastmcp.utilities.lifespan import combine_lifespans
 
 from lonekrav.api import v1
 from lonekrav.core.eligibility import UnknownCode
+from lonekrav.protocols.a2a_server import add_a2a
+from lonekrav.protocols.agent.loop import DEFAULT_MODEL, openrouter_model
 from lonekrav.protocols.mcp_server import build_mcp
 
 log = logging.getLogger("lonekrav.access")
+# Libraries that log request or response bodies at DEBUG: tool arguments (fastmcp), JSON-RPC
+# requests (a2a) and every streamed chunk (sse_starlette). They never go below INFO (FR-005).
+CONTENT_LOGGERS = ("fastmcp", "a2a", "sse_starlette")
 
 
-def create_app(engine=None, profiles=None, salaries=None) -> FastAPI:
+def create_app(engine=None, profiles=None, salaries=None, chat_model=None) -> FastAPI:
     """`engine`, `profiles` and `salaries` (distributions, age bands) are injected by tests; the
-    server loads the real ones at start-up."""
+    server loads the real ones at start-up. `chat_model` is the advisor's model; by default it is
+    OpenRouter's when OPENROUTER_KEY is set, and None (the advisor declines) when it is not."""
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -35,10 +42,16 @@ def create_app(engine=None, profiles=None, salaries=None) -> FastAPI:
             distributions=distributions, age_bands=age_bands)
         yield
 
+    for name in CONTENT_LOGGERS:
+        logger = logging.getLogger(name)
+        logger.setLevel(max(logging.INFO, logger.level))
     app = FastAPI(title="Lönekrav", version="1",
                   openapi_url="/api/v1/openapi.json", docs_url="/api/v1/docs", redoc_url=None)
     app.include_router(v1.router, prefix="/api/v1")
     app.state.mcp = build_mcp(app)
+    if chat_model is None and (key := os.environ.get("OPENROUTER_KEY")):
+        chat_model = openrouter_model(key, os.environ.get("LONEKRAV_LLM_MODEL", DEFAULT_MODEL))
+    add_a2a(app, app.state.mcp, chat_model)
     mcp_app = app.state.mcp.http_app(path="/mcp")  # mounted at "/" below: exactly /mcp (R2)
     app.router.lifespan_context = combine_lifespans(lifespan, mcp_app.lifespan)
 
@@ -66,6 +79,9 @@ def create_app(engine=None, profiles=None, salaries=None) -> FastAPI:
 
 def main() -> None:
     import uvicorn
+    from dotenv import load_dotenv
+
+    load_dotenv()  # OPENROUTER_KEY and LONEKRAV_LLM_MODEL from .env; tests never read it
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
     uvicorn.run(create_app(), host="127.0.0.1", port=8000, access_log=False)

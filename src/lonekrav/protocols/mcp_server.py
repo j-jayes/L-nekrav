@@ -1,4 +1,4 @@
-"""MCP adapter (contracts/mcp.md): the same operations and models as /api/v1, as tools and resources.
+"""MCP adapter (contracts/mcp.md): /api/v1's operations and models as tools and resources.
 
 Each tool is one call into `app.state.service`; the tools read it when called, so one server
 built at start-up serves the data the lifespan loads (research R3).
@@ -7,7 +7,6 @@ built at start-up serves the data the lifespan loads (research R3).
 from __future__ import annotations
 
 import datetime as dt
-import logging
 from collections.abc import Iterator
 from contextlib import contextmanager
 
@@ -32,9 +31,6 @@ def _expected(error: type[Exception] = ToolError) -> Iterator[None]:
 
 
 def build_mcp(app) -> FastMCP:
-    # fastmcp logs every tool's arguments at DEBUG; never let it go below INFO (FR-005).
-    fastmcp_log = logging.getLogger("fastmcp")
-    fastmcp_log.setLevel(max(logging.INFO, fastmcp_log.level))
     mcp = FastMCP("lonekrav", mask_error_details=True, instructions=(
         "Swedish work-permit salary requirements by SSYK 2012 occupation code. Every result "
         "names its sources; the code on an offer must match the duties actually performed."))
