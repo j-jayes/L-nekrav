@@ -114,10 +114,10 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 
 **Independent test**: select an exempt and a non-exempt code, and check every mark against the salary payloads.
 
-- [ ] T025 [US2] Load the `dataviz` skill, then follow `viz-distributions` for the bar-and-band encoding. Write the chart's colour tokens (official, low band, simulated, floor) into `frontend/src/index.css` for light and dark, checked with the skill's validator
-- [ ] T026 [P] [US2] Write `frontend/src/lib/chartScale.test.ts`, which must fail first. The scale starts at 0, the upper bound is the largest P90 or threshold rounded up to the next 10 000 tick, and value-to-x is linear and the same for every row (R8)
-- [ ] T027 [US2] Implement `frontend/src/lib/chartScale.ts`. T026 passes
-- [ ] T028 [P] [US2] Write `frontend/src/components/SalaryChart.test.tsx` on the recorded payloads, which must fail first:
+- [X] T025 [US2] Load the `dataviz` skill, then follow `viz-distributions` for the bar-and-band encoding. Write the chart's colour tokens (official, low band, simulated, floor) into `frontend/src/index.css` for light and dark, checked with the skill's validator
+- [X] T026 [P] [US2] Write `frontend/src/lib/chartScale.test.ts`, which must fail first. The scale starts at 0, the upper bound is the largest P90 or threshold rounded up to the next 10 000 tick, and value-to-x is linear and the same for every row (R8)
+- [X] T027 [US2] Implement `frontend/src/lib/chartScale.ts`. T026 passes
+- [X] T028 [P] [US2] Write `frontend/src/components/SalaryChart.test.tsx` on the recorded payloads, which must fail first:
   - each bar end, band, median tick and age dot sits at `scale(payload value)`;
   - a null percentile draws nothing and shows the SCB note;
   - the floor line comes from `thresholds[applicable_rule_id]`, or from the eligibility answer when an offer is given;
@@ -126,8 +126,8 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
   - the caption names the table and year with the SCB and Medlingsinstitutet credit;
   - each mark is focusable and announces its value;
   - no fill colour alone distinguishes simulated from official (a dashed outline and a label).
-- [ ] T029 [US2] Implement `frontend/src/components/SalaryChart.tsx` (hand-written SVG) and `ChartTable.tsx`, both from one row-mapping function. T028 passes
-- [ ] T030 [US2] Wire the chart into `SearchView`: fetch the salary payload per selected code (with `age_band` when chosen), add the age band picker and the per-code simulated toggles, and show the four-code limit note. Prove it by hand at phone and desktop width with 2512, 3511 (exempt) and 5343 (banned), and compare the marks with `curl .../occupations/{code}/salary`
+- [X] T029 [US2] Implement `frontend/src/components/SalaryChart.tsx` (hand-written SVG) and `ChartTable.tsx`, both from one row-mapping function. T028 passes
+- [X] T030 [US2] Wire the chart into `SearchView`: fetch the salary payload per selected code (with `age_band` when chosen), add the age band picker and the per-code simulated toggles, and show the four-code limit note. Prove it by hand at phone and desktop width with 2512, 3511 (exempt) and 5343 (banned), and compare the marks with `curl .../occupations/{code}/salary`
 
 ---
 

@@ -43,3 +43,35 @@ describe("SearchView", () => {
     expect(dispatch).toHaveBeenCalledWith({ type: "add", code: expect.stringMatching(/^\d{4}$/) });
   });
 });
+
+describe("SearchView chart", () => {
+  function withSelection(codes: string[], age: "25-34" | null = null) {
+    const seen = serve({
+      "GET /api/v1/occupations/2512/salary": fixture("salary-2512"),
+      "GET /api/v1/occupations/2512/salary?age_band=25-34": fixture("salary-2512-age"),
+      "GET /api/v1/occupations/3511/salary": fixture("salary-3511-exempt"),
+    });
+    const dispatch = vi.fn();
+    const selection = { ...initial(), codes };
+    const view = render(<SearchView selection={selection} dispatch={dispatch} age={age} setAge={() => {}} />);
+    return { seen, dispatch, view, selection };
+  }
+
+  it("fetches each selected code's salary, with the age band when one is chosen", async () => {
+    const { seen, dispatch } = withSelection(["2512", "3511"], "25-34");
+    await vi.waitFor(() => expect(dispatch).toHaveBeenCalledTimes(2));
+    expect(seen.map((r) => r.url.pathname + r.url.search).sort()).toEqual([
+      "/api/v1/occupations/2512/salary?age_band=25-34", "/api/v1/occupations/3511/salary?age_band=25-34"]);
+    expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ type: "payload", code: "2512" }));
+  });
+
+  it("removes a code from its chip and toggles its simulated bar", async () => {
+    const { dispatch, view } = withSelection(["2512"], "25-34");
+    await userEvent.click(screen.getByRole("button", { name: "Remove 2512" }));
+    expect(dispatch).toHaveBeenCalledWith({ type: "remove", code: "2512" });
+    view.rerender(<SearchView selection={{ ...initial(), codes: ["2512"], payloads: {
+      2512: fixture("salary-2512-age").body as never } }} dispatch={dispatch} age="25-34" setAge={() => {}} />);
+    await userEvent.click(screen.getByRole("checkbox", { name: /simulated bar for 2512/i }));
+    expect(dispatch).toHaveBeenCalledWith({ type: "simulated", code: "2512" });
+  });
+});

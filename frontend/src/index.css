@@ -11,6 +11,13 @@
   --color-warn: #8a4b00;
   --color-bad: #a1261c;
   --color-good: #1d6b3a;
+  /* Chart (dataviz skill, validated with scripts/validate_palette.js on 2026-10-22): the low band
+     and the bar are an ordinal blue ramp; bar and age dots a categorical pair. */
+  --color-band: #86b6ef;
+  --color-bar: #2a78d6;
+  --color-dot: #eb6834;
+  --color-grid: #e1e0d9;
+  --color-axis: #c3c2b7;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,6 +31,11 @@
     --color-warn: #e0a85c;
     --color-bad: #f08a80;
     --color-good: #7cc895;
+    --color-band: #184f95;
+    --color-bar: #3987e5;
+    --color-dot: #d95926;
+    --color-grid: #2c2c2a;
+    --color-axis: #383835;
   }
 }
 
