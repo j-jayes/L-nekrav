@@ -1,0 +1,21 @@
+Backend Developer (Python)
+
+About us
+Northwind Ledger is a fast-growing fintech company in Stockholm. We help 4 000 small businesses get paid on time. Our team of 60 people comes from 20 countries.
+
+Responsibilities
+- Design, build and maintain the REST APIs behind our invoicing platform
+- Write well-tested Python services and review your colleagues' code
+- Improve the performance and reliability of our PostgreSQL databases
+- Take part in the on-call rotation and fix production incidents
+
+Requirements
+- At least three years of experience developing backend systems in Python
+- Good knowledge of SQL and relational databases
+- Experience with Docker and cloud platforms such as AWS
+- Fluent English; Swedish is a plus
+
+What we offer
+- Hybrid work with three office days a week
+- Six weeks of vacation and a wellness allowance of 5 000 SEK
+- Occupational pension and private health insurance

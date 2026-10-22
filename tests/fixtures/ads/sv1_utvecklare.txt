@@ -1,0 +1,21 @@
+Mjukvaruutvecklare Java
+
+Om oss
+Sparbanken Mälardal är en lokal bank med 40 kontor och en växande IT-avdelning i Västerås. Vi har funnits sedan 1852.
+
+Arbetsuppgifter
+- Utveckla och förvalta bankens system för betalningar och kontohantering i Java
+- Skriva automatiserade tester och delta i kodgranskning
+- Arbeta i ett agilt team tillsammans med testare och produktägare
+- Felsöka och lösa incidenter i produktion
+
+Kvalifikationer
+- Högskoleexamen inom datavetenskap eller motsvarande
+- Minst tre års erfarenhet av utveckling i Java och Spring
+- Goda kunskaper i SQL
+- Du talar och skriver svenska och engelska obehindrat
+
+Vi erbjuder
+- Flexibla arbetstider och möjlighet till distansarbete två dagar i veckan
+- Friskvårdsbidrag och förmånlig bolåneränta
+- Tjänstepension enligt kollektivavtal

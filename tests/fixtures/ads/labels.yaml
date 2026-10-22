@@ -1,0 +1,163 @@
+# Hand labels for the made-up ads in this folder (tasks T049, spec SC-005). The ads are written by
+# the maintainer's agent to follow the layout of public Platsbanken ads; they are not real ads.
+# Real JobTech ads replace them once the JobTech licence is confirmed (research R5).
+#
+# Each passage is labelled by the start of its text: [prefix, label]. Headings are not passages.
+# Labels: title, duty, skill, company, benefits, other. Title, duty and skill are kept for search.
+
+en1_backend.txt:
+  expected_codes: ["2512"]
+  passages:
+    - ["Backend Developer", title]
+    - ["Northwind Ledger is", company]
+    - ["We help 4 000", company]
+    - ["Our team of 60", company]
+    - ["Design, build and maintain", duty]
+    - ["Write well-tested", duty]
+    - ["Improve the performance", duty]
+    - ["Take part in the on-call", duty]
+    - ["At least three years", skill]
+    - ["Good knowledge of SQL", skill]
+    - ["Experience with Docker", skill]
+    - ["Fluent English", skill]
+    - ["Hybrid work", benefits]
+    - ["Six weeks of vacation", benefits]
+    - ["Occupational pension", benefits]
+
+en2_nurse.txt:
+  expected_codes: ["2221"]
+  passages:
+    - ["Registered Nurse", title]
+    - ["Region Västerland runs", company]
+    - ["We care for patients", company]
+    - ["Plan, carry out and evaluate", duty]
+    - ["Administer medication", duty]
+    - ["Work closely with physicians", duty]
+    - ["Supervise nursing students", duty]
+    - ["Swedish nursing licence", skill]
+    - ["Experience of hospital ward", skill]
+    - ["You communicate well", skill]
+    - ["Salary according to", benefits]
+    - ["A structured introduction", benefits]
+    - ["Paid continuing education", benefits]
+
+en3_welder.txt:
+  expected_codes: ["7212"]
+  passages:
+    - ["Welder", title]
+    - ["Steelform AB manufactures", company]
+    - ["Our workshop in Borlänge", company]
+    - ["Weld steel structures", duty]
+    - ["Prepare and fit parts", duty]
+    - ["Check your own work", duty]
+    - ["Valid welding certificates", skill]
+    - ["Several years of experience", skill]
+    - ["Able to read technical", skill]
+    - ["Permanent position", benefits]
+    - ["Work clothes and safety", benefits]
+    - ["Overtime compensation", benefits]
+
+en4_truck.txt:
+  expected_codes: ["8332"]
+  passages:
+    - ["Truck Driver", title]
+    - ["Nordfrakt Logistics transports", company]
+    - ["Drive heavy trucks", duty]
+    - ["Load and unload goods", duty]
+    - ["Carry out daily vehicle", duty]
+    - ["Keep driving logs", duty]
+    - ["CE driving licence", skill]
+    - ["Experience of long-distance", skill]
+    - ["ADR certificate", skill]
+    - ["Modern trucks", benefits]
+    - ["Fixed monthly salary", benefits]
+    - ["A friendly team", benefits]
+
+en5_cook.txt:
+  expected_codes: ["5120"]
+  passages:
+    - ["Cook", title]
+    - ["Café Lindgården serves", company]
+    - ["We cook everything", company]
+    - ["You will prepare hot dishes", duty]
+    - ["You will also bake", duty]
+    - ["Completed vocational training", skill]
+    - ["At least two years", skill]
+    - ["Knowledge of food hygiene", skill]
+    - ["Daytime hours", benefits]
+    - ["Free lunch", benefits]
+
+sv1_utvecklare.txt:
+  expected_codes: ["2512"]
+  passages:
+    - ["Mjukvaruutvecklare Java", title]
+    - ["Sparbanken Mälardal är", company]
+    - ["Vi har funnits sedan", company]
+    - ["Utveckla och förvalta", duty]
+    - ["Skriva automatiserade", duty]
+    - ["Arbeta i ett agilt", duty]
+    - ["Felsöka och lösa", duty]
+    - ["Högskoleexamen inom", skill]
+    - ["Minst tre års erfarenhet", skill]
+    - ["Goda kunskaper i SQL", skill]
+    - ["Du talar och skriver", skill]
+    - ["Flexibla arbetstider", benefits]
+    - ["Friskvårdsbidrag och förmånlig", benefits]
+    - ["Tjänstepension enligt", benefits]
+
+sv2_underskoterska.txt:
+  expected_codes: ["5321"]
+  passages:
+    - ["Undersköterska till hemtjänsten", title]
+    - ["Hemtjänsten i Norrby", company]
+    - ["Ge personlig omvårdnad", duty]
+    - ["Utföra delegerade", duty]
+    - ["Dokumentera insatser", duty]
+    - ["Har undersköterskeexamen", skill]
+    - ["Har B-körkort", skill]
+    - ["Har erfarenhet av äldreomsorg", skill]
+    - ["Introduktion med handledare", benefits]
+    - ["Arbetskläder och elcykel", benefits]
+
+sv3_elektriker.txt:
+  expected_codes: ["7411"]
+  passages:
+    - ["Elektriker till installationsavdelningen", title]
+    - ["Elkraft i Mälardalen AB", company]
+    - ["Vi är 35 anställda", company]
+    - ["Installera elsystem", duty]
+    - ["Felsöka och reparera", duty]
+    - ["Utföra service och", duty]
+    - ["Auktorisation från", skill]
+    - ["Några års erfarenhet", skill]
+    - ["B-körkort", skill]
+    - ["Servicebil som du", benefits]
+    - ["Kollektivavtal, tjänstepension", benefits]
+
+sv4_forskollarare.txt:
+  expected_codes: ["2343"]
+  passages:
+    - ["Förskollärare till Solrosens", title]
+    - ["Solrosens förskola har", company]
+    - ["Vi arbetar mycket med", company]
+    - ["Som förskollärare planerar", duty]
+    - ["Du ansvarar för att dokumentera", duty]
+    - ["Förskollärarexamen och", skill]
+    - ["Erfarenhet av arbete i förskola", skill]
+    - ["God förmåga att samarbeta", skill]
+    - ["Planeringstid varje vecka", benefits]
+    - ["Friskvårdsbidrag", benefits]
+
+sv5_snickare.txt:
+  expected_codes: ["7111"]
+  passages:
+    - ["Snickare till byggprojekt", title]
+    - ["Byggbolaget Vest bygger", company]
+    - ["Utföra stomarbeten", duty]
+    - ["Lägga golv", duty]
+    - ["Läsa ritningar", duty]
+    - ["Har yrkesbevis", skill]
+    - ["Har flera års erfarenhet", skill]
+    - ["Har kunskap om arbetsmiljö", skill]
+    - ["Kollektivavtal och ackordslön", benefits]
+    - ["Moderna verktyg", benefits]

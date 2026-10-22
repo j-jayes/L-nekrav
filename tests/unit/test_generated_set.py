@@ -1,5 +1,5 @@
 from lonekrav.core.profiles import build_profiles
-from lonekrav.etl.benchmark import generate_queries
+from lonekrav.etl.benchmark import generate_queries, phrase_in
 
 
 def test_generated_set_is_stable_and_one_per_group(inputs):
@@ -37,10 +37,9 @@ def test_english_only_from_exact_or_close_esco_and_everything_held_out(inputs):
 def test_query_phrases_appear_in_no_indexed_chunk_of_their_answer(inputs):
     """Copilot review on PR #1: holding out whole labels left the phrase in titles, descriptions
     and longer labels ('Minister' in 'Minister, statsråd'), so the benchmark rewarded lookup."""
-    import re
-
     from lonekrav.core.chunks import chunk_profile
     from lonekrav.core.profiles import attach_ilo
+    from lonekrav.core.search import title_parts
 
     profiles = build_profiles(inputs)
     qs, held = generate_queries(inputs, profiles, seed=7)
@@ -49,7 +48,8 @@ def test_query_phrases_appear_in_no_indexed_chunk_of_their_answer(inputs):
         text = " ".join(c.text for code in q.expected_codes
                         for c in chunk_profile(indexed[code], holdout=held)).casefold()
         for phrase in filter(None, (q.text_sv, q.text_en)):
-            assert not re.search(rf"(?<!\w){re.escape(phrase.casefold())}(?!\w)", text), (q.id, phrase)
+            for alt in title_parts(phrase) or [phrase]:  # search tries each alternative
+                assert not phrase_in(alt, text), (q.id, alt)  # inflections count (FR-018a)
 
 
 def test_a_leaking_title_is_not_sampled(inputs):
@@ -58,3 +58,32 @@ def test_a_leaking_title_is_not_sampled(inputs):
     leaky = profiles["2512"].model_copy(update={"title_sv": f"{name.label} m.fl."})
     qs, _ = generate_queries(inputs, profiles | {"2512": leaky}, seed=7)
     assert all(q.text_sv != name.label for q in qs)
+
+
+def test_a_leaking_english_label_falls_back_to_a_clean_esco_alternative(inputs):
+    """FR-018a: ESCO preferred labels open their own descriptions in the plural, so the pair tries
+    the occupation's other English labels before giving up its English side."""
+    profiles = build_profiles(inputs)
+    qs, _ = generate_queries(inputs, profiles, seed=7)
+    english = {q.id: q.text_en for q in qs if q.text_en}
+    assert english, "every fixture pair lost its English side"
+    for qid, text in english.items():
+        matched = {lab for o in inputs.esco.values() for lab in (o.label.get("en"), *o.alt.get("en", []))}
+        assert text in matched, qid
+
+
+def test_a_slash_query_whose_alternative_leaks_is_not_sampled(inputs):
+    """Copilot review on PR #2: search tries each slash alternative on its own, so the leak check
+    must too. In the fixtures both parts of "Ekonomidirektör/Finanschef" appear in the indexed
+    text of 1211 and 1212; the whole phrase does not, so it used to be sampled."""
+    qs, _ = generate_queries(inputs, build_profiles(inputs), seed=7)
+    assert "Ekonomidirektör/Finanschef" not in {q.text_sv for q in qs}
+
+
+def test_slash_alternatives_are_held_out(inputs):
+    from lonekrav.core.search import title_parts
+
+    qs, held = generate_queries(inputs, build_profiles(inputs), seed=7)
+    for q in qs:
+        for part in title_parts(q.text_sv) or []:
+            assert part.casefold() in held, (q.id, part)

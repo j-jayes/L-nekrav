@@ -60,6 +60,7 @@ class LegalFlag(BaseModel):
     note: str = ""
     effective_from: dt.date
     source: SourceRef
+    checked_on: dt.date | None = None  # from the legal registry; absent in profiles built by 001
 
 
 class OccupationProfile(BaseModel):

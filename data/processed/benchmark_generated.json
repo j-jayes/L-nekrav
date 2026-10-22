@@ -1,20 +1,10 @@
 [
  {
-  "id": "gen-0310",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Soldat/Sjöman",
-  "expected_codes": [
-   "0310"
-  ]
- },
- {
   "id": "gen-1111",
   "origin": "generated",
   "type": "title",
-  "text_en": "member of parliament",
-  "text_sv": "Riksdagsledamot",
+  "text_en": "prime minister",
+  "text_sv": "Departementschef",
   "expected_codes": [
    "1111"
   ]
@@ -23,8 +13,8 @@
   "id": "gen-1112",
   "origin": "generated",
   "type": "title",
-  "text_en": "business manager",
-  "text_sv": "Departementsråd",
+  "text_en": null,
+  "text_sv": "Förvaltningsdirektör, statlig",
   "expected_codes": [
    "1112"
   ]
@@ -43,8 +33,8 @@
   "id": "gen-1120",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Hamnchef",
+  "text_en": "head of higher education institutions",
+  "text_sv": "Prorektor",
   "expected_codes": [
    "1120"
   ]
@@ -65,7 +55,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Regionskattechef",
+  "text_sv": "Enhetschef, offentlig förvaltning",
   "expected_codes": [
    "1230"
   ]
@@ -86,21 +76,10 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Teamledare",
+  "text_sv": "Centrumutvecklare/Handelsutvecklare",
   "expected_codes": [
    "1251",
    "1252"
-  ]
- },
- {
-  "id": "gen-1290",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Kundtjänstchef",
-  "expected_codes": [
-   "1291",
-   "1292"
   ]
  },
  {
@@ -108,7 +87,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Driftchef, data",
+  "text_sv": "Chief Information Security Officer",
   "expected_codes": [
    "1311",
    "1312"
@@ -118,8 +97,8 @@
   "id": "gen-1320",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Produktionschef, logistik/Produktionschef, transporter",
+  "text_en": "air traffic supervisor",
+  "text_sv": "Chief Operations/CO, flygledning",
   "expected_codes": [
    "1321",
    "1322"
@@ -141,7 +120,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Lantmäterichef",
+  "text_sv": "Byråchef",
   "expected_codes": [
    "1341",
    "1342"
@@ -152,7 +131,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Fastighetschef/Fastighetsdirektör",
+  "text_sv": "Driftchef fastighet",
   "expected_codes": [
    "1351",
    "1352"
@@ -163,7 +142,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Produktionschef, anläggning",
+  "text_sv": "Avdelningschef, gruva",
   "expected_codes": [
    "1361",
    "1362"
@@ -185,27 +164,16 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Stadsträdgårdsmästare",
+  "text_sv": "Virkeschef",
   "expected_codes": [
    "1380"
-  ]
- },
- {
-  "id": "gen-1410",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Skolchef/Skoldirektör/Skolledare",
-  "expected_codes": [
-   "1411",
-   "1412"
   ]
  },
  {
   "id": "gen-1420",
   "origin": "generated",
   "type": "title",
-  "text_en": "nursery school head teacher",
+  "text_en": "nursery school headmaster",
   "text_sv": "Biträdande förskolerektor",
   "expected_codes": [
    "1421",
@@ -216,8 +184,8 @@
   "id": "gen-1510",
   "origin": "generated",
   "type": "title",
-  "text_en": "healthcare institution manager",
-  "text_sv": "Enhetschef, hälso- och sjukvård",
+  "text_en": null,
+  "text_sv": "Verksamhetschef, hälso- och sjukvård",
   "expected_codes": [
    "1511",
    "1512"
@@ -228,7 +196,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Enhetschef inom social omsorg/Föreståndare inom social omsorg",
+  "text_sv": "Enhetschef inom socialtjänst",
   "expected_codes": [
    "1521",
    "1522"
@@ -249,8 +217,8 @@
   "id": "gen-1540",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Kyrkoherde",
+  "text_en": "minister of religion",
+  "text_sv": "Verksamhetschef inom trossamfund",
   "expected_codes": [
    "1540"
   ]
@@ -278,21 +246,10 @@
   ]
  },
  {
-  "id": "gen-1720",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "F&B Manager/Food and beverage manager",
-  "expected_codes": [
-   "1721",
-   "1722"
-  ]
- },
- {
   "id": "gen-1730",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "trainee trade regional manager",
   "text_sv": "Regionchef, butik",
   "expected_codes": [
    "1731",
@@ -304,7 +261,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Klubbledare, golf",
+  "text_sv": "Nationalparkschef",
   "expected_codes": [
    "1741",
    "1742"
@@ -315,7 +272,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Verkstadschef/Servicechef fordon",
+  "text_sv": "Stationschef, bilprovning",
   "expected_codes": [
    "1791",
    "1792"
@@ -326,19 +283,9 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Astronom",
+  "text_sv": "Materialfysiker",
   "expected_codes": [
    "2111"
-  ]
- },
- {
-  "id": "gen-2112",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Meteorolog",
-  "expected_codes": [
-   "2112"
   ]
  },
  {
@@ -349,26 +296,6 @@
   "text_sv": "Sjukhuskemist",
   "expected_codes": [
    "2113"
-  ]
- },
- {
-  "id": "gen-2114",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Hydrolog",
-  "expected_codes": [
-   "2114"
-  ]
- },
- {
-  "id": "gen-2121",
-  "origin": "generated",
-  "type": "title",
-  "text_en": "actuarial consultant",
-  "text_sv": "Aktuarie/Försäkringsaktuarie/Försäkringsmatematiker",
-  "expected_codes": [
-   "2121"
   ]
  },
  {
@@ -386,7 +313,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Forskare, immunologi",
+  "text_sv": "Forskningsassistent, biologi",
   "expected_codes": [
    "2131"
   ]
@@ -406,7 +333,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Regulatorisk handläggare/Regulatory affairs specialist",
+  "text_sv": "Forskare, farmakologi",
   "expected_codes": [
    "2133"
   ]
@@ -416,7 +343,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Maskinrådgivare/Maskinkonsulent",
+  "text_sv": "Forskningsassistent, agronomi",
   "expected_codes": [
    "2134"
   ]
@@ -425,8 +352,8 @@
   "id": "gen-2135",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Jaktvårdskonsulent/Jaktvårdsrådgivare",
+  "text_en": "wood merchant",
+  "text_sv": "Virkesköpare/Virkesinköpare",
   "expected_codes": [
    "2135"
   ]
@@ -455,8 +382,8 @@
   "id": "gen-2143",
   "origin": "generated",
   "type": "title",
-  "text_en": "medical device engineer",
-  "text_sv": "Civilingenjör, medicinsk teknik",
+  "text_en": null,
+  "text_sv": "Forskare, mikroelektronik",
   "expected_codes": [
    "2143"
   ]
@@ -465,8 +392,8 @@
   "id": "gen-2144",
   "origin": "generated",
   "type": "title",
-  "text_en": "solar energy engineer",
-  "text_sv": "Solenergiprojektör/Solcellsprojektör",
+  "text_en": "energy systems engineering specialist",
+  "text_sv": "Civilingenjör, energi",
   "expected_codes": [
    "2144"
   ]
@@ -475,7 +402,7 @@
   "id": "gen-2145",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "chemical engineering specialist",
   "text_sv": "Civilingenjör, kemi",
   "expected_codes": [
    "2145"
@@ -486,7 +413,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Civilingenjör, produktion, gruv, metallurgi",
+  "text_sv": "Geotekniker",
   "expected_codes": [
    "2146"
   ]
@@ -535,8 +462,8 @@
   "id": "gen-2173",
   "origin": "generated",
   "type": "title",
-  "text_en": "digital games designer",
-  "text_sv": "Game designer/Speldesigner",
+  "text_en": null,
+  "text_sv": "2D artist/2D-grafiker",
   "expected_codes": [
    "2173"
   ]
@@ -555,8 +482,8 @@
   "id": "gen-2181",
   "origin": "generated",
   "type": "title",
-  "text_en": "construction safety manager",
-  "text_sv": "Arbetsmiljöinspektör",
+  "text_en": "occupational health nurse",
+  "text_sv": "Skyddsingenjör",
   "expected_codes": [
    "2181"
   ]
@@ -565,8 +492,8 @@
   "id": "gen-2182",
   "origin": "generated",
   "type": "title",
-  "text_en": "healthcare inspector",
-  "text_sv": "Hälsovårdsinspektör",
+  "text_en": "HSE inspector",
+  "text_sv": "HSEQ Manager/KMA-samordnare",
   "expected_codes": [
    "2182"
   ]
@@ -575,8 +502,8 @@
   "id": "gen-2183",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Ekolog",
+  "text_en": "environment program coordinator",
+  "text_sv": "Miljöcontroller",
   "expected_codes": [
    "2183"
   ]
@@ -586,7 +513,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Specialistläkare, neurologi",
+  "text_sv": "Specialistläkare, invärtesmedicin",
   "expected_codes": [
    "2211"
   ]
@@ -596,7 +523,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "ST-läkare, barn- och ungdomsmedicin",
+  "text_sv": "ST-läkare, laboratoriemedicin",
   "expected_codes": [
    "2212"
   ]
@@ -616,7 +543,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Stomiterapeut",
+  "text_sv": "Uroterapeut",
   "expected_codes": [
    "2221"
   ]
@@ -625,7 +552,7 @@
   "id": "gen-2222",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "foetal nurse",
   "text_sv": "Barnmorska",
   "expected_codes": [
    "2222"
@@ -635,7 +562,7 @@
   "id": "gen-2223",
   "origin": "generated",
   "type": "title",
-  "text_en": "anaesthetic technician",
+  "text_en": "surgical technician",
   "text_sv": "Anestesisjuksköterska",
   "expected_codes": [
    "2223"
@@ -656,7 +583,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Akutsjuksköterska",
+  "text_sv": "Ambulanssjuksköterska",
   "expected_codes": [
    "2226"
   ]
@@ -666,7 +593,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Geriatriksjuksköterska",
+  "text_sv": "Demenssjuksköterska",
   "expected_codes": [
    "2227"
   ]
@@ -736,7 +663,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Ortoptist",
+  "text_sv": "Hjärtsjuksköterska",
   "expected_codes": [
    "2239"
   ]
@@ -752,20 +679,10 @@
   ]
  },
  {
-  "id": "gen-2242",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Psykoterapeut",
-  "expected_codes": [
-   "2242"
-  ]
- },
- {
   "id": "gen-2250",
   "origin": "generated",
   "type": "title",
-  "text_en": "specialised veterinarian",
+  "text_en": "companion animal internal medicine veterinarian",
   "text_sv": "Specialistveterinär",
   "expected_codes": [
    "2250"
@@ -775,27 +692,17 @@
   "id": "gen-2260",
   "origin": "generated",
   "type": "title",
-  "text_en": "specialist dentist",
+  "text_en": "prosthodontic specialist",
   "text_sv": "Forskare, odontologi",
   "expected_codes": [
    "2260"
   ]
  },
  {
-  "id": "gen-2271",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Osteopat",
-  "expected_codes": [
-   "2271"
-  ]
- },
- {
   "id": "gen-2272",
   "origin": "generated",
   "type": "title",
-  "text_en": "animal physiotherapist",
+  "text_en": "animal physical threapist",
   "text_sv": "Djurfysioterapeut",
   "expected_codes": [
    "2272"
@@ -805,7 +712,7 @@
   "id": "gen-2273",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "vocational rehabilitation counsellor",
   "text_sv": "Arbetsterapeutstuderande",
   "expected_codes": [
    "2273"
@@ -825,8 +732,8 @@
   "id": "gen-2283",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Audionom",
+  "text_en": "audiological scientist",
+  "text_sv": "Audionomstuderande",
   "expected_codes": [
    "2283"
   ]
@@ -836,7 +743,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Podiatriker",
+  "text_sv": "Bildterapeut",
   "expected_codes": [
    "2289"
   ]
@@ -845,7 +752,7 @@
   "id": "gen-2312",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "assistant lecturer in university",
   "text_sv": "Biträdande universitetslektor/Biträdande högskolelektor",
   "expected_codes": [
    "2312"
@@ -885,7 +792,7 @@
   "id": "gen-2330",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "home economics teacher",
   "text_sv": "Folkhögskolelärare",
   "expected_codes": [
    "2330"
@@ -896,7 +803,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Ämneslärare, 7–9",
+  "text_sv": "Grundlärare, 4–6",
   "expected_codes": [
    "2341"
   ]
@@ -915,8 +822,8 @@
   "id": "gen-2343",
   "origin": "generated",
   "type": "title",
-  "text_en": "early years teacher",
-  "text_sv": "Lekterapeut",
+  "text_en": "educator in primary education",
+  "text_sv": "Lärare i förskoleklass",
   "expected_codes": [
    "2343"
   ]
@@ -925,8 +832,8 @@
   "id": "gen-2351",
   "origin": "generated",
   "type": "title",
-  "text_en": "curriculum administrator",
-  "text_sv": "Utbildningskonsulent, skola",
+  "text_en": "curriculum manager",
+  "text_sv": "Förskolekonsulent",
   "expected_codes": [
    "2351"
   ]
@@ -936,7 +843,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Studie- och yrkesvägledare/SYV",
+  "text_sv": "SSA-sekreterare",
   "expected_codes": [
    "2352"
   ]
@@ -946,7 +853,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Danspedagog",
+  "text_sv": "Sångpedagog",
   "expected_codes": [
    "2359"
   ]
@@ -955,8 +862,8 @@
   "id": "gen-2412",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Business controller",
+  "text_en": "financial investigation clerk",
+  "text_sv": "Finansiell controller",
   "expected_codes": [
    "2412"
   ]
@@ -975,8 +882,8 @@
   "id": "gen-2415",
   "origin": "generated",
   "type": "title",
-  "text_en": "economic adviser",
-  "text_sv": "Nationalekonom",
+  "text_en": null,
+  "text_sv": "Forskare, ekonomi",
   "expected_codes": [
    "2415"
   ]
@@ -985,8 +892,8 @@
   "id": "gen-2419",
   "origin": "generated",
   "type": "title",
-  "text_en": "manufacturing cost estimator",
-  "text_sv": "Produktionsekonom",
+  "text_en": null,
+  "text_sv": "Budget- och skuldrådgivare",
   "expected_codes": [
    "2419"
   ]
@@ -995,8 +902,8 @@
   "id": "gen-2421",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Affärsutvecklare",
+  "text_en": "business process consultant",
+  "text_sv": "Organisationskonsult",
   "expected_codes": [
    "2421"
   ]
@@ -1005,8 +912,8 @@
   "id": "gen-2422",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Turistsekreterare",
+  "text_en": "social development officer",
+  "text_sv": "Kommunhandläggare",
   "expected_codes": [
    "2422"
   ]
@@ -1016,7 +923,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Researcher, rekrytering",
+  "text_sv": "HR business partner/HR BP",
   "expected_codes": [
    "2423"
   ]
@@ -1025,8 +932,8 @@
   "id": "gen-2431",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Anbudsansvarig/Bid Manager",
+  "text_en": "marketing development manager",
+  "text_sv": "Marknadskommunikatör",
   "expected_codes": [
    "2431"
   ]
@@ -1036,7 +943,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Informatör/Kommunikatör",
+  "text_sv": "Social media manager/Social media specialist",
   "expected_codes": [
    "2432"
   ]
@@ -1045,8 +952,8 @@
   "id": "gen-2511",
   "origin": "generated",
   "type": "title",
-  "text_en": "enterprise architect",
-  "text_sv": "Enterprise Architect",
+  "text_en": "network designer",
+  "text_sv": "Infrastrukturarkitekt",
   "expected_codes": [
    "2511"
   ]
@@ -1055,7 +962,7 @@
   "id": "gen-2512",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "systems programmer",
   "text_sv": "Civilingenjör, systemutveckling",
   "expected_codes": [
    "2512"
@@ -1065,8 +972,8 @@
   "id": "gen-2513",
   "origin": "generated",
   "type": "title",
-  "text_en": "digital games developer",
-  "text_sv": "Gameplay programmer",
+  "text_en": null,
+  "text_sv": "Game programmer",
   "expected_codes": [
    "2513"
   ]
@@ -1075,7 +982,7 @@
   "id": "gen-2514",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "application software tester",
   "text_sv": "Mjukvarutestare",
   "expected_codes": [
    "2514"
@@ -1086,7 +993,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Devops utvecklare",
+  "text_sv": "Systemansvarig",
   "expected_codes": [
    "2515"
   ]
@@ -1095,8 +1002,8 @@
   "id": "gen-2516",
   "origin": "generated",
   "type": "title",
-  "text_en": "chief ICT security officer",
-  "text_sv": "IT-säkerhetschef/IT security manager",
+  "text_en": "network security administrator",
+  "text_sv": "Säkerhetsadministratör, IT",
   "expected_codes": [
    "2516"
   ]
@@ -1105,7 +1012,7 @@
   "id": "gen-2519",
   "origin": "generated",
   "type": "title",
-  "text_en": "ICT product manager",
+  "text_en": "IT product manager",
   "text_sv": "IT-strateg",
   "expected_codes": [
    "2519"
@@ -1115,8 +1022,8 @@
   "id": "gen-2612",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Fiskal",
+  "text_en": "investigating magistrate",
+  "text_sv": "Rådman",
   "expected_codes": [
    "2612"
   ]
@@ -1136,7 +1043,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Patentjurist",
+  "text_sv": "Bolagsjurist",
   "expected_codes": [
    "2614"
   ]
@@ -1146,7 +1053,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Förbundsjurist",
+  "text_sv": "Regionjurist",
   "expected_codes": [
    "2615"
   ]
@@ -1155,8 +1062,8 @@
   "id": "gen-2619",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "IT-jurist",
+  "text_en": "jury bailiff",
+  "text_sv": "Kronofogde",
   "expected_codes": [
    "2619"
   ]
@@ -1165,8 +1072,8 @@
   "id": "gen-2621",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Bebyggelseantikvarie",
+  "text_en": "exhibition overseer",
+  "text_sv": "Konstkonsult",
   "expected_codes": [
    "2621"
   ]
@@ -1175,7 +1082,7 @@
   "id": "gen-2622",
   "origin": "generated",
   "type": "title",
-  "text_en": "knowledge engineer",
+  "text_en": "taxonomist",
   "text_sv": "Informationsspecialist",
   "expected_codes": [
    "2622"
@@ -1185,8 +1092,8 @@
   "id": "gen-2623",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Socialantropolog",
+  "text_en": "pundit",
+  "text_sv": "Forskare, statskunskap",
   "expected_codes": [
    "2623"
   ]
@@ -1195,8 +1102,8 @@
   "id": "gen-2641",
   "origin": "generated",
   "type": "title",
-  "text_en": "publishing rights manager",
-  "text_sv": "Förlagsredaktör",
+  "text_en": "television writer",
+  "text_sv": "Dramatiker",
   "expected_codes": [
    "2641"
   ]
@@ -1205,8 +1112,8 @@
   "id": "gen-2642",
   "origin": "generated",
   "type": "title",
-  "text_en": "picture editor",
-  "text_sv": "Bildredaktör",
+  "text_en": null,
+  "text_sv": "Medicinsk skribent",
   "expected_codes": [
    "2642"
   ]
@@ -1216,7 +1123,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Mediatextare",
+  "text_sv": "Översättare, skönlitteratur",
   "expected_codes": [
    "2643"
   ]
@@ -1226,7 +1133,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Möbelrenoverare/Möbelrestauratör",
+  "text_sv": "Textilkonstnär",
   "expected_codes": [
    "2651"
   ]
@@ -1235,8 +1142,8 @@
   "id": "gen-2652",
   "origin": "generated",
   "type": "title",
-  "text_en": "music arranger",
-  "text_sv": "Notskrivare",
+  "text_en": "arranger & orchestrator",
+  "text_sv": "Arrangör, musik",
   "expected_codes": [
    "2652"
   ]
@@ -1246,7 +1153,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Koreograf",
+  "text_sv": "Balettmästare",
   "expected_codes": [
    "2653"
   ]
@@ -1256,7 +1163,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Rollsättare",
+  "text_sv": "Koordinator: kultur, media, film, dataspel",
   "expected_codes": [
    "2654"
   ]
@@ -1276,7 +1183,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Familjerättssekreterare",
+  "text_sv": "Familjehemssekreterare/Familjehemskonsulent",
   "expected_codes": [
    "2661"
   ]
@@ -1295,8 +1202,8 @@
   "id": "gen-2669",
   "origin": "generated",
   "type": "title",
-  "text_en": "probation officer",
-  "text_sv": "Frivårdsinspektör",
+  "text_en": "cultural mediator social worker",
+  "text_sv": "Integrationshandläggare",
   "expected_codes": [
    "2669"
   ]
@@ -1306,7 +1213,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Präst, grekisk-ortodox kyrka",
+  "text_sv": "Präst, Svenska kyrkan",
   "expected_codes": [
    "2671"
   ]
@@ -1316,7 +1223,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "SQE Supplier Quality Engineer",
+  "text_sv": "Produktionsberedare inom industriell tillverkning",
   "expected_codes": [
    "3111"
   ]
@@ -1325,8 +1232,8 @@
   "id": "gen-3112",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Entreprenadingenjör",
+  "text_en": "construction quality and safety control supervisor",
+  "text_sv": "Byggledare",
   "expected_codes": [
    "3112"
   ]
@@ -1336,7 +1243,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Infrastrukturspecialist, It",
+  "text_sv": "Produktionsingenjör, elektronik",
   "expected_codes": [
    "3113"
   ]
@@ -1345,8 +1252,8 @@
   "id": "gen-3114",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Driftingenjör industri",
+  "text_en": "product development consultant engineer",
+  "text_sv": "Processtekniker, tillverkningsindustri",
   "expected_codes": [
    "3114"
   ]
@@ -1356,7 +1263,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Ostmästare",
+  "text_sv": "Produktionsingenjör, kemi",
   "expected_codes": [
    "3115"
   ]
@@ -1366,7 +1273,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Sprängingenjör",
+  "text_sv": "Projektledare, gruva",
   "expected_codes": [
    "3116"
   ]
@@ -1376,7 +1283,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Geodatasamordnare",
+  "text_sv": "GIS-ingenjör",
   "expected_codes": [
    "3117"
   ]
@@ -1385,7 +1292,7 @@
   "id": "gen-3119",
   "origin": "generated",
   "type": "title",
-  "text_en": "food and beverage packaging technologist",
+  "text_en": "diploma textile engineer",
   "text_sv": "Produktionsingenjör, textil, trä, glas, förpackningar",
   "expected_codes": [
    "3119"
@@ -1395,8 +1302,8 @@
   "id": "gen-3121",
   "origin": "generated",
   "type": "title",
-  "text_en": "construction painting supervisor",
-  "text_sv": "Arbetsledare, måleri",
+  "text_en": "mine shift supervisor",
+  "text_sv": "Arbetsledare, gruvbrytning och metallproduktion",
   "expected_codes": [
    "3121"
   ]
@@ -1415,8 +1322,8 @@
   "id": "gen-3151",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Elingenjör, fartyg/Fartygseltekniker",
+  "text_en": "maritime engineering officer",
+  "text_sv": "Maskinbefäl, fartyg",
   "expected_codes": [
    "3151"
   ]
@@ -1425,8 +1332,8 @@
   "id": "gen-3152",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Lots, fartyg",
+  "text_en": "submarine helmsman",
+  "text_sv": "2:e Styrman",
   "expected_codes": [
    "3152"
   ]
@@ -1435,8 +1342,8 @@
   "id": "gen-3153",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Fjärrpilot",
+  "text_en": "airline pilot",
+  "text_sv": "Pilot trafikflyg",
   "expected_codes": [
    "3153"
   ]
@@ -1472,21 +1379,11 @@
   ]
  },
  {
-  "id": "gen-3212",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Biomedicinsk analytiker/BMA",
-  "expected_codes": [
-   "3212"
-  ]
- },
- {
   "id": "gen-3214",
   "origin": "generated",
   "type": "title",
-  "text_en": "prosthetist-orthotist",
-  "text_sv": "Ortopedingenjör",
+  "text_en": null,
+  "text_sv": "Anaplastolog",
   "expected_codes": [
    "3214"
   ]
@@ -1495,8 +1392,8 @@
   "id": "gen-3215",
   "origin": "generated",
   "type": "title",
-  "text_en": "medical laboratory assistant",
-  "text_sv": "Laborant inom materialteknik",
+  "text_en": null,
+  "text_sv": "Laboratorieingenjör inom kemi och biologi",
   "expected_codes": [
    "3215"
   ]
@@ -1505,27 +1402,17 @@
   "id": "gen-3230",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Akupunktör",
+  "text_en": "complementary therapy practitioner",
+  "text_sv": "Terapeut inom alternativmedicin",
   "expected_codes": [
    "3230"
-  ]
- },
- {
-  "id": "gen-3250",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Tandhygienist",
-  "expected_codes": [
-   "3250"
   ]
  },
  {
   "id": "gen-3311",
   "origin": "generated",
   "type": "title",
-  "text_en": "financial broker",
+  "text_en": "financial services adviser",
   "text_sv": "Finansmäklare",
   "expected_codes": [
    "3311"
@@ -1535,8 +1422,8 @@
   "id": "gen-3312",
   "origin": "generated",
   "type": "title",
-  "text_en": "bank account manager",
-  "text_sv": "Privatekonomisk rådgivare",
+  "text_en": null,
+  "text_sv": "Gruppledare bank",
   "expected_codes": [
    "3312"
   ]
@@ -1546,7 +1433,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Redovisningsekonom",
+  "text_sv": "Revisorsassistent",
   "expected_codes": [
    "3313"
   ]
@@ -1555,7 +1442,7 @@
   "id": "gen-3314",
   "origin": "generated",
   "type": "title",
-  "text_en": "personal property appraiser",
+  "text_en": "personal property valuer",
   "text_sv": "Värderingsman",
   "expected_codes": [
    "3314"
@@ -1565,7 +1452,7 @@
   "id": "gen-3321",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "household insurance broker",
   "text_sv": "Försäkringsförmedlare",
   "expected_codes": [
    "3321"
@@ -1596,7 +1483,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Offertingenjör",
+  "text_sv": "Orderplanerare",
   "expected_codes": [
    "3324"
   ]
@@ -1615,7 +1502,7 @@
   "id": "gen-3332",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "live event producer",
   "text_sv": "Eventansvarig/Eventkoordinator",
   "expected_codes": [
    "3332"
@@ -1645,8 +1532,8 @@
   "id": "gen-3339",
   "origin": "generated",
   "type": "title",
-  "text_en": "advertising sales agent",
-  "text_sv": "Mediasäljare",
+  "text_en": null,
+  "text_sv": "Teateragent",
   "expected_codes": [
    "3339"
   ]
@@ -1655,7 +1542,7 @@
   "id": "gen-3341",
   "origin": "generated",
   "type": "title",
-  "text_en": "office manager",
+  "text_en": "office coordinator",
   "text_sv": "Arbetsledare, kontorspersonal/Gruppledare, kontorspersonal",
   "expected_codes": [
    "3341"
@@ -1672,21 +1559,11 @@
   ]
  },
  {
-  "id": "gen-3343",
-  "origin": "generated",
-  "type": "title",
-  "text_en": "management assistant",
-  "text_sv": "VD-assistent",
-  "expected_codes": [
-   "3343"
-  ]
- },
- {
   "id": "gen-3351",
   "origin": "generated",
   "type": "title",
-  "text_en": "coastguard watch officer",
-  "text_sv": "Kustbevakningstjänsteman",
+  "text_en": "customs control officer",
+  "text_sv": "Tulltjänsteman",
   "expected_codes": [
    "3351"
   ]
@@ -1696,7 +1573,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Handläggare, arbetslöshetskassa/Utredare, arbetslöshetskassa",
+  "text_sv": "Försäkringshandläggare, försäkringskassa",
   "expected_codes": [
    "3353"
   ]
@@ -1705,8 +1582,8 @@
   "id": "gen-3354",
   "origin": "generated",
   "type": "title",
-  "text_en": "transport health and safety inspector",
-  "text_sv": "Förarprövare",
+  "text_en": "road transport health and safety manager",
+  "text_sv": "Besiktningstekniker, fordon",
   "expected_codes": [
    "3354"
   ]
@@ -1715,7 +1592,7 @@
   "id": "gen-3355",
   "origin": "generated",
   "type": "title",
-  "text_en": "energy consultant",
+  "text_en": "energy saving consultant",
   "text_sv": "Energi- och klimatrådgivare",
   "expected_codes": [
    "3355"
@@ -1725,8 +1602,8 @@
   "id": "gen-3359",
   "origin": "generated",
   "type": "title",
-  "text_en": "fisheries observer",
-  "text_sv": "Fiskerikontrollant",
+  "text_en": null,
+  "text_sv": "Projektledare, offentlig verksamhet",
   "expected_codes": [
    "3359"
   ]
@@ -1736,7 +1613,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Hantverkspedagog",
+  "text_sv": "Projektledare, social inriktning",
   "expected_codes": [
    "3411"
   ]
@@ -1746,7 +1623,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Pastor, frikyrkoförsamling",
+  "text_sv": "Församlingsföreståndare, frikyrka",
   "expected_codes": [
    "3412"
   ]
@@ -1755,7 +1632,7 @@
   "id": "gen-3421",
   "origin": "generated",
   "type": "title",
-  "text_en": "professional athlete",
+  "text_en": "tennis player",
   "text_sv": "Professionell idrottsutövare",
   "expected_codes": [
    "3421"
@@ -1765,8 +1642,8 @@
   "id": "gen-3422",
   "origin": "generated",
   "type": "title",
-  "text_en": "sport official",
-  "text_sv": "Idrottsdomare",
+  "text_en": null,
+  "text_sv": "Tränare inom specialidrott",
   "expected_codes": [
    "3422"
   ]
@@ -1776,7 +1653,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Assistent i församlingsarbete",
+  "text_sv": "Församlingspedagog",
   "expected_codes": [
    "3423"
   ]
@@ -1785,7 +1662,7 @@
   "id": "gen-3424",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "health and fitness consultant",
   "text_sv": "Friskvårdsledare",
   "expected_codes": [
    "3424"
@@ -1796,7 +1673,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Director of photography/DoP/Filmfotograf",
+  "text_sv": "B-fotograf",
   "expected_codes": [
    "3431"
   ]
@@ -1805,8 +1682,8 @@
   "id": "gen-3432",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Köksdesigner",
+  "text_en": "exibition designer",
+  "text_sv": "Scenografiassistent",
   "expected_codes": [
    "3432"
   ]
@@ -1815,8 +1692,8 @@
   "id": "gen-3433",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Third assistant director/TAD",
+  "text_en": "orchestra secretary",
+  "text_sv": "Produktionsassistent: kultur, media, film, dataspel",
   "expected_codes": [
    "3433"
   ]
@@ -1825,8 +1702,8 @@
   "id": "gen-3439",
   "origin": "generated",
   "type": "title",
-  "text_en": "stand-up comedian",
-  "text_sv": "Stand-up-komiker",
+  "text_en": null,
+  "text_sv": "Inläsare",
   "expected_codes": [
    "3439"
   ]
@@ -1835,7 +1712,7 @@
   "id": "gen-3441",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "instructor in driving",
   "text_sv": "Utbildningsledare på trafikskola",
   "expected_codes": [
    "3441"
@@ -1846,7 +1723,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Personalutbildare",
+  "text_sv": "Musikhandledare",
   "expected_codes": [
    "3449"
   ]
@@ -1856,7 +1733,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Souschef",
+  "text_sv": "Köksmästare fartyg",
   "expected_codes": [
    "3451"
   ]
@@ -1866,7 +1743,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Måltidsutvecklare",
+  "text_sv": "Kostekonom",
   "expected_codes": [
    "3452"
   ]
@@ -1875,7 +1752,7 @@
   "id": "gen-3511",
   "origin": "generated",
   "type": "title",
-  "text_en": "ICT technician",
+  "text_en": "IT engineer",
   "text_sv": "Drifttekniker IT",
   "expected_codes": [
    "3511"
@@ -1885,20 +1762,10 @@
   "id": "gen-3512",
   "origin": "generated",
   "type": "title",
-  "text_en": "ICT help desk agent",
+  "text_en": "IT help desk advisor",
   "text_sv": "Supporttekniker IT",
   "expected_codes": [
    "3512"
-  ]
- },
- {
-  "id": "gen-3513",
-  "origin": "generated",
-  "type": "title",
-  "text_en": "database administrator",
-  "text_sv": "Databasadministratör",
-  "expected_codes": [
-   "3513"
   ]
  },
  {
@@ -1915,7 +1782,7 @@
   "id": "gen-3515",
   "origin": "generated",
   "type": "title",
-  "text_en": "webmaster",
+  "text_en": "e-commerce technician",
   "text_sv": "Webbansvarig",
   "expected_codes": [
    "3515"
@@ -1925,8 +1792,8 @@
   "id": "gen-3521",
   "origin": "generated",
   "type": "title",
-  "text_en": "video and motion picture editor",
-  "text_sv": "Klippassistent",
+  "text_en": "camera equipment operator",
+  "text_sv": "Bildingenjör/BING, film/BING, TV",
   "expected_codes": [
    "3521"
   ]
@@ -1935,27 +1802,17 @@
   "id": "gen-3522",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Belysningsmästare",
+  "text_en": "audio-visual operator",
+  "text_sv": "AV-tekniker",
   "expected_codes": [
    "3522"
-  ]
- },
- {
-  "id": "gen-4111",
-  "origin": "generated",
-  "type": "title",
-  "text_en": "billing clerk",
-  "text_sv": "Ekonomiassistent",
-  "expected_codes": [
-   "4111"
   ]
  },
  {
   "id": "gen-4112",
   "origin": "generated",
   "type": "title",
-  "text_en": "payroll clerk",
+  "text_en": "payroll officer",
   "text_sv": "Löneadministratör/Lönekonsult",
   "expected_codes": [
    "4112"
@@ -1965,8 +1822,8 @@
   "id": "gen-4114",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Försäkringsförmedlarassistent",
+  "text_en": "viewing and sales assistant",
+  "text_sv": "Fastighetsmäklarassistent",
   "expected_codes": [
    "4114"
   ]
@@ -1982,21 +1839,11 @@
   ]
  },
  {
-  "id": "gen-4116",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Skolassistent",
-  "expected_codes": [
-   "4116"
-  ]
- },
- {
   "id": "gen-4119",
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Operatör, Polisens kontaktcenter",
+  "text_sv": "Operatör, Polisens regionledningscentral",
   "expected_codes": [
    "4119"
   ]
@@ -2005,8 +1852,8 @@
   "id": "gen-4211",
   "origin": "generated",
   "type": "title",
-  "text_en": "bingo caller",
-  "text_sv": "Bingovärd",
+  "text_en": "casino dealer and pit boss",
+  "text_sv": "Kasinopersonal",
   "expected_codes": [
    "4211"
   ]
@@ -2015,7 +1862,7 @@
   "id": "gen-4212",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "payment collector",
   "text_sv": "Handläggare Kronofogden",
   "expected_codes": [
    "4212"
@@ -2025,8 +1872,8 @@
   "id": "gen-4221",
   "origin": "generated",
   "type": "title",
-  "text_en": "ground steward/ground stewardess",
-  "text_sv": "Trafikassistent flygplats",
+  "text_en": "meet and assist agent",
+  "text_sv": "Incheckningsmedarbetare",
   "expected_codes": [
    "4221"
   ]
@@ -2035,8 +1882,8 @@
   "id": "gen-4222",
   "origin": "generated",
   "type": "title",
-  "text_en": "customer contact centre information clerk",
-  "text_sv": "Besöksbokare/Kundbokare",
+  "text_en": "customer complaints handler",
+  "text_sv": "Reklamationshandläggare",
   "expected_codes": [
    "4222"
   ]
@@ -2045,7 +1892,7 @@
   "id": "gen-4223",
   "origin": "generated",
   "type": "title",
-  "text_en": "taxi controller",
+  "text_en": "taxi dispatcher",
   "text_sv": "Taxitelefonist",
   "expected_codes": [
    "4223"
@@ -2055,8 +1902,8 @@
   "id": "gen-4224",
   "origin": "generated",
   "type": "title",
-  "text_en": "night auditor",
-  "text_sv": "Hotellreceptionist",
+  "text_en": "hotelier",
+  "text_sv": "Hotellvärd",
   "expected_codes": [
    "4224"
   ]
@@ -2072,21 +1919,11 @@
   ]
  },
  {
-  "id": "gen-4226",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Marknadsundersökare/Intervjuare",
-  "expected_codes": [
-   "4226"
-  ]
- },
- {
   "id": "gen-4321",
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Arbetsledare lager och terminal",
+  "text_sv": "Reservdelsansvarig",
   "expected_codes": [
    "4321"
   ]
@@ -2096,7 +1933,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Lagerplanerare",
+  "text_sv": "Leveransbevakare",
   "expected_codes": [
    "4322"
   ]
@@ -2105,8 +1942,8 @@
   "id": "gen-4323",
   "origin": "generated",
   "type": "title",
-  "text_en": "baggage flow supervisor",
-  "text_sv": "Load master",
+  "text_en": "engine dispatcher",
+  "text_sv": "Tågtrafikledare",
   "expected_codes": [
    "4323"
   ]
@@ -2135,7 +1972,7 @@
   "id": "gen-5112",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "rail conductor",
   "text_sv": "Bussvärd",
   "expected_codes": [
    "5112"
@@ -2146,7 +1983,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Naturguide",
+  "text_sv": "Platschef reseföretag",
   "expected_codes": [
    "5113"
   ]
@@ -2155,7 +1992,7 @@
   "id": "gen-5120",
   "origin": "generated",
   "type": "title",
-  "text_en": "private chef",
+  "text_en": "private culinary expert",
   "text_sv": "Kock à la carte",
   "expected_codes": [
    "5120"
@@ -2175,7 +2012,7 @@
   "id": "gen-5132",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "barman",
   "text_sv": "Barmästare",
   "expected_codes": [
    "5132"
@@ -2185,7 +2022,7 @@
   "id": "gen-5141",
   "origin": "generated",
   "type": "title",
-  "text_en": "hairdresser assistant",
+  "text_en": "hairstyling specialist",
   "text_sv": "Frisöraspirant",
   "expected_codes": [
    "5141"
@@ -2195,7 +2032,7 @@
   "id": "gen-5142",
   "origin": "generated",
   "type": "title",
-  "text_en": "aesthetician",
+  "text_en": "skin care technician",
   "text_sv": "Ekologisk hudvårdsterapeut",
   "expected_codes": [
    "5142"
@@ -2225,8 +2062,8 @@
   "id": "gen-5149",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Piercare",
+  "text_en": "finger nail technician",
+  "text_sv": "Manikyrist",
   "expected_codes": [
    "5149"
   ]
@@ -2246,7 +2083,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Fastighetsvärd",
+  "text_sv": "Idrottsplatsvaktmästare",
   "expected_codes": [
    "5152"
   ]
@@ -2255,8 +2092,8 @@
   "id": "gen-5161",
   "origin": "generated",
   "type": "title",
-  "text_en": "funeral attendant",
-  "text_sv": "Begravningsrepresentant",
+  "text_en": null,
+  "text_sv": "Krematorieföreståndare",
   "expected_codes": [
    "5161"
   ]
@@ -2276,7 +2113,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Kassaledare butik",
+  "text_sv": "Köttmästare livsmedelsbutik",
   "expected_codes": [
    "5221"
   ]
@@ -2285,8 +2122,8 @@
   "id": "gen-5222",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Butikssäljare, dagligvaror/Medarbetare, dagligvaror",
+  "text_en": "fine foods specialised seller",
+  "text_sv": "Charkuteriarbetare, butik",
   "expected_codes": [
    "5222"
   ]
@@ -2295,38 +2132,18 @@
   "id": "gen-5223",
   "origin": "generated",
   "type": "title",
-  "text_en": "flower and garden specialised seller",
-  "text_sv": "Florist",
+  "text_en": null,
+  "text_sv": "Husvagnsförsäljare",
   "expected_codes": [
    "5223"
-  ]
- },
- {
-  "id": "gen-5224",
-  "origin": "generated",
-  "type": "title",
-  "text_en": "eyewear and optical equipment specialised seller",
-  "text_sv": "Optikerassistent",
-  "expected_codes": [
-   "5224"
-  ]
- },
- {
-  "id": "gen-5225",
-  "origin": "generated",
-  "type": "title",
-  "text_en": "fuel station specialised seller",
-  "text_sv": "Bensinstationsbiträde",
-  "expected_codes": [
-   "5225"
   ]
  },
  {
   "id": "gen-5226",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Stuguthyrare",
+  "text_en": "rental service representative in recreational and sports goods",
+  "text_sv": "Uthyrare sport- och fritidsutrustning",
   "expected_codes": [
    "5226"
   ]
@@ -2335,7 +2152,7 @@
   "id": "gen-5227",
   "origin": "generated",
   "type": "title",
-  "text_en": "pharmacy assistant",
+  "text_en": "pharmacy service assistant",
   "text_sv": "Apoteksassistent",
   "expected_codes": [
    "5227"
@@ -2345,7 +2162,7 @@
   "id": "gen-5230",
   "origin": "generated",
   "type": "title",
-  "text_en": "lottery cashier",
+  "text_en": "lottery retailer cashier",
   "text_sv": "Uppräkningspersonal",
   "expected_codes": [
    "5230"
@@ -2356,7 +2173,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Produktdemonstratör",
+  "text_sv": "Eventförsäljare",
   "expected_codes": [
    "5241"
   ]
@@ -2365,7 +2182,7 @@
   "id": "gen-5242",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "telemarketing agent",
   "text_sv": "Telefonkommunikatör på intresseorganisation",
   "expected_codes": [
    "5242"
@@ -2385,7 +2202,7 @@
   "id": "gen-5312",
   "origin": "generated",
   "type": "title",
-  "text_en": "primary school teaching assistant",
+  "text_en": "teaching assistant in primary schools",
   "text_sv": "Skolvärd",
   "expected_codes": [
    "5312"
@@ -2395,7 +2212,7 @@
   "id": "gen-5321",
   "origin": "generated",
   "type": "title",
-  "text_en": "care at home worker",
+  "text_en": "homecare assistant",
   "text_sv": "Undersköterska, hemtjänst, äldreboende och habilitering",
   "expected_codes": [
    "5321"
@@ -2412,21 +2229,11 @@
   ]
  },
  {
-  "id": "gen-5326",
-  "origin": "generated",
-  "type": "title",
-  "text_en": "emergency ambulance driver",
-  "text_sv": "Sjuktransportör",
-  "expected_codes": [
-   "5326"
-  ]
- },
- {
   "id": "gen-5341",
   "origin": "generated",
   "type": "title",
-  "text_en": "mental health support worker",
-  "text_sv": "Skötarstuderande",
+  "text_en": "intensive support worker",
+  "text_sv": "Brukarspecialist",
   "expected_codes": [
    "5341"
   ]
@@ -2445,8 +2252,8 @@
   "id": "gen-5343",
   "origin": "generated",
   "type": "title",
-  "text_en": "disability support worker",
-  "text_sv": "Personligt ombud",
+  "text_en": null,
+  "text_sv": "Ledsagare",
   "expected_codes": [
    "5343"
   ]
@@ -2475,8 +2282,8 @@
   "id": "gen-5413",
   "origin": "generated",
   "type": "title",
-  "text_en": "store detective",
-  "text_sv": "Butikskontrollant",
+  "text_en": null,
+  "text_sv": "Gränskontrollant",
   "expected_codes": [
    "5413"
   ]
@@ -2485,8 +2292,8 @@
   "id": "gen-5419",
   "origin": "generated",
   "type": "title",
-  "text_en": "swimming facility attendant",
-  "text_sv": "Badvakt",
+  "text_en": null,
+  "text_sv": "Sjöfarts- och hamnskyddskontrollant",
   "expected_codes": [
    "5419"
   ]
@@ -2505,8 +2312,8 @@
   "id": "gen-6112",
   "origin": "generated",
   "type": "title",
-  "text_en": "horticulture production manager",
-  "text_sv": "Arbetsledare trädgårdsodling",
+  "text_en": null,
+  "text_sv": "Odlingsarbetare trädgård",
   "expected_codes": [
    "6112"
   ]
@@ -2525,8 +2332,8 @@
   "id": "gen-6121",
   "origin": "generated",
   "type": "title",
-  "text_en": "equine worker",
-  "text_sv": "Hästskötare",
+  "text_en": null,
+  "text_sv": "Lantbrukare djuruppfödning",
   "expected_codes": [
    "6121"
   ]
@@ -2535,8 +2342,8 @@
   "id": "gen-6122",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Hundtrimmare",
+  "text_en": "agility dog trainer",
+  "text_sv": "Hundtränare",
   "expected_codes": [
    "6122"
   ]
@@ -2555,8 +2362,8 @@
   "id": "gen-6130",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Lantbrukare blandad drift",
+  "text_en": "agricultural manager",
+  "text_sv": "Driftledare lantbruk med blandad drift",
   "expected_codes": [
    "6130"
   ]
@@ -2565,8 +2372,8 @@
   "id": "gen-6210",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Kontrollmätare virke",
+  "text_en": "head lumber quality grader",
+  "text_sv": "Virkesmätare",
   "expected_codes": [
    "6210"
   ]
@@ -2575,8 +2382,8 @@
   "id": "gen-7111",
   "origin": "generated",
   "type": "title",
-  "text_en": "house builder",
-  "text_sv": "Gruvbyggare",
+  "text_en": "craftsman carpenter",
+  "text_sv": "Lärling, träarbetare",
   "expected_codes": [
    "7111"
   ]
@@ -2585,8 +2392,8 @@
   "id": "gen-7112",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Lärling, stenmontör",
+  "text_en": "industrial oven brickmason",
+  "text_sv": "Lärling, murare",
   "expected_codes": [
    "7112"
   ]
@@ -2595,8 +2402,8 @@
   "id": "gen-7113",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Betonghåltagare, utan yrkesbevis",
+  "text_en": "concrete floor finisher and layer",
+  "text_sv": "Lärling betongarbetare",
   "expected_codes": [
    "7113"
   ]
@@ -2606,7 +2413,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Bantekniker",
+  "text_sv": "Beläggningsarbetare, utan yrkesbevis",
   "expected_codes": [
    "7114"
   ]
@@ -2616,7 +2423,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": "construction commercial diver",
-  "text_sv": "Yrkesdykare",
+  "text_sv": "Lärling, anläggningsdykare",
   "expected_codes": [
    "7115"
   ]
@@ -2625,8 +2432,8 @@
   "id": "gen-7116",
   "origin": "generated",
   "type": "title",
-  "text_en": "construction scaffolder",
-  "text_sv": "Ställningsbyggare, utan yrkesbevis",
+  "text_en": "scaffolding labourer",
+  "text_sv": "Lärling, ställningsbyggare",
   "expected_codes": [
    "7116"
   ]
@@ -2636,7 +2443,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Brandskyddsmontör",
+  "text_sv": "Fasadmontör",
   "expected_codes": [
    "7119"
   ]
@@ -2645,8 +2452,8 @@
   "id": "gen-7121",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Lärling, undertaksmontör",
+  "text_en": "roofing carpenter",
+  "text_sv": "Tak- och tätskiktsmontör, utan yrkesbevis",
   "expected_codes": [
    "7121"
   ]
@@ -2656,7 +2463,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Lärling, golvläggare",
+  "text_sv": "Golvslipare, trä",
   "expected_codes": [
    "7122"
   ]
@@ -2685,8 +2492,8 @@
   "id": "gen-7125",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Lärling, VVS-montör",
+  "text_en": "fire sprinkler fitter",
+  "text_sv": "Lärling, sprinklermontör",
   "expected_codes": [
    "7125"
   ]
@@ -2696,7 +2503,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Distributionstekniker fjärrvärmenät och fjärrkylenät",
+  "text_sv": "Kyltekniker",
   "expected_codes": [
    "7126"
   ]
@@ -2705,7 +2512,7 @@
   "id": "gen-7131",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "wallpaper decorator",
   "text_sv": "Lärling, målare",
   "expected_codes": [
    "7131"
@@ -2715,8 +2522,8 @@
   "id": "gen-7132",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Rostskyddsmålare",
+  "text_en": "coating machine operative",
+  "text_sv": "Industrilackerare",
   "expected_codes": [
    "7132"
   ]
@@ -2726,7 +2533,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Ventilationsrengörare",
+  "text_sv": "Spol- och avloppstekniker",
   "expected_codes": [
    "7134"
   ]
@@ -2735,8 +2542,8 @@
   "id": "gen-7211",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Konstgjutare",
+  "text_en": "Central control caster",
+  "text_sv": "Gjutare metallhantverk",
   "expected_codes": [
    "7211"
   ]
@@ -2745,7 +2552,7 @@
   "id": "gen-7213",
   "origin": "generated",
   "type": "title",
-  "text_en": "sheet metal worker",
+  "text_en": "duct fabricator",
   "text_sv": "Lärling byggnadsplåtslagare",
   "expected_codes": [
    "7213"
@@ -2756,7 +2563,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Cisterntekniker",
+  "text_sv": "Flygplåtslagare",
   "expected_codes": [
    "7214"
   ]
@@ -2772,21 +2579,11 @@
   ]
  },
  {
-  "id": "gen-7221",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Smed",
-  "expected_codes": [
-   "7221"
-  ]
- },
- {
   "id": "gen-7223",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Maskinoperatör mekanisk verkstad",
+  "text_en": "CNC laser punch press operator",
+  "text_sv": "Pressoperatör metallbearbetning",
   "expected_codes": [
    "7223"
   ]
@@ -2795,7 +2592,7 @@
   "id": "gen-7224",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "tool grinding machine operator",
   "text_sv": "Slipare metall",
   "expected_codes": [
    "7224"
@@ -2806,7 +2603,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Motorcykelmekaniker",
+  "text_sv": "Mopedmekaniker",
   "expected_codes": [
    "7231"
   ]
@@ -2816,7 +2613,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Installationstekniker industrimaskiner",
+  "text_sv": "Vindkrafttekniker",
   "expected_codes": [
    "7233"
   ]
@@ -2825,8 +2622,8 @@
   "id": "gen-7311",
   "origin": "generated",
   "type": "title",
-  "text_en": "precision instrument assembler",
-  "text_sv": "Hjälpmedelstekniker",
+  "text_en": null,
+  "text_sv": "Tandteknikerbiträde",
   "expected_codes": [
    "7311"
   ]
@@ -2835,8 +2632,8 @@
   "id": "gen-7312",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Gemmolog",
+  "text_en": "silver engraver",
+  "text_sv": "Gravör, ädelmetall",
   "expected_codes": [
    "7312"
   ]
@@ -2845,20 +2642,10 @@
   "id": "gen-7319",
   "origin": "generated",
   "type": "title",
-  "text_en": "membranophone musical instruments maker",
-  "text_sv": "Trumtekniker",
+  "text_en": "decorator of wooden items",
+  "text_sv": "Förgyllare",
   "expected_codes": [
    "7319"
-  ]
- },
- {
-  "id": "gen-7321",
-  "origin": "generated",
-  "type": "title",
-  "text_en": "prepress technician",
-  "text_sv": "Prepressoperatör",
-  "expected_codes": [
-   "7321"
   ]
  },
  {
@@ -2875,7 +2662,7 @@
   "id": "gen-7323",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "binding machine tender",
   "text_sv": "Bokbinderiarbetare",
   "expected_codes": [
    "7323"
@@ -2885,8 +2672,8 @@
   "id": "gen-7411",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Lärling, installationselektriker",
+  "text_en": "domestic and commercial electrician",
+  "text_sv": "Serviceelektriker, installation",
   "expected_codes": [
    "7411"
   ]
@@ -2895,8 +2682,8 @@
   "id": "gen-7412",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Fartygselektrikerelev",
+  "text_en": "lift service mechanic",
+  "text_sv": "Lärling, hissmontör",
   "expected_codes": [
    "7412"
   ]
@@ -2915,7 +2702,7 @@
   "id": "gen-7420",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "phone systems technician",
   "text_sv": "Projektör telekom",
   "expected_codes": [
    "7420"
@@ -2925,28 +2712,18 @@
   "id": "gen-7521",
   "origin": "generated",
   "type": "title",
-  "text_en": "wood treater",
+  "text_en": "wood treating machine specialist",
   "text_sv": "Manuell ytbehandlare inom trä",
   "expected_codes": [
    "7521"
   ]
  },
  {
-  "id": "gen-7522",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Inredningssnickare/Specialsnickare",
-  "expected_codes": [
-   "7522"
-  ]
- },
- {
   "id": "gen-7523",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Hyveloperatör inom trä- och möbelindustri",
+  "text_en": "nailing machinist",
+  "text_sv": "Trähusindustriarbetare",
   "expected_codes": [
    "7523"
   ]
@@ -2955,8 +2732,8 @@
   "id": "gen-7531",
   "origin": "generated",
   "type": "title",
-  "text_en": "milliner",
-  "text_sv": "Hattmakare",
+  "text_en": null,
+  "text_sv": "Körsnär",
   "expected_codes": [
    "7531"
   ]
@@ -2965,8 +2742,8 @@
   "id": "gen-7532",
   "origin": "generated",
   "type": "title",
-  "text_en": "sewing machinist",
-  "text_sv": "Sömmerska hemtextilier och andra textilprodukter",
+  "text_en": null,
+  "text_sv": "Segelmakare",
   "expected_codes": [
    "7532"
   ]
@@ -2975,37 +2752,17 @@
   "id": "gen-7533",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "chair builder",
   "text_sv": "Möbeltapetserare",
   "expected_codes": [
    "7533"
   ]
  },
  {
-  "id": "gen-7534",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Ortopedskomakare/Ortopedskotekniker",
-  "expected_codes": [
-   "7534"
-  ]
- },
- {
-  "id": "gen-7612",
-  "origin": "generated",
-  "type": "title",
-  "text_en": "head pastry chef",
-  "text_sv": "Bagare/Konditor",
-  "expected_codes": [
-   "7612"
-  ]
- },
- {
   "id": "gen-7613",
   "origin": "generated",
   "type": "title",
-  "text_en": "food grader",
+  "text_en": "food product grader",
   "text_sv": "Kvalitetsbedömare livsmedel",
   "expected_codes": [
    "7613"
@@ -3025,7 +2782,7 @@
   "id": "gen-8112",
   "origin": "generated",
   "type": "title",
-  "text_en": "mineral crushing operator",
+  "text_en": "mineral crushing plant operative",
   "text_sv": "Krossoperatör",
   "expected_codes": [
    "8112"
@@ -3035,7 +2792,7 @@
   "id": "gen-8113",
   "origin": "generated",
   "type": "title",
-  "text_en": "oil rig motorhand",
+  "text_en": "rig maintenance technicians",
   "text_sv": "Pumpman, oljeborrning",
   "expected_codes": [
    "8113"
@@ -3045,20 +2802,10 @@
   "id": "gen-8114",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "cement and concrete plant worker",
   "text_sv": "Processoperatör cementtillverkning",
   "expected_codes": [
    "8114"
-  ]
- },
- {
-  "id": "gen-8116",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Stengravör",
-  "expected_codes": [
-   "8116"
   ]
  },
  {
@@ -3075,7 +2822,7 @@
   "id": "gen-8122",
   "origin": "generated",
   "type": "title",
-  "text_en": "metal rolling mill operator",
+  "text_en": "hammer mill operator",
   "text_sv": "Valsare",
   "expected_codes": [
    "8122"
@@ -3095,8 +2842,8 @@
   "id": "gen-8131",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Maskinoperatör hygienteknik",
+  "text_en": "pharmaceutical granulation operative",
+  "text_sv": "Operatör läkemedelstillverkning",
   "expected_codes": [
    "8131"
   ]
@@ -3106,7 +2853,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Operatör batteritillverkning",
+  "text_sv": "Maskinoperatör kemitekniska produkter",
   "expected_codes": [
    "8132"
   ]
@@ -3115,7 +2862,7 @@
   "id": "gen-8141",
   "origin": "generated",
   "type": "title",
-  "text_en": "rubber products machine operator",
+  "text_en": "calender machine operator",
   "text_sv": "Maskinoperatör gummiindustri",
   "expected_codes": [
    "8141"
@@ -3155,8 +2902,8 @@
   "id": "gen-8159",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Industrisömmerska",
+  "text_en": "skiver",
+  "text_sv": "Maskinoperatör skotillverkning",
   "expected_codes": [
    "8159"
   ]
@@ -3165,7 +2912,7 @@
   "id": "gen-8161",
   "origin": "generated",
   "type": "title",
-  "text_en": "animal feed operator",
+  "text_en": "animal feeder",
   "text_sv": "Maskinoperatör foderberedning",
   "expected_codes": [
    "8161"
@@ -3175,7 +2922,7 @@
   "id": "gen-8162",
   "origin": "generated",
   "type": "title",
-  "text_en": "dairy products manufacturing worker",
+  "text_en": "dairy plant worker",
   "text_sv": "Processoperatör mejeri",
   "expected_codes": [
    "8162"
@@ -3195,8 +2942,8 @@
   "id": "gen-8169",
   "origin": "generated",
   "type": "title",
-  "text_en": "food production operator",
-  "text_sv": "Maskinoperatör livsmedelsindustri",
+  "text_en": "brewery worker",
+  "text_sv": "Bryggeritekniker",
   "expected_codes": [
    "8169"
   ]
@@ -3205,7 +2952,7 @@
   "id": "gen-8171",
   "origin": "generated",
   "type": "title",
-  "text_en": "pulp control operator",
+  "text_en": "pulping production assistant",
   "text_sv": "Processoperatör pappersmassa",
   "expected_codes": [
    "8171"
@@ -3235,7 +2982,7 @@
   "id": "gen-8174",
   "origin": "generated",
   "type": "title",
-  "text_en": "wood drying kiln operator",
+  "text_en": "wood-drying kiln technician",
   "text_sv": "Maskinoperatör ytbehandling av trä",
   "expected_codes": [
    "8174"
@@ -3245,7 +2992,7 @@
   "id": "gen-8181",
   "origin": "generated",
   "type": "title",
-  "text_en": "packaging and filling machine operator",
+  "text_en": "packaging and filling machine worker",
   "text_sv": "Maskinoperatör förpackning och påfyllning",
   "expected_codes": [
    "8181"
@@ -3255,8 +3002,8 @@
   "id": "gen-8189",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Processoperatör keramisk industri",
+  "text_en": "glass moulder",
+  "text_sv": "Processoperatör glas",
   "expected_codes": [
    "8189"
   ]
@@ -3265,8 +3012,8 @@
   "id": "gen-8191",
   "origin": "generated",
   "type": "title",
-  "text_en": "power plant control room operator",
-  "text_sv": "Drifttekniker elkraft",
+  "text_en": "steam power operator",
+  "text_sv": "Drifttekniker värmeverk",
   "expected_codes": [
    "8191"
   ]
@@ -3275,8 +3022,8 @@
   "id": "gen-8192",
   "origin": "generated",
   "type": "title",
-  "text_en": "chemical plant control room operator",
-  "text_sv": "Processoperatör kemisk industri",
+  "text_en": null,
+  "text_sv": "Processoperatör bioraffinaderi",
   "expected_codes": [
    "8192"
   ]
@@ -3285,30 +3032,10 @@
   "id": "gen-8193",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Processövervakare metallproduktion",
+  "text_en": "industrial coke oven worker",
+  "text_sv": "Processoperatör smältverk",
   "expected_codes": [
    "8193"
-  ]
- },
- {
-  "id": "gen-8199",
-  "origin": "generated",
-  "type": "title",
-  "text_en": "industrial robot controller",
-  "text_sv": "Industrirobotoperatör",
-  "expected_codes": [
-   "8199"
-  ]
- },
- {
-  "id": "gen-8211",
-  "origin": "generated",
-  "type": "title",
-  "text_en": "aircraft interior technician",
-  "text_sv": "Flygplansmontör",
-  "expected_codes": [
-   "8211"
   ]
  },
  {
@@ -3325,7 +3052,7 @@
   "id": "gen-8214",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "wooden furniture assembler",
   "text_sv": "Möbel- och inredningsmontör",
   "expected_codes": [
    "8214"
@@ -3336,7 +3063,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Mätartekniker VA",
+  "text_sv": "Braskaminmontör",
   "expected_codes": [
    "8219"
   ]
@@ -3365,8 +3092,8 @@
   "id": "gen-8332",
   "origin": "generated",
   "type": "title",
-  "text_en": "live animal transporter",
-  "text_sv": "Djurtransportförare",
+  "text_en": null,
+  "text_sv": "Bärgarförare",
   "expected_codes": [
    "8332"
   ]
@@ -3375,7 +3102,7 @@
   "id": "gen-8341",
   "origin": "generated",
   "type": "title",
-  "text_en": "land-based machinery supervisor",
+  "text_en": "landbased machinery supervisor",
   "text_sv": "Maskinförare lantbruk",
   "expected_codes": [
    "8341"
@@ -3385,8 +3112,8 @@
   "id": "gen-8342",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Renhållningsmaskinförare",
+  "text_en": "bulldozer operative",
+  "text_sv": "Lärling, bandschaktarförare",
   "expected_codes": [
    "8342"
   ]
@@ -3395,7 +3122,7 @@
   "id": "gen-8343",
   "origin": "generated",
   "type": "title",
-  "text_en": "tower crane operator",
+  "text_en": "tower crane driver",
   "text_sv": "Lärling, tornkranförare",
   "expected_codes": [
    "8343"
@@ -3415,8 +3142,8 @@
   "id": "gen-8350",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
-  "text_sv": "Båtsman/Bås",
+  "text_en": "able seawoman",
+  "text_sv": "Matros, inre fart",
   "expected_codes": [
    "8350"
   ]
@@ -3425,27 +3152,17 @@
   "id": "gen-9111",
   "origin": "generated",
   "type": "title",
-  "text_en": "factory hand",
-  "text_sv": "Industristädare",
+  "text_en": null,
+  "text_sv": "Fartygsstädare",
   "expected_codes": [
    "9111"
-  ]
- },
- {
-  "id": "gen-9119",
-  "origin": "generated",
-  "type": "title",
-  "text_en": "babysitter",
-  "text_sv": "Barnvakt",
-  "expected_codes": [
-   "9119"
   ]
  },
  {
   "id": "gen-9120",
   "origin": "generated",
   "type": "title",
-  "text_en": null,
+  "text_en": "automotive valeter",
   "text_sv": "Bilvårdare",
   "expected_codes": [
    "9120"
@@ -3456,7 +3173,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Plantör",
+  "text_sv": "Skördearbetare",
   "expected_codes": [
    "9210"
   ]
@@ -3465,7 +3182,7 @@
   "id": "gen-9310",
   "origin": "generated",
   "type": "title",
-  "text_en": "building construction worker",
+  "text_en": "mechanical construction worker",
   "text_sv": "Måleri, servicearbetare",
   "expected_codes": [
    "9310"
@@ -3476,7 +3193,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Vitvarumontör/Hemelektronikinstallatör",
+  "text_sv": "Flygplatstekniker",
   "expected_codes": [
    "9332"
   ]
@@ -3485,7 +3202,7 @@
   "id": "gen-9411",
   "origin": "generated",
   "type": "title",
-  "text_en": "quick service restaurant crew member",
+  "text_en": "snack maker",
   "text_sv": "Grillkock snabbmat",
   "expected_codes": [
    "9411"
@@ -3502,33 +3219,13 @@
   ]
  },
  {
-  "id": "gen-9413",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Kafébiträde/Konditoribiträde",
-  "expected_codes": [
-   "9413"
-  ]
- },
- {
   "id": "gen-9610",
   "origin": "generated",
   "type": "title",
-  "text_en": "recycling worker",
-  "text_sv": "Demontör återvinning",
+  "text_en": "household waste recycling site operative",
+  "text_sv": "Bildemontör",
   "expected_codes": [
    "9610"
-  ]
- },
- {
-  "id": "gen-9621",
-  "origin": "generated",
-  "type": "title",
-  "text_en": null,
-  "text_sv": "Tidningsdistributör",
-  "expected_codes": [
-   "9621"
   ]
  },
  {
@@ -3546,7 +3243,7 @@
   "origin": "generated",
   "type": "title",
   "text_en": null,
-  "text_sv": "Väderobservatör",
+  "text_sv": "Snöläggare",
   "expected_codes": [
    "9629"
   ]

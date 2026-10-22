@@ -1,0 +1,34 @@
+# Anchor sentences for job-ad passages that sit outside any recognised heading (research R5).
+# A passage takes the label of the nearest anchor centroid (KBLab embeddings). Written for this
+# project, in English and Swedish; add sentences here rather than rules in code.
+duty:
+  - You will design, build and maintain our systems.
+  - In this role you plan and carry out the daily work.
+  - Your tasks include treating patients, preparing meals or installing equipment.
+  - Du kommer att utveckla och förvalta våra system.
+  - Som medarbetare planerar och genomför du det dagliga arbetet.
+  - I arbetsuppgifterna ingår att ge omvårdnad, laga mat eller installera utrustning.
+skill:
+  - You have a university degree and several years of experience.
+  - We are looking for someone with a valid licence and good knowledge of the field.
+  - Fluent English is required and Swedish is a plus.
+  - Du har en relevant examen och flera års erfarenhet.
+  - Vi söker dig som har körkort och goda kunskaper inom området.
+  - Du talar och skriver svenska obehindrat.
+company:
+  - Our company was founded in 1990 and has 200 employees in five countries.
+  - We are a fast-growing business that helps thousands of customers.
+  - The organisation runs hospitals, schools and services across the region.
+  - Företaget grundades 1990 och har 200 anställda.
+  - Vi är ett växande bolag som hjälper tusentals kunder.
+  - Kommunen driver förskolor, skolor och äldreomsorg i hela regionen.
+benefits:
+  - We offer a competitive salary, pension and six weeks of vacation.
+  - You get a wellness allowance, flexible hours and health insurance.
+  - Vi erbjuder kollektivavtal, tjänstepension och friskvårdsbidrag.
+  - Du får flexibla arbetstider och möjlighet till distansarbete.
+other:
+  - Send your application and CV by the last application date.
+  - For questions about the position, contact the recruiting manager.
+  - Skicka din ansökan senast sista ansökningsdag.
+  - Har du frågor om tjänsten är du välkommen att kontakta rekryterande chef.

@@ -29,3 +29,10 @@ def test_every_flag_cites_the_ordinance():
             assert f.source.source == "sfs"
             assert f.source.ref.startswith("SFS 2026:605")
             assert f.effective_from == dt.date(2026, 6, 1)
+
+
+def test_flags_carry_the_registrys_checked_on_date():  # Principle III
+    from lonekrav.core.legal import load_registry
+
+    checked = load_registry().code_lists["exempt_75"].source.checked_on
+    assert [f.checked_on for f in flags_for("3511")] == [checked]

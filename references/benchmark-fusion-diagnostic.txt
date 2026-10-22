@@ -1,7 +1,0 @@
-# Diagnostic run 2026-10-21 (not a fix): fused benchmark with method subsets, same index and queries.
-# Tuned on the benchmark itself (32 hand-written pairs), so treat as evidence for a decision only.
-
-('kblab', 'harrier', 'bm25') | fused R@5 en 0.992 sv 0.94 | gap 0.052 | hw en/sv 0.969 0.906 | overlap 0.625
-('kblab', 'harrier') | fused R@5 en 0.988 sv 0.94 | gap 0.048 | hw en/sv 1.0 0.969 | overlap 0.812
-('harrier', 'bm25') | fused R@5 en 0.988 sv 0.916 | gap 0.072 | hw en/sv 0.906 0.781 | overlap 0.406
-('harrier',) | fused R@5 en 0.996 sv 0.936 | gap 0.06 | hw en/sv 0.969 0.969 | overlap 0.562
