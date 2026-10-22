@@ -176,5 +176,5 @@ Things worked out in Feature 003:
 - **Milvus Lite leaks a gRPC server per database path** until exit. `tests/conftest.py` releases each
   test's servers; without that, subprocess tests crash in gRPC's fork handler once there are
   hundreds of them.
-- `claude mcp add --transport http lonekrav http://localhost:8000/mcp` (local scope) is registered
-  on this machine; `claude -p ... --output-format stream-json` captures a tool transcript.
+- `claude mcp add --transport http lonekrav http://localhost:8000/mcp` connects Claude Code (removed
+  again after 003); `claude -p ... --output-format stream-json` captures a tool transcript.
