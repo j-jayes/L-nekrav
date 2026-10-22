@@ -1,0 +1,50 @@
+{
+  "status": 200,
+  "body": {
+    "name": "lonekrav-advisor",
+    "description": "Reads a job ad, the applicant's background and the offer, and writes an honest-fit memo: every plausible SSYK 2012 code with its Swedish work-permit salary consequences, from Lönekrav's own data. It uses a third-party language model (via OpenRouter), which receives the ad, background and offer you send.",
+    "supportedInterfaces": [
+      {
+        "url": "http://localhost:8000/a2a",
+        "protocolBinding": "JSONRPC",
+        "protocolVersion": "1.0"
+      }
+    ],
+    "version": "0.1.0",
+    "capabilities": {
+      "streaming": true
+    },
+    "defaultInputModes": [
+      "text/plain",
+      "application/json"
+    ],
+    "defaultOutputModes": [
+      "text/plain",
+      "application/json"
+    ],
+    "skills": [
+      {
+        "id": "honest-fit-memo",
+        "name": "Honest-fit occupation and salary memo",
+        "description": "Send one data part {ad, background?, offer?} (offer: monthly_salary_sek, fte_percent, application_type, filed_on, ...) or the ad as text. Streams progress, a ui_sync artifact per tool result, and a markdown memo.",
+        "tags": [
+          "ssyk",
+          "work-permit",
+          "salary",
+          "sweden"
+        ],
+        "examples": [
+          "A backend developer ad with an offer of a monthly salary for a first permit"
+        ],
+        "inputModes": [
+          "text/plain",
+          "application/json"
+        ],
+        "outputModes": [
+          "text/plain",
+          "application/json"
+        ]
+      }
+    ]
+  }
+}

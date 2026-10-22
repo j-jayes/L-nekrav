@@ -1,0 +1,23 @@
+{
+  "status": 200,
+  "body": {
+    "status": "not_permitted",
+    "rule_id": null,
+    "reason": "5 kap. 5 §: work permits may not be granted.",
+    "percent": null,
+    "median": null,
+    "threshold_sek": null,
+    "margin_sek": null,
+    "margin_percent": null,
+    "warnings": [],
+    "sources": [
+      {
+        "key": "sfs_2026_605",
+        "title": "SFS 2026:605, utlänningsförordningen 5 kap. 5–6 §§",
+        "url": "https://svenskforfattningssamling.se/doc/2026605.html",
+        "checked_on": "2026-10-20"
+      }
+    ],
+    "disclaimer": "The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice."
+  }
+}

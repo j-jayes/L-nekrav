@@ -1,0 +1,2756 @@
+{
+  "status": 200,
+  "body": {
+    "code": "2512",
+    "title_sv": "Mjukvaru- och systemutvecklare m.fl.",
+    "title_en": "Software- and system developers",
+    "isco_codes": [
+      "2511",
+      "2512",
+      "2513",
+      "2514",
+      "2521"
+    ],
+    "jobtech_concept_id": "DJh5_yyF_hEM",
+    "jobtech_shared": false,
+    "descriptions": [
+      {
+        "lang": "sv",
+        "kind": "definition",
+        "text": "Analyserar, designar och utvecklar IT-system eller delar av system. Utformar och utvecklar lösningar för programvara, applikationer, system och databaser.",
+        "source": {
+          "source": "jobtech",
+          "ref": "taxonomy ssyk-level-4",
+          "url": "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "en",
+        "kind": "definition",
+        "text": "User interface developers implement, code, document and maintain the interface of a software system by using front-end development technologies.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+          "url": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "sv",
+        "kind": "definition",
+        "text": "Gränssnittsutvecklare implementerar, kodar, dokumenterar och utför underhåll på gränssnitt av programvarusystem med hjälp av frontutvecklad teknik.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+          "url": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "en",
+        "kind": "definition",
+        "text": "ICT application developers implement the ICT (software) applications based on the designs provided using application domain specific languages, tools, platforms and experience.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+          "url": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "sv",
+        "kind": "definition",
+        "text": "IKT-programutvecklare implementerar IKT-program (programvara) utifrån angivna designlösningar med hjälp av domänspecifika språk, verktyg, plattformar och erfarenheter.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+          "url": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "en",
+        "kind": "definition",
+        "text": "ICT project managers schedule, control and direct the resources, people, funding and facilities to achieve the objectives of ICT projects. They establish budgets and timelines, perform risk analysis and quality management, and complete project closure reports.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+          "url": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "sv",
+        "kind": "definition",
+        "text": "Projektledare inom IKT schemalägger, kontrollerar och styr resurser, personal, finansiering och resurser för att uppnå IKT-projektens mål. De fastställer budgetar och tidsramar, utför riskanalys och kvalitetsstyrning samt upprättar rapporter om avslutande av projekt.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+          "url": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "en",
+        "kind": "definition",
+        "text": "ICT system developers maintain, audit and improve organisational support systems. They use existing or new technologies to meet particular needs. They test both hardware and software system components, diagnose and resolve system faults.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+          "url": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "sv",
+        "kind": "definition",
+        "text": "IKT-systemutvecklare upprätthåller, granskar och förbättrar systemen för organisatoriskt stöd. De använder befintlig eller ny teknik för att tillgodose särskilda behov. De testar komponenter av både maskinvaru- och programvarusystem samt diagnostiserar och åtgärdar systemfel.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+          "url": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "en",
+        "kind": "definition",
+        "text": "Database developers program, implement and coordinate changes to computer databases based on their expertise of database management systems.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+          "url": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "sv",
+        "kind": "definition",
+        "text": "Databasutvecklare programmerar, genomför och samordnar ändringar i databaser utifrån sin sakkunskap om databashanteringssystem.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+          "url": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "en",
+        "kind": "definition",
+        "text": "Database designers specify the database's logical structure, processes, and information flows. They design data models and databases to serve data acquisition.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+          "url": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "sv",
+        "kind": "definition",
+        "text": "Databasdesigner specificerar den logiska strukturen, processer och informationsflöden i databaser. De utformar datamodeller och databaser för att säkra insamling av data.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+          "url": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "en",
+        "kind": "definition",
+        "text": "Software developers implement or program all kinds of software systems based on specifications and designs by using programming languages, tools, and platforms.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+          "url": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "sv",
+        "kind": "definition",
+        "text": "Programvaruutvecklare implementerar eller programmerar alla typer av programvarusystem utifrån deras specifikationer och utformning genom användning av programmeringsspråk, programmeringsverktyg och plattformar.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+          "url": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "en",
+        "kind": "definition",
+        "text": "Database integrators perform integration among different databases. They maintain integration and ensure interoperability.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+          "url": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "sv",
+        "kind": "definition",
+        "text": "Databasintegratorer integrerar olika databaser. De upprätthåller integrationen och säkerställer interoperabilitet.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+          "url": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "en",
+        "kind": "definition",
+        "text": "Data warehouse designers are responsible for planning, connecting, designing, scheduling, and deploying data warehouse systems. They develop, monitor and maintain ETL processes, reporting applications and data warehouse design.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84",
+          "url": "http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "sv",
+        "kind": "definition",
+        "text": "Informationslagerdesigner ansvarar för planering, sammankoppling, utformning, planering och införande av datalagersystem. De utvecklar, övervakar och underhåller ETL-processer, rapporteringsprogram och datalagrens utformning.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84",
+          "url": "http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "en",
+        "kind": "definition",
+        "text": "ICT system architects design architecture, components, modules, interfaces, and data for a multi-components system to meet specified requirements.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+          "url": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "sv",
+        "kind": "definition",
+        "text": "Systemarkitekter utformar arkitektur, komponenter, moduler, gränssnitt och data för flerkomponentssystem för att de ska uppfylla angivna krav.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+          "url": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "en",
+        "kind": "definition",
+        "text": "Mobile app developers implement applications software for mobile devices, based on the designs provided, using general or specific development tools for device operating systems.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+          "url": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c"
+        },
+        "isco_code": null,
+        "shared_with": []
+      },
+      {
+        "lang": "sv",
+        "kind": "definition",
+        "text": "Mobilapputvecklare tar fram applikationsprogram för mobila enheter utifrån angivna designlösningar med hjälp av allmänna eller specifika utvecklingsverktyg beroende på de mobila enheternas operativsystem.",
+        "source": {
+          "source": "esco",
+          "ref": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+          "url": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c"
+        },
+        "isco_code": null,
+        "shared_with": []
+      }
+    ],
+    "synonyms": [
+      {
+        "lang": "sv",
+        "label": "App utvecklare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Applikationsingenjör, programmering",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Applikationsprogrammerare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Applikationsspecialist",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Applikationsutvecklare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Civilingenjör, systemutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Data Warehouse specialist",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Databasanalytiker",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Databasdesigner",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Databasprogrammerare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Databasutvecklare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Datakonsult applikationsprogrammerare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Datakonsult, databasutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Datakonsult, systemutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Datakonsult, webb- och multimedia",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Dataprogrammerare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "IT projektledare applikationsprogrammerare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "IT projektledare, databasutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "IT projektledare, systemutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "IT projektledare, webb- och multimedia",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "IT-konsult applikationsprogrammerare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "IT-konsult, databasutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "IT-konsult, programvaruutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "IT-konsult, systemutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "IT-konsult, webb- och multimedia",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "IT-utvecklare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Javautvecklare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Konsult, data applikationsprogrammerare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Konsult, data, databasutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Konsult, data, systemutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Konsult, data, webb- och multimedia",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Konsult, IT applikationsprogrammerare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Konsult, IT, databasutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Konsult, IT, systemutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Konsult, IT, webb- och multimedia",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Medieingenjör",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Mjukvarudesigner",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Mjukvaruingenjör",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Mjukvarukonstruktör",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Mjukvaruutvecklare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Mobilutvecklare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Produktägare, IT",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Programmerare, data",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Programutvecklare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Programvarukonstruktör",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Programvaruutvecklare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Projektledare, IT applikationsprogrammerare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Projektledare, IT, databasutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Projektledare, IT, programvaruutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Projektledare, IT, systemutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Projektledare, IT, webb- och multimedia",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Projektledare, systemutveckling",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Softwaredesigner",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Systemdesigner",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Systemerare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Systemkonstruktör",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Systemprogrammerare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Systemtekniker, systemerare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Systemutvecklare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Systemvetare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Webbprogrammerare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Webbutvecklare",
+        "source": {
+          "source": "scb_title_index",
+          "ref": "ssyk_index_webb_2026.xlsx",
+          "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+        },
+        "jobtech_id": null,
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "GIS-utvecklare",
+        "source": {
+          "source": "jobtech",
+          "ref": "taxonomy ssyk-level-4",
+          "url": "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
+        },
+        "jobtech_id": "WoBk_fWz_nrt",
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Backend-utvecklare",
+        "source": {
+          "source": "jobtech",
+          "ref": "taxonomy ssyk-level-4",
+          "url": "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
+        },
+        "jobtech_id": "7wdX_4rv_33z",
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Frontend-utvecklare",
+        "source": {
+          "source": "jobtech",
+          "ref": "taxonomy ssyk-level-4",
+          "url": "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
+        },
+        "jobtech_id": "GDHs_eoz_uKx",
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "en",
+        "label": "user interface developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "front end developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "UI programmer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "user interface developers",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "UI developers",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "UI developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "user interface engineer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "gränssnittsutvecklare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "utvecklare av klientdel",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "UI-utvecklare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "designer av klientdel",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "gränssnittsdesigner",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "UI-designer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "ICT application developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "application software developers",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "application developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "application software engineer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "application designer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "app software developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "software programmer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "IKT-programutvecklare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "programvaruprogrammerare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "programmerare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "programvaruingenjör",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "applikationsingenjör",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "lösningsutvecklare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "programmeringsanalytiker",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "Projektledare, IT",
+        "source": {
+          "source": "jobtech",
+          "ref": "taxonomy ssyk-level-4",
+          "url": "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
+        },
+        "jobtech_id": "z5AM_ayf_WcL",
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "IT-projektledare",
+        "source": {
+          "source": "jobtech",
+          "ref": "taxonomy ssyk-level-4",
+          "url": "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
+        },
+        "jobtech_id": "z5AM_ayf_WcL",
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "en",
+        "label": "ICT project manager",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "IT projects manager",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "IT project manager",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "web projects manager",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "web project manager",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "ICT project managers",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "projektledare inom IKT",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "IKT-projektchef",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "projektansvarig inom IKT",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "IKT-projektansvarig",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "IKT-projektledare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "ICT system developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "ICT system developers",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "ICT systems developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "systems programmer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "system developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "component developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "system software developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "chief ICT system developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "ICT systems developers",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "IT system developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "systems developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "IKT-systemutvecklare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "IT-systemutvecklare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "systemprogramutvecklare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "automatiseringsingenjör",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "komponentutvecklare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "database developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "database developers",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "data base developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "data base developers",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "database development engineer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "database coder",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "database design specialist",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "database programmer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "utvecklare av databas",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "databaskodare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "database designer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "data architect",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "database designers",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "data base designers",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "database architect",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "data base designer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "database design engineer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "data model designer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "databasformgivare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "designer av datamodeller",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "designer för databaser",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "databasarkitekt",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "dataarkitekt",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "software developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "application programmer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "solutions developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "programmer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "software specialist",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "application software developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "software developers",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "software engineer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "applications engineer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "soft developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "developer of software",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "xApplication-utvecklare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "Systemutvecklare/Programmerare",
+        "source": {
+          "source": "jobtech",
+          "ref": "taxonomy ssyk-level-4",
+          "url": "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
+        },
+        "jobtech_id": "fg7B_yov_smw",
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Fullstack-utvecklare",
+        "source": {
+          "source": "jobtech",
+          "ref": "taxonomy ssyk-level-4",
+          "url": "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
+        },
+        "jobtech_id": "71Ji_irM_rSJ",
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "en",
+        "label": "database integrator",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+        "match_type": "narrow"
+      },
+      {
+        "lang": "en",
+        "label": "data base integrators",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+        "match_type": "narrow"
+      },
+      {
+        "lang": "en",
+        "label": "data base integrator",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+        "match_type": "narrow"
+      },
+      {
+        "lang": "en",
+        "label": "database integrators",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+        "match_type": "narrow"
+      },
+      {
+        "lang": "en",
+        "label": "data integrator",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+        "match_type": "narrow"
+      },
+      {
+        "lang": "en",
+        "label": "database development specialist",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+        "match_type": "narrow"
+      },
+      {
+        "lang": "sv",
+        "label": "databasintegrator",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+        "match_type": "narrow"
+      },
+      {
+        "lang": "sv",
+        "label": "dataintegrator",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+        "match_type": "narrow"
+      },
+      {
+        "lang": "sv",
+        "label": "integrator av databas",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+        "match_type": "narrow"
+      },
+      {
+        "lang": "sv",
+        "label": "dataförstärkare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+        "match_type": "narrow"
+      },
+      {
+        "lang": "en",
+        "label": "data warehouse designer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "data warehouse architect",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "data warehouse developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "informationslagerdesigner",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "ICT system architect",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "ICT systems architect",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "solution architect",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "IT systems architect",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "IT system architect",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "systems architect",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "ICT system architects",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "ICT systems architects",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "en",
+        "label": "information systems architect",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "systemarkitekt",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "it-systemarkitekt",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "informationssystemsarkitekt",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "informationssystemsdesigner",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "it-systemdesigner",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "match_type": "close"
+      },
+      {
+        "lang": "sv",
+        "label": "Mobilutvecklare/Apputvecklare",
+        "source": {
+          "source": "jobtech",
+          "ref": "taxonomy ssyk-level-4",
+          "url": "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
+        },
+        "jobtech_id": "n2kJ_qFK_x2K",
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "sv",
+        "label": "Apputvecklare",
+        "source": {
+          "source": "jobtech",
+          "ref": "taxonomy ssyk-level-4",
+          "url": "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
+        },
+        "jobtech_id": "n2kJ_qFK_x2K",
+        "esco_uri": null,
+        "match_type": null
+      },
+      {
+        "lang": "en",
+        "label": "mobile application developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "app developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "mobile app specialist",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "mobile app developer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "mobile application developers",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "app programmer",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "en",
+        "label": "app coder",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "mobilapputvecklare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "app-programmerare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+        "match_type": "exact"
+      },
+      {
+        "lang": "sv",
+        "label": "appkodare",
+        "source": {
+          "source": "esco",
+          "ref": "ESCO v1.2.1",
+          "url": "https://esco.ec.europa.eu/en/use-esco/download"
+        },
+        "jobtech_id": null,
+        "esco_uri": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+        "match_type": "exact"
+      }
+    ],
+    "legal_flags": [],
+    "sources": [
+      {
+        "source": "scb_structure",
+        "ref": "ssyk-2012-koder.xlsx",
+        "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk-2012-koder.xlsx"
+      },
+      {
+        "source": "scb_english",
+        "ref": "structur_english_ssyk2012_1_4.xlsx",
+        "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/structur_english_ssyk2012_1_4.xlsx"
+      },
+      {
+        "source": "jobtech",
+        "ref": "taxonomy ssyk-level-4",
+        "url": "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
+      },
+      {
+        "source": "esco",
+        "ref": "http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84",
+        "url": "http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84"
+      },
+      {
+        "source": "esco",
+        "ref": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+        "url": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c"
+      },
+      {
+        "source": "esco",
+        "ref": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+        "url": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67"
+      },
+      {
+        "source": "esco",
+        "ref": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+        "url": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c"
+      },
+      {
+        "source": "esco",
+        "ref": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+        "url": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525"
+      },
+      {
+        "source": "esco",
+        "ref": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+        "url": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427"
+      },
+      {
+        "source": "esco",
+        "ref": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+        "url": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135"
+      },
+      {
+        "source": "esco",
+        "ref": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+        "url": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d"
+      },
+      {
+        "source": "esco",
+        "ref": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+        "url": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7"
+      },
+      {
+        "source": "esco",
+        "ref": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+        "url": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae"
+      },
+      {
+        "source": "esco",
+        "ref": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+        "url": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1"
+      },
+      {
+        "source": "scb_title_index",
+        "ref": "ssyk_index_webb_2026.xlsx",
+        "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/ssyk_index_webb_2026.xlsx"
+      },
+      {
+        "source": "scb_isco_key",
+        "ref": "webb_nyckel_ssyk2012_isco-08_20160905.xlsx",
+        "url": "https://www.scb.se/contentassets/0c0089cc085a45d49c1dc83923ad933a/webb_nyckel_ssyk2012_isco-08_20160905.xlsx"
+      }
+    ]
+  }
+}

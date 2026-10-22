@@ -1,0 +1,242 @@
+{
+  "status": 200,
+  "body": {
+    "mode_used": "full",
+    "fallback_reason": null,
+    "searched_text": "Backend Developer (Python)\nDesign, build and maintain the REST APIs behind our invoicing platform\nWrite well-tested Python services and review your colleagues' code\nImprove the performance and reliability of our PostgreSQL databases\nTake part in the on-call rotation and fix production incidents\nAt least three years of experience developing backend systems in Python\nGood knowledge of SQL and relational databases\nExperience with Docker and cloud platforms such as AWS\nFluent English; Swedish is a plus",
+    "title_list": null,
+    "passages": [
+      {
+        "index": 0,
+        "text": "Backend Developer (Python)",
+        "label": "title",
+        "keep": true,
+        "by": "position"
+      },
+      {
+        "index": 1,
+        "text": "Northwind Ledger is a fast-growing fintech company in Stockholm.",
+        "label": "company",
+        "keep": false,
+        "by": "heading"
+      },
+      {
+        "index": 2,
+        "text": "We help 4 000 small businesses get paid on time.",
+        "label": "company",
+        "keep": false,
+        "by": "heading"
+      },
+      {
+        "index": 3,
+        "text": "Our team of 60 people comes from 20 countries.",
+        "label": "company",
+        "keep": false,
+        "by": "heading"
+      },
+      {
+        "index": 4,
+        "text": "Design, build and maintain the REST APIs behind our invoicing platform",
+        "label": "duty",
+        "keep": true,
+        "by": "heading"
+      },
+      {
+        "index": 5,
+        "text": "Write well-tested Python services and review your colleagues' code",
+        "label": "duty",
+        "keep": true,
+        "by": "heading"
+      },
+      {
+        "index": 6,
+        "text": "Improve the performance and reliability of our PostgreSQL databases",
+        "label": "duty",
+        "keep": true,
+        "by": "heading"
+      },
+      {
+        "index": 7,
+        "text": "Take part in the on-call rotation and fix production incidents",
+        "label": "duty",
+        "keep": true,
+        "by": "heading"
+      },
+      {
+        "index": 8,
+        "text": "At least three years of experience developing backend systems in Python",
+        "label": "skill",
+        "keep": true,
+        "by": "heading"
+      },
+      {
+        "index": 9,
+        "text": "Good knowledge of SQL and relational databases",
+        "label": "skill",
+        "keep": true,
+        "by": "heading"
+      },
+      {
+        "index": 10,
+        "text": "Experience with Docker and cloud platforms such as AWS",
+        "label": "skill",
+        "keep": true,
+        "by": "heading"
+      },
+      {
+        "index": 11,
+        "text": "Fluent English; Swedish is a plus",
+        "label": "skill",
+        "keep": true,
+        "by": "heading"
+      },
+      {
+        "index": 12,
+        "text": "Hybrid work with three office days a week",
+        "label": "benefits",
+        "keep": false,
+        "by": "heading"
+      },
+      {
+        "index": 13,
+        "text": "Six weeks of vacation and a wellness allowance of 5 000 SEK",
+        "label": "benefits",
+        "keep": false,
+        "by": "heading"
+      },
+      {
+        "index": 14,
+        "text": "Occupational pension and private health insurance",
+        "label": "benefits",
+        "keep": false,
+        "by": "heading"
+      }
+    ],
+    "low_confidence": false,
+    "hits": [
+      {
+        "code": "2512",
+        "title_sv": "Mjukvaru- och systemutvecklare m.fl.",
+        "title_en": "Software- and system developers",
+        "scores": {
+          "kblab": 0.5985780954360962,
+          "harrier": 0.5412302017211914,
+          "bm25": 78.05026245117188
+        },
+        "ranks": {
+          "kblab": 1,
+          "harrier": 1,
+          "bm25": 2
+        },
+        "fused_score": 0.037625594923320994,
+        "fused_rank": 1,
+        "matched_chunk": {
+          "kind": "synonyms_en",
+          "text": "database designers; data base designers; database architect; data base designer; database design engineer; data model designer; software developer; application programmer; solutions developer; programmer; software specialist; application software developer; software developers; software engineer; applications engineer; soft developer; developer of software; database integrator; data base integrators; data base integrator; database integrators; data integrator; database development specialist; data warehouse designer; data warehouse architect; data warehouse developer; ICT system architect; ICT systems architect; solution architect; IT systems architect; IT system architect; systems architect; ICT system architects; ICT systems architects; information systems architect; mobile application developer; app developer; mobile app specialist; mobile app developer; mobile application developers"
+        },
+        "legal_flags": []
+      },
+      {
+        "code": "3513",
+        "title_sv": "Systemadministratörer",
+        "title_en": "System administrators",
+        "scores": {
+          "kblab": 0.5628695487976074,
+          "harrier": 0.5401063561439514,
+          "bm25": 63.039833068847656
+        },
+        "ranks": {
+          "kblab": 2,
+          "harrier": 2,
+          "bm25": 3
+        },
+        "fused_score": 0.03701996927803379,
+        "fused_rank": 2,
+        "matched_chunk": {
+          "kind": "desc_en",
+          "text": "(a)  designing and developing database architecture, data structures, tables, dictionaries and naming conventions for information systems projects; (b)  designing, constructing, modifying, integrating, implementing and testing database management systems; (c)  conducting research and providing advice on the selection, application and implementation of database management tools; (d)  developing and implementing data administration policy, documentation, standards and models; (e)  developing policies and procedures for database access and usage and for the backup and recovery of data; (f)  performing the operational establishment and preventive maintenance of backups, recovery procedures, and enforcing security and integrity controls."
+        },
+        "legal_flags": [
+          {
+            "kind": "exempt_75",
+            "note": "5 kap. 6 §: the 90 % requirement does not apply; 75 % of the median applies instead.",
+            "effective_from": "2026-06-01",
+            "source": {
+              "source": "sfs",
+              "ref": "SFS 2026:605, 5 kap. 6 §",
+              "url": "https://svenskforfattningssamling.se/doc/2026605.html"
+            },
+            "checked_on": "2026-10-20"
+          }
+        ]
+      },
+      {
+        "code": "2519",
+        "title_sv": "Övriga IT-specialister",
+        "title_en": "ICT-specialist professionals not elsewhere classified",
+        "scores": {
+          "kblab": 0.5557272434234619,
+          "harrier": 0.4972383379936218,
+          "bm25": 79.68771362304688
+        },
+        "ranks": {
+          "kblab": 4,
+          "harrier": 8,
+          "bm25": 1
+        },
+        "fused_score": 0.03524891513982642,
+        "fused_rank": 3,
+        "matched_chunk": {
+          "kind": "desc_en",
+          "text": "User experience analysts assess client interaction and experience and analyse users' behaviours, attitudes, and emotions about the usage of a particular product, system or service. They make proposals for the improvement of the interface and usability of products, systems or services. In doing so, they take into consideration the practical, experiential, affective, meaningful and valuable aspects of human–computer interaction and product ownership, as well as the person's perceptions of system aspects such as utility, ease of use and efficiency, and user experience dynamics."
+        },
+        "legal_flags": []
+      },
+      {
+        "code": "2511",
+        "title_sv": "Systemanalytiker och IT-arkitekter m.fl.",
+        "title_en": "System analysts and ICT-architects",
+        "scores": {
+          "kblab": 0.5600056648254395,
+          "harrier": 0.4898415207862854,
+          "bm25": 55.283973693847656
+        },
+        "ranks": {
+          "kblab": 3,
+          "harrier": 11,
+          "bm25": 11
+        },
+        "fused_score": 0.03418287502794545,
+        "fused_rank": 4,
+        "matched_chunk": {
+          "kind": "desc_sv",
+          "text": "Systemintegrationskonsulter ger råd om sammanförande av olika system till interoperation inom en organisation för att möjliggöra datadelning och minska redundans."
+        },
+        "legal_flags": []
+      },
+      {
+        "code": "4119",
+        "title_sv": "Övriga kontorsassistenter och sekreterare",
+        "title_en": "Office clerks not elsewhere classified",
+        "scores": {
+          "kblab": 0.5359843373298645,
+          "harrier": 0.49979549646377563,
+          "bm25": 50.8255729675293
+        },
+        "ranks": {
+          "kblab": 6,
+          "harrier": 7,
+          "bm25": 38
+        },
+        "fused_score": 0.033138112775639425,
+        "fused_rank": 5,
+        "matched_chunk": {
+          "kind": "desc_en",
+          "text": "(a)  receiving and registering invoices, forms, records and other documents for data capture; (b)  entering numerical data, codes and text from source material into computer-compatible storage and processing devices; (c)  verifying accuracy and completeness of data and correcting entered data, if needed; (d)  operating bookkeeping and calculating machines; (e)  importing and exporting data between different database systems and software."
+        },
+        "legal_flags": []
+      }
+    ],
+    "honest_fit": "The SSYK code on a work-permit offer must match the duties actually performed. These are the occupations whose official descriptions best match the text, not advice on which code to choose."
+  }
+}

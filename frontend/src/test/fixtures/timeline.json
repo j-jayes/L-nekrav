@@ -1,0 +1,181 @@
+{
+  "status": 200,
+  "body": [
+    {
+      "date": "2021-06-22",
+      "kind": "median",
+      "summary": "Median 32 400 SEK (SCB 2020) applies to applications filed from this day",
+      "source": {
+        "key": "mv_lonekrav",
+        "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+        "checked_on": "2026-10-21"
+      }
+    },
+    {
+      "date": "2022-06-21",
+      "kind": "median",
+      "summary": "Median 33 200 SEK (SCB 2021) applies to applications filed from this day",
+      "source": {
+        "key": "mv_lonekrav",
+        "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+        "checked_on": "2026-10-21"
+      }
+    },
+    {
+      "date": "2023-06-20",
+      "kind": "median",
+      "summary": "Median 34 200 SEK (SCB 2022) applies to applications filed from this day",
+      "source": {
+        "key": "mv_lonekrav",
+        "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+        "checked_on": "2026-10-21"
+      }
+    },
+    {
+      "date": "2023-10-31",
+      "kind": "rule",
+      "summary": "Last day: 13 000 SEK. Maintenance requirement before 1 November 2023: at least 13 000 SEK a month.",
+      "source": {
+        "key": "mv_god_forsorjning",
+        "title": "Migrationsverket: God försörjning – försörjningskrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/god-forsorjning---forsorjningskrav-for-arbetstillstand.html",
+        "checked_on": "2026-10-21"
+      }
+    },
+    {
+      "date": "2023-11-01",
+      "kind": "rule",
+      "summary": "From this day: 80 % of the median. Maintenance requirement (god försörjning): at least 80 % of the median.",
+      "source": {
+        "key": "mv_god_forsorjning",
+        "title": "Migrationsverket: God försörjning – försörjningskrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/god-forsorjning---forsorjningskrav-for-arbetstillstand.html",
+        "checked_on": "2026-10-21"
+      }
+    },
+    {
+      "date": "2024-06-18",
+      "kind": "median",
+      "summary": "Median 35 600 SEK (SCB 2023) applies to applications filed from this day",
+      "source": {
+        "key": "mv_lonekrav",
+        "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+        "checked_on": "2026-10-21"
+      }
+    },
+    {
+      "date": "2025-06-17",
+      "kind": "median",
+      "summary": "Median 37 100 SEK (SCB 2024) applies to applications filed from this day",
+      "source": {
+        "key": "mv_lonekrav",
+        "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+        "checked_on": "2026-10-21"
+      }
+    },
+    {
+      "date": "2026-05-31",
+      "kind": "rule",
+      "summary": "Last day: 80 % of the median. Maintenance requirement (god försörjning): at least 80 % of the median.",
+      "source": {
+        "key": "mv_god_forsorjning",
+        "title": "Migrationsverket: God försörjning – försörjningskrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/god-forsorjning---forsorjningskrav-for-arbetstillstand.html",
+        "checked_on": "2026-10-21"
+      }
+    },
+    {
+      "date": "2026-06-01",
+      "kind": "rule",
+      "summary": "From this day: 90 % of the median. Salary requirement for first permits decided from 1 June 2026 and for extensions not covered by the transition: at least 90 % of the median in force when the application was filed.",
+      "source": {
+        "key": "mv_lonekrav",
+        "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+        "checked_on": "2026-10-21"
+      }
+    },
+    {
+      "date": "2026-06-01",
+      "kind": "rule",
+      "summary": "From this day: 75 % of the median. Occupations on the government's exempt list, and applicants in an exempt group: at least 75 % of the median.",
+      "source": {
+        "key": "mv_lonekrav",
+        "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+        "checked_on": "2026-10-21"
+      }
+    },
+    {
+      "date": "2026-06-01",
+      "kind": "rule",
+      "summary": "From this day: 80 % of the median. Extensions filed 1 June–1 December 2026 for a permit granted before 1 June 2026 keep the earlier maintenance requirement: at least 80 % of the median, with no 75 % exemption.",
+      "source": {
+        "key": "mv_god_forsorjning",
+        "title": "Migrationsverket: God försörjning – försörjningskrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/god-forsorjning---forsorjningskrav-for-arbetstillstand.html",
+        "checked_on": "2026-10-21"
+      }
+    },
+    {
+      "date": "2026-06-01",
+      "kind": "code_list",
+      "summary": "exempt_75 list (27 codes). 5 kap. 6 §: the 90 % requirement does not apply; 75 % of the median applies instead.",
+      "source": {
+        "key": "sfs_2026_605",
+        "title": "SFS 2026:605, utlänningsförordningen 5 kap. 5–6 §§",
+        "url": "https://svenskforfattningssamling.se/doc/2026605.html",
+        "checked_on": "2026-10-20"
+      }
+    },
+    {
+      "date": "2026-06-01",
+      "kind": "code_list",
+      "summary": "banned list (1 codes). 5 kap. 5 §: work permits may not be granted.",
+      "source": {
+        "key": "sfs_2026_605",
+        "title": "SFS 2026:605, utlänningsförordningen 5 kap. 5–6 §§",
+        "url": "https://svenskforfattningssamling.se/doc/2026605.html",
+        "checked_on": "2026-10-20"
+      }
+    },
+    {
+      "date": "2026-06-01",
+      "kind": "code_list",
+      "summary": "partially_banned list (1 codes). 5 kap. 5 §: work permits may not be granted for part of this occupation.",
+      "source": {
+        "key": "sfs_2026_605",
+        "title": "SFS 2026:605, utlänningsförordningen 5 kap. 5–6 §§",
+        "url": "https://svenskforfattningssamling.se/doc/2026605.html",
+        "checked_on": "2026-10-20"
+      }
+    },
+    {
+      "date": "2026-06-16",
+      "kind": "median",
+      "summary": "Median 38 300 SEK (SCB 2025) applies to applications filed from this day",
+      "source": {
+        "key": "mv_lonekrav",
+        "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+        "checked_on": "2026-10-21"
+      }
+    },
+    {
+      "date": "2026-12-01",
+      "kind": "rule",
+      "summary": "Last day: 80 % of the median. Extensions filed 1 June–1 December 2026 for a permit granted before 1 June 2026 keep the earlier maintenance requirement: at least 80 % of the median, with no 75 % exemption.",
+      "source": {
+        "key": "mv_god_forsorjning",
+        "title": "Migrationsverket: God försörjning – försörjningskrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/god-forsorjning---forsorjningskrav-for-arbetstillstand.html",
+        "checked_on": "2026-10-21"
+      }
+    }
+  ]
+}

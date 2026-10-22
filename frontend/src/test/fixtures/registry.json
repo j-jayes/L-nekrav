@@ -1,0 +1,326 @@
+{
+  "status": 200,
+  "body": {
+    "medians": [
+      {
+        "amount": 32400,
+        "scb_reference_year": 2020,
+        "effective_from": "2021-06-22",
+        "effective_to": "2022-06-20",
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      },
+      {
+        "amount": 33200,
+        "scb_reference_year": 2021,
+        "effective_from": "2022-06-21",
+        "effective_to": "2023-06-19",
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      },
+      {
+        "amount": 34200,
+        "scb_reference_year": 2022,
+        "effective_from": "2023-06-20",
+        "effective_to": "2024-06-17",
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      },
+      {
+        "amount": 35600,
+        "scb_reference_year": 2023,
+        "effective_from": "2024-06-18",
+        "effective_to": "2025-06-16",
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      },
+      {
+        "amount": 37100,
+        "scb_reference_year": 2024,
+        "effective_from": "2025-06-17",
+        "effective_to": "2026-06-15",
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      },
+      {
+        "amount": 38300,
+        "scb_reference_year": 2025,
+        "effective_from": "2026-06-16",
+        "effective_to": null,
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      }
+    ],
+    "median_publication_window": {
+      "earliest": "06-16",
+      "latest": "06-22",
+      "source": {
+        "key": "mv_lonekrav",
+        "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+        "checked_on": "2026-10-21"
+      }
+    },
+    "rules": {
+      "flat_13000": {
+        "id": "flat_13000",
+        "kind": "flat",
+        "percent": null,
+        "amount": 13000,
+        "effective_from": null,
+        "effective_to": "2023-10-31",
+        "permits_granted_before": null,
+        "applies_to": "Maintenance requirement before 1 November 2023: at least 13 000 SEK a month.",
+        "source": {
+          "key": "mv_god_forsorjning",
+          "title": "Migrationsverket: God försörjning – försörjningskrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/god-forsorjning---forsorjningskrav-for-arbetstillstand.html",
+          "checked_on": "2026-10-21"
+        }
+      },
+      "maintenance_80": {
+        "id": "maintenance_80",
+        "kind": "share_of_median",
+        "percent": "80",
+        "amount": null,
+        "effective_from": "2023-11-01",
+        "effective_to": "2026-05-31",
+        "permits_granted_before": null,
+        "applies_to": "Maintenance requirement (god försörjning): at least 80 % of the median.",
+        "source": {
+          "key": "mv_god_forsorjning",
+          "title": "Migrationsverket: God försörjning – försörjningskrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/god-forsorjning---forsorjningskrav-for-arbetstillstand.html",
+          "checked_on": "2026-10-21"
+        }
+      },
+      "salary_90": {
+        "id": "salary_90",
+        "kind": "share_of_median",
+        "percent": "90",
+        "amount": null,
+        "effective_from": "2026-06-01",
+        "effective_to": null,
+        "permits_granted_before": null,
+        "applies_to": "Salary requirement for first permits decided from 1 June 2026 and for extensions not covered by the transition: at least 90 % of the median in force when the application was filed.",
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      },
+      "salary_75_exempt": {
+        "id": "salary_75_exempt",
+        "kind": "share_of_median",
+        "percent": "75",
+        "amount": null,
+        "effective_from": "2026-06-01",
+        "effective_to": null,
+        "permits_granted_before": null,
+        "applies_to": "Occupations on the government's exempt list, and applicants in an exempt group: at least 75 % of the median.",
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      },
+      "transition_maintenance_80": {
+        "id": "transition_maintenance_80",
+        "kind": "share_of_median",
+        "percent": "80",
+        "amount": null,
+        "effective_from": "2026-06-01",
+        "effective_to": "2026-12-01",
+        "permits_granted_before": "2026-06-01",
+        "applies_to": "Extensions filed 1 June–1 December 2026 for a permit granted before 1 June 2026 keep the earlier maintenance requirement: at least 80 % of the median, with no 75 % exemption.",
+        "source": {
+          "key": "mv_god_forsorjning",
+          "title": "Migrationsverket: God försörjning – försörjningskrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/god-forsorjning---forsorjningskrav-for-arbetstillstand.html",
+          "checked_on": "2026-10-21"
+        }
+      }
+    },
+    "code_lists": {
+      "exempt_75": {
+        "kind": "exempt_75",
+        "codes": {
+          "3115": "",
+          "3215": "",
+          "3511": "",
+          "3512": "",
+          "3513": "",
+          "3514": "",
+          "5321": "",
+          "5322": "",
+          "5323": "",
+          "5324": "",
+          "5325": "",
+          "5326": "",
+          "5330": "",
+          "6121": "",
+          "6129": "",
+          "6130": "",
+          "6210": "",
+          "7212": "",
+          "7215": "",
+          "7233": "",
+          "7413": "",
+          "7611": "",
+          "8161": "",
+          "8169": "",
+          "8199": "",
+          "8341": "",
+          "9210": ""
+        },
+        "effective_from": "2026-06-01",
+        "effective_to": null,
+        "note": "5 kap. 6 §: the 90 % requirement does not apply; 75 % of the median applies instead.",
+        "source": {
+          "key": "sfs_2026_605",
+          "title": "SFS 2026:605, utlänningsförordningen 5 kap. 5–6 §§",
+          "url": "https://svenskforfattningssamling.se/doc/2026605.html",
+          "checked_on": "2026-10-20"
+        }
+      },
+      "banned": {
+        "kind": "banned",
+        "codes": {
+          "5343": ""
+        },
+        "effective_from": "2026-06-01",
+        "effective_to": null,
+        "note": "5 kap. 5 §: work permits may not be granted.",
+        "source": {
+          "key": "sfs_2026_605",
+          "title": "SFS 2026:605, utlänningsförordningen 5 kap. 5–6 §§",
+          "url": "https://svenskforfattningssamling.se/doc/2026605.html",
+          "checked_on": "2026-10-20"
+        }
+      },
+      "partially_banned": {
+        "kind": "partially_banned",
+        "codes": {
+          "9210": "forest berry pickers only (bärplockare i skog)"
+        },
+        "effective_from": "2026-06-01",
+        "effective_to": null,
+        "note": "5 kap. 5 §: work permits may not be granted for part of this occupation.",
+        "source": {
+          "key": "sfs_2026_605",
+          "title": "SFS 2026:605, utlänningsförordningen 5 kap. 5–6 §§",
+          "url": "https://svenskforfattningssamling.se/doc/2026605.html",
+          "checked_on": "2026-10-20"
+        }
+      }
+    },
+    "exemptions": {
+      "former_student_researcher": {
+        "id": "former_student_researcher",
+        "label": "Former student or researcher",
+        "conditions": "Holds a residence permit as a student or researcher in Sweden when applying for a work permit for the first time.",
+        "first_permit_only": true,
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      },
+      "temporary_protection": {
+        "id": "temporary_protection",
+        "label": "Temporary protection (EU mass-displacement directive)",
+        "conditions": "Holds a residence permit with or after temporary protection under the EU mass-displacement directive. Exempt for two years, or until that permit ends if it is valid for longer.",
+        "first_permit_only": false,
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      },
+      "healthcare_licensing": {
+        "id": "healthcare_licensing",
+        "label": "Doctor, dentist or nurse becoming licensed",
+        "conditions": "A doctor, dentist or nurse with a foreign degree who is in the process of obtaining a Swedish licence to practise.",
+        "first_permit_only": false,
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      },
+      "young_tech_company": {
+        "id": "young_tech_company",
+        "label": "Employee of a young tech or life-science company",
+        "conditions": "Employed by a tech or life-science company that is being built up, is less than five years old and has fewer than 100 employees.",
+        "first_permit_only": false,
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      }
+    },
+    "statements": {
+      "part_time": {
+        "id": "part_time",
+        "text": "The requirement applies to the monthly salary actually paid. Migrationsverket states it as \"a monthly salary or wages totalling at least\" the threshold and gives no reduction for part-time work, so a part-time salary must still reach the full amount.",
+        "source": {
+          "key": "mv_employees",
+          "title": "Migrationsverket: Employees (work permit requirements)",
+          "url": "https://www.migrationsverket.se/en/you-want-to-apply/work/employee-or-self-employed/employees.html",
+          "checked_on": "2026-10-21"
+        }
+      },
+      "partial_ban_9210": {
+        "id": "partial_ban_9210",
+        "text": "Work permits cannot be granted for forest berry pickers (bärplockare i skog), even though the occupation group is otherwise on the exempt list. Other jobs in the group are covered by the 75 % level.",
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      },
+      "out_of_scope": {
+        "id": "out_of_scope",
+        "text": "Lönekrav covers ordinary work permits decided under the rules in force from 1 June 2026. Earlier decisions, extensions filed before that date, EU Blue Cards, ICT permits, seasonal work and other permit types follow other rules.",
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      }
+    }
+  }
+}
