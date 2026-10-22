@@ -26,13 +26,13 @@ class AdvisorRequest(BaseModel):
 
 
 def finalise_memo(memo: str, tools_called: list[str]) -> str:
-    parts = [memo.strip()]
+    memo = memo.strip().removesuffix(THIRD_PARTY_NOTICE).rstrip()  # re-added last, below
+    parts = [memo]
     if HONEST_FIT not in memo:
         parts.append(HONEST_FIT)
     if not tools_called and NO_RESULTS not in memo:
         parts.append(NO_RESULTS)
     if "not legal advice" not in memo.casefold():
         parts.append(DISCLAIMER)
-    if not memo.rstrip().endswith(THIRD_PARTY_NOTICE):
-        parts.append(THIRD_PARTY_NOTICE)
+    parts.append(THIRD_PARTY_NOTICE)
     return "\n\n".join(parts)

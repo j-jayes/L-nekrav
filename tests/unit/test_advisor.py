@@ -55,3 +55,10 @@ def test_guard_flags_a_memo_with_no_tool_results():
 def test_guard_is_idempotent():
     once = finalise_memo("Code 2512 fits.", [])
     assert finalise_memo(once, []) == once
+
+
+def test_footer_stays_last_when_the_model_wrote_it_early():  # Copilot review on PR #3
+    memo = finalise_memo(f"Code 2512 fits.\n\n{THIRD_PARTY_NOTICE}", [])
+    assert HONEST_FIT in memo and DISCLAIMER in memo and "not based on" in memo
+    assert memo.endswith(THIRD_PARTY_NOTICE) and memo.count(THIRD_PARTY_NOTICE) == 1
+    assert finalise_memo(memo, []) == memo
