@@ -16,7 +16,9 @@ export function OfferPanel({ code, draft, exemptions, onApplied, submitLabel }: 
   const [errors, setErrors] = useState<Partial<Record<keyof Draft | "form", string>>>({});
   async function submit(d: Draft) {
     const offer = toOffer(d);
-    const { data, error, response } = await api.POST("/api/v1/eligibility", { body: { ...offer, code } });
+    const reply = await api.POST("/api/v1/eligibility", { body: { ...offer, code } }).catch(() => null);
+    if (!reply) return setErrors({ form: "The offer could not be checked: the server did not answer. Try again." });
+    const { data, error, response } = reply;
     if (data) {
       setErrors({});
       onApplied(d, offer, data);

@@ -71,8 +71,8 @@ def main() -> None:
         cid = container()
         row("`.env` inside the container", sh("docker", "exec", cid, "sh", "-c",
                                                "ls -a /app | grep -c '^.env$' || true") + " files")
-        row("`OPENROUTER_KEY` in the container", repr(sh("docker", "exec", cid, "printenv",
-                                                         "OPENROUTER_KEY")) + " (empty: not given)")
+        key = sh("docker", "exec", cid, "printenv", "OPENROUTER_KEY")  # never printed, only tested
+        row("`OPENROUTER_KEY` in the container", "set" if key else "not set")
         nets = sh("docker", "inspect", cid, "--format",
                   "{{range $k, $v := .NetworkSettings.Networks}}{{$k}} {{end}}").split()
         for n in nets:

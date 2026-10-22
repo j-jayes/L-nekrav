@@ -13,7 +13,7 @@ Image `lonekrav:latest`: 3.85 GB.
 | Fast search (en1 ad) | fast: ['2512', '3513', '2519', '2511', '3512'] |
 | Full search (en1 ad) | full: ['2512', '3513', '2519', '2511', '4119'] |
 | `.env` inside the container | 0 files |
-| `OPENROUTER_KEY` in the container | '' (empty: not given) |
+| `OPENROUTER_KEY` in the container | not set |
 | Both searches with no network (from inside) | [('fast', 'fast'), ('full', 'full')] |
 
 ## Settings at run time
