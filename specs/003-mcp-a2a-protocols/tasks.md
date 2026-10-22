@@ -179,13 +179,14 @@ running server.
 - [X] T026 [P] Run `rtk proxy uv run pytest -q` (the new total, all passing), `uv run pytest -m benchmark -q` (9 passed, with the server stopped), `uv run pytest -m live -q` and `uv run ruff check src tests scripts`
 - [X] T027 [P] Check `src/lonekrav/protocols/` against Principle I. Every function must only validate, call `Service` or the loop, and serialise. Move any rule found there into `core/`, test-first
 - [X] T028 [P] Measure the advisor's latency over three live runs of the quickstart §4 ad, recording the total time and the model's share, and add the results to `references/a2a-stream.md` (SC-006)
-- [ ] T029 Update `references/development-plan.md` §003 for the actual decisions: fastmcp 4.1.3, `SendStreamingMessage`, the rejected state, Haiku 5.5 as the default, and the in-memory MCP client in the agent
-- [ ] T030 [P] Write `docs/walkthroughs/003-mcp-a2a-protocols.md` with the walkthrough skill (snippets emitted from disk)
-- [ ] T031 Run `/speckit-converge` and complete any tasks it appends
+- [X] T029 Update `references/development-plan.md` §003 for the actual decisions: fastmcp 4.1.3, `SendStreamingMessage`, the rejected state, Haiku 5.5 as the default, and the in-memory MCP client in the agent
+- [X] T030 [P] Write `docs/walkthroughs/003-mcp-a2a-protocols.md` with the walkthrough skill (snippets emitted from disk)
+- [X] T031 Run `/speckit-converge` and complete any tasks it appends
 - [ ] T032 Read the whole diff, then open the PR. It should include the test totals, the two transcripts, the latency figures, and a note that the handoff's `message/stream` is `SendStreamingMessage` in v1.0
 - [ ] T033 Read every Copilot review comment on the PR, fix each valid one with a red/green test, and reply in each thread with the fix commit
 - [ ] T034 Remove the scratchpad virtual environment, and keep the local-scope `lonekrav` MCP entry only if the maintainer wants it
 - [ ] T035 Compound step: add "Things worked out in Feature 003" to CLAUDE.md (the mount order and lifespan, ToolError and masking, the protobuf integers-as-floats issue, Task-first enqueueing, the in-memory MCP client as the agent's tool bus, and the reference files), and update the memory status file
+
 
 ---
 
@@ -209,3 +210,12 @@ running server.
 2. Add US2, the advisor with a fake model first and then live.
 3. Add US3, the no-key rejection, which is small but gates startup on a fresh machine.
 4. Polish, evidence, PR and the Copilot review.
+
+
+---
+
+## Phase 7: Convergence
+
+- [X] T036 Test that `openrouter_model` builds its client with a 30 s timeout and one retry, in `tests/unit/test_agent_loop.py`, per FR-015 (partial)
+- [X] T037 Fix the no-key instructions in quickstart.md §2: `OPENROUTER_KEY= uv run lonekrav-serve`, because `load_dotenv` does not override a variable that is already set. Per plan: quickstart (partial)
+- [X] T038 Record the MCP server's `instructions` sentence in `contracts/mcp.md`, or remove it from `build_mcp`. Per contracts/mcp.md (unrequested)

@@ -154,3 +154,27 @@ Things worked out in Feature 002:
 - **Do not `git commit -a` while a build runs**: it writes `data/processed/` as it goes.
 - Every route, with real responses: `references/api-smoke.md` (regenerate with
   `scripts/api_smoke.py` against a running server).
+
+Things worked out in Feature 003:
+
+- **One service, three surfaces**: `core/service.py` holds the not-found check, ILO stripping and
+  salary defaults. REST and MCP call it, and the advisor reaches it only through the MCP tools
+  (`McpTools`, an in-memory `fastmcp.Client`), so no tool definition is duplicated.
+- **FastMCP at exactly `/mcp`**: `app.mount("/", mcp.http_app(path="/mcp"))`, mounted last, with
+  `combine_lifespans`. A root mount catches routes added after it, so tests that add probe routes
+  must insert them before it. Working example: `references/fastmcp_mount.py`.
+- **A2A v1.0 (a2a-sdk 1.2.3)**: the streaming method is `SendStreamingMessage` (`message/stream` is
+  the 0.3 name). The executor must enqueue the Task before any status update. Data parts are
+  protobuf, so integers arrive as floats. With no key, tasks end `rejected`. Working example:
+  `references/a2a_server_client.py`.
+- **Libraries log bodies at DEBUG**: fastmcp (tool arguments), a2a (requests) and sse_starlette
+  (every chunk). `create_app` pins them to INFO or above (`CONTENT_LOGGERS`). fastmcp does not
+  propagate to root, so turn propagation on in any caplog test of it.
+- **Small models send object arguments as JSON text**, with a stray brace. `loop._decode_objects`
+  handles it. Measure a new model with `scripts/a2a_stream.py`; a warm run takes about 15 s, about
+  1 s of it tools (`references/a2a-stream.md`).
+- **Milvus Lite leaks a gRPC server per database path** until exit. `tests/conftest.py` releases each
+  test's servers; without that, subprocess tests crash in gRPC's fork handler once there are
+  hundreds of them.
+- `claude mcp add --transport http lonekrav http://localhost:8000/mcp` (local scope) is registered
+  on this machine; `claude -p ... --output-format stream-json` captures a tool transcript.

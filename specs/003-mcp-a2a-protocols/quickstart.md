@@ -13,7 +13,7 @@ uv run pytest -m benchmark -q       # 9 passed (stop lonekrav-serve first: Milvu
 ## 2. Without a key
 
 ```bash
-env -u OPENROUTER_KEY uv run lonekrav-serve   # if .env defines the key, move .env aside for this run
+OPENROUTER_KEY= uv run lonekrav-serve   # empty wins: load_dotenv never overrides a set variable
 curl -s localhost:8000/api/v1/health
 curl -s localhost:8000/.well-known/agent-card.json | jq .name        # "lonekrav-advisor"
 uv run python scripts/a2a_stream.py --ad "Backend developer, Python APIs"
@@ -56,7 +56,7 @@ uv run pytest -m live -q        # skipped without OPENROUTER_KEY
 ## 6. REST unchanged
 
 ```bash
-uv run python scripts/api_smoke.py > /tmp/smoke.md && diff <(grep -v fetched_at references/api-smoke.md) <(grep -v fetched_at /tmp/smoke.md)
+uv run python scripts/api_smoke.py > /tmp/smoke.md && diff references/api-smoke.md /tmp/smoke.md
 ```
 
-Expected result: no difference apart from timestamps.
+Expected result: only the "Run <timestamp>" line differs.

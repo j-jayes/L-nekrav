@@ -27,7 +27,7 @@ full stack including React; English enrichment should come from official crosswa
 | Salary data | SCB PxWeb v2 **TAB5932**: P10/P25/median/P75/P90/mean (+95 % CI) × sector × 4-digit SSYK × sex, 2023–2025 (2025 published 2026-06-16). **TAB5844**: mean + headcount × age band (18–24 … 65–68) × code. TAB5841 same by education level (optional). Suppressed cells arrive as `null`. GET works; `Kon=1+2`, `Sektor=0`. | probed |
 | Code list | SCB structure file has **426** 4-digit codes; TAB5932 has 429 real codes (+0000/0001/0002); ISCO key has 429. ETL must reconcile and record the difference in the data dictionary. JobTech has only **400** because it collapses manager "nivå 1/2" pairs (1211/1212 → 1210 etc.) and lacks 4430, 5322, 5324, 7619. | probed |
 | English text | SCB publishes official **English titles** for all 426 codes (`structur_english_ssyk2012_1_4.xlsx`), a **9 171-title Swedish index** (`ssyk_index_webb_2026.xlsx`), and an **SSYK→ISCO-08 key** (429 codes; some 1→many, e.g. 2512 → 2511,2512,2513,2514,2521). ILO ships English ISCO-08 definitions with task lists (`ISCO-08 EN Structure and definitions.xlsx`, 303 KB). ESCO API (no auth) gives per-occupation English **and Swedish** titles, alt labels and descriptions, linked to ISCO unit groups; JobTech links every occupation-name to ESCO. So English enrichment is deterministic; the LLM is optional polish. | probed |
-| Stack versions | milvus-lite 3.2.2 (pure Python, BM25 Function, sparse, multi-vector, hybrid RRF, FLAT only, Py ≥3.10), pymilvus 3.0.2, a2a-sdk 1.2.3 (`[fastapi]` extra, JSON-RPC + SSE, card at `/.well-known/agent-card.json`), fastmcp 4.1.2, mcp 2.3.0, sentence-transformers 6.1.0, spec-kit v1.2.2 (`specify` already installed; commands are `/speckit-constitution`, `-specify`, `-clarify`, `-plan`, `-checklist`, `-tasks`, `-analyze`, `-implement`, `-converge`). | PyPI / probe |
+| Stack versions | milvus-lite 3.2.2 (pure Python, BM25 Function, sparse, multi-vector, hybrid RRF, FLAT only, Py ≥3.10), pymilvus 3.0.2, a2a-sdk 1.2.3 (`[fastapi]` extra, JSON-RPC + SSE, card at `/.well-known/agent-card.json`), fastmcp 4.1.2 (4.1.3 pinned in 003), mcp 2.3.0, sentence-transformers 6.1.0, spec-kit v1.2.2 (`specify` already installed; commands are `/speckit-constitution`, `-specify`, `-clarify`, `-plan`, `-checklist`, `-tasks`, `-analyze`, `-implement`, `-converge`). | PyPI / probe |
 | Machine | Apple M2 Pro, 16 GB, uv 0.9.9, Docker 24, node 22, system Python 3.9 (uv will pin 3.12). KBLab model already in HF cache. | local |
 | Latency | Measured 2026-10-20 (`references/embedding-benchmark.md`): KBLab 39 ms per query, 0.73 GB; Harrier fp32 130 ms per query, 0.58 s per pasted ad, 3.1 GB (bf16 is 10× slower on CPU). Container budget raised to **4 GB** by the maintainer. | measured |
 
@@ -174,6 +174,17 @@ the executor against a fake model client; one live smoke test skipped without th
 **Verify:** `claude mcp add --transport http lonekrav http://localhost:8000/mcp` and call a tool from
 Claude Code; A2A: fetch the card, then a `message/stream` call with the a2a-sdk client printing events;
 save both transcripts to `references/`.
+
+**As built (2026-10-22)**: the decisions are in `specs/003-mcp-a2a-protocols/research.md`.
+- fastmcp 4.1.3 is mounted at `/` with `http_app(path="/mcp")`, so the endpoint is exactly `/mcp`.
+- The REST adapter's rules moved to `core/service.py`, which all three surfaces call.
+- The advisor's tools are the MCP server's own, used through an in-memory `fastmcp.Client`.
+- A2A v1.0 names the streaming method `SendStreamingMessage`; `message/stream` is the 0.3 name.
+- Without a key, tasks end `rejected`.
+- The default model is `anthropic/claude-haiku-5.5`: about 1 s per round, and about 15 s for a
+  warm memo run, of which about 1 s is tools.
+
+The transcripts are `references/mcp-claude-code.md` and `references/a2a-stream.md`.
 
 ## Feature 004 — `004-web-client-docker`
 

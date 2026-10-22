@@ -1,7 +1,9 @@
 # Contract: MCP server
 
 The server is at `http://localhost:8000/mcp`, using MCP's streamable HTTP transport, and is mounted
-on the same app as `/api/v1` (research R2). Its server name is `lonekrav`. The machine-readable
+on the same app as `/api/v1` (research R2). Its server name is `lonekrav`, and its `instructions` field tells every client, before any call,
+that results name their sources and that the code on an offer must match the duties actually
+performed (Principle III). The machine-readable
 contract is the server's own `tools/list` and `resources/list`. This file is the human-readable
 index.
 

@@ -139,3 +139,15 @@ def test_an_object_argument_sent_as_a_json_string_is_decoded(fake_model, sent):
     events(AdvisorRequest(ad="dev"), model, tools)
     assert tools.calls == [("search_occupations",
                             {"request": {"text": "dev"}, "note": '{"kept": "as text"}'})]
+
+
+def test_the_openrouter_client_has_a_timeout_and_one_retry(monkeypatch):  # FR-015
+    import openai
+
+    from lonekrav.protocols.agent.loop import OPENROUTER_URL, openrouter_model
+
+    made = []
+    monkeypatch.setattr(openai, "AsyncOpenAI", lambda **kw: made.append(kw))
+    openrouter_model("sk-test")
+    assert made == [{"base_url": OPENROUTER_URL, "api_key": "sk-test", "timeout": 30,
+                     "max_retries": 1}]
