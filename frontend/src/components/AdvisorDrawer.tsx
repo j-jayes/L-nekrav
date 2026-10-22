@@ -15,6 +15,11 @@ type Run = {
 };
 const IDLE: Run = { state: "idle", taskId: null, progress: [], memo: null, error: null, selected: [] };
 
+// Shown before the first send whatever happens to the agent card request (FR-019); the card's own
+// description replaces it once read.
+const FALLBACK_NOTICE = "Your ad, background and offer go to a third-party language model (via OpenRouter) "
+  + "when you ask.";
+
 const ENDED: Record<string, string> = {
   rejected: "The advisor is unavailable",
   failed: "The run failed",
@@ -22,18 +27,29 @@ const ENDED: Record<string, string> = {
   canceled: "The run was cancelled.",
 };
 
-type Props = { offer: Offer | null; dispatch: Dispatch<Action>; onClose: () => void };
+type Props = {
+  offer: Offer | null;
+  dispatch: Dispatch<Action>;
+  onClose: () => void;
+  open?: boolean; // focus moves into the drawer when it opens
+  modal?: boolean; // full-screen at phone width: a modal dialog over an inert page
+};
 
 /** Ask lonekrav-advisor (US5): progress streams in, the codes it looks up are selected on the
  * chart, and its memo is shown with its footer. Nothing typed here is stored (FR-024). */
-export function AdvisorDrawer({ offer, dispatch, onClose }: Props) {
+export function AdvisorDrawer({ offer, dispatch, onClose, open = true, modal = false }: Props) {
   const [notice, setNotice] = useState<string | null>(null);
   const [ad, setAd] = useState("");
   const [background, setBackground] = useState("");
   const [withOffer, setWithOffer] = useState(false);
   const [run, setRun] = useState<Run>(IDLE);
   const abort = useRef<AbortController | null>(null);
+  const first = useRef<HTMLTextAreaElement>(null);
   const running = run.state === "running";
+
+  useEffect(() => {
+    if (open) first.current?.focus();
+  }, [open]);
 
   useEffect(() => {
     agentCard().then((card) => setNotice(card?.description ?? null)).catch(() => setNotice(null));
@@ -46,9 +62,9 @@ export function AdvisorDrawer({ offer, dispatch, onClose }: Props) {
     else if (e.type === "status" && e.state !== "working" && e.state !== "submitted")
       setRun((r) => ({ ...r, state: e.state as Run["state"], error: e.state === "completed" ? null : e.text }));
     else if (e.type === "ui_sync" && e.tool === "get_occupation_salary") {
+      // Select the code only: the chart fetches its own payload for the age band on screen.
       const payload = e.result as SalaryPayload;
       dispatch({ type: "advisor", codes: [payload.code] });
-      dispatch({ type: "payload", code: payload.code, payload });
       setRun((r) => ({ ...r, selected: [...new Set([...r.selected, payload.code])] }));
     } else if (e.type === "ui_sync" && e.tool === "compare_occupations") {
       const codes = (e.result as Comparison).columns.map((c) => c.code);
@@ -75,15 +91,16 @@ export function AdvisorDrawer({ offer, dispatch, onClose }: Props) {
   }
 
   return (
-    <aside aria-label="Advisor" className="fixed inset-y-0 right-0 z-10 flex w-full max-w-md flex-col gap-3 overflow-y-auto border-l border-line bg-page p-4 shadow-xl">
+    <aside aria-label="Advisor" role={modal ? "dialog" : undefined} aria-modal={modal || undefined}
+      onKeyDown={(e) => e.key === "Escape" && onClose()} className="fixed inset-y-0 right-0 z-10 flex w-full max-w-md flex-col gap-3 overflow-y-auto border-l border-line bg-page p-4 shadow-xl">
       <div className="flex items-baseline justify-between">
         <h2 className="text-lg font-semibold">Ask the advisor</h2>
         <button type="button" onClick={onClose} className="text-sm text-accent underline">Close</button>
       </div>
-      {notice && <p className="text-sm text-muted">{notice}</p>}
+      <p className="text-sm text-muted">{notice ?? FALLBACK_NOTICE}</p>
       <form className="space-y-2" onSubmit={(e) => { e.preventDefault(); void ask(); }}>
         <label htmlFor="adv-ad" className="block text-sm">Job ad</label>
-        <textarea id="adv-ad" rows={6} value={ad} onChange={(e) => setAd(e.target.value)}
+        <textarea id="adv-ad" ref={first} rows={6} value={ad} onChange={(e) => setAd(e.target.value)}
           className="w-full rounded border border-line bg-panel p-2" />
         <label htmlFor="adv-bg" className="block text-sm">Your background <span className="text-muted">(optional)</span></label>
         <textarea id="adv-bg" rows={2} value={background} onChange={(e) => setBackground(e.target.value)}

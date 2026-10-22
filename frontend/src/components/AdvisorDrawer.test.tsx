@@ -65,6 +65,12 @@ describe("AdvisorDrawer", () => {
     expect(await screen.findByText(card.description)).toBeInTheDocument();
   });
 
+  it("keeps the third-party notice when the agent card cannot be read (FR-019)", async () => {  // Copilot on PR #4
+    stubFetch({});
+    render(<AdvisorDrawer offer={null} dispatch={vi.fn()} onClose={() => {}} />);
+    expect(await screen.findByText(/third-party language model \(via OpenRouter\)/)).toBeInTheDocument();
+  });
+
   it("shows progress, selects the codes the advisor looks up, and renders the memo", async () => {
     const { dispatch } = setup({ SendStreamingMessage: [{ body: withSalaryEvent() }] });
     await ask();
@@ -74,7 +80,8 @@ describe("AdvisorDrawer", () => {
     const progress = screen.getByRole("list", { name: /progress/i });
     expect(within(progress).getByText("Reading the job ad")).toBeInTheDocument();
     expect(dispatch).toHaveBeenCalledWith({ type: "advisor", codes: ["2512"] });
-    expect(dispatch).toHaveBeenCalledWith({ type: "payload", code: "2512", payload: salary });
+    // The chart fetches its own payload for the age band on screen (Copilot on PR #4).
+    expect(dispatch).not.toHaveBeenCalledWith(expect.objectContaining({ type: "payload" }));
     expect(dispatch).toHaveBeenCalledWith({ type: "advisor", codes: ["2512", "2511"] });
   });
 

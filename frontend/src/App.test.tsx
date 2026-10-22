@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
 import App from "./App";
 import { fixture, serve } from "./test/fakeApi";
@@ -24,6 +25,20 @@ describe("App", () => {
     render(<App />);
     expect(await screen.findByText(/Not selected from the link: 9999/)).toBeInTheDocument();
     expect(location.search).toBe("?view=compare&codes=2512");
+  });
+
+  it("at phone width the open drawer is modal: focus moves in, the page is inert, Escape returns", async () => {  // Copilot on PR #4
+    serve({});
+    at("");
+    render(<App />);
+    const button = await screen.findByRole("button", { name: "Ask the advisor" });
+    await userEvent.click(button);
+    const drawer = screen.getByRole("dialog", { name: "Advisor" });
+    await waitFor(() => expect(drawer).toContainElement(document.activeElement as HTMLElement));
+    expect(document.querySelector("[data-page]")).toHaveAttribute("inert");
+    await userEvent.keyboard("{Escape}");
+    expect(document.querySelector("[data-page]")).not.toHaveAttribute("inert");
+    expect(button).toHaveFocus();
   });
 
   it("writes the view to the address", async () => {

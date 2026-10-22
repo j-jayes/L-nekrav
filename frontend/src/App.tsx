@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { api, type Offer, type Registry } from "./api/client";
 import { AdvisorDrawer } from "./components/AdvisorDrawer";
 import { Notice } from "./components/Notice";
@@ -15,6 +15,21 @@ const TABS: { view: View; label: string }[] = [
   { view: "compare", label: "Compare" },
   { view: "legal", label: "The rules" },
 ];
+
+/** Whether the screen is wide enough for the drawer to sit beside the page (Tailwind's `lg`). */
+const wideQuery = () => (typeof matchMedia === "function" ? matchMedia("(min-width: 1024px)") : null);
+
+function useWide() {
+  const [wide, setWide] = useState(() => wideQuery()?.matches ?? false);
+  useEffect(() => {
+    const query = wideQuery();
+    if (!query) return;
+    const on = () => setWide(query.matches);
+    query.addEventListener("change", on);
+    return () => query.removeEventListener("change", on);
+  }, []);
+  return wide;
+}
 
 /** Drop codes the server does not know (a 404 from /occupations/{code}). */
 async function known(codes: string[]) {
@@ -33,6 +48,9 @@ export default function App() {
   const [offer, setOffer] = useState<Offer | null>(null);
   const [registry, setRegistry] = useState<Registry | null>(null);
   const [advisor, setAdvisor] = useState(false);
+  const wide = useWide();
+  const trigger = useRef<HTMLButtonElement>(null);
+  const closeAdvisor = () => { setAdvisor(false); trigger.current?.focus(); };
 
   useEffect(() => {
     api.GET("/api/v1/legal/registry").then(({ data }) => data && setRegistry(data));
@@ -51,14 +69,16 @@ export default function App() {
   }, [loaded, view, selection.codes, age]);
 
   return (
-    // On wide screens the open drawer sits beside the page rather than over the chart.
-    <div className={`mx-auto max-w-5xl px-4 pb-16 ${advisor ? "lg:mr-[28rem] lg:ml-4" : ""}`}>
+    <>
+    {/* On wide screens the open drawer sits beside the page; on a phone it covers it, and the page
+        is inert until it closes. */}
+    <div data-page inert={advisor && !wide} className={`mx-auto max-w-5xl px-4 pb-16 ${advisor ? "lg:mr-[28rem] lg:ml-4" : ""}`}>
       <header className="flex flex-wrap items-baseline justify-between gap-2 py-4">
         <div>
           <h1 className="text-2xl font-bold">Lönekrav</h1>
           <p className="text-sm text-muted">SSYK codes and the salary requirement for Swedish work permits</p>
         </div>
-        <button type="button" onClick={() => setAdvisor(!advisor)} aria-expanded={advisor}
+        <button type="button" ref={trigger} onClick={() => (advisor ? closeAdvisor() : setAdvisor(true))} aria-expanded={advisor}
           className="rounded border border-accent px-3 py-1.5 text-sm text-accent">Ask the advisor</button>
       </header>
       <nav aria-label="Views" className="mb-4 flex gap-1 border-b border-line">
@@ -84,10 +104,11 @@ export default function App() {
           rules={registry?.rules} />}
         {view === "legal" && <LegalView registry={registry} draft={draft} onApplied={(d, o) => { setDraft(d); setOffer(o); }} />}
       </main>
-      {/* Hidden, not unmounted, when closed: a run keeps going and its answer is still there. */}
-      <div hidden={!advisor}>
-        <AdvisorDrawer offer={offer} dispatch={dispatch} onClose={() => setAdvisor(false)} />
-      </div>
     </div>
+    {/* Hidden, not unmounted, when closed: a run keeps going and its answer is still there. */}
+    <div hidden={!advisor}>
+      <AdvisorDrawer offer={offer} dispatch={dispatch} onClose={closeAdvisor} open={advisor} modal={!wide} />
+    </div>
+    </>
   );
 }

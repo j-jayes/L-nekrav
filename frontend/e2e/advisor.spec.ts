@@ -5,7 +5,7 @@ import { expect, test } from "@playwright/test";
 test("the chart follows the advisor before its memo arrives", async ({ page }) => {
   await page.goto("/?view=search");
   await page.getByRole("button", { name: "Ask the advisor" }).click();
-  const drawer = page.getByRole("complementary", { name: "Advisor" });
+  const drawer = page.locator('aside[aria-label="Advisor"]'); // a dialog on a phone, a side panel on desktop
   await expect(drawer).toContainText("third-party language model");
   await drawer.getByLabel("Job ad").fill("Backend Developer (Python)\n\nYou will build and maintain our APIs.");
   await drawer.getByRole("button", { name: "Ask" }).click();
