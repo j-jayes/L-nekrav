@@ -149,3 +149,9 @@ def test_parse_job_ad_route(api_client, fixtures):
     assert body["passages"][0] == {"index": 0, "text": "Backend Developer (Python)",
                                    "label": "title", "keep": True, "by": "position"}
     assert api_client.post("/api/v1/parse-job-ad", json={"text": ""}).status_code == 422
+
+
+def test_compare_with_an_invalid_offer_is_422_not_500(api_client):  # Copilot review on PR #2
+    offer = {k: v for k, v in OFFER.items() if k != "code"} | {"fte_percent": 0}
+    r = api_client.post("/api/v1/compare", json={"codes": ["2512", "3511"], "offer": offer})
+    assert r.status_code == 422 and "fte_percent" in r.text

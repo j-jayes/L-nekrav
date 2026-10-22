@@ -61,3 +61,23 @@ def test_honest_fit_and_no_ranking_by_threshold(cmp):
     c = cmp(codes=["3511", "2512"], offer=OFFER)
     assert c.honest_fit == HONEST_FIT
     assert [col.code for col in c.columns] == ["3511", "2512"]  # as asked, not by threshold
+
+
+@pytest.mark.parametrize("bad", [{"fte_percent": 0}, {"monthly_salary_sek": -1},
+                                 {"application_type": "visit"},
+                                 {"application_type": "extension"}])  # no current-permit date
+def test_an_invalid_offer_is_refused_at_validation(bad):  # Copilot review on PR #2
+    with pytest.raises(ValidationError):
+        CompareRequest(codes=["2512", "3511"], offer=OFFER | bad)
+
+
+def test_with_an_offer_the_threshold_is_the_eligibility_threshold(cmp):  # Copilot review on PR #2
+    transitional = OFFER | {"application_type": "extension",
+                            "current_permit_granted_on": dt.date(2026, 1, 10),
+                            "filed_on": dt.date(2026, 11, 30), "decided_on": dt.date(2026, 12, 20)}
+    by = {c.code: c for c in cmp(codes=["3511", "2512", "5343"], offer=transitional).columns}
+    assert (by["3511"].threshold.rule_id, by["3511"].threshold.amount_sek) == (
+        "transition_maintenance_80", by["3511"].eligibility.threshold_sek)
+    assert by["5343"].threshold is None  # not permitted: no threshold to show
+    early = OFFER | {"filed_on": dt.date(2026, 5, 1), "decided_on": dt.date(2026, 5, 20)}
+    assert all(c.threshold is None for c in cmp(codes=["3511", "2512"], offer=early).columns)

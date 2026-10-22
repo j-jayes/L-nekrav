@@ -24,8 +24,8 @@ class UnknownCode(KeyError):
         return f"unknown SSYK code {self.args[0]!r}"
 
 
-class EligibilityRequest(BaseModel):
-    code: str = Field(pattern=r"^\d{4}$")
+class Offer(BaseModel):
+    """Everything about an offer except the code; comparison tries one offer against each code."""
     monthly_salary_sek: int = Field(gt=0, description="Gross monthly salary actually paid")
     fte_percent: int = Field(ge=1, le=100, description="Share of full time")
     application_type: Literal["first_permit", "extension"]
@@ -58,6 +58,10 @@ class EligibilityRequest(BaseModel):
                 exemptions[e].first_permit_only for e in self.exemptions):
             raise ValueError("exemptions: former_student_researcher applies to first permits only")
         return self
+
+
+class EligibilityRequest(Offer):
+    code: str = Field(pattern=r"^\d{4}$")
 
 
 class Warning(BaseModel):
