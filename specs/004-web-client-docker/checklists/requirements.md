@@ -36,6 +36,5 @@
   (REST, MCP, A2A, the agent card) because they are the product's own surfaces from 002 and 003.
 - FR-025 (generated types) and FR-030 (key only at run time) are worded as outcomes rather than
   tools.
-- Open for `/speckit-clarify`: where the models and index come from inside the container (copied
-  from the local build or a mounted volume), and whether the accurate search runs on pause for
-  short typed queries or only for pasted ads.
+- Resolved in `/speckit-clarify` (2026-10-22): models and index are baked into the image; the 4 GB
+  cap stays and an overrun goes to the maintainer; view and codes are kept in the page address.

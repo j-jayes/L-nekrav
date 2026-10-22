@@ -23,6 +23,20 @@ screenshots of the three main views at phone and desktop width; docker stats RSS
 end-to-end: paste a real LinkedIn ad in English, then its Swedish translation, confirm the same
 top-3 codes; A2A drawer updates the chart."
 
+## Clarifications
+
+### Session 2026-10-22
+
+- Q: How does the container get the search models and the index? → A: Both are baked into the
+  image. The models are downloaded during the build and the locally built index is copied in, so
+  the image is self-contained and runs unchanged on a managed container service.
+- Q: What happens if the measured peak memory exceeds the 4 GB budget? → A: 4 GB stays the cap.
+  If the measured peak exceeds it, work stops and the numbers and options go to the maintainer
+  before anything is changed.
+- Q: Are the selected codes and the current view kept in the page address? → A: Yes. The view
+  and the selected codes are in the address, so a reload or a shared link restores them. The ad,
+  background and offer never go in the address.
+
 ## User Scenarios & Testing *(mandatory)*
 
 Features 001–003 built the data, the search, the eligibility rules and three machine interfaces
@@ -241,7 +255,9 @@ on the one port; record the container's peak memory.
    card's interface URL is that address; with nothing configured it is the local address.
 4. **Given** the container has no model key, **When** it starts, **Then** everything except the
    advisor works, and the advisor reports that it is unavailable.
-5. **Given** the README, **When** a reader follows it, **Then** it gives the local command, the
+5. **Given** a running container cut off from the network, **When** a user runs both searches,
+   **Then** both work, because the models and the index are inside the image.
+6. **Given** the README, **When** a reader follows it, **Then** it gives the local command, the
    environment variables (model key, model name, public address, store location) and the steps for
    a managed container service, and it states that the managed deployment has not been done.
 
@@ -259,6 +275,8 @@ on the one port; record the container's peak memory.
 - **A code that is banned**: the chart and comparison show that permits cannot be granted for it,
   with the source; no floor line is drawn for it.
 - **Duplicate selection**: selecting a code already on the chart does nothing and says so.
+- **A shared link with a bad code**: an unknown code, or a fifth code, in the address is dropped
+  and the page says which.
 - **Advisor selects more than four codes**: the chart keeps the four most recently looked-up codes
   and the drawer says which were left out.
 - **The server restarts mid-run**: the drawer reports a lost connection and offers to retry.
@@ -338,16 +356,23 @@ on the one port; record the container's peak memory.
   their English equivalents.
 - **FR-023**: The page MUST work at phone and desktop widths with no sideways page scroll.
 - **FR-024**: The page MUST NOT store the user's ad, background or offer anywhere but the
-  browser's memory for the current visit, and MUST NOT send them anywhere but this server.
+  browser's memory for the current visit, MUST NOT put them in the page address, and MUST NOT
+  send them anywhere but this server.
+- **FR-032**: The current view and the selected codes MUST be kept in the page address, so that
+  reloading the page or opening a shared link restores them; an unknown or excess code in the
+  address is dropped with a note.
 - **FR-025**: The page MUST call the API through types generated from the API's own schema, so a
   field change in the API breaks the page's build rather than its behaviour.
 
 **Packaging and deployment**
 
 - **FR-026**: One command MUST build and start the page, REST, MCP and the advisor on one port,
-  with the search models and index available, and no other services.
-- **FR-027**: The container's memory MUST be capped at the budget set by the maintainer, and its
-  measured peak during an accurate search MUST be recorded in the repository.
+  with no other services. The search models and the index MUST be inside the image (models
+  downloaded at build time, the locally built index copied in), so the image needs no volume or
+  network download at start-up.
+- **FR-027**: The container's memory MUST be capped at 4 GB, and its measured peak during an
+  accurate search MUST be recorded in the repository. If the peak exceeds 4 GB, the cap MUST NOT be
+  raised, and no model may be dropped, without the maintainer's decision.
 - **FR-028**: The advisor's public address in its agent card MUST be settable by configuration,
   defaulting to the local address.
 - **FR-029**: The container MUST start and serve everything except the advisor when no model key
@@ -361,7 +386,8 @@ on the one port; record the container's peak memory.
 - **Search session**: the text in the box, the latest answer for each search speed, and which one
   is on screen. Lives only in the page.
 - **Selection**: the ordered set of up to four codes on the chart (up to five for comparison), each
-  with its salary payload and its simulated-bar setting. Updated by the user and by the advisor.
+  with its salary payload and its simulated-bar setting. Updated by the user and by the advisor,
+  and mirrored, with the current view, in the page address.
 - **Offer draft**: the calculator's and drawer's offer fields, validated by the API's eligibility
   model.
 - **Advisor run**: one request to the advisor and the events it streams (progress, structured
@@ -385,8 +411,8 @@ on the one port; record the container's peak memory.
   usable at 390 px and 1280 px wide with no sideways scroll, shown by screenshots at both widths.
 - **SC-006**: From a clean checkout with the index built, the one command serves the page within
   10 minutes of build time and 60 seconds of start-up on the reference machine.
-- **SC-007**: The container's peak memory during an accurate search on a pasted ad stays under the
-  configured limit, and is recorded.
+- **SC-007**: The container's peak memory during an accurate search on a pasted ad stays under
+  4 GB, and is recorded.
 - **SC-008**: With the advisor on, the chart's selection changes during the run, before the memo
   arrives, in a recorded end-to-end run.
 - **SC-009**: The page passes an automated accessibility check with no serious or critical
@@ -395,7 +421,8 @@ on the one port; record the container's peak memory.
 ## Assumptions
 
 - The reference machine is the maintainer's laptop (Apple M2 Pro, 16 GB), as in Features 001–003.
-- The memory budget is 4 GB, as the maintainer set in Feature 001.
+- The memory budget is 4 GB, as the maintainer set in Feature 001 (measured peaks in 001: about
+  1 GB for the fast model and about 2.6 GB for the accurate model).
 - The search index and processed data are built locally with `lonekrav-etl` before the container
   is built; the container does not run the data pipeline, which takes over an hour cold.
 - The page is served by the same server as the API, so there is no cross-origin setup and no
