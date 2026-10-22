@@ -182,10 +182,10 @@ running server.
 - [X] T029 Update `references/development-plan.md` §003 for the actual decisions: fastmcp 4.1.3, `SendStreamingMessage`, the rejected state, Haiku 5.5 as the default, and the in-memory MCP client in the agent
 - [X] T030 [P] Write `docs/walkthroughs/003-mcp-a2a-protocols.md` with the walkthrough skill (snippets emitted from disk)
 - [X] T031 Run `/speckit-converge` and complete any tasks it appends
-- [ ] T032 Read the whole diff, then open the PR. It should include the test totals, the two transcripts, the latency figures, and a note that the handoff's `message/stream` is `SendStreamingMessage` in v1.0
-- [ ] T033 Read every Copilot review comment on the PR, fix each valid one with a red/green test, and reply in each thread with the fix commit
+- [X] T032 Read the whole diff, then open the PR. It should include the test totals, the two transcripts, the latency figures, and a note that the handoff's `message/stream` is `SendStreamingMessage` in v1.0
+- [X] T033 Read every Copilot review comment on the PR, fix each valid one with a red/green test, and reply in each thread with the fix commit
 - [ ] T034 Remove the scratchpad virtual environment, and keep the local-scope `lonekrav` MCP entry only if the maintainer wants it
-- [ ] T035 Compound step: add "Things worked out in Feature 003" to CLAUDE.md (the mount order and lifespan, ToolError and masking, the protobuf integers-as-floats issue, Task-first enqueueing, the in-memory MCP client as the agent's tool bus, and the reference files), and update the memory status file
+- [X] T035 Compound step: add "Things worked out in Feature 003" to CLAUDE.md (the mount order and lifespan, ToolError and masking, the protobuf integers-as-floats issue, Task-first enqueueing, the in-memory MCP client as the agent's tool bus, and the reference files), and update the memory status file
 
 
 ---
