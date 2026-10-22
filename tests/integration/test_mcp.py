@@ -170,6 +170,12 @@ def test_tool_arguments_are_not_logged(fixture_engine, salaries, caplog, monkeyp
                  {"request": OFFER | {"monthly_salary_sek": 41234}})
             tool(c, "evaluate_permit_eligibility",
                  {"request": OFFER | {"monthly_salary_sek": 41234, "code": "1234"}})
+            # A ToolError echoes the caller's input to the caller; it must not reach the log
+            # (Copilot review on PR #3).
+            r = tool(c, "get_occupation_salary", {"code": "2512", "age_band": "PRIVATE-AD-TEXT"})
+            assert r.is_error and "PRIVATE-AD-TEXT" in r.content[0].text
+            with pytest.raises(Exception, match="PRIVATE-AD-TEXT"):
+                read(c, "ssyk://PRIVATE-AD-TEXT")  # fastmcp logs resource errors with a traceback
     finally:
         fm.setLevel(level)
     assert "PRIVATE-AD-TEXT" not in caplog.text and "41234" not in caplog.text

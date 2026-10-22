@@ -7,6 +7,7 @@ built at start-up serves the data the lifespan loads (research R3).
 from __future__ import annotations
 
 import datetime as dt
+import logging
 from collections.abc import Iterator
 from contextlib import contextmanager
 
@@ -23,11 +24,15 @@ from lonekrav.core.service import Service
 
 @contextmanager
 def _expected(error: type[Exception] = ToolError) -> Iterator[None]:
-    """Unknown codes and age bands reach the client with REST's text; anything else is masked."""
+    """Unknown codes and age bands reach the client with REST's text; anything else is masked.
+
+    They are the caller's mistakes, not faults, so fastmcp logs them at DEBUG, below the app's INFO
+    floor: its resource-error traceback would otherwise put the caller's input in the log (FR-005,
+    Copilot review on PR #3)."""
     try:
         yield
     except (UnknownCode, ValueError) as e:
-        raise error(str(e)) from e
+        raise error(str(e), log_level=logging.DEBUG) from e
 
 
 def build_mcp(app) -> FastMCP:
