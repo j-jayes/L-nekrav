@@ -316,8 +316,11 @@ def test_the_key_selects_the_openrouter_model(fixture_engine, salaries, monkeypa
     app = lonekrav.app.create_app(engine=engine, profiles=profiles, salaries=salaries)
     monkeypatch.setenv("LONEKRAV_LLM_MODEL", "some/other-model")
     lonekrav.app.create_app(engine=engine, profiles=profiles, salaries=salaries)
+    monkeypatch.setenv("LONEKRAV_LLM_MODEL", "")  # docker compose passes an unset variable as ""
+    lonekrav.app.create_app(engine=engine, profiles=profiles, salaries=salaries)
 
     from lonekrav.protocols.agent.loop import DEFAULT_MODEL
-    assert chosen == [("sk-or-SENTINEL", DEFAULT_MODEL), ("sk-or-SENTINEL", "some/other-model")]
+    assert chosen == [("sk-or-SENTINEL", DEFAULT_MODEL), ("sk-or-SENTINEL", "some/other-model"),
+                      ("sk-or-SENTINEL", DEFAULT_MODEL)]
     with TestClient(app) as client:
         assert "SENTINEL" not in client.get("/.well-known/agent-card.json").text

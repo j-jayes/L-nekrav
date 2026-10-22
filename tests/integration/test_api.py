@@ -143,7 +143,11 @@ def test_registry_route(api_client):  # Feature 004 research R9: the legal guide
     r = api_client.get("/api/v1/legal/registry")
     assert r.status_code == 200
     body = r.json()
-    assert body == load_registry().model_dump(mode="json")
+    raw = load_registry().model_dump(mode="json")
+    assert {k: v for k, v in body.items() if k != "code_lists"} == {
+        k: v for k, v in raw.items() if k != "code_lists"}
+    assert {k: set(v["codes"]) for k, v in body["code_lists"].items()} == {
+        k: set(v["codes"]) for k, v in raw["code_lists"].items()}
     rows = [*body["medians"], body["median_publication_window"], *body["rules"].values(),
             *body["code_lists"].values(), *body["exemptions"].values(),
             *body["statements"].values()]

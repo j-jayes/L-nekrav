@@ -55,7 +55,7 @@ def create_app(engine=None, profiles=None, salaries=None, chat_model=None,
     app.include_router(v1.router, prefix="/api/v1")
     app.state.mcp = build_mcp(app)
     if chat_model is None and (key := os.environ.get("OPENROUTER_KEY")):
-        chat_model = openrouter_model(key, os.environ.get("LONEKRAV_LLM_MODEL", DEFAULT_MODEL))
+        chat_model = openrouter_model(key, os.environ.get("LONEKRAV_LLM_MODEL") or DEFAULT_MODEL)
     add_a2a(app, app.state.mcp, chat_model)
     mcp_app = app.state.mcp.http_app(path="/mcp")  # mounted at "/" below: exactly /mcp (R2)
     app.router.lifespan_context = combine_lifespans(lifespan, mcp_app.lifespan)

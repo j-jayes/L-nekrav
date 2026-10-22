@@ -1,4 +1,4 @@
-"""`lonekrav-etl`: fetch | build | index | benchmark | measure-models (contracts/cli.md)."""
+"""`lonekrav-etl`: fetch | build | index | benchmark | measure-models | fetch-models (contracts/cli.md)."""
 
 from __future__ import annotations
 
@@ -39,6 +39,12 @@ def _measure(args: argparse.Namespace) -> None:
     measure.measure()
 
 
+def _fetch_models(args: argparse.Namespace) -> None:
+    from lonekrav.core.embeddings import download_models
+
+    download_models()
+
+
 def _benchmark(args: argparse.Namespace) -> None:
     from pathlib import Path
 
@@ -53,6 +59,7 @@ COMMANDS: dict[str, Callable[[argparse.Namespace], None]] = {
     "index": _index,
     "benchmark": _benchmark,
     "measure-models": _measure,
+    "fetch-models": _fetch_models,
 }
 
 
@@ -69,6 +76,7 @@ def parser() -> argparse.ArgumentParser:
     b = sub.add_parser("benchmark", help="cross-lingual benchmark -> benchmark_results.json")
     b.add_argument("--db", default=None)
     sub.add_parser("measure-models", help="model latency and memory -> references/")
+    sub.add_parser("fetch-models", help="download the pinned search models into HF_HOME")
     return p
 
 

@@ -71,6 +71,20 @@ class SentenceTransformerEmbedder:
         return self._encode(texts, show_progress_bar=len(texts) > 100)
 
 
+# Files the pinned repos carry that sentence-transformers never loads (it prefers safetensors).
+UNUSED_FILES = ["*.gguf", "pytorch_model.bin", "eval/*", "README.md"]
+
+
+def download_models() -> None:
+    """Download every SPECS model at its pinned revision into the Hugging Face cache (HF_HOME):
+    the container image runs this at build time and then works offline (Feature 004 R10)."""
+    import huggingface_hub
+
+    for spec in SPECS.values():
+        huggingface_hub.snapshot_download(repo_id=spec.hf_id, revision=spec.revision,
+                                          ignore_patterns=UNUSED_FILES)
+
+
 @cache
 def get_embedder(name: str) -> Embedder:
     return SentenceTransformerEmbedder(name, SPECS[name])

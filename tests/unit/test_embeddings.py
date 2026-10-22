@@ -95,3 +95,18 @@ def test_kblab_queries_encode_on_one_thread_and_restore_it():  # research R2, T0
     fake("kblab").encode_documents(["a document"])
     assert seen == [1, before, before]
     assert torch.get_num_threads() == before
+
+
+def test_download_models_fetches_each_pinned_revision_without_unused_weights(monkeypatch):
+    """The image downloads the models at build time (Feature 004 R10): every SPECS model at its
+    pinned revision, skipping weight formats sentence-transformers does not load."""
+    import huggingface_hub
+
+    from lonekrav.core import embeddings
+
+    calls = []
+    monkeypatch.setattr(huggingface_hub, "snapshot_download", lambda **kw: calls.append(kw) or "/x")
+    embeddings.download_models()
+    assert [(c["repo_id"], c["revision"]) for c in calls] == [
+        (s.hf_id, s.revision) for s in embeddings.SPECS.values()]
+    assert all({"*.gguf", "pytorch_model.bin"} <= set(c["ignore_patterns"]) for c in calls)

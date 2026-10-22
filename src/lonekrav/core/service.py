@@ -65,4 +65,11 @@ class Service:
         return load_registry().timeline()
 
     def registry(self) -> Registry:
-        return load_registry()
+        """The legal registry, with each listed code named by its Swedish title (FR-022); a note
+        the registry gives a code (9210's berry pickers) follows the title."""
+        reg = load_registry()
+        lists = {kind: cl.model_copy(update={"codes": {
+            code: ": ".join(t for t in (self.profiles[code].title_sv if code in self.profiles
+                                        else "", note) if t)
+            for code, note in cl.codes.items()}}) for kind, cl in reg.code_lists.items()}
+        return reg.model_copy(update={"code_lists": lists})

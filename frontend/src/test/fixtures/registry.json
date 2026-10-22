@@ -171,33 +171,33 @@
       "exempt_75": {
         "kind": "exempt_75",
         "codes": {
-          "3115": "",
-          "3215": "",
-          "3511": "",
-          "3512": "",
-          "3513": "",
-          "3514": "",
-          "5321": "",
-          "5322": "",
-          "5323": "",
-          "5324": "",
-          "5325": "",
-          "5326": "",
-          "5330": "",
-          "6121": "",
-          "6129": "",
-          "6130": "",
-          "6210": "",
-          "7212": "",
-          "7215": "",
-          "7233": "",
-          "7413": "",
-          "7611": "",
-          "8161": "",
-          "8169": "",
-          "8199": "",
-          "8341": "",
-          "9210": ""
+          "3115": "Ingenjörer och tekniker inom kemi och kemiteknik",
+          "3215": "Laboratorieingenjörer",
+          "3511": "Drifttekniker, IT",
+          "3512": "Supporttekniker, IT",
+          "3513": "Systemadministratörer",
+          "3514": "Nätverks- och systemtekniker m.fl.",
+          "5321": "Undersköterskor, hemtjänst, hemsjukvård och äldreboende",
+          "5322": "Undersköterskor, habilitering",
+          "5323": "Undersköterskor, vård- och specialavdelning",
+          "5324": "Undersköterskor, mottagning",
+          "5325": "Barnsköterskor",
+          "5326": "Ambulanssjukvårdare",
+          "5330": "Vårdbiträden",
+          "6121": "Uppfödare och skötare av lantbrukets husdjur",
+          "6129": "Övriga djuruppfödare och djurskötare",
+          "6130": "Växtodlare och djuruppfödare, blandad drift",
+          "6210": "Skogsarbetare",
+          "7212": "Svetsare och gasskärare",
+          "7215": "Stålkonstruktionsmontörer och grovplåtsslagare",
+          "7233": "Underhållsmekaniker och maskinreparatörer",
+          "7413": "Distributionselektriker",
+          "7611": "Slaktare och styckare m.fl.",
+          "8161": "Maskinoperatörer, kött- och fiskberedningsindustri",
+          "8169": "Övriga maskinoperatörer inom livsmedelsindustri m.m.",
+          "8199": "Övriga drifttekniker och processövervakare",
+          "8341": "Förare av jordbruks- och skogsmaskiner",
+          "9210": "Bärplockare och plantörer m.fl."
         },
         "effective_from": "2026-06-01",
         "effective_to": null,
@@ -212,7 +212,7 @@
       "banned": {
         "kind": "banned",
         "codes": {
-          "5343": ""
+          "5343": "Personliga assistenter"
         },
         "effective_from": "2026-06-01",
         "effective_to": null,
@@ -227,7 +227,7 @@
       "partially_banned": {
         "kind": "partially_banned",
         "codes": {
-          "9210": "forest berry pickers only (bärplockare i skog)"
+          "9210": "Bärplockare och plantörer m.fl.: forest berry pickers only (bärplockare i skog)"
         },
         "effective_from": "2026-06-01",
         "effective_to": null,
