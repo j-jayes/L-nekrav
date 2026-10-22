@@ -3,7 +3,7 @@ import { scale } from "./chartScale";
 
 describe("chart scale", () => {
   it("starts at zero and ends at the largest value rounded up to the next 10 000", () => {
-    const s = scale([39600, 72600, 34470, null], 500);
+    const s = scale([39600, 72600, 31000, null], 500);
     expect(s.max).toBe(80000);
     expect(s.ticks).toEqual([0, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000]);
   });
