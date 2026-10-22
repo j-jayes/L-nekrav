@@ -36,3 +36,5 @@ outbox/
 .DS_Store
 .idea/
 .vscode/
+frontend/test-results/
+frontend/playwright-report/

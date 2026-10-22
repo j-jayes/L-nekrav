@@ -27,9 +27,9 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 
 ## Phase 1: Setup
 
-- [ ] T001 Scaffold `frontend/` by hand, with no template generator. Add `package.json` with the exact versions from research R1 and the scripts `dev`, `build` (`tsc --noEmit && vite build`), `test` (`vitest run`), `gen` (`openapi-typescript src/api/openapi.json -o src/api/schema.d.ts`) and `e2e` (`playwright test`). Add `tsconfig.json` (strict), `vite.config.ts` (React and Tailwind plugins, a dev proxy for `/api`, `/a2a`, `/mcp` and `/.well-known` to `http://localhost:8000`, Vitest with jsdom), `index.html`, `src/main.tsx`, `src/App.tsx` (an empty shell) and `src/index.css` (`@import "tailwindcss"`). Run `npm install` to create `package-lock.json`, then `npm ci && npm run build && npm test -- --passWithNoTests`, all green
-- [ ] T002 [P] Add `frontend/playwright.config.ts`. It sets `baseURL` from `BASE_URL` (default `http://localhost:8000`) and has two projects: `phone` (390×844) and `desktop` (1280×800). Run `npx playwright install chromium`
-- [ ] T003 [P] Record the baseline: `rtk proxy uv run pytest -q` reports 340 passed
+- [X] T001 Scaffold `frontend/` by hand, with no template generator. Add `package.json` with the exact versions from research R1 and the scripts `dev`, `build` (`tsc --noEmit && vite build`), `test` (`vitest run`), `gen` (`openapi-typescript src/api/openapi.json -o src/api/schema.d.ts`) and `e2e` (`playwright test`). Add `tsconfig.json` (strict), `vite.config.ts` (React and Tailwind plugins, a dev proxy for `/api`, `/a2a`, `/mcp` and `/.well-known` to `http://localhost:8000`, Vitest with jsdom), `index.html`, `src/main.tsx`, `src/App.tsx` (an empty shell) and `src/index.css` (`@import "tailwindcss"`). Run `npm install` to create `package-lock.json`, then `npm ci && npm run build && npm test -- --passWithNoTests`, all green
+- [X] T002 [P] Add `frontend/playwright.config.ts`. It sets `baseURL` from `BASE_URL` (default `http://localhost:8000`) and has two projects: `phone` (390×844) and `desktop` (1280×800). Run `npx playwright install chromium`
+- [X] T003 [P] Record the baseline: `rtk proxy uv run pytest -q` reports 340 passed
 
 ---
 
