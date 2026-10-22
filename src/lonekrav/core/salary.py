@@ -42,6 +42,7 @@ def load_age_bands(path: Path = AGE_BANDS) -> list[AgeBandSalary]:
 AGE_BANDS_ = ("18-24", "25-34", "35-44", "45-54", "55-64", "65-68")
 FORMULA = "percentile × age_band_mean ÷ all_ages_mean"
 PERCENTILES = ("p10", "p25", "median", "p75", "p90")
+LINE_RULES = ("maintenance_80", "salary_90", "salary_75_exempt")
 
 
 class ThresholdLine(BaseModel):
@@ -116,17 +117,20 @@ def payload(code: str, on: dt.date, age_band: str | None = None,
 
     reg = load_registry()
     median = reg.median_on(on)
-    lines = [] if median is None else [
-        ThresholdLine(rule_id=r, percent=float(reg.rules[r].percent),
-                      amount_sek=reg.threshold(r, median), median_sek=median.amount,
-                      median_reference_year=median.scb_reference_year, on=on)
-        for r in ("salary_90", "salary_75_exempt")]
-    if code in reg.codes_on("banned", on):
+    # Lines for the general rules in force on `on` (not the transition, which depends on the
+    # applicant's permit history): the maintenance requirement before June 2026, the salary
+    # requirement and its exempt level after (Copilot review on PR #2).
+    rules = [r for r in LINE_RULES if median and reg.rule_active(r, on)]
+    lines = [ThresholdLine(rule_id=r, percent=float(reg.rules[r].percent),
+                           amount_sek=reg.threshold(r, median), median_sek=median.amount,
+                           median_reference_year=median.scb_reference_year, on=on)
+             for r in rules]
+    if code in reg.codes_on("banned", on) or not rules:
         applicable = None
-    elif code in reg.codes_on("exempt_75", on):
-        applicable = "salary_75_exempt"
+    elif "salary_90" in rules:
+        applicable = "salary_75_exempt" if code in reg.codes_on("exempt_75", on) else "salary_90"
     else:
-        applicable = "salary_90"
+        applicable = rules[0]
 
     simulated = None
     if age_band and dists:

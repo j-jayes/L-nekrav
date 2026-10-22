@@ -73,3 +73,23 @@ def test_code_without_salary_rows(salaries):
 def test_unknown_age_band_is_refused(salaries):
     with pytest.raises(ValueError, match="age_band"):
         make(salaries, "2512", age_band="12-17")
+
+
+def test_threshold_lines_follow_the_rules_in_force_on_the_date(salaries):  # Copilot review on PR #2
+    reg = load_registry()
+    before = reg.rules["salary_90"].effective_from - dt.timedelta(days=1)
+    dists, ages = salaries
+    p = payload("2512", on=before, distributions=dists, age_bands=ages)
+    assert [t.rule_id for t in p.thresholds] == ["maintenance_80"]
+    assert p.applicable_rule_id == "maintenance_80"
+    assert p.thresholds[0].amount_sek == reg.threshold("maintenance_80", reg.median_on(before))
+    banned_before = payload("5343", on=before, distributions=dists, age_bands=ages)
+    assert banned_before.applicable_rule_id == "maintenance_80"  # the ban starts with the new rules
+    now = payload("2512", on=ON, distributions=dists, age_bands=ages)
+    assert [t.rule_id for t in now.thresholds] == ["salary_90", "salary_75_exempt"]
+
+
+def test_no_lines_before_the_registry_starts(salaries):
+    dists, ages = salaries
+    p = payload("2512", on=dt.date(2021, 1, 1), distributions=dists, age_bands=ages)
+    assert p.thresholds == [] and p.applicable_rule_id is None

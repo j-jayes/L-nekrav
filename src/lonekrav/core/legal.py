@@ -118,6 +118,9 @@ class Registry(BaseModel):
             return rule.amount
         return round_half_up(rule.percent * median.amount / 100)
 
+    def rule_active(self, rule_id: str, on: dt.date) -> bool:
+        return _active(self.rules[rule_id], on)
+
     def codes_on(self, kind: str, on: dt.date) -> dict[str, str]:
         cl = self.code_lists[kind]
         return dict(cl.codes) if _active(cl, on) else {}
