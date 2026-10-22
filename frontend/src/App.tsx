@@ -75,7 +75,7 @@ export default function App() {
           <SearchView selection={selection} dispatch={dispatch} age={age} setAge={setAge} offer={offer} />
         )}
         {view === "compare" && <CompareView codes={selection.codes} offer={offer} onSearch={() => setView("search")} />}
-        {view === "legal" && <LegalView />}
+        {view === "legal" && <LegalView registry={registry} draft={draft} onApplied={(d, o) => { setDraft(d); setOffer(o); }} />}
       </main>
     </div>
   );

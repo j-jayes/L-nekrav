@@ -169,13 +169,13 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 
 - [X] T038 [P] [US4] Write `frontend/src/components/OfferForm.test.tsx`, which must fail first. The fields follow the `Offer` schema; `current_permit_granted_on` appears only for an extension; a 422 detail is mapped to the named field in plain words; and the draft is shared state, never written to storage or the URL
 - [X] T039 [US4] Implement `frontend/src/components/OfferForm.tsx`, with the offer draft in a context shared by compare, the calculator, the chart's floor line and the drawer. T038 passes
-- [ ] T040 [P] [US4] Write `frontend/src/views/LegalView.test.tsx` on the recorded registry, timeline and eligibility fixtures, which must fail first:
+- [X] T040 [P] [US4] Write `frontend/src/views/LegalView.test.tsx` on the recorded registry, timeline and eligibility fixtures, which must fail first:
   - each rule, median, code list, exemption and statement shows its source link and checked-on date;
   - code-list entries show their Swedish titles from the registry next to the code, and rule and exemption names keep their Swedish legal terms where the registry gives them (FR-022);
   - an eligibility answer with a `stale_median` warning shows it with its source (edge case);
   - the timeline is in date order and equal to the fixture;
   - the calculator shows status, rule, threshold, margin, warnings (including part-time) and the disclaimer.
-- [ ] T041 [US4] Implement `frontend/src/views/LegalView.tsx`. T040 passes. Prove it by hand: full-time pass, part-time, an extension filed in the transition window, and code 5343
+- [X] T041 [US4] Implement `frontend/src/views/LegalView.tsx`. T040 passes. Prove it by hand: full-time pass, part-time, an extension filed in the transition window, and code 5343
 
 ---
 
