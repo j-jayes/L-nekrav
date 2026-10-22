@@ -136,7 +136,7 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 **Independent test**: `docker compose up --build` on a clean checkout; the page, REST, MCP, the card and both searches work on port 8000; peak memory recorded.
 
 - [ ] T031 [P] [US6] Write `scripts/fetch_models.py`, which downloads each `core.embeddings.SPECS` model at its pinned revision into `HF_HOME` with `huggingface_hub.snapshot_download`. Write a unit test that it requests exactly the SPECS ids and revisions, with `snapshot_download` monkeypatched
-- [ ] T032 [US6] Write `docker/Dockerfile` (multi-stage, as in research R10), `.dockerignore` and `docker-compose.yml` (one service, `8000:8000`, `mem_limit: 4g`, environment `OPENROUTER_KEY`, `LONEKRAV_LLM_MODEL` and `LONEKRAV_PUBLIC_URL` interpolated, no `env_file`). Start Docker Desktop, then run `docker compose up --build` and time the build and the start-up (SC-006)
+- [ ] T032 [US6] Write `docker/Dockerfile` (multi-stage, as in research R10), `.dockerignore` (it must not exclude `data/lonekrav_milvus.db` or `data/processed/`, though `data/*.db` is gitignored) and `docker-compose.yml` (one service, `8000:8000`, `mem_limit: 4g`, environment `OPENROUTER_KEY`, `LONEKRAV_LLM_MODEL` and `LONEKRAV_PUBLIC_URL` interpolated, no `env_file`). Start Docker Desktop, then run `docker compose up --build` and time the build and the start-up (SC-006)
 - [ ] T033 [US6] Check the running container by hand:
   - `GET /`, `/api/v1/health`, the card, an MCP `initialize` with `tools/list`, a fast search and a full search;
   - then `docker compose exec` to confirm that `.env` is absent and that the key is only in the environment when given;
@@ -155,7 +155,8 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 - [ ] T036 [P] [US3] Write `frontend/src/views/CompareView.test.tsx` on the recorded compare fixtures, which must fail first:
   - columns keep the selection order;
   - each shows sv/en tasks with source, latest salary, threshold, flags and, with an offer, status, margin and warnings;
-  - pass and fail use the same styling apart from the status text and icon;
+  - pass and fail use the same styling apart from the status text and icon (FR-012);
+  - a fifth code cannot be added (the shared four-code selection);
   - `honest_fit` is shown;
   - with fewer than two codes it explains and links to search.
 - [ ] T037 [US3] Implement `frontend/src/views/CompareView.tsx` and `components/EligibilityResult.tsx`. T036 passes. Prove it by hand with 2512, 2511 and 3511 and an offer
@@ -170,6 +171,8 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 - [ ] T039 [US4] Implement `frontend/src/components/OfferForm.tsx`, with the offer draft in a context shared by compare, the calculator, the chart's floor line and the drawer. T038 passes
 - [ ] T040 [P] [US4] Write `frontend/src/views/LegalView.test.tsx` on the recorded registry, timeline and eligibility fixtures, which must fail first:
   - each rule, median, code list, exemption and statement shows its source link and checked-on date;
+  - code-list entries show their Swedish titles from the registry next to the code, and rule and exemption names keep their Swedish legal terms where the registry gives them (FR-022);
+  - an eligibility answer with a `stale_median` warning shows it with its source (edge case);
   - the timeline is in date order and equal to the fixture;
   - the calculator shows status, rule, threshold, margin, warnings (including part-time) and the disclaimer.
 - [ ] T041 [US4] Implement `frontend/src/views/LegalView.tsx`. T040 passes. Prove it by hand: full-time pass, part-time, an extension filed in the transition window, and code 5343
@@ -189,7 +192,8 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
 - [ ] T043 [US5] Implement `frontend/src/lib/a2aClient.ts`. T042 passes
 - [ ] T044 [P] [US5] Write `frontend/src/components/AdvisorDrawer.test.tsx`, which must fail first:
   - the third-party notice (from the card description) is shown before the first send;
-  - a second send while running is refused;
+  - a second send while running is refused with a note;
+  - when the user changes the selection after an advisor update, the user's change stands, and a later advisor update wins again (most recent wins);
   - progress lines appear as events arrive;
   - `ui_sync:get_occupation_salary` and `ui_sync:compare_occupations` update the selection, and payloads and dropped codes are noted;
   - the memo renders Markdown without raw HTML and with its footer;
@@ -208,7 +212,7 @@ test`). Stop `lonekrav-serve` before running the benchmark or a script against t
   - axe with no serious or critical violations (SC-005, SC-009).
   
   Run it against `lonekrav-serve` and against the container
-- [ ] T048 Find a real public job ad (an English-language ad from Platsbanken through the JobSearch API, or one the maintainer supplies) and translate it to Swedish. Write `frontend/e2e/ad-languages.spec.ts`, which pastes each one and records the top three after the full search. They must be the same set (SC-003). Commit only the ad's source link and the codes, in `references/web-client-e2e.md`, and keep the ad text in the scratchpad
+- [ ] T048 Find a real public job ad (an English-language ad from Platsbanken through the JobSearch API, or one the maintainer supplies) and translate it to Swedish (a model translation, recorded as such). Write `frontend/e2e/ad-languages.spec.ts`, which pastes each one and records the top three after the full search. They must be the same set (SC-003). Commit only the ad's source link and the codes, in `references/web-client-e2e.md`, and keep the ad text in the scratchpad
 - [ ] T049 Measure SC-001 and SC-002 in Playwright on the reference machine (keystroke to list update; pause to full ranking for the 600-word ad), and record the numbers in `references/web-client-e2e.md`
 - [ ] T050 [P] Regenerate `references/api-smoke.md` with `scripts/api_smoke.py`. The only differences allowed are the timestamp and the new `/legal/registry` route, if the smoke script lists routes
 - [ ] T051 Write `docs/walkthroughs/004-web-client-docker.md` with the walkthrough skill (snippets emitted with `sed`). Update CLAUDE.md ("Things worked out in Feature 004"; the `/` serving note; the frontend commands) and `references/development-plan.md` ("As built")

@@ -5,7 +5,7 @@
 `/?view=search|compare|legal&codes=C1,C2,…&age=18-24|25-34|35-44|45-54|55-64|65-68`
 
 - An unknown `view` falls back to `search`.
-- `codes` are 4-digit SSYK codes. The chart keeps the first four and compare the first five. A code
+- `codes` are 4-digit SSYK codes. The chart and compare share the first four. A code
   that is unknown (a 404 from `/occupations/{code}`), a duplicate or past the limit is dropped, and
   a note names it.
 - An unknown `age` is ignored, and the simulated bars stay off.

@@ -79,8 +79,8 @@ response for the same text.
 1. **Given** the search box, **When** the user types "backend developer" one character at a time,
    **Then** the result list updates during typing, without waiting for the user to stop, and never
    shows results for older text after results for newer text.
-2. **Given** a typed query, **When** the user stops typing, **Then** within a few seconds the list
-   is replaced by the accurate search's ranking, and the page shows which search produced the list
+2. **Given** a typed query, **When** the user stops typing for 600 ms, **Then** within the time in
+   SC-002 the list is replaced by the accurate search's ranking, and the page shows which search produced the list
    on screen.
 3. **Given** a pasted job ad, **When** the results arrive, **Then** each passage of the ad is shown
    as kept or set aside, with the reason in words (for example "under a 'Benefits' heading"), and
@@ -135,7 +135,7 @@ code with a suppressed percentile.
 
 ### User Story 3 - Compare codes side by side (Priority: P2)
 
-The user compares the selected codes (two to five). For each code they see its official Swedish
+The user compares the selected codes (two to four, the same selection as the chart). For each code they see its official Swedish
 task description from SCB, its English description, its salary summary, its threshold and legal
 flags. If they have entered an offer, they also see whether that offer would pass under each code,
 and by what margin. The honest-fit notice states that the code has to match the duties actually
@@ -149,7 +149,7 @@ compare response.
 
 **Acceptance Scenarios**:
 
-1. **Given** two to five selected codes, **When** the compare view opens, **Then** each code shows
+1. **Given** two to four selected codes, **When** the compare view opens, **Then** each code shows
    its official task text with its source, its salary summary, threshold, flags and, with an offer,
    pass or fail with the margin and warnings, all equal to the REST compare response.
 2. **Given** an offer that passes under one code and fails under another, **When** the comparison
@@ -275,6 +275,9 @@ on the one port; record the container's peak memory.
 - **A code that is banned**: the chart and comparison show that permits cannot be granted for it,
   with the source; no floor line is drawn for it.
 - **Duplicate selection**: selecting a code already on the chart does nothing and says so.
+- **A second advisor request during a run**: refused, with a note to wait or cancel.
+- **The user and the advisor both change the selection**: the most recent change wins, whichever
+  side made it; the drawer lists the codes the advisor selected.
 - **A shared link with a bad code**: an unknown code, or a fifth code, in the address is dropped
   and the page says which.
 - **Advisor selects more than four codes**: the chart keeps the four most recently looked-up codes
@@ -317,15 +320,19 @@ on the one port; record the container's peak memory.
 - **FR-009**: The chart MUST name the SCB table and reference year it was drawn from, and credit
   the data sources as the data dictionary requires.
 - **FR-010**: The chart's figures MUST also be available as an accessible table, and every mark's
-  exact value MUST be reachable by keyboard and touch as well as by pointer.
+  exact value MUST be reachable by keyboard and touch as well as by pointer. No meaning MUST rest
+  on colour alone: pass and fail, simulated and official, and legal flags each also carry text or
+  a shape.
 
 **Comparison**
 
-- **FR-011**: The compare view MUST show, for two to five codes, the official task text with its
+- **FR-011**: The compare view MUST show, for the two to four selected codes, the official task text with its
   source, the salary summary, threshold, flags and, when an offer is entered, the eligibility
   result per code, all as returned by the API's compare operation.
 - **FR-012**: The compare view and the search results MUST show the honest-fit notice, and MUST
-  NOT order, highlight or word results so as to suggest choosing a code for its lower threshold.
+  NOT order, highlight or word results so as to suggest choosing a code for its lower threshold:
+  compare columns keep the selection order, results keep the API's order, and a passing and a
+  failing code are styled alike apart from the status text and icon.
 
 **Legal guide and calculator**
 
@@ -374,7 +381,7 @@ on the one port; record the container's peak memory.
   accurate search MUST be recorded in the repository. If the peak exceeds 4 GB, the cap MUST NOT be
   raised, and no model may be dropped, without the maintainer's decision.
 - **FR-028**: The advisor's public address in its agent card MUST be settable by configuration,
-  defaulting to the local address.
+  defaulting to the local address; a trailing slash in the setting is ignored.
 - **FR-029**: The container MUST start and serve everything except the advisor when no model key
   is given.
 - **FR-030**: The model key MUST reach the container only at run time, never inside the image.
@@ -385,7 +392,7 @@ on the one port; record the container's peak memory.
 
 - **Search session**: the text in the box, the latest answer for each search speed, and which one
   is on screen. Lives only in the page.
-- **Selection**: the ordered set of up to four codes on the chart (up to five for comparison), each
+- **Selection**: the ordered set of up to four codes, shared by the chart and the comparison, each
   with its salary payload and its simulated-bar setting. Updated by the user and by the advisor,
   and mirrored, with the current view, in the page address.
 - **Offer draft**: the calculator's and drawer's offer fields, validated by the API's eligibility
@@ -429,7 +436,8 @@ on the one port; record the container's peak memory.
   login; Lönekrav has no user accounts.
 - The applicable floor line on the chart is the one for a first permit decided today, unless the
   user has entered an offer, in which case it follows the offer's application type and dates.
-- The end-to-end check uses a real public job ad and a translation of it. Only the ad's source
+- The end-to-end check uses a real public job ad and a Swedish translation of it, made by the
+  model during the feature and recorded as such (not a human translation). Only the ad's source
   link and the resulting codes are committed as evidence, not the ad text.
 - The managed container-service variant is documented only; no cloud account is used.
 - Fast search accuracy on long full sentences is a known limitation from Feature 003; the accurate
