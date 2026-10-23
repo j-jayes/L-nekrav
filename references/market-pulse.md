@@ -85,3 +85,38 @@ For comparison, the historical API reported 686 950 ads in 2016 across all occup
 code and year in both tables, the Sweden row equals TAB5932's mean
 (`tests/integration/test_regional_data.py`). TAB4185, which the development plan named, holds
 pay within the regions as employers, not pay by area.
+
+## The advisor and the market tool (FR-017, SC-007)
+
+Two live runs, made with `scripts/a2a_stream.py` and the default model, on the ad
+`tests/fixtures/ads/en1_backend.txt`. The step is optional, and in the first run, whose
+background only mentions a move, the model did not call it:
+
+```text
+  2.94s  status_update  TASK_STATE_WORKING Calling search_occupations
+ 11.95s  status_update  TASK_STATE_WORKING Calling get_occupation_salary
+ 15.23s  status_update  TASK_STATE_WORKING Calling get_occupation_salary
+ 15.24s  status_update  TASK_STATE_WORKING Calling get_occupation_salary
+```
+
+In the second run, the background asks how many jobs are open and what they pay in West
+Sweden. The model called `get_occupation_market`, and the memo kept the market under its own
+heading:
+
+```text
+  2.47s  status_update  TASK_STATE_WORKING Calling search_occupations
+  5.46s  status_update  TASK_STATE_WORKING Calling get_occupation_salary
+  5.48s  status_update  TASK_STATE_WORKING Calling get_occupation_salary
+  5.49s  status_update  TASK_STATE_WORKING Calling get_occupation_market
+
+## Context for a move to West Sweden (not a basis for choosing a code)
+
+- **Open ads, Västra Götalands län (West Sweden):** 244 ads for the occupation group 2512, from Platsbanken (JobTech), fetched 2026-10-23. The national figure is 1,188 ads. These are all software development ads, not only Python backend roles.
+- **Pay, West Sweden (SE23):** mean monthly salary of 54,100 SEK, SCB table TAB5696, reference year 2025, fetched 2026-10-23. The Sweden-wide mean for 2512 is 55,500 SEK, and the Stockholm mean is 59,400 SEK.
+- The work-permit floor is the same nationally and does not vary by region.
+```
+
+Each figure names its source and date, and the memo says the floor does not vary by region.
+One imprecision remains: it calls the county count (Västra Götalands län) "West Sweden",
+although SCB's area SE23 also includes Halland. Counties and national areas are different
+geographies; the panel keeps them in separate sections.
