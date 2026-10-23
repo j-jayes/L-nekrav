@@ -66,6 +66,29 @@ describe("MarketPanel", () => {
     expect(pay.textContent).toMatch(/SCB TAB5696/);
   });
 
+  it("labels a shared count even when the live count is unavailable (US3/AC3)", async () => {
+    const f = structuredClone(fixture("market-1211"));
+    (f.body as { live: unknown }).live = (fixture("market-unavailable").body as { live: unknown }).live;
+    setup(f, "1211");
+    const history = await screen.findByRole("region", { name: "Ads per year" });
+    expect(history.textContent).toMatch(/Shared with 1212/);
+  });
+
+  it("shows when the regional figures were fetched", async () => {
+    setup(fixture("market-1211"), "1211");
+    const pay = await screen.findByRole("region", { name: /Pay by area/ });
+    expect(pay.textContent).toMatch(/fetched \d{4}-\d{2}-\d{2} \d{2}:\d{2} UTC/);
+  });
+
+  it("gives the range of fetch times when the years were fetched at different times", async () => {
+    const f = structuredClone(fixture("market-2512"));
+    const h = (f.body as { history: { fetched_at: string }[] }).history;
+    h[h.length - 1].fetched_at = "2027-01-03T08:00:00Z";
+    setup(f);
+    const history = await screen.findByRole("region", { name: "Ads per year" });
+    expect(history.textContent).toMatch(/fetched 2026-10-23 \d{2}:\d{2} UTC to 2027-01-03 08:00 UTC/);
+  });
+
   it("draws one bar per year with a table view, and a zero year as 0", async () => {
     const f = structuredClone(fixture("market-2512"));
     (f.body as Answer).history[0].ads = 0;

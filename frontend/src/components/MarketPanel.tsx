@@ -8,6 +8,20 @@ const n = (v: number) => v.toLocaleString("sv-SE");
 const utc = (iso: string) => `${new Date(iso).toISOString().slice(0, 16).replace("T", " ")} UTC`;
 const NO_CONCEPT = "JobTech publishes no ads under this code, so there is no count.";
 
+/** "fetched X", or "fetched X to Y" when the figures were fetched at different times. */
+function fetched(times: string[]) {
+  const sorted = [...times].sort();
+  const [first, last] = [utc(sorted[0]), utc(sorted.at(-1)!)];
+  return first === last ? `fetched ${first}` : `fetched ${first} to ${last}`;
+}
+
+/** Codes JobTech merges share one concept, so both its live and its yearly counts. */
+function Shared({ a }: { a: MarketAnswer }) {
+  return a.shared_with.length > 0
+    ? <p className="text-muted">Shared with {a.shared_with.join(", ")}: JobTech counts these codes together.</p>
+    : null;
+}
+
 function OpenNow({ a }: { a: MarketAnswer }) {
   const l = a.live;
   let body;
@@ -19,9 +33,7 @@ function OpenNow({ a }: { a: MarketAnswer }) {
     body = (
       <>
         <p><strong>{n(l.ads!)} open ads</strong>, {n(l.positions!)} positions on Platsbanken</p>
-        {a.shared_with.length > 0 && (
-          <p className="text-muted">Shared with {a.shared_with.join(", ")}: JobTech counts these codes together.</p>
-        )}
+        <Shared a={a} />
         <ul aria-label="Top counties" className="space-y-0.5">{top.map(item)}</ul>
         {rest.length > 0 && (
           <details>
@@ -74,7 +86,9 @@ function PayByArea({ a, floor }: { a: MarketAnswer; floor: number | null }) {
               ))}
             </tbody>
           </table>
-          <p className="text-xs text-muted">SCB TAB5696 (Medlingsinstitutet / SCB), all sectors, {a.regional_year}</p>
+          <p className="text-xs text-muted">
+            SCB TAB5696 (Medlingsinstitutet / SCB), all sectors, {a.regional_year}, {fetched(a.regional.map((r) => r.fetched_at))}
+          </p>
         </>
       )}
     </section>
@@ -131,6 +145,7 @@ function AdsPerYear({ a }: { a: MarketAnswer }) {
       <h5 className="text-xs font-semibold uppercase text-muted">Ads published per year (Platsbanken)</h5>
       {a.history_status === "no_concept" ? <p>{NO_CONCEPT}</p> : (
         <>
+          <Shared a={a} />
           <YearBars rows={a.history} />
           <details>
             <summary className="cursor-pointer text-muted">Table</summary>
@@ -140,7 +155,7 @@ function AdsPerYear({ a }: { a: MarketAnswer }) {
             </table>
           </details>
           <p className="text-xs text-muted">
-            Arbetsförmedlingen historical ads, full years, fetched {a.history[0] && utc(a.history[0].fetched_at)}
+            Arbetsförmedlingen historical ads, full years, {a.history.length > 0 && fetched(a.history.map((h) => h.fetched_at))}
           </p>
         </>
       )}
