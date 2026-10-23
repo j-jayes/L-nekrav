@@ -250,9 +250,9 @@ a recorded run.
 - **Live demand**: for one JobTech concept at one time, the open ads, the positions and the ads
   per county; its source, concept, fetch time, status (available, shared, no count, unavailable)
   and the codes that share it.
-- **Regional pay row**: for one code, one area and one year, the mean monthly salary, the lower
-  and upper ends of its 95 % confidence interval, and the number of employees, each possibly
-  empty; with the SCB table and fetch time.
+- **Regional pay row**: for one code, one area and one year, the mean monthly salary, the margin
+  of its 95 % confidence interval (SCB publishes it as one ± figure), and the number of employees,
+  each possibly empty; with the SCB table and fetch time.
 - **Yearly demand**: for one JobTech concept and one full year, the number of ads published; with
   the source and the build date.
 - **Market answer**: for one code, the three parts above, each with its own status, plus the
