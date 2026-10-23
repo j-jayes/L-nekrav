@@ -1,0 +1,137 @@
+{
+ "total": {
+  "value": 1185
+ },
+ "positions": 0,
+ "query_time_in_millis": 5,
+ "result_time_in_millis": 14,
+ "stats": [
+  {
+   "type": "region",
+   "values": [
+    {
+     "term": "Stockholms län",
+     "concept_id": "CifL_Rzy_Mku",
+     "code": "01",
+     "count": 490
+    },
+    {
+     "term": "Västra Götalands län",
+     "concept_id": "zdoY_6u5_Krt",
+     "code": "14",
+     "count": 244
+    },
+    {
+     "term": "Östergötlands län",
+     "concept_id": "oLT3_Q9p_3nn",
+     "code": "05",
+     "count": 123
+    },
+    {
+     "term": "Skåne län",
+     "concept_id": "CaRE_1nn_cSU",
+     "code": "12",
+     "count": 109
+    },
+    {
+     "term": "Jönköpings län",
+     "concept_id": "MtbE_xWT_eMi",
+     "code": "06",
+     "count": 31
+    },
+    {
+     "term": "Uppsala län",
+     "concept_id": "zBon_eET_fFU",
+     "code": "03",
+     "count": 20
+    },
+    {
+     "term": "Kronobergs län",
+     "concept_id": "tF3y_MF9_h5G",
+     "code": "07",
+     "count": 19
+    },
+    {
+     "term": "Örebro län",
+     "concept_id": "xTCk_nT5_Zjm",
+     "code": "18",
+     "count": 19
+    },
+    {
+     "term": "Västmanlands län",
+     "concept_id": "G6DV_fKE_Viz",
+     "code": "19",
+     "count": 19
+    },
+    {
+     "term": "Norrbottens län",
+     "concept_id": "9hXe_F4g_eTG",
+     "code": "25",
+     "count": 18
+    },
+    {
+     "term": "Västernorrlands län",
+     "concept_id": "NvUF_SP1_1zo",
+     "code": "22",
+     "count": 13
+    },
+    {
+     "term": "Blekinge län",
+     "concept_id": "DQZd_uYs_oKb",
+     "code": "10",
+     "count": 11
+    },
+    {
+     "term": "Dalarnas län",
+     "concept_id": "oDpK_oZ2_WYt",
+     "code": "20",
+     "count": 11
+    },
+    {
+     "term": "Gävleborgs län",
+     "concept_id": "zupA_8Nt_xcD",
+     "code": "21",
+     "count": 9
+    },
+    {
+     "term": "Västerbottens län",
+     "concept_id": "g5Tt_CAV_zBd",
+     "code": "24",
+     "count": 7
+    },
+    {
+     "term": "Värmlands län",
+     "concept_id": "EVVp_h6U_GSZ",
+     "code": "17",
+     "count": 6
+    },
+    {
+     "term": "Södermanlands län",
+     "concept_id": "s93u_BEb_sx2",
+     "code": "04",
+     "count": 5
+    },
+    {
+     "term": "Hallands län",
+     "concept_id": "wjee_qH2_yb6",
+     "code": "13",
+     "count": 5
+    },
+    {
+     "term": "Kalmar län",
+     "concept_id": "9QUH_2bb_6Np",
+     "code": "08",
+     "count": 4
+    },
+    {
+     "term": "Jämtlands län",
+     "concept_id": "65Ms_7r1_RTG",
+     "code": "23",
+     "count": 3
+    }
+   ]
+  }
+ ],
+ "freetext_concepts": {},
+ "hits": []
+}

@@ -4,6 +4,7 @@ Standalone on purpose (plain httpx + openpyxl + pypdf), so parser tests have rea
 any parser exists. Run from the repo root:
 
     uv run python scripts/cut_fixtures.py
+    uv run python scripts/cut_fixtures.py market   # only the Feature 005 slices, appended
 
 Writes to tests/fixtures/ and records each URL with its fetch date in tests/fixtures/README.md.
 """
@@ -14,6 +15,7 @@ import datetime as dt
 import io
 import json
 import re
+import sys
 from pathlib import Path
 
 import httpx
@@ -37,6 +39,11 @@ PXWEB_TABLES = {  # table -> extra selections
     "TAB5844": {"Alder": "*"},
     "TAB4264": {"Alder": "*"},
 }
+REGIONAL_TABLE = "TAB5696"  # mean salary by national area (Feature 005)
+REGIONAL_CONTENTS = "000007AS,000007AU,000007AP"  # monthly salary, its 95 % CI, employees
+JOBSEARCH = "https://jobsearch.api.jobtechdev.se/search"
+HISTORICAL = "https://historical.api.jobtechdev.se/search"
+JOBSEARCH_CONCEPT = "DJh5_yyF_hEM"  # 2512's occupation group
 JOBTECH = "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
 JOBTECH_QUERY = """{ concepts(type:"ssyk-level-4") { id ssyk_code_2012 preferred_label definition
   narrower(type:"occupation-name") { id preferred_label alternative_labels
@@ -110,6 +117,42 @@ def pxweb() -> None:
         params |= {f"valueCodes[{k}]": v for k, v in extra.items()}
         data = get(PXWEB.format(table=table), params=params).json()
         (OUT / "pxweb" / f"{table}.json").write_text(json.dumps(data, ensure_ascii=False, indent=1))
+
+
+def regional() -> None:
+    params = {"lang": "en", "outputFormat": "json-stat2", "valueCodes[Region]": "*",
+              "valueCodes[Sektor]": "0", "valueCodes[Kon]": "1+2",
+              "valueCodes[Yrke2012]": ",".join(CODES), "valueCodes[Tid]": "*",
+              "valueCodes[ContentsCode]": REGIONAL_CONTENTS}
+    data = get(PXWEB.format(table=REGIONAL_TABLE), params=params).json()
+    (OUT / "pxweb" / f"{REGIONAL_TABLE}.json").write_text(
+        json.dumps(data, ensure_ascii=False, indent=1))
+
+
+def jobsearch() -> None:
+    """Ad counts only (limit=0): no ad text is kept."""
+    live = get(JOBSEARCH, params={"occupation-group": JOBSEARCH_CONCEPT, "limit": "0",
+                                  "stats": "region", "stats.limit": "30"}).json()
+    (OUT / "jobsearch" / "live_2512.json").write_text(json.dumps(live, ensure_ascii=False, indent=1))
+    # positions is 0 whenever stats are asked for, so the live count makes a second, plain request
+    plain = get(JOBSEARCH, params={"occupation-group": JOBSEARCH_CONCEPT, "limit": "0"}).json()
+    (OUT / "jobsearch" / "live_2512_plain.json").write_text(
+        json.dumps(plain, ensure_ascii=False, indent=1))
+    for year in (2016, 2025):
+        h = get(HISTORICAL, params={"occupation-group": JOBSEARCH_CONCEPT, "limit": "0",
+                                    "historical-from": f"{year}-01-01T00:00:00",
+                                    "historical-to": f"{year}-12-31T23:59:59"}).json()
+        (OUT / "jobsearch" / f"history_2512_{year}.json").write_text(
+            json.dumps(h, ensure_ascii=False, indent=1))
+
+
+def market() -> None:
+    (OUT / "jobsearch").mkdir(parents=True, exist_ok=True)
+    regional()
+    jobsearch()
+    with (OUT / "README.md").open("a") as f:
+        f.writelines(f"| {u} | {d} |\n" for u, d in sources)
+    print(f"appended market fixtures from {len(sources)} requests to {OUT}")
 
 
 def jobtech() -> list[str]:
@@ -190,4 +233,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    market() if sys.argv[1:] == ["market"] else main()

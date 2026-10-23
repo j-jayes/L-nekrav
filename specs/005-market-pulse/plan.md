@@ -48,7 +48,7 @@ outbound HTTPS for the live count only; without it, the count says it is unavail
 
 **Performance Goals**:
 - A market answer with a live fetch arrives within 2 s; a reused one within 0.1 s (SC-002).
-- With JobSearch down, an answer arrives within 5 s (SC-003). The live call times out at 3 s.
+- With JobSearch down, an answer arrives within 5 s (SC-003). The live count makes two calls, each with a 2 s timeout (research R1).
 
 **Constraints**:
 - No count or salary is estimated or carried over (FR-005, Principle II).

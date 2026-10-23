@@ -7,12 +7,19 @@ the session scratchpad and were not committed. The fixtures are cut from the sam
 ## R1. The live ad interface (JobSearch)
 
 - **Decision**: `GET https://jobsearch.api.jobtechdev.se/search?occupation-group={concept}&limit=0&stats=region&stats.limit=30`
-  with Lönekrav's User-Agent and a 3 s timeout. The fields used are:
+  with Lönekrav's User-Agent. The fields used are:
   - `total.value`: the number of ads;
   - `positions`: the number of positions;
   - `stats[0].values[]`: the counties, each with `term`, `code`, `concept_id` and `count`.
 
   Ads with no county are `total − Σcounts`, shown as "no county given" when greater than zero.
+- **Two requests, not one** (found while cutting fixtures): `positions` is 0 whenever `stats` is
+  asked for. With no stats it is real: 1 185 ads, 1 571 positions; with `stats=region` it is
+  1 185 ads, 0 positions, and the counties sum to 1 166. So the live count makes two requests:
+  - a plain request gives `ads` and `positions`;
+  - a stats request gives the counties and `no_county`, from that response's own total.
+
+  Each has a 2 s timeout, so a dead API still answers within 5 s (SC-003).
 - **Evidence**:
   - The request needs no key and answered 200 in 0.36 s.
   - For `DJh5_yyF_hEM` (2512) it returned 1 183 ads, 1 569 positions and 488 in Stockholms län.
@@ -31,7 +38,7 @@ the session scratchpad and were not committed. The fixtures are cut from the sam
     `status="unavailable"` with a reason (`timeout`, `http 503`, `connection error`,
     `unexpected response`), and no number.
 - **Rationale**: REST routes and MCP tools are synchronous here (they run in the thread pool), so
-  a lock is enough. With a 3 s timeout, SC-003 (5 s) holds even for the slowest failure.
+  a lock is enough. With two 2 s timeouts (R1), SC-003 (5 s) holds even for the slowest failure.
 - **Base URL setting**: `LONEKRAV_JOBSEARCH_URL` (default the real API) exists only so that the
   failure path can be proven against a running server (SC-003) and in e2e. Unit tests inject the
   fetcher instead.

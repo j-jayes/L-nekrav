@@ -1,6 +1,9 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.0 → 1.0.1 (PATCH, 2026-10-20): Principle IV clarifies that the
+- Version change: 1.0.1 → 1.0.2 (PATCH, 2026-10-23): Technology and Data Constraints lists the
+  Feature 005 sources: Arbetsförmedlingen's JobSearch and historical ads APIs (CC0) and SCB
+  TAB5696 (mean salary by national area). No principle changes. Templates: no edits required.
+- Earlier: 1.0.0 → 1.0.1 (PATCH, 2026-10-20): Principle IV clarifies that the
   cross-lingual benchmark runs under a `benchmark` marker and gates merges of data or search changes,
   rather than running in every default test run. Prompted by the Feature 001 clarification and the
   /speckit-analyze finding D1.
@@ -106,7 +109,8 @@ Rationale: an agent-built codebase grows by accretion unless size is treated as 
   legal terms are shown alongside so users can copy them into forms.
 - Data sources: SCB PxWeb v2 (TAB5932 percentiles, TAB5844 age-band means), SCB SSYK 2012
   structure, English titles, title index and ISCO key; JobTech Taxonomy; ILO ISCO-08
-  definitions; ESCO. Raw downloads are cached under `data/raw/` and never committed.
+  definitions; ESCO; SCB TAB5696 (mean salary by national area); Arbetsförmedlingen's JobSearch
+  and historical ads APIs (ad counts only, CC0). Raw downloads are cached under `data/raw/` and never committed.
 - Secrets live only in `.env`, which is gitignored. No secret may appear in logs, fixtures or
   committed artefacts.
 
@@ -135,4 +139,4 @@ Rationale: an agent-built codebase grows by accretion unless size is treated as 
 - The `LegalConstants` registry MUST be reviewed every June when SCB publishes a new median, and
   whenever Migrationsverket announces a rule change.
 
-**Version**: 1.0.1 | **Ratified**: 2026-10-20 | **Last Amended**: 2026-10-20
+**Version**: 1.0.2 | **Ratified**: 2026-10-20 | **Last Amended**: 2026-10-23

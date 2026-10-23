@@ -1,0 +1,11 @@
+{
+ "total": {
+  "value": 1185
+ },
+ "positions": 1571,
+ "query_time_in_millis": 1,
+ "result_time_in_millis": 10,
+ "stats": [],
+ "freetext_concepts": {},
+ "hits": []
+}
