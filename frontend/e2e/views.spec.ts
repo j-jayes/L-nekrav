@@ -18,7 +18,11 @@ const VIEWS: { name: string; url: string; ready: (p: Page) => Promise<void> }[] 
   {
     name: "compare",
     url: "/?view=compare&codes=2512,2511,3511",
-    ready: async (p) => { await expect(p.getByRole("article")).toHaveCount(3); },
+    ready: async (p) => {
+      await expect(p.getByRole("article")).toHaveCount(3);
+      for (const code of ["2512", "2511", "3511"]) // Feature 005: each column's market panel
+        await expect(p.getByRole("region", { name: `Market for ${code}` }).getByRole("region", { name: "Ads per year" })).toBeVisible();
+    },
   },
   {
     name: "legal",

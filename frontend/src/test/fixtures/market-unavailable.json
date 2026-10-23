@@ -1,0 +1,222 @@
+{
+  "status": 200,
+  "body": {
+    "code": "2512",
+    "title_sv": "Mjukvaru- och systemutvecklare m.fl.",
+    "title_en": "Software- and system developers",
+    "shared_with": [],
+    "live": {
+      "status": "unavailable",
+      "concept_id": "DJh5_yyF_hEM",
+      "ads": null,
+      "positions": null,
+      "counties": [],
+      "no_county": null,
+      "reason": "connection error",
+      "fetched_at": null,
+      "source": null
+    },
+    "regional_year": 2025,
+    "regional": [
+      {
+        "code": "2512",
+        "year": 2025,
+        "region": "SE",
+        "region_name": "Sweden",
+        "mean": 55500,
+        "mean_ci95": 940,
+        "employees": 113100,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": []
+      },
+      {
+        "code": "2512",
+        "year": 2025,
+        "region": "SE11",
+        "region_name": "Stockholm",
+        "mean": 59400,
+        "mean_ci95": 1470,
+        "employees": 51000,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": []
+      },
+      {
+        "code": "2512",
+        "year": 2025,
+        "region": "SE12",
+        "region_name": "East-Central Sweden",
+        "mean": 52400,
+        "mean_ci95": 1670,
+        "employees": 11800,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": []
+      },
+      {
+        "code": "2512",
+        "year": 2025,
+        "region": "SE21",
+        "region_name": "Småland and islands",
+        "mean": 48400,
+        "mean_ci95": 1960,
+        "employees": null,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": [
+          "employees"
+        ]
+      },
+      {
+        "code": "2512",
+        "year": 2025,
+        "region": "SE22",
+        "region_name": "South Sweden",
+        "mean": 52900,
+        "mean_ci95": 3230,
+        "employees": 14000,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": []
+      },
+      {
+        "code": "2512",
+        "year": 2025,
+        "region": "SE23",
+        "region_name": "West Sweden",
+        "mean": 54100,
+        "mean_ci95": 1220,
+        "employees": 20200,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": []
+      },
+      {
+        "code": "2512",
+        "year": 2025,
+        "region": "SE31",
+        "region_name": "North-Central Sweden",
+        "mean": 48600,
+        "mean_ci95": 2720,
+        "employees": null,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": [
+          "employees"
+        ]
+      },
+      {
+        "code": "2512",
+        "year": 2025,
+        "region": "SE32",
+        "region_name": "Central Norrland",
+        "mean": 52000,
+        "mean_ci95": 1230,
+        "employees": null,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": [
+          "employees"
+        ]
+      },
+      {
+        "code": "2512",
+        "year": 2025,
+        "region": "SE33",
+        "region_name": "Upper Norrland",
+        "mean": 50900,
+        "mean_ci95": 2060,
+        "employees": null,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": [
+          "employees"
+        ]
+      }
+    ],
+    "history_status": "available",
+    "history": [
+      {
+        "concept_id": "DJh5_yyF_hEM",
+        "year": 2016,
+        "ads": 16406,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:16.161560Z"
+      },
+      {
+        "concept_id": "DJh5_yyF_hEM",
+        "year": 2017,
+        "ads": 18886,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:16.161370Z"
+      },
+      {
+        "concept_id": "DJh5_yyF_hEM",
+        "year": 2018,
+        "ads": 22572,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:16.161654Z"
+      },
+      {
+        "concept_id": "DJh5_yyF_hEM",
+        "year": 2019,
+        "ads": 22723,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:16.185766Z"
+      },
+      {
+        "concept_id": "DJh5_yyF_hEM",
+        "year": 2020,
+        "ads": 17910,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:16.221232Z"
+      },
+      {
+        "concept_id": "DJh5_yyF_hEM",
+        "year": 2021,
+        "ads": 29425,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:16.217182Z"
+      },
+      {
+        "concept_id": "DJh5_yyF_hEM",
+        "year": 2022,
+        "ads": 34649,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:16.223006Z"
+      },
+      {
+        "concept_id": "DJh5_yyF_hEM",
+        "year": 2023,
+        "ads": 29645,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:16.256884Z"
+      },
+      {
+        "concept_id": "DJh5_yyF_hEM",
+        "year": 2024,
+        "ads": 21634,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:16.281540Z"
+      },
+      {
+        "concept_id": "DJh5_yyF_hEM",
+        "year": 2025,
+        "ads": 30304,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:16.287185Z"
+      }
+    ],
+    "notice": "The SSYK code on a work-permit offer must match the duties actually performed. Open ads and regional pay are context: they are never a reason to choose a code. Regional figures are SCB means; the work-permit salary floor comes from the national median and is the same in every area."
+  }
+}

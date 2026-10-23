@@ -151,3 +151,10 @@ def test_the_openrouter_client_has_a_timeout_and_one_retry(monkeypatch):  # FR-0
     openrouter_model("sk-test")
     assert made == [{"base_url": OPENROUTER_URL, "api_key": "sk-test", "timeout": 30,
                      "max_retries": 1}]
+
+
+def test_the_prompt_allows_market_context_but_never_choosing_by_it():  # Feature 005 FR-017
+    prompt = " ".join(SYSTEM_PROMPT.split())
+    assert "get_occupation_market" in prompt
+    assert "Never use open ads or pay as a reason to prefer or rank a code" in prompt
+    assert "with its source and date" in prompt

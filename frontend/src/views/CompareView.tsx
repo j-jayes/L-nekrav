@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api, type CompareColumn, type Comparison, type Offer, type Registry, type Source } from "../api/client";
 import { EligibilityResult } from "../components/EligibilityResult";
+import { MarketPanel } from "../components/MarketPanel";
 import { Notice } from "../components/Notice";
 import { Flags } from "../components/ResultList";
 import { sek } from "../components/SalaryChart";
@@ -56,6 +57,7 @@ function Column({ c }: { c: CompareColumn }) {
       )}
       <Tasks title="Official tasks (Swedish)" texts={c.tasks_sv} lang="sv" />
       <Tasks title="Tasks in English" texts={c.tasks_en} lang="en" />
+      <MarketPanel code={c.code} floor={c.eligibility?.threshold_sek ?? c.threshold?.amount_sek ?? null} />
     </article>
   );
 }

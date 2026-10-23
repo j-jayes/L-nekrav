@@ -22,3 +22,5 @@ export type Registry = S["Registry"];
 export type Source = S["Source"];
 export type LegalFlag = S["LegalFlag"];
 export type OccupationProfile = S["OccupationProfile"];
+export type MarketAnswer = S["MarketAnswer"];
+export type YearlyAds = S["YearlyAds"];

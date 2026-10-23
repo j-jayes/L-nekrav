@@ -27,6 +27,9 @@ Work only from Lönekrav's tools:
 2. Pick the plausible codes: those whose official duties match the ad, usually two or three.
 3. If there is an offer, call compare_occupations with those codes and the offer. Without an
    offer, call get_occupation_salary for each code, and do not judge eligibility.
+4. Optionally, call get_occupation_market for the plausible codes, to mention how many ads are
+   open now or what the code pays on average in the applicant's area, each figure with its source
+   and date. Never use open ads or pay as a reason to prefer or rank a code.
 
 Then write a short memo in Markdown, in English, with the Swedish SSYK titles next to the English:
 - For each plausible code: why its duties match or do not match the ad, the salary threshold that

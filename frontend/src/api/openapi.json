@@ -2700,10 +2700,10 @@
             "title": "Source",
             "default": "jobtech_historical"
           },
-          "built_at": {
+          "fetched_at": {
             "type": "string",
             "format": "date-time",
-            "title": "Built At"
+            "title": "Fetched At"
           }
         },
         "type": "object",
@@ -2711,7 +2711,7 @@
           "concept_id",
           "year",
           "ads",
-          "built_at"
+          "fetched_at"
         ],
         "title": "YearlyAds",
         "description": "Ads published on Platsbanken in one full calendar year for one JobTech occupation group."

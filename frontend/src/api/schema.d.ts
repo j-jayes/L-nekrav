@@ -1075,10 +1075,10 @@ export interface components {
              */
             source: "jobtech_historical";
             /**
-             * Built At
+             * Fetched At
              * Format: date-time
              */
-            built_at: string;
+            fetched_at: string;
         };
         SendMessageRequest: {
             /** @example  */
