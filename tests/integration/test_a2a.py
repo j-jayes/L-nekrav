@@ -81,6 +81,21 @@ def test_agent_card(advisor, fake_model):
     assert "third-party" in card["description"] and "OpenRouter" in card["description"]
 
 
+@pytest.mark.parametrize(("setting", "url"), [
+    (None, "http://localhost:8000/a2a"),
+    ("https://lonekrav.example.test", "https://lonekrav.example.test/a2a"),
+    ("https://lonekrav.example.test/", "https://lonekrav.example.test/a2a"),
+])
+def test_card_url_follows_the_public_address(advisor, fake_model, monkeypatch, setting, url):
+    # Feature 004 FR-028: the card names where the container is reachable.
+    if setting is None:
+        monkeypatch.delenv("LONEKRAV_PUBLIC_URL", raising=False)
+    else:
+        monkeypatch.setenv("LONEKRAV_PUBLIC_URL", setting)
+    card = advisor(fake_model()).get("/.well-known/agent-card.json").json()
+    assert card["supportedInterfaces"][0]["url"] == url
+
+
 def test_streamed_run_events_in_order(advisor, fake_model):
     client = advisor(fake_model(*SCRIPT))
     events = stream(client, [{"data": {"ad": AD, "offer": OFFER}}])
@@ -301,8 +316,11 @@ def test_the_key_selects_the_openrouter_model(fixture_engine, salaries, monkeypa
     app = lonekrav.app.create_app(engine=engine, profiles=profiles, salaries=salaries)
     monkeypatch.setenv("LONEKRAV_LLM_MODEL", "some/other-model")
     lonekrav.app.create_app(engine=engine, profiles=profiles, salaries=salaries)
+    monkeypatch.setenv("LONEKRAV_LLM_MODEL", "")  # docker compose passes an unset variable as ""
+    lonekrav.app.create_app(engine=engine, profiles=profiles, salaries=salaries)
 
     from lonekrav.protocols.agent.loop import DEFAULT_MODEL
-    assert chosen == [("sk-or-SENTINEL", DEFAULT_MODEL), ("sk-or-SENTINEL", "some/other-model")]
+    assert chosen == [("sk-or-SENTINEL", DEFAULT_MODEL), ("sk-or-SENTINEL", "some/other-model"),
+                      ("sk-or-SENTINEL", DEFAULT_MODEL)]
     with TestClient(app) as client:
         assert "SENTINEL" not in client.get("/.well-known/agent-card.json").text

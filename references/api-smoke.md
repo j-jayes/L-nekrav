@@ -1,6 +1,6 @@
 # API smoke transcript
 
-Run 2026-10-22T09:45:42 against `http://127.0.0.1:8000` by `scripts/api_smoke.py`. Lists are cut to three items for reading.
+Run 2026-10-22T15:19:09 against `http://127.0.0.1:8000` by `scripts/api_smoke.py`. Lists are cut to three items for reading.
 
 ## Eligibility, scenario 1: 2512 filed 16 June 2026
 
@@ -1070,8 +1070,8 @@ Run 2026-10-22T09:45:42 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "fused_score": 0.01639344262295082,
    "fused_rank": 1,
    "matched_chunk": {
-    "kind": "synonyms_en",
-    "text": "Tourpusher"
+    "kind": "title",
+    "text": "Brunnsborrare m.fl. / Well drillers and borers and related workers"
    },
    "legal_flags": []
   },
@@ -1200,8 +1200,8 @@ Run 2026-10-22T09:45:42 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    "fused_score": 0.03701996927803379,
    "fused_rank": 2,
    "matched_chunk": {
-    "kind": "desc_en",
-    "text": "(a)  designing and developing database architecture, data structures, tables, dictionaries and naming conventions for information systems projects; (b)  designing, constructing, modifying, integrating, implementing and testing database management systems; (c)  conducting research and providing advice on the selection, application and implementation of database management tools; (d)  developing and implementing data administration policy, documentation, standards and models; (e)  developing policies and procedures for database access and usage and for the backup and recovery of data; (f)  performing the operational establishment and preventive maintenance of backups, recovery procedures, and enforcing security and integrity controls."
+    "kind": "synonyms_sv",
+    "text": "Databasadministratör; Databastekniker; DBA; IT-leveranskoordinator; Nätverksadministratör; Nätverksansvarig; Systemadministratör, dataspecialist; Systemadministratör, datatekniker; databasadministratörer; administratör av databas; databasansvarig; databaskonfigurator; ansvarig för databasen; Systemadministratör; IKT-systemadministratör; system- och nätverksadministratör; system- och nätverkshanterare; nätverkshanterare; administratör; hanterare; systemhanterare; serverhanterare; serveradministratör; nätverksspecialist; nätverkssupport; nätverksingenjör; nätverksadministratörer; nätadministratörer; nätverkschef; nätadministratör"
    },
    "legal_flags": [
     {

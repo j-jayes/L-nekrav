@@ -1,0 +1,51 @@
+{
+  "status": 200,
+  "body": {
+    "status": "fail",
+    "rule_id": "salary_90",
+    "reason": "Salary requirement for first permits decided from 1 June 2026 and for extensions not covered by the transition: at least 90 % of the median in force when the application was filed.",
+    "percent": 90.0,
+    "median": {
+      "amount": 38300,
+      "scb_reference_year": 2025,
+      "effective_from": "2026-06-16",
+      "effective_to": null,
+      "source": {
+        "key": "mv_lonekrav",
+        "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+        "checked_on": "2026-10-21"
+      }
+    },
+    "threshold_sek": 34470,
+    "margin_sek": -8470,
+    "margin_percent": -24.6,
+    "warnings": [
+      {
+        "kind": "part_time",
+        "message": "The requirement applies to the monthly salary actually paid. Migrationsverket states it as \"a monthly salary or wages totalling at least\" the threshold and gives no reduction for part-time work, so a part-time salary must still reach the full amount.",
+        "source": {
+          "key": "mv_employees",
+          "title": "Migrationsverket: Employees (work permit requirements)",
+          "url": "https://www.migrationsverket.se/en/you-want-to-apply/work/employee-or-self-employed/employees.html",
+          "checked_on": "2026-10-21"
+        }
+      }
+    ],
+    "sources": [
+      {
+        "key": "mv_lonekrav",
+        "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+        "checked_on": "2026-10-21"
+      },
+      {
+        "key": "mv_employees",
+        "title": "Migrationsverket: Employees (work permit requirements)",
+        "url": "https://www.migrationsverket.se/en/you-want-to-apply/work/employee-or-self-employed/employees.html",
+        "checked_on": "2026-10-21"
+      }
+    ],
+    "disclaimer": "The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice."
+  }
+}

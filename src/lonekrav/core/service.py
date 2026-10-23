@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from lonekrav.core.adparse import AdText, ParsedAd, parse
 from lonekrav.core.compare import CompareRequest, Comparison, compare
 from lonekrav.core.eligibility import EligibilityAnswer, EligibilityRequest, UnknownCode, evaluate
-from lonekrav.core.legal import TimelineEvent, load_registry
+from lonekrav.core.legal import Registry, TimelineEvent, load_registry
 from lonekrav.core.legal_flags import flags_for
 from lonekrav.core.models import AgeBandSalary, OccupationProfile, SalaryDistribution
 from lonekrav.core.salary import SalaryPayload, payload
@@ -63,3 +63,13 @@ class Service:
 
     def timeline(self) -> list[TimelineEvent]:
         return load_registry().timeline()
+
+    def registry(self) -> Registry:
+        """The legal registry, with each listed code named by its Swedish title (FR-022); a note
+        the registry gives a code (9210's berry pickers) follows the title."""
+        reg = load_registry()
+        lists = {kind: cl.model_copy(update={"codes": {
+            code: ": ".join(t for t in (self.profiles[code].title_sv if code in self.profiles
+                                        else "", note) if t)
+            for code, note in cl.codes.items()}}) for kind, cl in reg.code_lists.items()}
+        return reg.model_copy(update={"code_lists": lists})

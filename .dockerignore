@@ -1,0 +1,24 @@
+# Only the page, the package, uv's lock and the built data go into the build context.
+.git/
+.venv/
+.env
+.env.*
+**/__pycache__/
+**/.pytest_cache/
+.ruff_cache/
+frontend/node_modules/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+data/raw/
+data/*.db.lock
+reports/
+slides/
+docs/
+specs/
+references/
+tests/
+scripts/
+inbox/
+work/
+outbox/

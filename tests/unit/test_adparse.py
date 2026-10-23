@@ -66,6 +66,19 @@ def test_swedish_headings():
                    ("benefits", False)]
 
 
+def test_an_unknown_heading_ends_the_section_before_it():
+    """Found by hand in Feature 004: a Swedish ad's "Om tjänsten" made everything after it a duty,
+    because the headings that followed ("Dina förmåner som anställd", "Din arbetsplats") are not in
+    the list. An unknown heading-like line now ends the section, and anchors label what follows."""
+    ad = ("Sjuksköterska\n\nOm tjänsten\n- Du vårdar patienter\n- Du övervakar vitala parametrar\n\n"
+          "Dina förmåner som anställd\nWe offer vacation pension and allowance to all staff.\n")
+    p = parse(ad, FakeEmbedder(), anchors=ANCHORS)
+    assert [(x.text, x.label, x.by) for x in p.passages[1:3]] == [
+        ("Du vårdar patienter", "duty", "heading"), ("Du övervakar vitala parametrar", "duty", "heading")]
+    assert (p.passages[-1].label, p.passages[-1].by) == ("benefits", "anchor")
+    assert p.passages[-1].keep is False
+
+
 def test_unheaded_passages_take_the_nearest_anchor():
     ad = "Cook\n\nWe offer vacation pension and allowance to all staff.\nYou will build and maintain menus."
     p = parse(ad, FakeEmbedder(), anchors=ANCHORS)

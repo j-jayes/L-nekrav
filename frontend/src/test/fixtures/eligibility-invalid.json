@@ -1,0 +1,25 @@
+{
+  "status": 422,
+  "body": {
+    "detail": [
+      {
+        "type": "value_error",
+        "loc": [
+          "body"
+        ],
+        "msg": "Value error, decided_on cannot be before filed_on",
+        "input": {
+          "monthly_salary_sek": 52000,
+          "fte_percent": 100,
+          "application_type": "first_permit",
+          "filed_on": "2026-10-23",
+          "decided_on": "2026-10-22",
+          "code": "2512"
+        },
+        "ctx": {
+          "error": {}
+        }
+      }
+    ]
+  }
+}

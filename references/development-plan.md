@@ -29,7 +29,7 @@ full stack including React; English enrichment should come from official crosswa
 | English text | SCB publishes official **English titles** for all 426 codes (`structur_english_ssyk2012_1_4.xlsx`), a **9 171-title Swedish index** (`ssyk_index_webb_2026.xlsx`), and an **SSYK→ISCO-08 key** (429 codes; some 1→many, e.g. 2512 → 2511,2512,2513,2514,2521). ILO ships English ISCO-08 definitions with task lists (`ISCO-08 EN Structure and definitions.xlsx`, 303 KB). ESCO API (no auth) gives per-occupation English **and Swedish** titles, alt labels and descriptions, linked to ISCO unit groups; JobTech links every occupation-name to ESCO. So English enrichment is deterministic; the LLM is optional polish. | probed |
 | Stack versions | milvus-lite 3.2.2 (pure Python, BM25 Function, sparse, multi-vector, hybrid RRF, FLAT only, Py ≥3.10), pymilvus 3.0.2, a2a-sdk 1.2.3 (`[fastapi]` extra, JSON-RPC + SSE, card at `/.well-known/agent-card.json`), fastmcp 4.1.2 (4.1.3 pinned in 003), mcp 2.3.0, sentence-transformers 6.1.0, spec-kit v1.2.2 (`specify` already installed; commands are `/speckit-constitution`, `-specify`, `-clarify`, `-plan`, `-checklist`, `-tasks`, `-analyze`, `-implement`, `-converge`). | PyPI / probe |
 | Machine | Apple M2 Pro, 16 GB, uv 0.9.9, Docker 24, node 22, system Python 3.9 (uv will pin 3.12). KBLab model already in HF cache. | local |
-| Latency | Measured 2026-10-20 (`references/embedding-benchmark.md`): KBLab 39 ms per query, 0.73 GB; Harrier fp32 130 ms per query, 0.58 s per pasted ad, 3.1 GB (bf16 is 10× slower on CPU). Container budget raised to **4 GB** by the maintainer. | measured |
+| Latency | Measured 2026-10-20 (`references/embedding-benchmark.md`): KBLab 39 ms per query, 0.73 GB; Harrier fp32 130 ms per query, 0.58 s per pasted ad, 3.1 GB (bf16 is 10× slower on CPU). Container budget raised to **4 GB** by the maintainer, then to **5 GB** in 004 after measuring both models in one container. | measured |
 
 ## Repository layout (monorepo)
 
@@ -205,6 +205,26 @@ Cloud Run variant in the README without deploying it.
 **Verify:** Playwright screenshots of the three main views at phone and desktop width; `docker stats`
 RSS recorded; end-to-end: paste a real LinkedIn ad in English, then its Swedish translation, confirm the
 same top-3 codes; A2A drawer updates the chart.
+
+**As built (2026-10-22)**: the decisions are in `specs/004-web-client-docker/research.md`.
+- The page is served at `/` and `/assets`, before the MCP root mount. Its state lives in the query
+  string, so no catch-all route is needed.
+- The page's types are generated from the committed OpenAPI schema, which a drift test guards.
+- The chart is hand-written SVG, and every figure comes from the payloads, including
+  `applicable_rule_id` for the floor.
+- The A2A client is fetch plus an SSE parser, tested on captured bytes.
+- The image bakes in both models and the index. It uses CPU-only torch on Linux and a uv cache
+  mount, and is 3.85 GB.
+- The cap is 5 GB, because the measured peak is 4.54 GiB.
+
+Found and fixed along the way:
+- ILO text was served as the matched passage. ILO chunks now rank but are never shown.
+- 002's ad parser let one heading label an entire ad.
+
+The English/Swedish top-three check failed on two real Platsbanken ads, the cross-lingual ranking
+of whole ads (`references/web-client-e2e.md`). Evidence: `references/web-client-e2e.md`,
+`references/container-smoke.md`, `references/container-memory.md` and
+`references/web-client-screenshots/`.
 
 ## Extension (not in milestone) — `005-market-pulse`
 

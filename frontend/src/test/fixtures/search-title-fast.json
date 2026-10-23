@@ -1,0 +1,114 @@
+{
+  "status": 200,
+  "body": {
+    "mode_used": "fast",
+    "fallback_reason": null,
+    "searched_text": "backend developer",
+    "title_list": null,
+    "passages": null,
+    "low_confidence": false,
+    "hits": [
+      {
+        "code": "2512",
+        "title_sv": "Mjukvaru- och systemutvecklare m.fl.",
+        "title_en": "Software- and system developers",
+        "scores": {
+          "kblab": 0.6936643123626709,
+          "bm25": 7.139456748962402
+        },
+        "ranks": {
+          "kblab": 2,
+          "bm25": 1
+        },
+        "fused_score": 0.021047065044949763,
+        "fused_rank": 1,
+        "matched_chunk": {
+          "kind": "synonyms_sv",
+          "text": "Produktägare, IT; Programmerare, data; Programutvecklare; Programvarukonstruktör; Programvaruutvecklare; Projektledare, IT applikationsprogrammerare; Projektledare, IT, databasutveckling; Projektledare, IT, programvaruutveckling; Projektledare, IT, systemutveckling; Projektledare, IT, webb- och multimedia; Projektledare, systemutveckling; Softwaredesigner; Systemdesigner; Systemerare; Systemkonstruktör; Systemprogrammerare; Systemtekniker, systemerare; Systemutvecklare; Systemvetare; Webbprogrammerare; Webbutvecklare; GIS-utvecklare; Backend-utvecklare; Frontend-utvecklare; gränssnittsutvecklare; utvecklare av klientdel; UI-utvecklare; designer av klientdel; gränssnittsdesigner; UI-designer; IKT-programutvecklare; programvaruprogrammerare; programmerare; programvaruingenjör; applikationsingenjör; lösningsutvecklare; programmeringsanalytiker; Projektledare, IT; IT-projektledare; projektledare inom IKT"
+        },
+        "legal_flags": []
+      },
+      {
+        "code": "2513",
+        "title_sv": "Utvecklare inom spel och digitala media",
+        "title_en": "Games and digital media developers",
+        "scores": {
+          "kblab": 0.6162564754486084,
+          "bm25": 5.656832695007324
+        },
+        "ranks": {
+          "kblab": 3,
+          "bm25": 2
+        },
+        "fused_score": 0.020711725550435225,
+        "fused_rank": 2,
+        "matched_chunk": {
+          "kind": "synonyms_en",
+          "text": "digital games developer; digital game developer; computer games developer; virtual games developer; video games developer; games programmer; digital games developers"
+        },
+        "legal_flags": []
+      },
+      {
+        "code": "2143",
+        "title_sv": "Civilingenjörsyrken inom elektroteknik",
+        "title_en": "Engineering professionals in electrical, electronics and telecommunications",
+        "scores": {
+          "kblab": 0.7121975421905518,
+          "bm25": 4.237313747406006
+        },
+        "ranks": {
+          "kblab": 1,
+          "bm25": 26
+        },
+        "fused_score": 0.019881814715974076,
+        "fused_rank": 3,
+        "matched_chunk": {
+          "kind": "synonyms_sv",
+          "text": "maskinvarukonstruktör"
+        },
+        "legal_flags": []
+      },
+      {
+        "code": "3449",
+        "title_sv": "Övriga utbildare och instruktörer",
+        "title_en": "Other teaching associate professionals",
+        "scores": {
+          "kblab": 0.5679967403411865,
+          "bm25": 5.08984899520874
+        },
+        "ranks": {
+          "kblab": 7,
+          "bm25": 4
+        },
+        "fused_score": 0.019612873134328357,
+        "fused_rank": 4,
+        "matched_chunk": {
+          "kind": "title",
+          "text": "Övriga utbildare och instruktörer / Other teaching associate professionals"
+        },
+        "legal_flags": []
+      },
+      {
+        "code": "1331",
+        "title_sv": "Forsknings- och utvecklingschefer, nivå 1",
+        "title_en": "Research and development managers, level 1",
+        "scores": {
+          "kblab": 0.5200243592262268,
+          "bm25": 4.620849609375
+        },
+        "ranks": {
+          "kblab": 13,
+          "bm25": 13
+        },
+        "fused_score": 0.01780821917808219,
+        "fused_rank": 5,
+        "matched_chunk": {
+          "kind": "desc_sv",
+          "text": "Produktutvecklingschefer samordnar utarbetandet av nya produkter från början till slut. De tar emot sammanställningar och inleder planering av den nya produkten med hänsyn till designrelaterade, tekniska och kostnadsmässiga kriterier. De undersöker marknadens behov och skapar prototyper för nya produkter för outnyttjade marknadsmöjligheter. De förbättrar och höjer även den tekniska kvaliteten."
+        },
+        "legal_flags": []
+      }
+    ],
+    "honest_fit": "The SSYK code on a work-permit offer must match the duties actually performed. These are the occupations whose official descriptions best match the text, not advice on which code to choose."
+  }
+}

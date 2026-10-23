@@ -77,6 +77,20 @@ def test_timeline_is_the_registry_timeline(service):
     assert service.timeline() == load_registry().timeline()
 
 
+def test_registry_names_each_listed_code_in_swedish(service):  # Feature 004 R9, FR-022
+    from lonekrav.core.legal import load_registry
+
+    reg, raw = service.registry(), load_registry()
+    assert reg.model_dump(exclude={"code_lists"}) == raw.model_dump(exclude={"code_lists"})
+    for kind, cl in reg.code_lists.items():
+        assert set(cl.codes) == set(raw.code_lists[kind].codes)
+        for code, text in cl.codes.items():
+            if code in service.profiles:
+                assert text.startswith(service.profiles[code].title_sv)
+            note = raw.code_lists[kind].codes[code]
+            assert note in text  # a note in the registry is kept
+
+
 def test_search_runs_core_search(service):
     from lonekrav.core.search import SearchRequest, run
 

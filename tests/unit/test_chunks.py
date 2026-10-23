@@ -52,3 +52,23 @@ def test_synonym_chunks_respect_the_character_limit():
     syn = [c for c in chunk_profile(p) if c.kind == "synonyms_sv"]
     assert all(len(c.text) <= MAX_CHARS for c in syn)
     assert sum(c.text.count(";") + 1 for c in syn) == 120  # no label lost
+
+
+ILO = SourceRef(source="ilo_isco08", ref="ISCO-08", url="u")
+
+
+def test_ilo_chunks_are_flagged_and_their_text_is_unchanged():
+    """ILO reserves reproduction rights: its text may rank but is never shown (Feature 004)."""
+    plain = profile(n_sv_labels=3)
+    with_ilo = plain.model_copy(update={
+        "descriptions": [*plain.descriptions,
+                         Text(lang="en", kind="tasks", text="(a) writing ILO tasks;", source=ILO)],
+        "synonyms": [*plain.synonyms, Synonym(lang="en", label="Ilo example title", source=ILO)]})
+    chunks = chunk_profile(with_ilo)
+    flagged = {c.text for c in chunks if c.ilo}
+    assert "(a) writing ILO tasks;" in flagged
+    assert any("Ilo example title" in t and "Backend developer" in t for t in flagged)  # a mixed batch
+    assert not any(c.ilo for c in chunk_profile(plain))
+    assert [c.text for c in chunks if c.kind != "desc_en"] == [  # batching is unchanged
+        c.text for c in chunk_profile(with_ilo.model_copy(update={"synonyms": [
+            s.model_copy(update={"source": S}) for s in with_ilo.synonyms]})) if c.kind != "desc_en"]

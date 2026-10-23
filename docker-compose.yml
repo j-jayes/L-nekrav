@@ -1,0 +1,16 @@
+# The whole stack on one port: docker compose up --build (Feature 004, constitution Principle V).
+# OPENROUTER_KEY, LONEKRAV_LLM_MODEL and LONEKRAV_PUBLIC_URL are read from the shell or .env at run
+# time; the key is never in the image. Without it, everything but the advisor works.
+services:
+  lonekrav:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: lonekrav:latest
+    ports:
+      - "${LONEKRAV_PORT:-8000}:8000"  # the host port; set it if 8000 is taken
+    mem_limit: 5g  # measured peak 4.54 GiB with both models loaded (references/container-memory.md)
+    environment:
+      OPENROUTER_KEY: ${OPENROUTER_KEY:-}
+      LONEKRAV_LLM_MODEL: ${LONEKRAV_LLM_MODEL:-}
+      LONEKRAV_PUBLIC_URL: ${LONEKRAV_PUBLIC_URL:-}

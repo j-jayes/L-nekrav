@@ -1,0 +1,34 @@
+{
+  "status": 200,
+  "body": {
+    "status": "pass",
+    "rule_id": "salary_90",
+    "reason": "Salary requirement for first permits decided from 1 June 2026 and for extensions not covered by the transition: at least 90 % of the median in force when the application was filed.",
+    "percent": 90.0,
+    "median": {
+      "amount": 38300,
+      "scb_reference_year": 2025,
+      "effective_from": "2026-06-16",
+      "effective_to": null,
+      "source": {
+        "key": "mv_lonekrav",
+        "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+        "checked_on": "2026-10-21"
+      }
+    },
+    "threshold_sek": 34470,
+    "margin_sek": 17530,
+    "margin_percent": 50.9,
+    "warnings": [],
+    "sources": [
+      {
+        "key": "mv_lonekrav",
+        "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+        "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+        "checked_on": "2026-10-21"
+      }
+    ],
+    "disclaimer": "The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice."
+  }
+}
