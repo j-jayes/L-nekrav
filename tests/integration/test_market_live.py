@@ -17,12 +17,14 @@ def _online() -> bool:
         return False
 
 
-pytestmark = [pytest.mark.live, pytest.mark.skipif(not _online(), reason="JobSearch unreachable")]
+pytestmark = pytest.mark.live  # the probe runs in the test, so collection stays offline (FR-007)
 
 
 def test_live_count_matches_jobsearch(fixture_engine, salaries):
     from lonekrav.app import create_app
 
+    if not _online():
+        pytest.skip("JobSearch unreachable")
     engine, profiles = fixture_engine
     concept = profiles["2512"].jobtech_concept_id
     with TestClient(create_app(engine=engine, profiles=profiles, salaries=salaries)) as c:
