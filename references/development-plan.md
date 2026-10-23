@@ -231,6 +231,19 @@ of whole ads (`references/web-client-e2e.md`). Evidence: `references/web-client-
 JobSearch API live counts and regions per code (probe: `occupation-group=DJh5_yyF_hEM` returns 1 172
 open ads), pre-aggregated historical counts later. Regional salary tables (TAB4185) could join here.
 
+**As built (2026-10-23)**: the decisions are in `specs/005-market-pulse/research.md`.
+- **Live demand**: two JobSearch requests per count, because `positions` is 0 whenever stats are
+  requested. Each has a 2 s timeout, and counts are reused for 15 minutes. A failure is
+  "unavailable", with no number.
+- **Regional pay**: from **TAB5696**, not TAB4185. TAB4185 holds the pay of people employed by
+  the regions (county health-care employers), not pay by area. TAB5696 gives means only, for 8
+  national areas.
+- **Yearly ads**: 2016–2025 from the historical ads API (4 000 cached requests, 69 s).
+- **Surfaces**: `GET /api/v1/occupations/{code}/market`, the MCP tool `get_occupation_market`
+  (which the advisor may cite), and a market panel under each compare column.
+
+Evidence: `references/market-pulse.md`.
+
 ## Process per feature
 
 `/speckit-specify` → `/speckit-clarify` → `/speckit-plan` → `/speckit-checklist` → `/speckit-tasks` →

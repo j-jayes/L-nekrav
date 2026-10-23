@@ -1,5 +1,5 @@
 {
- "run_at": "2026-10-22T07:45:10+00:00",
+ "run_at": "2026-10-23T11:40:55+00:00",
  "models": {
   "kblab": "KBLab/sentence-bert-swedish-cased@6b5e83cd29c0",
   "harrier": "microsoft/harrier-oss-v1-0.6b@f9b9dc8d367d"

@@ -1,0 +1,322 @@
+{
+  "status": 200,
+  "body": {
+    "code": "1211",
+    "title_sv": "Ekonomi- och finanschefer, nivå 1",
+    "title_en": "Finance managers, level 1",
+    "shared_with": [
+      "1212"
+    ],
+    "live": {
+      "status": "available",
+      "concept_id": "mZsb_A1K_Gec",
+      "ads": 84,
+      "positions": 84,
+      "counties": [
+        {
+          "name": "Västra Götalands län",
+          "code": "14",
+          "ads": 21
+        },
+        {
+          "name": "Stockholms län",
+          "code": "01",
+          "ads": 18
+        },
+        {
+          "name": "Jönköpings län",
+          "code": "06",
+          "ads": 8
+        },
+        {
+          "name": "Östergötlands län",
+          "code": "05",
+          "ads": 7
+        },
+        {
+          "name": "Skåne län",
+          "code": "12",
+          "ads": 6
+        },
+        {
+          "name": "Kronobergs län",
+          "code": "07",
+          "ads": 5
+        },
+        {
+          "name": "Kalmar län",
+          "code": "08",
+          "ads": 3
+        },
+        {
+          "name": "Jämtlands län",
+          "code": "23",
+          "ads": 3
+        },
+        {
+          "name": "Västerbottens län",
+          "code": "24",
+          "ads": 3
+        },
+        {
+          "name": "Uppsala län",
+          "code": "03",
+          "ads": 2
+        },
+        {
+          "name": "Västmanlands län",
+          "code": "19",
+          "ads": 2
+        },
+        {
+          "name": "Gotlands län",
+          "code": "09",
+          "ads": 1
+        },
+        {
+          "name": "Blekinge län",
+          "code": "10",
+          "ads": 1
+        },
+        {
+          "name": "Dalarnas län",
+          "code": "20",
+          "ads": 1
+        },
+        {
+          "name": "Gävleborgs län",
+          "code": "21",
+          "ads": 1
+        },
+        {
+          "name": "Västernorrlands län",
+          "code": "22",
+          "ads": 1
+        },
+        {
+          "name": "Norrbottens län",
+          "code": "25",
+          "ads": 1
+        }
+      ],
+      "no_county": 0,
+      "reason": null,
+      "fetched_at": "2026-10-23T11:29:33.234765Z",
+      "source": {
+        "source": "jobtech_jobsearch",
+        "ref": "occupation-group=mZsb_A1K_Gec",
+        "url": "https://jobsearch.api.jobtechdev.se/search?occupation-group=mZsb_A1K_Gec&limit=0"
+      }
+    },
+    "regional_year": 2025,
+    "regional": [
+      {
+        "code": "1211",
+        "year": 2025,
+        "region": "SE",
+        "region_name": "Sweden",
+        "mean": 87400,
+        "mean_ci95": 7830,
+        "employees": 9400,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": []
+      },
+      {
+        "code": "1211",
+        "year": 2025,
+        "region": "SE11",
+        "region_name": "Stockholm",
+        "mean": 102900,
+        "mean_ci95": 10180,
+        "employees": 3700,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": []
+      },
+      {
+        "code": "1211",
+        "year": 2025,
+        "region": "SE12",
+        "region_name": "East-Central Sweden",
+        "mean": null,
+        "mean_ci95": null,
+        "employees": null,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": [
+          "mean",
+          "employees"
+        ]
+      },
+      {
+        "code": "1211",
+        "year": 2025,
+        "region": "SE21",
+        "region_name": "Småland and islands",
+        "mean": 85600,
+        "mean_ci95": 11730,
+        "employees": null,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": [
+          "employees"
+        ]
+      },
+      {
+        "code": "1211",
+        "year": 2025,
+        "region": "SE22",
+        "region_name": "South Sweden",
+        "mean": null,
+        "mean_ci95": null,
+        "employees": null,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": [
+          "mean",
+          "employees"
+        ]
+      },
+      {
+        "code": "1211",
+        "year": 2025,
+        "region": "SE23",
+        "region_name": "West Sweden",
+        "mean": 88600,
+        "mean_ci95": 5650,
+        "employees": 1400,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": []
+      },
+      {
+        "code": "1211",
+        "year": 2025,
+        "region": "SE31",
+        "region_name": "North-Central Sweden",
+        "mean": 75100,
+        "mean_ci95": 8120,
+        "employees": null,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": [
+          "employees"
+        ]
+      },
+      {
+        "code": "1211",
+        "year": 2025,
+        "region": "SE32",
+        "region_name": "Central Norrland",
+        "mean": null,
+        "mean_ci95": null,
+        "employees": null,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": [
+          "mean",
+          "employees"
+        ]
+      },
+      {
+        "code": "1211",
+        "year": 2025,
+        "region": "SE33",
+        "region_name": "Upper Norrland",
+        "mean": null,
+        "mean_ci95": null,
+        "employees": null,
+        "source_table": "TAB5696",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-23T11:15:32.157497Z",
+        "suppressed": [
+          "mean",
+          "employees"
+        ]
+      }
+    ],
+    "history_status": "available",
+    "history": [
+      {
+        "concept_id": "mZsb_A1K_Gec",
+        "year": 2016,
+        "ads": 1206,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:55.108193Z"
+      },
+      {
+        "concept_id": "mZsb_A1K_Gec",
+        "year": 2017,
+        "ads": 1406,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:55.108254Z"
+      },
+      {
+        "concept_id": "mZsb_A1K_Gec",
+        "year": 2018,
+        "ads": 1550,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:55.120468Z"
+      },
+      {
+        "concept_id": "mZsb_A1K_Gec",
+        "year": 2019,
+        "ads": 1443,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:55.169390Z"
+      },
+      {
+        "concept_id": "mZsb_A1K_Gec",
+        "year": 2020,
+        "ads": 1426,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:55.164406Z"
+      },
+      {
+        "concept_id": "mZsb_A1K_Gec",
+        "year": 2021,
+        "ads": 1785,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:55.169447Z"
+      },
+      {
+        "concept_id": "mZsb_A1K_Gec",
+        "year": 2022,
+        "ads": 2162,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:55.175568Z"
+      },
+      {
+        "concept_id": "mZsb_A1K_Gec",
+        "year": 2023,
+        "ads": 1796,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:55.241402Z"
+      },
+      {
+        "concept_id": "mZsb_A1K_Gec",
+        "year": 2024,
+        "ads": 1672,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:55.247518Z"
+      },
+      {
+        "concept_id": "mZsb_A1K_Gec",
+        "year": 2025,
+        "ads": 2149,
+        "source": "jobtech_historical",
+        "fetched_at": "2026-10-23T11:23:55.247582Z"
+      }
+    ],
+    "notice": "The SSYK code on a work-permit offer must match the duties actually performed. Open ads and regional pay are context: they are never a reason to choose a code. Regional figures are SCB means; the work-permit salary floor comes from the national median and is the same in every area."
+  }
+}

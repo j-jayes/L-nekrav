@@ -12,13 +12,24 @@ const OFFER = { monthly_salary_sek: 30000, fte_percent: 100, application_type: "
 
 function setup(codes: string[], offer: Offer | null) {
   const seen = serve({ "POST /api/v1/compare": (body) =>
-    (body as { offer?: unknown }).offer ? fixture("compare-offer") : fixture("compare-2512-2511") });
+    (body as { offer?: unknown }).offer ? fixture("compare-offer") : fixture("compare-2512-2511"),
+    "GET /api/v1/occupations/2512/market": fixture("market-2512") });
   const toSearch = vi.fn();
   render(<CompareView codes={codes} offer={offer} onSearch={toSearch} rules={rules} />);
   return { seen, toSearch };
 }
 
 describe("CompareView", () => {
+  it("shows a market panel under every column, whoever selected the code", async () => {
+    // The advisor selects codes through the same selection, so its codes reach here as props too.
+    const { seen } = setup(["2512", "2511"], null);
+    const cols = await screen.findAllByRole("article");
+    for (const [i, code] of ["2512", "2511"].entries())
+      expect(within(cols[i]).getByRole("region", { name: `Market for ${code}` })).toBeInTheDocument();
+    expect(await within(cols[0]).findByRole("region", { name: "Open now" })).toBeInTheDocument();
+    expect(seen.some((r) => r.url.pathname === "/api/v1/occupations/2511/market")).toBe(true);
+  });
+
   it("shows one column per code, in the order selected, with its official task text and source", async () => {
     const { seen } = setup(["2512", "2511", "3511"], OFFER);
     const cols = await screen.findAllByRole("article");

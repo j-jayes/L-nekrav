@@ -14,7 +14,7 @@ from pydantic import BaseModel, Field, computed_field, model_validator
 Lang = Literal["sv", "en"]
 Source = Literal[
     "scb_structure", "scb_english", "scb_title_index", "scb_isco_key", "scb_mis2012",
-    "scb_pxweb", "jobtech", "ilo_isco08", "esco", "sfs",
+    "scb_pxweb", "jobtech", "ilo_isco08", "esco", "sfs", "jobtech_jobsearch", "jobtech_historical",
 ]
 Code = str  # four digits, validated where it is a key
 
@@ -142,3 +142,39 @@ class AgeBandSalary(BaseModel):
         if self.reference_year != self.year:
             raise ValueError(f"{self.code} {self.year}: reference_year {self.reference_year}")
         return self
+
+
+class RegionalSalary(BaseModel):
+    """SCB's mean monthly salary for one code in Sweden (SE) or one national area (Feature 005).
+    A mean, not the median the salary floor is based on; each figure is null where SCB suppresses
+    it, independently of the others."""
+    code: Code = Field(pattern=r"^\d{4}$")
+    year: int = Field(ge=2023)
+    region: str
+    region_name: str
+    mean: int | None
+    mean_ci95: int | None = None  # ± margin, as SCB publishes it
+    employees: int | None
+    source_table: Literal["TAB5696"]
+    reference_year: int
+    fetched_at: dt.datetime
+
+    @computed_field
+    @property
+    def suppressed(self) -> list[str]:
+        return [f for f in ("mean", "employees") if getattr(self, f) is None]
+
+    @model_validator(mode="after")
+    def _check(self):
+        if self.reference_year != self.year:
+            raise ValueError(f"{self.code} {self.year}: reference_year {self.reference_year}")
+        return self
+
+
+class YearlyAds(BaseModel):
+    """Ads published on Platsbanken in one full calendar year for one JobTech occupation group."""
+    concept_id: str
+    year: int = Field(ge=2016)  # the historical interface has no coded ads before 2016
+    ads: int = Field(ge=0)
+    source: Literal["jobtech_historical"] = "jobtech_historical"
+    fetched_at: dt.datetime  # when this count was fetched (deterministic builds)

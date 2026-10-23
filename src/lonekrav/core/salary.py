@@ -9,10 +9,11 @@ from typing import Literal
 import polars as pl
 from pydantic import BaseModel
 
-from lonekrav.core.models import AgeBandSalary, SalaryDistribution
+from lonekrav.core.models import AgeBandSalary, RegionalSalary, SalaryDistribution
 
 DISTRIBUTIONS = Path("data/processed/salary_distributions.parquet")
 AGE_BANDS = Path("data/processed/salary_age.parquet")
+REGIONAL = Path("data/processed/salary_regional.parquet")
 
 
 def _write(rows: list, path: Path) -> None:
@@ -29,12 +30,20 @@ def write_age_bands(rows: list[AgeBandSalary], path: Path = AGE_BANDS) -> None:
     _write(sorted(rows, key=lambda a: (a.code, a.year, a.age_band)), path)
 
 
+def write_regional(rows: list[RegionalSalary], path: Path = REGIONAL) -> None:
+    _write(sorted(rows, key=lambda r: (r.code, r.year, r.region)), path)
+
+
 def load_distributions(path: Path = DISTRIBUTIONS) -> list[SalaryDistribution]:
     return [SalaryDistribution.model_validate(r) for r in pl.read_parquet(path).to_dicts()]
 
 
 def load_age_bands(path: Path = AGE_BANDS) -> list[AgeBandSalary]:
     return [AgeBandSalary.model_validate(r) for r in pl.read_parquet(path).to_dicts()]
+
+
+def load_regional(path: Path = REGIONAL) -> list[RegionalSalary]:
+    return [RegionalSalary.model_validate(r) for r in pl.read_parquet(path).to_dicts()]
 
 
 # --- the salary payload for one occupation (Feature 002, spec FR-024–FR-026) ----------------

@@ -7,7 +7,7 @@ It serves all of this in four ways, on one port:
 
 | Surface | Path | For |
 |---|---|---|
-| Web page | `/` | People: search, salary chart, comparison, the rules and an offer calculator |
+| Web page | `/` | People: search, salary chart, comparison with market context, the rules and an offer calculator |
 | REST | `/api/v1` (docs at `/api/v1/docs`) | Programs |
 | MCP | `/mcp` | Chat assistants such as Claude Code (`claude mcp add --transport http lonekrav http://localhost:8000/mcp`) |
 | A2A | `/a2a`, card at `/.well-known/agent-card.json` | Agents and the page's advisor drawer: the `lonekrav-advisor` honest-fit memo |
@@ -57,6 +57,7 @@ All settings are environment variables, read at start-up. Compose takes them fro
 | `HOST`, `PORT` | `127.0.0.1`, `8000` | Where `lonekrav-serve` listens (the image sets `HOST=0.0.0.0`) |
 | `LONEKRAV_PORT` | `8000` | The host port compose publishes |
 | `MILVUS_URI` | the Milvus Lite index in `data/` | A Milvus server instead of the local index |
+| `LONEKRAV_JOBSEARCH_URL` | `https://jobsearch.api.jobtechdev.se/search` | Where live open-ad counts come from; point it at a closed port to see the "unavailable" path |
 
 ## Cloud Run (documented, not deployed)
 
@@ -83,7 +84,12 @@ Notes:
 ## Data and credits
 
 - **Salary statistics**: SCB, CC0 1.0. Credit: "Medlingsinstitutet / SCB lönestrukturstatistik
-  (AM0110)".
+  (AM0110)". Regional means come from TAB5696, by national area. They are means, and the
+  work-permit floor comes from the national median and is the same everywhere.
+- **Job ads**: Arbetsförmedlingen's JobSearch API, queried live (open ads and positions per
+  code, by county, reused for 15 minutes), and its historical ads API (ads per year since
+  2016, built ahead of time). The ads are CC0, and only counts are kept. The market panel is
+  context: demand and pay are never a reason to choose a code.
 - **Occupation codes and Swedish titles**: SCB SSYK 2012, CC0 1.0.
 - **Swedish occupation names**: JobTech Taxonomy (Arbetsförmedlingen), published as open data. Its
   exact licence is not yet confirmed.

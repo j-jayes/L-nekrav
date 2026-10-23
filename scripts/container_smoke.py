@@ -48,6 +48,12 @@ def search(c: httpx.Client, mode: str) -> str:
     return f"{r['mode_used']}: {[h['code'] for h in r['hits']]}"
 
 
+def market(c: httpx.Client) -> str:
+    m = c.get("/api/v1/occupations/2512/market").json()
+    return (f"live {m['live']['status']} ({m['live']['ads']} ads), regional {m['regional_year']} "
+            f"({len(m['regional'])} rows), history {m['history'][0]['year']}–{m['history'][-1]['year']}")
+
+
 def main() -> None:
     run = dt.datetime.now().isoformat(timespec="seconds")
     out = [f"# Container smoke test\n\nRun {run} against `{BASE}` by `scripts/container_smoke.py`.\n"]
@@ -68,6 +74,7 @@ def main() -> None:
         row("MCP `tools/list`", ", ".join(mcp_tools(c)))
         row("Fast search (en1 ad)", search(c, "fast"))
         row("Full search (en1 ad)", search(c, "full"))
+        row("Market for 2512 (Feature 005)", market(c))
         cid = container()
         row("`.env` inside the container", sh("docker", "exec", cid, "sh", "-c",
                                                "ls -a /app | grep -c '^.env$' || true") + " files")
@@ -85,6 +92,11 @@ def main() -> None:
                 " headers={'Content-Type': 'application/json'});"
                 "print([(m, json.load(u.urlopen(req(m)))['mode_used']) for m in ('fast', 'full')])"))
             row("Both searches with no network (from inside)", offline)
+            live = sh("docker", "exec", cid, "python", "-c", (
+                "import json, urllib.request as u, time; s = time.time();"
+                "m = json.load(u.urlopen('http://127.0.0.1:8000/api/v1/occupations/2511/market'));"
+                "print(m['live']['status'], m['live']['reason'], f'{time.time() - s:.1f} s')"))
+            row("Market live count with no network (from inside)", live)
         finally:
             for n in nets:
                 sh("docker", "network", "connect", n, cid)

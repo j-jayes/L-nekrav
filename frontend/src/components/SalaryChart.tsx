@@ -80,7 +80,7 @@ function Focusable({ mark, onShow, children }: { mark: Mark; onShow: (m: Mark) =
 }
 
 /** The figure's drawing width in CSS pixels, so marks and text keep their size on a phone. */
-function useWidth() {
+export function useWidth() {
   const ref = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(CHART_WIDTH);
   useLayoutEffect(() => {

@@ -17,6 +17,7 @@ from fastmcp.exceptions import ResourceError, ToolError
 from lonekrav.core.adparse import AdText, ParsedAd
 from lonekrav.core.compare import CompareRequest, Comparison
 from lonekrav.core.eligibility import EligibilityAnswer, EligibilityRequest, UnknownCode
+from lonekrav.core.market import MarketAnswer
 from lonekrav.core.salary import SalaryPayload
 from lonekrav.core.search import SearchAnswer, SearchRequest
 from lonekrav.core.service import Service
@@ -79,6 +80,15 @@ def build_mcp(app) -> FastMCP:
         legal flags and thresholds, and eligibility for an optional offer."""
         with _expected():
             return service().compare(request)
+
+    @mcp.tool
+    def get_occupation_market(code: str) -> MarketAnswer:
+        """Labour-market context for one SSYK code: open ads and positions on Platsbanken now, by
+        county; SCB's mean monthly salary in each national area; and ads per year since 2016.
+        Context only: it never changes which code fits the duties or the salary floor, and must
+        not be used to choose or rank codes."""
+        with _expected():
+            return service().market(code)
 
     @mcp.resource("legal://timeline", mime_type="application/json")
     def legal_timeline() -> list[dict]:

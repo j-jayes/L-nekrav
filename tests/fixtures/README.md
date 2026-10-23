@@ -23,3 +23,8 @@ Except `ilo/isco08_en.xlsx`: the ILO reserves reproduction rights, so it keeps o
 | https://ec.europa.eu/esco/api/resource/occupation | 2026-10-20 |
 | https://ec.europa.eu/esco/api/resource/occupation | 2026-10-20 |
 | https://www.scb.se/contentassets/c9d055b6f2114b62bd23c33602b56da5/ov9999_2012a01_br_x70br1201.pdf | 2026-10-20 |
+| https://statistikdatabasen.scb.se/api/v2/tables/TAB5696/data | 2026-10-23 |
+| https://jobsearch.api.jobtechdev.se/search | 2026-10-23 |
+| https://jobsearch.api.jobtechdev.se/search | 2026-10-23 |
+| https://historical.api.jobtechdev.se/search | 2026-10-23 |
+| https://historical.api.jobtechdev.se/search | 2026-10-23 |

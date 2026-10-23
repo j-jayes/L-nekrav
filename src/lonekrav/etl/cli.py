@@ -6,7 +6,7 @@ import argparse
 import sys
 from collections.abc import Callable
 
-SOURCES = ("scb_files", "scb_pxweb", "jobtech", "ilo", "esco", "mis2012")
+SOURCES = ("scb_files", "scb_pxweb", "jobtech", "ilo", "esco", "mis2012", "jobsearch_history")
 
 
 def _todo(args: argparse.Namespace) -> None:

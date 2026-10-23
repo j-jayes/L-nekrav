@@ -28,6 +28,14 @@ def raw_from_fixtures(fixtures, raw):
         dest = esco.path_for(raw, uri)
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy(f, dest)
+    from lonekrav.etl import jobsearch
+    for concept in pipeline.history_concepts(raw):  # a count of 0 per year: no history fixture
+        for year in jobsearch.years(dt.date.today()):
+            dest = jobsearch.path_for(raw, concept, year)
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_text(json.dumps({"total": {"value": 0}}))
+            (dest.parent / f"{year}.json.meta.json").write_text(
+                json.dumps({"url": "u", "fetched_at": T, "sha256": "x"}))
 
 
 def test_build_twice_is_byte_identical_without_llm_key(fixtures, tmp_path, monkeypatch):

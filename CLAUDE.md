@@ -208,3 +208,22 @@ Things worked out in Feature 004:
   width, so text keeps its size on a phone. One-off Playwright scripts in the scratchpad load
   Playwright with `createRequire(process.cwd() + "/")` from `frontend/`.
 
+Things worked out in Feature 005:
+
+- **JobSearch drops `positions` (it returns 0) when `stats` is in the request**, so a live count
+  makes two requests: a plain one for ads and positions, and one with `stats=region` for the
+  counties. `stats.limit` is at most 30. There is no key, and the ads are CC0.
+- **Live data in core**: `core.market.LiveCache` takes an injected `get_json` and clock. The
+  shared `api_client` fixture passes an offline fetcher, so the default test run never reaches
+  the network. Anything new that builds `create_app` for tests should do the same.
+- **Regional pay is TAB5696** (by national area, means only). TAB4185 holds the pay of people
+  employed by the regions. TAB5696's Sweden row equals TAB5932's mean, which makes a cheap
+  check on the table and content code.
+- **Historical ads**: `historical-from`/`historical-to` filter by publication date. Coded ads
+  start in 2016. One `cached_get` file per concept and year makes the fetch resumable (4 000
+  files, 69 s on 4 threads). Rows carry each file's `fetched_at`, never a build time, so the
+  build stays byte-identical.
+- **Fixtures**: `scripts/cut_fixtures.py market` cuts only the 005 slices and appends their
+  sources to `tests/fixtures/README.md`, so the older fixtures are not re-downloaded.
+  `scripts/record_api_fixtures.py BASE NAME…` records only the named page fixtures.
+

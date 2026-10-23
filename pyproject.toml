@@ -55,7 +55,7 @@ testpaths = ["tests"]
 addopts = "-m 'not benchmark and not live' --import-mode=importlib"
 markers = [
     "benchmark: full cross-lingual benchmark with real models (slow, needs model downloads)",
-    "live: calls the real model on OpenRouter (needs OPENROUTER_KEY, costs a little)",
+    "live: calls a real external service: OpenRouter (needs OPENROUTER_KEY, costs a little) or JobSearch (needs network)",
 ]
 
 [tool.ruff]

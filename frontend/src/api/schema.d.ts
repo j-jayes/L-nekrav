@@ -72,6 +72,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/occupations/{code}/market": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Market */
+        get: operations["market_api_v1_occupations__code__market_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/occupations/{code}": {
         parameters: {
             query?: never;
@@ -351,6 +368,15 @@ export interface components {
              */
             honest_fit: string;
         };
+        /** CountyCount */
+        CountyCount: {
+            /** Name */
+            name: string;
+            /** Code */
+            code: string;
+            /** Ads */
+            ads: number;
+        };
         /** EligibilityAnswer */
         EligibilityAnswer: {
             /**
@@ -451,6 +477,60 @@ export interface components {
             source: components["schemas"]["SourceRef"];
             /** Checked On */
             checked_on?: string | null;
+        };
+        /** LiveDemand */
+        LiveDemand: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "available" | "no_concept" | "unavailable";
+            /** Concept Id */
+            concept_id?: string | null;
+            /** Ads */
+            ads?: number | null;
+            /** Positions */
+            positions?: number | null;
+            /**
+             * Counties
+             * @default []
+             */
+            counties: components["schemas"]["CountyCount"][];
+            /** No County */
+            no_county?: number | null;
+            /** Reason */
+            reason?: string | null;
+            /** Fetched At */
+            fetched_at?: string | null;
+            source?: components["schemas"]["SourceRef"] | null;
+        };
+        /** MarketAnswer */
+        MarketAnswer: {
+            /** Code */
+            code: string;
+            /** Title Sv */
+            title_sv: string;
+            /** Title En */
+            title_en: string;
+            /** Shared With */
+            shared_with: string[];
+            live: components["schemas"]["LiveDemand"];
+            /** Regional Year */
+            regional_year: number | null;
+            /** Regional */
+            regional: components["schemas"]["RegionalSalary"][];
+            /**
+             * History Status
+             * @enum {string}
+             */
+            history_status: "available" | "no_concept";
+            /** History */
+            history: components["schemas"]["YearlyAds"][];
+            /**
+             * Notice
+             * @default The SSYK code on a work-permit offer must match the duties actually performed. Open ads and regional pay are context: they are never a reason to choose a code. Regional figures are SCB means; the work-permit salary floor comes from the national median and is the same in every area.
+             */
+            notice: string;
         };
         /** MatchedChunk */
         MatchedChunk: {
@@ -577,6 +657,42 @@ export interface components {
             /** First Permit Only */
             first_permit_only: boolean;
             source: components["schemas"]["Source"];
+        };
+        /**
+         * RegionalSalary
+         * @description SCB's mean monthly salary for one code in Sweden (SE) or one national area (Feature 005).
+         *     A mean, not the median the salary floor is based on; each figure is null where SCB suppresses
+         *     it, independently of the others.
+         */
+        RegionalSalary: {
+            /** Code */
+            code: string;
+            /** Year */
+            year: number;
+            /** Region */
+            region: string;
+            /** Region Name */
+            region_name: string;
+            /** Mean */
+            mean: number | null;
+            /** Mean Ci95 */
+            mean_ci95?: number | null;
+            /** Employees */
+            employees: number | null;
+            /**
+             * Source Table
+             * @constant
+             */
+            source_table: "TAB5696";
+            /** Reference Year */
+            reference_year: number;
+            /**
+             * Fetched At
+             * Format: date-time
+             */
+            fetched_at: string;
+            /** Suppressed */
+            readonly suppressed: string[];
         };
         /** Registry */
         Registry: {
@@ -822,7 +938,7 @@ export interface components {
              * Source
              * @enum {string}
              */
-            source: "scb_structure" | "scb_english" | "scb_title_index" | "scb_isco_key" | "scb_mis2012" | "scb_pxweb" | "jobtech" | "ilo_isco08" | "esco" | "sfs";
+            source: "scb_structure" | "scb_english" | "scb_title_index" | "scb_isco_key" | "scb_mis2012" | "scb_pxweb" | "jobtech" | "ilo_isco08" | "esco" | "sfs" | "jobtech_jobsearch" | "jobtech_historical";
             /** Ref */
             ref: string;
             /** Url */
@@ -940,6 +1056,29 @@ export interface components {
             /** Message */
             message: string;
             source: components["schemas"]["Source"];
+        };
+        /**
+         * YearlyAds
+         * @description Ads published on Platsbanken in one full calendar year for one JobTech occupation group.
+         */
+        YearlyAds: {
+            /** Concept Id */
+            concept_id: string;
+            /** Year */
+            year: number;
+            /** Ads */
+            ads: number;
+            /**
+             * Source
+             * @default jobtech_historical
+             * @constant
+             */
+            source: "jobtech_historical";
+            /**
+             * Fetched At
+             * Format: date-time
+             */
+            fetched_at: string;
         };
         SendMessageRequest: {
             /** @example  */
@@ -1238,6 +1377,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SalaryPayload"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    market_api_v1_occupations__code__market_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarketAnswer"];
                 };
             };
             /** @description Validation Error */

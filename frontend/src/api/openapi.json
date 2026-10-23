@@ -173,6 +173,45 @@
         }
       }
     },
+    "/api/v1/occupations/{code}/market": {
+      "get": {
+        "summary": "Market",
+        "operationId": "market_api_v1_occupations__code__market_get",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketAnswer"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/occupations/{code}": {
       "get": {
         "summary": "Occupation",
@@ -756,6 +795,29 @@
         ],
         "title": "Comparison"
       },
+      "CountyCount": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "ads": {
+            "type": "integer",
+            "title": "Ads"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "code",
+          "ads"
+        ],
+        "title": "CountyCount"
+      },
       "EligibilityAnswer": {
         "properties": {
           "status": {
@@ -995,6 +1057,186 @@
           "source"
         ],
         "title": "LegalFlag"
+      },
+      "LiveDemand": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "available",
+              "no_concept",
+              "unavailable"
+            ],
+            "title": "Status"
+          },
+          "concept_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Concept Id"
+          },
+          "ads": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ads"
+          },
+          "positions": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Positions"
+          },
+          "counties": {
+            "items": {
+              "$ref": "#/components/schemas/CountyCount"
+            },
+            "type": "array",
+            "title": "Counties",
+            "default": []
+          },
+          "no_county": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "No County"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "fetched_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fetched At"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SourceRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "LiveDemand"
+      },
+      "MarketAnswer": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title_sv": {
+            "type": "string",
+            "title": "Title Sv"
+          },
+          "title_en": {
+            "type": "string",
+            "title": "Title En"
+          },
+          "shared_with": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Shared With"
+          },
+          "live": {
+            "$ref": "#/components/schemas/LiveDemand"
+          },
+          "regional_year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Regional Year"
+          },
+          "regional": {
+            "items": {
+              "$ref": "#/components/schemas/RegionalSalary"
+            },
+            "type": "array",
+            "title": "Regional"
+          },
+          "history_status": {
+            "type": "string",
+            "enum": [
+              "available",
+              "no_concept"
+            ],
+            "title": "History Status"
+          },
+          "history": {
+            "items": {
+              "$ref": "#/components/schemas/YearlyAds"
+            },
+            "type": "array",
+            "title": "History"
+          },
+          "notice": {
+            "type": "string",
+            "title": "Notice",
+            "default": "The SSYK code on a work-permit offer must match the duties actually performed. Open ads and regional pay are context: they are never a reason to choose a code. Regional figures are SCB means; the work-permit salary floor comes from the national median and is the same in every area."
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "title_sv",
+          "title_en",
+          "shared_with",
+          "live",
+          "regional_year",
+          "regional",
+          "history_status",
+          "history"
+        ],
+        "title": "MarketAnswer"
       },
       "MatchedChunk": {
         "properties": {
@@ -1283,6 +1525,98 @@
           "source"
         ],
         "title": "PersonalExemption"
+      },
+      "RegionalSalary": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^\\d{4}$",
+            "title": "Code"
+          },
+          "year": {
+            "type": "integer",
+            "minimum": 2023.0,
+            "title": "Year"
+          },
+          "region": {
+            "type": "string",
+            "title": "Region"
+          },
+          "region_name": {
+            "type": "string",
+            "title": "Region Name"
+          },
+          "mean": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mean"
+          },
+          "mean_ci95": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mean Ci95"
+          },
+          "employees": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Employees"
+          },
+          "source_table": {
+            "type": "string",
+            "const": "TAB5696",
+            "title": "Source Table"
+          },
+          "reference_year": {
+            "type": "integer",
+            "title": "Reference Year"
+          },
+          "fetched_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Fetched At"
+          },
+          "suppressed": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Suppressed",
+            "readOnly": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "year",
+          "region",
+          "region_name",
+          "mean",
+          "employees",
+          "source_table",
+          "reference_year",
+          "fetched_at",
+          "suppressed"
+        ],
+        "title": "RegionalSalary",
+        "description": "SCB's mean monthly salary for one code in Sweden (SE) or one national area (Feature 005).\nA mean, not the median the salary floor is based on; each figure is null where SCB suppresses\nit, independently of the others."
       },
       "Registry": {
         "properties": {
@@ -2019,7 +2353,9 @@
               "jobtech",
               "ilo_isco08",
               "esco",
-              "sfs"
+              "sfs",
+              "jobtech_jobsearch",
+              "jobtech_historical"
             ],
             "title": "Source"
           },
@@ -2341,6 +2677,44 @@
           "source"
         ],
         "title": "Warning"
+      },
+      "YearlyAds": {
+        "properties": {
+          "concept_id": {
+            "type": "string",
+            "title": "Concept Id"
+          },
+          "year": {
+            "type": "integer",
+            "minimum": 2016.0,
+            "title": "Year"
+          },
+          "ads": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Ads"
+          },
+          "source": {
+            "type": "string",
+            "const": "jobtech_historical",
+            "title": "Source",
+            "default": "jobtech_historical"
+          },
+          "fetched_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Fetched At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "concept_id",
+          "year",
+          "ads",
+          "fetched_at"
+        ],
+        "title": "YearlyAds",
+        "description": "Ads published on Platsbanken in one full calendar year for one JobTech occupation group."
       },
       "SendMessageRequest": {
         "type": "object",
