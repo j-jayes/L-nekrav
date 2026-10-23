@@ -1,6 +1,6 @@
 # API smoke transcript
 
-Run 2026-10-22T15:19:09 against `http://127.0.0.1:8000` by `scripts/api_smoke.py`. Lists are cut to three items for reading.
+Run 2026-10-23T13:35:39 against `http://127.0.0.1:8010` by `scripts/api_smoke.py`. Lists are cut to three items for reading.
 
 ## Eligibility, scenario 1: 2512 filed 16 June 2026
 
@@ -1957,6 +1957,316 @@ Run 2026-10-22T15:19:09 against `http://127.0.0.1:8000` by `scripts/api_smoke.py
    }
   }
  ]
+}
+```
+
+## Market for 2512 (live open ads, pay by area, ads per year)
+
+`GET /api/v1/occupations/2512/market` → **200**
+
+```json
+{
+ "code": "2512",
+ "title_sv": "Mjukvaru- och systemutvecklare m.fl.",
+ "title_en": "Software- and system developers",
+ "shared_with": [],
+ "live": {
+  "status": "available",
+  "concept_id": "DJh5_yyF_hEM",
+  "ads": 1186,
+  "positions": 1572,
+  "counties": [
+   {
+    "name": "Stockholms län",
+    "code": "01",
+    "ads": 490
+   },
+   {
+    "name": "Västra Götalands län",
+    "code": "14",
+    "ads": 244
+   },
+   {
+    "name": "Östergötlands län",
+    "code": "05",
+    "ads": 123
+   },
+   "… 17 more"
+  ],
+  "no_county": 19,
+  "reason": null,
+  "fetched_at": "2026-10-23T11:34:38.004657Z",
+  "source": {
+   "source": "jobtech_jobsearch",
+   "ref": "occupation-group=DJh5_yyF_hEM",
+   "url": "https://jobsearch.api.jobtechdev.se/search?occupation-group=DJh5_yyF_hEM&limit=0"
+  }
+ },
+ "regional_year": 2025,
+ "regional": [
+  {
+   "code": "2512",
+   "year": 2025,
+   "region": "SE",
+   "region_name": "Sweden",
+   "mean": 55500,
+   "mean_ci95": 940,
+   "employees": 113100,
+   "source_table": "TAB5696",
+   "reference_year": 2025,
+   "fetched_at": "2026-10-23T11:15:32.157497Z",
+   "suppressed": []
+  },
+  {
+   "code": "2512",
+   "year": 2025,
+   "region": "SE11",
+   "region_name": "Stockholm",
+   "mean": 59400,
+   "mean_ci95": 1470,
+   "employees": 51000,
+   "source_table": "TAB5696",
+   "reference_year": 2025,
+   "fetched_at": "2026-10-23T11:15:32.157497Z",
+   "suppressed": []
+  },
+  {
+   "code": "2512",
+   "year": 2025,
+   "region": "SE12",
+   "region_name": "East-Central Sweden",
+   "mean": 52400,
+   "mean_ci95": 1670,
+   "employees": 11800,
+   "source_table": "TAB5696",
+   "reference_year": 2025,
+   "fetched_at": "2026-10-23T11:15:32.157497Z",
+   "suppressed": []
+  },
+  "… 6 more"
+ ],
+ "history_status": "available",
+ "history": [
+  {
+   "concept_id": "DJh5_yyF_hEM",
+   "year": 2016,
+   "ads": 16406,
+   "source": "jobtech_historical",
+   "fetched_at": "2026-10-23T11:23:16.161560Z"
+  },
+  {
+   "concept_id": "DJh5_yyF_hEM",
+   "year": 2017,
+   "ads": 18886,
+   "source": "jobtech_historical",
+   "fetched_at": "2026-10-23T11:23:16.161370Z"
+  },
+  {
+   "concept_id": "DJh5_yyF_hEM",
+   "year": 2018,
+   "ads": 22572,
+   "source": "jobtech_historical",
+   "fetched_at": "2026-10-23T11:23:16.161654Z"
+  },
+  "… 7 more"
+ ],
+ "notice": "The SSYK code on a work-permit offer must match the duties actually performed. Open ads and regional pay are context: they are never a reason to choose a code. Regional figures are SCB means; the work-permit salary floor comes from the national median and is the same in every area."
+}
+```
+
+## Market for 1211 (a count JobTech shares with 1212)
+
+`GET /api/v1/occupations/1211/market` → **200**
+
+```json
+{
+ "code": "1211",
+ "title_sv": "Ekonomi- och finanschefer, nivå 1",
+ "title_en": "Finance managers, level 1",
+ "shared_with": [
+  "1212"
+ ],
+ "live": {
+  "status": "available",
+  "concept_id": "mZsb_A1K_Gec",
+  "ads": 84,
+  "positions": 84,
+  "counties": [
+   {
+    "name": "Västra Götalands län",
+    "code": "14",
+    "ads": 21
+   },
+   {
+    "name": "Stockholms län",
+    "code": "01",
+    "ads": 18
+   },
+   {
+    "name": "Jönköpings län",
+    "code": "06",
+    "ads": 8
+   },
+   "… 14 more"
+  ],
+  "no_county": 0,
+  "reason": null,
+  "fetched_at": "2026-10-23T11:35:41.386500Z",
+  "source": {
+   "source": "jobtech_jobsearch",
+   "ref": "occupation-group=mZsb_A1K_Gec",
+   "url": "https://jobsearch.api.jobtechdev.se/search?occupation-group=mZsb_A1K_Gec&limit=0"
+  }
+ },
+ "regional_year": 2025,
+ "regional": [
+  {
+   "code": "1211",
+   "year": 2025,
+   "region": "SE",
+   "region_name": "Sweden",
+   "mean": 87400,
+   "mean_ci95": 7830,
+   "employees": 9400,
+   "source_table": "TAB5696",
+   "reference_year": 2025,
+   "fetched_at": "2026-10-23T11:15:32.157497Z",
+   "suppressed": []
+  },
+  {
+   "code": "1211",
+   "year": 2025,
+   "region": "SE11",
+   "region_name": "Stockholm",
+   "mean": 102900,
+   "mean_ci95": 10180,
+   "employees": 3700,
+   "source_table": "TAB5696",
+   "reference_year": 2025,
+   "fetched_at": "2026-10-23T11:15:32.157497Z",
+   "suppressed": []
+  },
+  {
+   "code": "1211",
+   "year": 2025,
+   "region": "SE12",
+   "region_name": "East-Central Sweden",
+   "mean": null,
+   "mean_ci95": null,
+   "employees": null,
+   "source_table": "TAB5696",
+   "reference_year": 2025,
+   "fetched_at": "2026-10-23T11:15:32.157497Z",
+   "suppressed": [
+    "mean",
+    "employees"
+   ]
+  },
+  "… 6 more"
+ ],
+ "history_status": "available",
+ "history": [
+  {
+   "concept_id": "mZsb_A1K_Gec",
+   "year": 2016,
+   "ads": 1206,
+   "source": "jobtech_historical",
+   "fetched_at": "2026-10-23T11:23:55.108193Z"
+  },
+  {
+   "concept_id": "mZsb_A1K_Gec",
+   "year": 2017,
+   "ads": 1406,
+   "source": "jobtech_historical",
+   "fetched_at": "2026-10-23T11:23:55.108254Z"
+  },
+  {
+   "concept_id": "mZsb_A1K_Gec",
+   "year": 2018,
+   "ads": 1550,
+   "source": "jobtech_historical",
+   "fetched_at": "2026-10-23T11:23:55.120468Z"
+  },
+  "… 7 more"
+ ],
+ "notice": "The SSYK code on a work-permit offer must match the duties actually performed. Open ads and regional pay are context: they are never a reason to choose a code. Regional figures are SCB means; the work-permit salary floor comes from the national median and is the same in every area."
+}
+```
+
+## Market for 4430 (no JobTech concept)
+
+`GET /api/v1/occupations/4430/market` → **200**
+
+```json
+{
+ "code": "4430",
+ "title_sv": "Förtroendevalda",
+ "title_en": "Elected representatives",
+ "shared_with": [],
+ "live": {
+  "status": "no_concept",
+  "concept_id": null,
+  "ads": null,
+  "positions": null,
+  "counties": [],
+  "no_county": null,
+  "reason": null,
+  "fetched_at": null,
+  "source": null
+ },
+ "regional_year": 2025,
+ "regional": [
+  {
+   "code": "4430",
+   "year": 2025,
+   "region": "SE",
+   "region_name": "Sweden",
+   "mean": 37300,
+   "mean_ci95": 1490,
+   "employees": null,
+   "source_table": "TAB5696",
+   "reference_year": 2025,
+   "fetched_at": "2026-10-23T11:15:32.157497Z",
+   "suppressed": [
+    "employees"
+   ]
+  },
+  {
+   "code": "4430",
+   "year": 2025,
+   "region": "SE11",
+   "region_name": "Stockholm",
+   "mean": null,
+   "mean_ci95": null,
+   "employees": null,
+   "source_table": "TAB5696",
+   "reference_year": 2025,
+   "fetched_at": "2026-10-23T11:15:32.157497Z",
+   "suppressed": [
+    "mean",
+    "employees"
+   ]
+  },
+  {
+   "code": "4430",
+   "year": 2025,
+   "region": "SE12",
+   "region_name": "East-Central Sweden",
+   "mean": 35700,
+   "mean_ci95": 1710,
+   "employees": null,
+   "source_table": "TAB5696",
+   "reference_year": 2025,
+   "fetched_at": "2026-10-23T11:15:32.157497Z",
+   "suppressed": [
+    "employees"
+   ]
+  },
+  "… 6 more"
+ ],
+ "history_status": "no_concept",
+ "history": [],
+ "notice": "The SSYK code on a work-permit offer must match the duties actually performed. Open ads and regional pay are context: they are never a reason to choose a code. Regional figures are SCB means; the work-permit salary floor comes from the national median and is the same in every area."
 }
 ```
 
