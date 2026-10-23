@@ -282,6 +282,47 @@ tables:
         constraints: [required]
         range: [2026-10-23T11:15:32, 2026-10-23T11:15:33]
 
+  - name: ad_history
+    label: Ads published per year by JobTech occupation group
+    source:
+      parquet: ad_history.parquet
+    description: >
+      One row per JobTech occupation-group concept (400) and full calendar year from 2016
+      (Feature 005): the number of ads published on Platsbanken, from Arbetsförmedlingen's
+      historical ads API. Ads, not positions: the interface does not report positions reliably.
+      Profiles link to it through `jobtech_concept_id`; codes JobTech merges (1211 and 1212 as
+      1210) share one concept and so one count.
+    details: >
+      Ads are released under CC0 (the API's licence field, checked 2026-10-23). Only counts are
+      fetched (limit=0); no ad text is stored. The interface has no coded ads before 2016. The
+      year filter is by publication date: for 2512 the twelve months of 2025 add up to the
+      year's 30 304. A count of 0 is a real count; a year that was not fetched fails the build.
+    columns:
+      - name: concept_id
+        type: string
+        constraints: [primary_key]
+        examples: ["DJh5_yyF_hEM", "mZsb_A1K_Gec"]
+      - name: year
+        type: number(ordinal)
+        constraints: [primary_key]
+        range: [2016, 2025]
+      - name: ads
+        type: number(quantity)
+        units: ads
+        constraints: [required]
+        description: Ads published in the year under this occupation group.
+        range: [0, 88035]
+      - name: source
+        type: enum
+        constraints: [required]
+        values:
+          jobtech_historical: Arbetsförmedlingen historical ads API (historical.api.jobtechdev.se)
+      - name: fetched_at
+        type: datetime
+        time_zone: UTC
+        constraints: [required]
+        range: [2026-10-23T11:23:01, 2026-10-23T11:24:11]
+
   - name: ssyk_profiles
     label: Occupation profiles (ssyk_profiles.json)
     description: >

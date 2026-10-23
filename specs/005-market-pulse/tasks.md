@@ -50,20 +50,20 @@ task after it is implemented.
 **Goal**: ads published per full year since 2016 for each concept, built ahead of time; a missed year fails the build.
 **Independent test**: building from the fixtures gives 2016 = 16 406 and 2025 = 30 304 for 2512's concept, and a missing file raises.
 
-- [ ] T020 [US3] Write failing tests in `tests/unit/test_jobsearch_history.py`: `years(today)` gives 2016 to the last full year (a build on 2027-01-02 includes 2026); `parse_year` reads `total.value`; `build_history` raises naming the concept and year when one is missing, and stores 0 as 0
-- [ ] T021 [US3] Implement `src/lonekrav/etl/jobsearch.py`: `fetch_history(raw, concepts, force)` with one `cached_get` file per concept-year under `data/raw/jobsearch_history/` on 4 threads, then `years` and `build_history`; add `write_history`/`load_history` (`data/processed/ad_history.parquet`); wire `jobsearch_history` into `pipeline.fetch`/`build` and `cli.SOURCES`
-- [ ] T022 [US3] Write failing tests for the history part of `market()` in `tests/unit/test_market.py`: rows ascending by year for the code's concept, and `history_status="no_concept"` with no rows for 4430
-- [ ] T023 [US3] Implement the history part in `src/lonekrav/core/market.py`, and load `ad_history.parquet` into `Service` in `src/lonekrav/app.py`
-- [ ] T024 [US3] Run the real history fetch and build, timing them. Check on 2512 that the months of 2025 add up to its yearly count (research R4), and record the result. Commit `ad_history.parquet`. Add a test that every concept in the committed profiles has one row per year (SC-005)
-- [ ] T025 [US3] Record `ad_history` in `data/processed/data-dict.yaml` (provenance, CC0, ads not positions, from 2016) and run `data-dict validate-data`
+- [x] T020 [US3] Write failing tests in `tests/unit/test_jobsearch_history.py`: `years(today)` gives 2016 to the last full year (a build on 2027-01-02 includes 2026); `parse_year` reads `total.value`; `build_history` raises naming the concept and year when one is missing, and stores 0 as 0
+- [x] T021 [US3] Implement `src/lonekrav/etl/jobsearch.py`: `fetch_history(raw, concepts, force)` with one `cached_get` file per concept-year under `data/raw/jobsearch_history/` on 4 threads, then `years` and `build_history`; add `write_history`/`load_history` (`data/processed/ad_history.parquet`); wire `jobsearch_history` into `pipeline.fetch`/`build` and `cli.SOURCES`
+- [x] T022 [US3] Write failing tests for the history part of `market()` in `tests/unit/test_market.py`: rows ascending by year for the code's concept, and `history_status="no_concept"` with no rows for 4430
+- [x] T023 [US3] Implement the history part in `src/lonekrav/core/market.py`, and load `ad_history.parquet` into `Service` in `src/lonekrav/app.py`
+- [x] T024 [US3] Run the real history fetch and build, timing them. Check on 2512 that the months of 2025 add up to its yearly count (research R4), and record the result. Commit `ad_history.parquet`. Add a test that every concept in the committed profiles has one row per year (SC-005)
+- [x] T025 [US3] Record `ad_history` in `data/processed/data-dict.yaml` (provenance, CC0, ads not positions, from 2016) and run `data-dict validate-data`
 
 ## Phase 6: User Story 4 — MCP and advisor (P3)
 
 **Goal**: the same market answer through MCP; the advisor may cite it and never chooses by it.
 **Independent test**: the MCP tool equals REST for a code; the advisor's prompt and a scripted run pass the honest-fit checks.
 
-- [ ] T026 [US4] Write a failing test in `tests/integration/test_mcp.py`: `get_occupation_market` is listed, returns the same JSON as REST for 2512 with the same fake fetcher, and returns REST's text as a ToolError for 9999
-- [ ] T027 [US4] Add the tool to `src/lonekrav/protocols/mcp_server.py` with the description from contracts/mcp.md
+- [x] T026 [US4] Write a failing test in `tests/integration/test_mcp.py`: `get_occupation_market` is listed, returns the same JSON as REST for 2512 with the same fake fetcher, and returns REST's text as a ToolError for 9999
+- [x] T027 [US4] Add the tool to `src/lonekrav/protocols/mcp_server.py` with the description from contracts/mcp.md
 - [ ] T028 [US4] Write a failing test in `tests/unit/test_agent_loop.py` (or the existing prompt test) that `SYSTEM_PROMPT` names `get_occupation_market` and forbids preferring a code by demand or pay; extend the existing honest-fit wording test to cover the tool's description and `MARKET_NOTICE`
 - [ ] T029 [US4] Update `SYSTEM_PROMPT` in `src/lonekrav/protocols/agent/loop.py` (contracts/mcp.md)
 

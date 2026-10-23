@@ -177,4 +177,4 @@ class YearlyAds(BaseModel):
     year: int = Field(ge=2016)  # the historical interface has no coded ads before 2016
     ads: int = Field(ge=0)
     source: Literal["jobtech_historical"] = "jobtech_historical"
-    built_at: dt.datetime
+    fetched_at: dt.datetime  # when this count was fetched (deterministic builds)

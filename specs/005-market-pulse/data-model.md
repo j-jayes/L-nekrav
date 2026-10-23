@@ -27,7 +27,7 @@ JobTech publishes nothing; nothing is filled in.
 | year | int ≥ 2016 | full calendar years only |
 | ads | int ≥ 0 | 0 is a real count |
 | source | `"jobtech_historical"` | |
-| built_at | datetime | when the build ran |
+| fetched_at | datetime | when that count was fetched (from the raw file meta, so builds are byte-identical) |
 
 ## LiveDemand (`core/market.py`, in memory, reused for 15 min)
 

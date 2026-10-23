@@ -141,3 +141,17 @@ def test_market_shows_the_latest_regional_year_with_sweden_first(inputs, fixture
     assert all(r.code == "2512" for r in a.regional)
     empty = market(profiles["2512"], profiles, live, [r for r in regional if r.code != "2512"], [])
     assert empty.regional == [] and empty.regional_year is None
+
+
+def test_market_history_is_the_concepts_years_in_order(inputs):
+    from lonekrav.core.models import YearlyAds
+    from lonekrav.core.profiles import build_profiles
+
+    profiles = build_profiles(inputs)
+    rows = [YearlyAds(concept_id=c, year=y, ads=n, fetched_at=T0)
+            for c, y, n in [(CONCEPT, 2025, 30304), ("other", 2016, 5), (CONCEPT, 2016, 16406)]]
+    live = LiveCache(get_json=FakeApi({}, {}, error=httpx.ConnectError("x")), clock=Clock())
+    a = market(profiles["2512"], profiles, live, [], rows)
+    assert a.history_status == "available"
+    assert [(h.year, h.ads) for h in a.history] == [(2016, 16406), (2025, 30304)]
+    assert market(profiles["4430"], profiles, live, [], rows).history == []

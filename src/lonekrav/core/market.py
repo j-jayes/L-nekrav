@@ -12,15 +12,18 @@ import datetime as dt
 import json
 import threading
 from collections.abc import Callable
+from pathlib import Path
 from typing import Literal
 from urllib.parse import urlencode
 
 import httpx
+import polars as pl
 from pydantic import BaseModel
 
 from lonekrav.core.models import OccupationProfile, RegionalSalary, SourceRef, YearlyAds
 
 JOBSEARCH_URL = "https://jobsearch.api.jobtechdev.se/search"
+HISTORY = Path("data/processed/ad_history.parquet")
 TTL = dt.timedelta(minutes=15)
 TIMEOUT_S = 2.0  # per request; two requests per count keep a dead API under 5 s (SC-003)
 USER_AGENT = "lonekrav/0.1 (+https://github.com/j-jayes/L-nekrav)"
@@ -62,6 +65,16 @@ class MarketAnswer(BaseModel):
     history_status: Literal["available", "no_concept"]
     history: list[YearlyAds]
     notice: str = MARKET_NOTICE
+
+
+def write_history(rows: list[YearlyAds], path: Path = HISTORY) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    data = [r.model_dump() for r in sorted(rows, key=lambda r: (r.concept_id, r.year))]
+    pl.DataFrame(data, infer_schema_length=None).write_parquet(path, statistics=False)
+
+
+def load_history(path: Path = HISTORY) -> list[YearlyAds]:
+    return [YearlyAds.model_validate(r) for r in pl.read_parquet(path).to_dicts()]
 
 
 def _params(concept: str, stats: bool) -> dict[str, str]:
@@ -152,4 +165,6 @@ def market(profile: OccupationProfile, profiles: dict[str, OccupationProfile], l
         shared_with=shared,
         live=live.get(concept) if concept else LiveDemand(status="no_concept"),
         regional_year=year, regional=latest,
-        history_status="available" if concept else "no_concept", history=[])
+        history_status="available" if concept else "no_concept",
+        history=sorted((h for h in history if concept and h.concept_id == concept),
+                       key=lambda h: h.year))

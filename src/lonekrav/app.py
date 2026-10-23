@@ -38,14 +38,14 @@ def create_app(engine=None, profiles=None, salaries=None, chat_model=None,
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
-        from lonekrav.core.market import JOBSEARCH_URL, LiveCache
+        from lonekrav.core.market import JOBSEARCH_URL, LiveCache, load_history
         from lonekrav.core.profiles import load_profiles
         from lonekrav.core.salary import load_age_bands, load_distributions, load_regional
         from lonekrav.core.search import SearchEngine
         from lonekrav.core.service import Service
 
         distributions, age_bands = salaries or (load_distributions(), load_age_bands())
-        regional, history = market or (load_regional(), [])
+        regional, history = market or (load_regional(), load_history())
         app.state.service = Service(
             engine=engine or SearchEngine.load(),
             profiles=profiles if profiles is not None else load_profiles(),

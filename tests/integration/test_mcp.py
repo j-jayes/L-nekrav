@@ -5,7 +5,7 @@ import asyncio
 import pytest
 
 TOOLS = {"search_occupations", "extract_job_ad_signal", "get_occupation_salary",
-         "evaluate_permit_eligibility", "compare_occupations"}
+         "evaluate_permit_eligibility", "compare_occupations", "get_occupation_market"}
 
 
 def mcp_call(api_client, fn):
@@ -22,7 +22,7 @@ def tool(api_client, name, args):
     return mcp_call(api_client, lambda c: c.call_tool(name, args, raise_on_error=False))
 
 
-def test_lists_exactly_the_five_tools(api_client):
+def test_lists_exactly_the_six_tools(api_client):
     tools = mcp_call(api_client, lambda c: c.list_tools())
     assert {t.name for t in tools} == TOOLS
     for t in tools:
@@ -93,6 +93,21 @@ def read(api_client, uri):
 
     contents = mcp_call(api_client, lambda c: c.read_resource(uri))
     return json.loads(contents[0].text)
+
+
+def test_market_equals_rest(api_client):  # Feature 005: JobSearch is offline in tests
+    same_as_rest(api_client, "get_occupation_market", {"code": "2512"}, "get",
+                 "/api/v1/occupations/2512/market")
+
+
+def test_market_tool_says_it_is_context_not_a_reason_to_choose():
+    from lonekrav.protocols.mcp_server import build_mcp
+
+    async def describe():
+        return (await build_mcp(None).get_tool("get_occupation_market")).description
+
+    text = " ".join(asyncio.run(describe()).split())  # the docstring wraps lines
+    assert "never changes which code fits" in text and "must not be used to choose" in text
 
 
 def test_timeline_resource_equals_rest(api_client):

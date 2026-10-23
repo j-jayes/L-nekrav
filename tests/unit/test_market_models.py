@@ -31,10 +31,10 @@ def test_regional_only_from_tab5696():
 
 
 def test_yearly_ads_zero_is_a_count():
-    assert YearlyAds(concept_id="DJh5_yyF_hEM", year=2016, ads=0, built_at=FETCHED).ads == 0
+    assert YearlyAds(concept_id="DJh5_yyF_hEM", year=2016, ads=0, fetched_at=FETCHED).ads == 0
 
 
 @pytest.mark.parametrize("kw", [{"ads": -1}, {"year": 2015}])
 def test_yearly_ads_rejects_negative_counts_and_years_before_2016(kw):
     with pytest.raises(ValidationError):
-        YearlyAds(**({"concept_id": "x", "year": 2020, "ads": 1, "built_at": FETCHED} | kw))
+        YearlyAds(**({"concept_id": "x", "year": 2020, "ads": 1, "fetched_at": FETCHED} | kw))

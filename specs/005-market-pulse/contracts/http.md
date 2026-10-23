@@ -21,7 +21,7 @@ Example, abridged and with the live numbers from the 2026-10-23 probe:
   "regional": [{"region": "SE", "region_name": "Sweden", "mean": 55500, "mean_ci95": 940, "employees": 113100, "source_table": "TAB5696", "...": "..."},
                {"region": "SE21", "region_name": "Småland and islands", "mean": 48400, "mean_ci95": 1960, "employees": null, "suppressed": ["employees"], "...": "..."}],
   "history_status": "available",
-  "history": [{"concept_id": "DJh5_yyF_hEM", "year": 2016, "ads": 16406, "source": "jobtech_historical", "built_at": "..."}, "..."],
+  "history": [{"concept_id": "DJh5_yyF_hEM", "year": 2016, "ads": 16406, "source": "jobtech_historical", "fetched_at": "..."}, "..."],
   "notice": "..."
 }
 ```

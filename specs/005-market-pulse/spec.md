@@ -119,7 +119,7 @@ every published figure for a code matches the slice, and that a suppressed cell 
 
 An adviser explaining a field to a client wants to show whether hiring for the code has grown or
 shrunk. For each code they see the number of ads published on Platsbanken in each full year since
-2016, as a small chart with a table view, with the source and the date the counts were built.
+2016, as a small chart with a table view, with the source and the date the counts were fetched.
 
 **Why this priority**: a trend gives the live count a scale, but it is the least urgent of the
 three, and it needs one ahead-of-time pass over all codes.
@@ -131,7 +131,7 @@ against the historical interface's answer recorded in the fixture.
 
 1. **Given** a code with a JobTech concept, **When** its history is requested, **Then** it returns
    the number of ads published in each full year from 2016 to the last full year, with the source
-   and the build date.
+   and the date the counts were fetched.
 2. **Given** a year with no ads for the code, **When** history is shown, **Then** that year shows
    zero, which is a real count, and is not confused with a missing year.
 3. **Given** a code JobTech merges or lacks, **When** history is requested, **Then** it is labelled
@@ -224,7 +224,7 @@ a recorded run.
 - **FR-012**: The system MUST provide, for each code with a JobTech concept, the number of ads
   published in each full calendar year from 2016 to the last full year before the build.
 - **FR-013**: Yearly counts MUST be built ahead of time by the data pipeline, committed with the
-  other processed data, recorded in the data dictionary, and carry the source and the build date.
+  other processed data, recorded in the data dictionary, and carry the source and the date the counts were fetched.
 - **FR-014**: A year with no ads MUST be stored and shown as zero; a year the pipeline could not
   fetch MUST fail the build rather than be stored as zero or left out.
 
@@ -254,7 +254,7 @@ a recorded run.
   of its 95 % confidence interval (SCB publishes it as one ± figure), and the number of employees,
   each possibly empty; with the SCB table and fetch time.
 - **Yearly demand**: for one JobTech concept and one full year, the number of ads published; with
-  the source and the build date.
+  the source and the date the counts were fetched.
 - **Market answer**: for one code, the three parts above, each with its own status, plus the
   honest-fit statement.
 

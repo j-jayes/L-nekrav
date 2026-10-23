@@ -18,7 +18,7 @@ The panel sits under each compare column, below the official tasks, headed "Mark
    Employees. A null cell reads "not published". With no rows: "SCB publishes no regional figures
    for this code."
 4. **Ads per year**: a bar chart (one series, no legend) titled "Ads published per year
-   (Platsbanken)", with a `<details>` table view and the source and build date. `no_concept`
+   (Platsbanken)", with a `<details>` table view and the source and fetch date. `no_concept`
    uses the same text as in 2.
 
 The panel holds no thresholds or numbers of its own: the legal-literal scan still covers
