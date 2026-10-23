@@ -87,7 +87,7 @@ task after it is implemented.
 - [ ] T039 Regenerate `references/api-smoke.md` with `scripts/api_smoke.py` (adding the market route)
 - [ ] T040 Rebuild the container and run `scripts/container_smoke.py` with `LONEKRAV_PORT=8001`; confirm the market route from inside the image, and record it in `references/container-smoke.md`
 - [x] T041 Update `README.md` (data and credits, the market route, `LONEKRAV_JOBSEARCH_URL` in the settings table), `references/development-plan.md` (the 005 as-built note, correcting TAB4185 to TAB5696), `CLAUDE.md` ("Things worked out in Feature 005") and `docs/walkthroughs/005-market-pulse.md` (walkthrough skill)
-- [ ] T042 Open the PR with the evidence, request the Copilot review, and answer every comment
+- [x] T042 Open the PR with the evidence, request the Copilot review, and answer every comment
 
 ## Dependencies
 
