@@ -7,14 +7,21 @@ the removal of ILO text and the salary defaults live here, not in an adapter (Pr
 from __future__ import annotations
 
 import datetime as dt
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from lonekrav.core.adparse import AdText, ParsedAd, parse
 from lonekrav.core.compare import CompareRequest, Comparison, compare
 from lonekrav.core.eligibility import EligibilityAnswer, EligibilityRequest, UnknownCode, evaluate
 from lonekrav.core.legal import Registry, TimelineEvent, load_registry
 from lonekrav.core.legal_flags import flags_for
-from lonekrav.core.models import AgeBandSalary, OccupationProfile, SalaryDistribution
+from lonekrav.core.market import LiveCache, MarketAnswer, market
+from lonekrav.core.models import (
+    AgeBandSalary,
+    OccupationProfile,
+    RegionalSalary,
+    SalaryDistribution,
+    YearlyAds,
+)
 from lonekrav.core.salary import SalaryPayload, payload
 from lonekrav.core.search import SearchAnswer, SearchEngine, SearchRequest, run
 
@@ -25,6 +32,9 @@ class Service:
     profiles: dict[str, OccupationProfile]
     distributions: list[SalaryDistribution]
     age_bands: list[AgeBandSalary]
+    regional: list[RegionalSalary] = field(default_factory=list)
+    history: list[YearlyAds] = field(default_factory=list)
+    live: LiveCache = field(default_factory=LiveCache)
 
     def _known(self, code: str) -> OccupationProfile:
         if code not in self.profiles:
@@ -60,6 +70,11 @@ class Service:
         return p.model_copy(update={
             "legal_flags": flags_for(code),
             "descriptions": [d for d in p.descriptions if d.source.source != "ilo_isco08"]})
+
+    def market(self, code: str) -> MarketAnswer:
+        """Open ads now, regional means and yearly ads for a code: context, never a reason to
+        choose it. A live failure is part of the answer, not an exception (FR-005)."""
+        return market(self._known(code), self.profiles, self.live, self.regional, self.history)
 
     def timeline(self) -> list[TimelineEvent]:
         return load_registry().timeline()

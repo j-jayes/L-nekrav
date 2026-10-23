@@ -10,28 +10,28 @@ task after it is implemented.
 
 ## Phase 1: Setup
 
-- [ ] T001 Amend `.specify/memory/constitution.md` (PATCH): add the JobSearch and historical ads APIs (CC0) and SCB TAB5696 to Technology and Data Constraints, with a sync-impact note (research R8)
-- [ ] T002 [P] Add `jobtech_jobsearch` and `jobtech_historical` to `Source` in `src/lonekrav/core/models.py`
-- [ ] T003 [P] Extend `scripts/cut_fixtures.py` to cut real slices into `tests/fixtures/`: TAB5696 for codes 2512, 1211, 1212, 4430, 2221 (json-stat2, `lang=en`); a JobSearch `search` answer for 2512's concept and for a concept with an ad with no county, if one is found; historical answers for 2512 for 2016 and 2025. Run it and commit the slices
+- [x] T001 Amend `.specify/memory/constitution.md` (PATCH): add the JobSearch and historical ads APIs (CC0) and SCB TAB5696 to Technology and Data Constraints, with a sync-impact note (research R8)
+- [x] T002 [P] Add `jobtech_jobsearch` and `jobtech_historical` to `Source` in `src/lonekrav/core/models.py`
+- [x] T003 [P] Extend `scripts/cut_fixtures.py` to cut real slices into `tests/fixtures/`: TAB5696 for codes 2512, 1211, 1212, 4430, 2221 (json-stat2, `lang=en`); a JobSearch `search` answer for 2512's concept and for a concept with an ad with no county, if one is found; historical answers for 2512 for 2016 and 2025. Run it and commit the slices
 
 ## Phase 2: Foundational
 
-- [ ] T004 Write a failing test in `tests/unit/test_market_models.py` for `RegionalSalary` (independently nullable `mean` and `employees`, `reference_year == year`, computed `suppressed`) and `YearlyAds` (`ads >= 0`, `year >= 2016`)
-- [ ] T005 Implement `RegionalSalary` and `YearlyAds` in `src/lonekrav/core/models.py`
+- [x] T004 Write a failing test in `tests/unit/test_market_models.py` for `RegionalSalary` (independently nullable `mean` and `employees`, `reference_year == year`, computed `suppressed`) and `YearlyAds` (`ads >= 0`, `year >= 2016`)
+- [x] T005 Implement `RegionalSalary` and `YearlyAds` in `src/lonekrav/core/models.py`
 
 ## Phase 3: User Story 1 — Live demand (P1) 🎯 MVP
 
 **Goal**: one code's open ads, positions and counties, live, with shared and missing concepts labelled and failure reported without a number.
 **Independent test**: `GET /api/v1/occupations/2512/market` gives `live` equal to JobSearch's own count; 1211 names 1212; 4430 gives `no_concept`; an unreachable URL gives `unavailable` within 5 s.
 
-- [ ] T006 [US1] Write failing tests in `tests/unit/test_market.py` for `parse_live` on the T003 fixture: ads, positions, counties ordered by count, `no_county = total − Σ`, and `unexpected response` for a body without `total`
-- [ ] T007 [US1] Write failing tests in `tests/unit/test_market.py` for `LiveCache` with a fake fetcher and clock: a reuse within 15 min keeps `fetched_at` and makes one fetch; a refetch after 15 min; an unavailable answer is not cached; a timeout, connection error, HTTP 503 and bad JSON each map to their `reason`
-- [ ] T008 [US1] Implement `CountyCount`, `LiveDemand`, `parse_live`, `http_fetcher` (httpx, two requests per count, 2 s timeout each, User-Agent, base URL from `LONEKRAV_JOBSEARCH_URL`, defaulting to the real API) and `LiveCache` in `src/lonekrav/core/market.py`
-- [ ] T009 [US1] Write failing tests in `tests/unit/test_market.py` for `market()`: `shared_with` from profiles with the same concept (1211 ↔ 1212), `no_concept` for a profile without a concept id (no fetch made), and `notice` equal to `MARKET_NOTICE`, which contains `HONEST_FIT`'s rule that the code must match the duties
-- [ ] T010 [US1] Implement `MarketAnswer`, `MARKET_NOTICE` and `market()` in `src/lonekrav/core/market.py`, and `Service.market(code)` in `src/lonekrav/core/service.py` (with a `live: LiveCache` field, defaulting to the real fetcher); `UnknownCode` for an unknown code
-- [ ] T011 [US1] Write failing tests in `tests/integration/test_market_api.py`: `GET /api/v1/occupations/{code}/market` gives 200 with a fake fetcher, 404 for 9999, and 200 with `live.status="unavailable"` when the fetcher raises
-- [ ] T012 [US1] Add the route in `src/lonekrav/api/v1.py`, and let `create_app` in `src/lonekrav/app.py` accept an injected `LiveCache` for tests
-- [ ] T013 [US1] Add `tests/integration/test_market_live.py` (marker `live`, skipped when the network is unavailable; widen the `live` marker's description in `pyproject.toml` to "calls a real external service"): for 2512, the answer's `ads` is within 2 % of a direct JobSearch call made in the same test, since ads can change in between. The exact same-minute check for 10 codes (SC-001) is T038
+- [x] T006 [US1] Write failing tests in `tests/unit/test_market.py` for `parse_live` on the T003 fixture: ads, positions, counties ordered by count, `no_county = total − Σ`, and `unexpected response` for a body without `total`
+- [x] T007 [US1] Write failing tests in `tests/unit/test_market.py` for `LiveCache` with a fake fetcher and clock: a reuse within 15 min keeps `fetched_at` and makes one fetch; a refetch after 15 min; an unavailable answer is not cached; a timeout, connection error, HTTP 503 and bad JSON each map to their `reason`
+- [x] T008 [US1] Implement `CountyCount`, `LiveDemand`, `parse_live`, `http_fetcher` (httpx, two requests per count, 2 s timeout each, User-Agent, base URL from `LONEKRAV_JOBSEARCH_URL`, defaulting to the real API) and `LiveCache` in `src/lonekrav/core/market.py`
+- [x] T009 [US1] Write failing tests in `tests/unit/test_market.py` for `market()`: `shared_with` from profiles with the same concept (1211 ↔ 1212), `no_concept` for a profile without a concept id (no fetch made), and `notice` equal to `MARKET_NOTICE`, which contains `HONEST_FIT`'s rule that the code must match the duties
+- [x] T010 [US1] Implement `MarketAnswer`, `MARKET_NOTICE` and `market()` in `src/lonekrav/core/market.py`, and `Service.market(code)` in `src/lonekrav/core/service.py` (with a `live: LiveCache` field, defaulting to the real fetcher); `UnknownCode` for an unknown code
+- [x] T011 [US1] Write failing tests in `tests/integration/test_market_api.py`: `GET /api/v1/occupations/{code}/market` gives 200 with a fake fetcher, 404 for 9999, and 200 with `live.status="unavailable"` when the fetcher raises
+- [x] T012 [US1] Add the route in `src/lonekrav/api/v1.py`, and let `create_app` in `src/lonekrav/app.py` accept an injected `LiveCache` for tests
+- [x] T013 [US1] Add `tests/integration/test_market_live.py` (marker `live`, skipped when the network is unavailable; widen the `live` marker's description in `pyproject.toml` to "calls a real external service"): for 2512, the answer's `ads` is within 2 % of a direct JobSearch call made in the same test, since ads can change in between. The exact same-minute check for 10 codes (SC-001) is T038
 
 ## Phase 4: User Story 2 — Regional pay (P2)
 

@@ -27,14 +27,17 @@ FRONTEND_DIST = Path("frontend/dist")  # `npm run build` in frontend/; the image
 
 
 def create_app(engine=None, profiles=None, salaries=None, chat_model=None,
-               frontend_dist: Path = FRONTEND_DIST) -> FastAPI:
+               frontend_dist: Path = FRONTEND_DIST, live=None) -> FastAPI:
     """`engine`, `profiles` and `salaries` (distributions, age bands) are injected by tests; the
     server loads the real ones at start-up. `chat_model` is the advisor's model; by default it is
     OpenRouter's when OPENROUTER_KEY is set, and None (the advisor declines) when it is not.
-    `frontend_dist` is the built page, served at / when its index.html exists."""
+    `frontend_dist` is the built page, served at / when its index.html exists. `live` is the
+    JobSearch cache (tests inject one that never touches the network); by default it calls
+    LONEKRAV_JOBSEARCH_URL, or the real API."""
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
+        from lonekrav.core.market import JOBSEARCH_URL, LiveCache
         from lonekrav.core.profiles import load_profiles
         from lonekrav.core.salary import load_age_bands, load_distributions
         from lonekrav.core.search import SearchEngine
@@ -44,7 +47,9 @@ def create_app(engine=None, profiles=None, salaries=None, chat_model=None,
         app.state.service = Service(
             engine=engine or SearchEngine.load(),
             profiles=profiles if profiles is not None else load_profiles(),
-            distributions=distributions, age_bands=age_bands)
+            distributions=distributions, age_bands=age_bands,
+            live=live or LiveCache(base_url=os.environ.get("LONEKRAV_JOBSEARCH_URL")
+                                   or JOBSEARCH_URL))
         yield
 
     for name in CONTENT_LOGGERS:

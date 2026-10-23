@@ -83,14 +83,23 @@ def fixture_engine(inputs, tmp_path):
     store.client.close()
 
 
+def offline(url, params):
+    """A JobSearch that cannot be reached: the default test run never calls the real one (FR-007)."""
+    import httpx
+
+    raise httpx.ConnectError("offline in tests")
+
+
 @pytest.fixture
 def api_client(fixture_engine, salaries):
     from fastapi.testclient import TestClient
 
     from lonekrav.app import create_app
+    from lonekrav.core.market import LiveCache
 
     engine, profiles = fixture_engine
-    with TestClient(create_app(engine=engine, profiles=profiles, salaries=salaries),
+    with TestClient(create_app(engine=engine, profiles=profiles, salaries=salaries,
+                               live=LiveCache(get_json=offline)),
                     raise_server_exceptions=False) as client:
         yield client
 

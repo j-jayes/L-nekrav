@@ -12,6 +12,7 @@ from lonekrav.core.adparse import AdText, ParsedAd
 from lonekrav.core.compare import CompareRequest, Comparison
 from lonekrav.core.eligibility import EligibilityAnswer, EligibilityRequest
 from lonekrav.core.legal import Registry, TimelineEvent
+from lonekrav.core.market import MarketAnswer
 from lonekrav.core.models import OccupationProfile
 from lonekrav.core.salary import SalaryPayload
 from lonekrav.core.search import SearchAnswer, SearchRequest
@@ -49,6 +50,11 @@ def salary(code: str, request: Request, age_band: str | None = None,
         return _service(request).salary(code, on=on, age_band=age_band)
     except ValueError as e:  # an unknown age band
         raise HTTPException(422, str(e)) from e
+
+
+@router.get("/occupations/{code}/market")
+def market(code: str, request: Request) -> MarketAnswer:
+    return _service(request).market(code)
 
 
 @router.get("/occupations/{code}")
