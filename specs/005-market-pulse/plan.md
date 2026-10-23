@@ -109,7 +109,7 @@ src/lonekrav/
 │   ├── scb_pxweb.py       # + TAB5696 fetch and parse_regional
 │   ├── jobsearch.py       # NEW: history fetch (one cached file per concept-year) and build
 │   ├── pipeline.py        # fetch/build steps for both
-│   └── cli.py             # + "scb_regional", "jobsearch_history" sources
+│   └── cli.py             # + "jobsearch_history" source (TAB5696 comes with "scb_pxweb")
 ├── api/v1.py              # + GET /occupations/{code}/market
 ├── protocols/mcp_server.py        # + get_occupation_market
 ├── protocols/agent/loop.py        # SYSTEM_PROMPT: may cite the market, never choose by it

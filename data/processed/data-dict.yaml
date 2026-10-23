@@ -205,6 +205,83 @@ tables:
         constraints: [required]
         range: [2026-10-20T20:54:52, 2026-10-20T20:55:38]
 
+  - name: salary_regional
+    label: Mean monthly salary by occupation and national area
+    source:
+      parquet: salary_regional.parquet
+    description: >
+      One row per occupation, year and area (Feature 005): Sweden (SE) and its 8 national areas
+      (riksområden, NUTS2), all sectors and both sexes combined, from SCB TAB5696, 2023 onwards.
+      SCB publishes only means by area, not percentiles, and no county figures per 4-digit
+      code. These are context: the work-permit floor comes from the national median and is the
+      same in every area.
+    details: >
+      Fetched in English (`lang=en`) so the area names are SCB's English labels. The SE row
+      equals TAB5932's mean for the same code and year (tests/integration/test_regional_data.py).
+      Not TAB4185, which holds the pay of people employed by the regions (county health-care
+      employers), not pay by area. Credit "Medlingsinstitutet / SCB lönestrukturstatistik
+      (AM0110)", CC0 1.0 as for the other SCB tables.
+    constraints:
+      - assert: reference_year = year
+    columns:
+      - name: code
+        type: string
+        constraints: [primary_key]
+        examples: ["0000", "2512", "5343"]
+      - name: year
+        type: number(ordinal)
+        constraints: [primary_key]
+        range: [2023, 2025]
+      - name: region
+        type: enum
+        constraints: [primary_key]
+        values:
+          SE: Sweden
+          SE11: Stockholm
+          SE12: East-Central Sweden
+          SE21: Småland and islands
+          SE22: South Sweden
+          SE23: West Sweden
+          SE31: North-Central Sweden
+          SE32: Central Norrland
+          SE33: Upper Norrland
+      - name: region_name
+        type: string
+        constraints: [required]
+        description: SCB's English label for `region`.
+        examples: ["Sweden", "Stockholm", "Småland and islands"]
+      - name: mean
+        type: number(quantity)
+        units: SEK per month
+        description: Mean monthly salary. Null where SCB suppresses it (~34% of rows).
+        range: [22600, 180400]
+      - name: mean_ci95
+        type: number(quantity)
+        units: SEK per month
+        description: Half-width of the 95% confidence interval for the mean; null with the mean.
+        range: [0, 21770]
+      - name: employees
+        type: number(quantity)
+        units: employees
+        description: >
+          Estimated number of employees. Suppressed on its own more often than the mean (~55%);
+          a null does not mean zero employees.
+        range: [100, 4616500]
+      - name: source_table
+        type: enum
+        constraints: [required]
+        values:
+          TAB5696: Genomsnittlig grund- och månadslön ... efter region, sektor, yrke (SSYK 2012) och kön. År 2023-2025
+      - name: reference_year
+        type: number(ordinal)
+        constraints: [required]
+        range: [2023, 2025]
+      - name: fetched_at
+        type: datetime
+        time_zone: UTC
+        constraints: [required]
+        range: [2026-10-23T11:15:32, 2026-10-23T11:15:33]
+
   - name: ssyk_profiles
     label: Occupation profiles (ssyk_profiles.json)
     description: >

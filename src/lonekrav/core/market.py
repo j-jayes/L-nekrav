@@ -143,9 +143,13 @@ def market(profile: OccupationProfile, profiles: dict[str, OccupationProfile], l
     concept = profile.jobtech_concept_id
     shared = sorted(c for c, p in profiles.items()
                     if concept and p.jobtech_concept_id == concept and c != profile.code)
+    rows = [r for r in regional if r.code == profile.code]
+    year = max((r.year for r in rows), default=None)
+    latest = sorted((r for r in rows if r.year == year),
+                    key=lambda r: (r.region != "SE", r.region))  # Sweden first, then the areas
     return MarketAnswer(
         code=profile.code, title_sv=profile.title_sv, title_en=profile.title_en,
         shared_with=shared,
         live=live.get(concept) if concept else LiveDemand(status="no_concept"),
-        regional_year=None, regional=[],
+        regional_year=year, regional=latest,
         history_status="available" if concept else "no_concept", history=[])

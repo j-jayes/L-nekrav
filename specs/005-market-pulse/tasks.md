@@ -38,12 +38,12 @@ task after it is implemented.
 **Goal**: SCB TAB5696 means per national area for the latest year, built ahead of time, with suppression kept.
 **Independent test**: the parsed fixture slice matches SCB's cells, nulls stay null, and the market answer's `regional` lists `SE` first.
 
-- [ ] T014 [US2] Write failing tests in `tests/unit/test_scb_regional.py` for `scb_pxweb.parse_regional` on the T003 slice: 2512 in 2025 for `SE` is 55 500 ± 940 with 113 100 employees; `SE21` has a mean and null employees; codes 0001 and 0002 are dropped and 0000 is kept, as for TAB5932; and every row's table, reference year and fetched_at are set
-- [ ] T015 [US2] Implement the TAB5696 fetch (in `scb_pxweb.fetch`, `lang=en`, the three content codes) and `parse_regional`/`build_regional` in `src/lonekrav/etl/scb_pxweb.py`; add `write_regional`/`load_regional` (`data/processed/salary_regional.parquet`) in `src/lonekrav/core/salary.py`; call it from `pipeline.build`
-- [ ] T016 [US2] Write failing tests in `tests/unit/test_market.py` for the regional part of `market()`: only the latest year, `SE` first and then by area code, an empty list and null `regional_year` for a code with no rows
-- [ ] T017 [US2] Implement the regional part in `src/lonekrav/core/market.py`, and load `salary_regional.parquet` into `Service` in `src/lonekrav/app.py`. Update the test fixtures in `tests/conftest.py`
-- [ ] T018 [US2] Run `lonekrav-etl fetch --only scb_pxweb` and `lonekrav-etl build` for real. Commit `salary_regional.parquet`. Add `tests/integration/test_regional_data.py`: the committed `SE` mean equals TAB5932's mean for each code and year present in both (research R3 cross-check)
-- [ ] T019 [US2] Record `salary_regional` in `data/processed/data-dict.yaml` (provenance, CC0, Medlingsinstitutet / SCB credit, the suppression note) and run `data-dict validate-data`
+- [x] T014 [US2] Write failing tests in `tests/unit/test_scb_regional.py` for `scb_pxweb.parse_regional` on the T003 slice: 2512 in 2025 for `SE` is 55 500 ± 940 with 113 100 employees; `SE21` has a mean and null employees; codes 0001 and 0002 are dropped and 0000 is kept, as for TAB5932; and every row's table, reference year and fetched_at are set
+- [x] T015 [US2] Implement the TAB5696 fetch (in `scb_pxweb.fetch`, `lang=en`, the three content codes) and `parse_regional`/`build_regional` in `src/lonekrav/etl/scb_pxweb.py`; add `write_regional`/`load_regional` (`data/processed/salary_regional.parquet`) in `src/lonekrav/core/salary.py`; call it from `pipeline.build`
+- [x] T016 [US2] Write failing tests in `tests/unit/test_market.py` for the regional part of `market()`: only the latest year, `SE` first and then by area code, an empty list and null `regional_year` for a code with no rows
+- [x] T017 [US2] Implement the regional part in `src/lonekrav/core/market.py`, and load `salary_regional.parquet` into `Service` in `src/lonekrav/app.py`. Update the test fixtures in `tests/conftest.py`
+- [x] T018 [US2] Run `lonekrav-etl fetch --only scb_pxweb` and `lonekrav-etl build` for real. Commit `salary_regional.parquet`. Add `tests/integration/test_regional_data.py`: the committed `SE` mean equals TAB5932's mean for each code and year present in both (research R3 cross-check)
+- [x] T019 [US2] Record `salary_regional` in `data/processed/data-dict.yaml` (provenance, CC0, Medlingsinstitutet / SCB credit, the suppression note) and run `data-dict validate-data`
 
 ## Phase 5: User Story 3 — Yearly demand (P3)
 
@@ -72,7 +72,7 @@ task after it is implemented.
 **Goal**: the market panel under each compare column.
 **Independent test**: Vitest on recorded answers covers each status; Playwright screenshots at 390 and 1280 px pass axe.
 
-- [ ] T030 Regenerate the schema and types (`uv run python scripts/export_openapi.py && (cd frontend && npm run gen)`); `test_openapi_drift.py` passes
+- [x] T030 Regenerate the schema and types (`uv run python scripts/export_openapi.py && (cd frontend && npm run gen)`); `test_openapi_drift.py` passes
 - [ ] T031 [P] Extend `scripts/record_api_fixtures.py` to record `market-2512.json`, `market-1211.json`, `market-4430.json` and `market-unavailable.json` (the latter with `LONEKRAV_JOBSEARCH_URL` pointed at a closed port) into `frontend/src/test/fixtures/`, and run it against a local server
 - [ ] T032 Write failing tests in `frontend/src/components/MarketPanel.test.tsx`: available (counts, top 5 counties, details for the rest, source and fetched time), shared (names 1212), no_concept (no number), unavailable (reason, no number), regional (floor sentence, mean ± margin, "not published" for null), history (bar per year, table view, a zero year labelled 0), the panel's own request failing, and the notice shown
 - [ ] T033 Implement `frontend/src/components/MarketPanel.tsx` (contracts/ui.md, research R7); load the `dataviz` skill and draw the chart at the measured width

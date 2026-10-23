@@ -61,12 +61,15 @@ def build(raw: Path = RAW, out: Path = PROCESSED) -> None:
     ages = scb_pxweb.build_age_bands(raw)
     salary.write_distributions(dists, out / "salary_distributions.parquet")
     salary.write_age_bands(ages, out / "salary_age.parquet")
+    regional = scb_pxweb.build_regional(raw)
+    salary.write_regional(regional, out / "salary_regional.parquet")
     queries, held = generate_queries(inputs, profiles)
     (out / "benchmark_generated.json").write_text(json.dumps(
         [q.model_dump() for q in queries], ensure_ascii=False, indent=1) + "\n")
     (out / "benchmark_holdout.json").write_text(json.dumps(
         sorted(held), ensure_ascii=False, indent=1) + "\n")
     print(f"built {len(profiles)} profiles, {len(dists)} distributions, {len(ages)} age rows, "
+          f"{len(regional)} regional rows, "
           f"{len(queries)} generated queries ({sum(bool(q.text_en) for q in queries)} with English)")
 
 

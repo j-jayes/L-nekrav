@@ -125,3 +125,19 @@ def test_market_notice_carries_the_honest_fit_rule():
     rule = HONEST_FIT.split(". ")[0]  # "The SSYK code ... must match the duties actually performed"
     assert rule in MARKET_NOTICE
     assert "mean" in MARKET_NOTICE and "national median" in MARKET_NOTICE
+
+
+def test_market_shows_the_latest_regional_year_with_sweden_first(inputs, fixtures):
+    from lonekrav.core.profiles import build_profiles
+    from lonekrav.etl.scb_pxweb import parse_regional
+
+    profiles = build_profiles(inputs)
+    regional = parse_regional(fixtures / "pxweb/TAB5696.json", T0)
+    live = LiveCache(get_json=FakeApi({}, {}, error=httpx.ConnectError("x")), clock=Clock())
+    a = market(profiles["2512"], profiles, live, regional, [])
+    assert a.regional_year == 2025 and {r.year for r in a.regional} == {2025}
+    assert [r.region for r in a.regional] == ["SE", "SE11", "SE12", "SE21", "SE22", "SE23",
+                                              "SE31", "SE32", "SE33"]
+    assert all(r.code == "2512" for r in a.regional)
+    empty = market(profiles["2512"], profiles, live, [r for r in regional if r.code != "2512"], [])
+    assert empty.regional == [] and empty.regional_year is None

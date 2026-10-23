@@ -4,6 +4,9 @@
 |-----------|--------------------|-----------|
 | 2014-2022 | TAB4265 (no CIs)   | TAB4264   |
 | 2023-     | TAB5932            | TAB5844   |
+
+Regional means (Feature 005): TAB5696, by national area, 2023 on, fetched in English for the
+area names. Not TAB4185, which is pay within the regions as employers (research R3).
 """
 
 from __future__ import annotations
@@ -14,13 +17,15 @@ import json
 from collections.abc import Iterator
 from pathlib import Path
 
-from lonekrav.core.models import AgeBandSalary, SalaryDistribution
+from lonekrav.core.models import AgeBandSalary, RegionalSalary, SalaryDistribution
 from lonekrav.etl.http import cached_get, read_meta
 
 URL = "https://statistikdatabasen.scb.se/api/v2/tables/{table}/data"
 DISTRIBUTION_TABLES = ("TAB4265", "TAB5932")
 AGE_TABLES = ("TAB4264", "TAB5844")
 TABLES = DISTRIBUTION_TABLES + AGE_TABLES
+REGIONAL_TABLE = "TAB5696"
+REGIONAL_FIELD = {"000007AS": "mean", "000007AU": "mean_ci95", "000007AP": "employees"}
 NOT_OCCUPATIONS = {"0001", "0002"}  # "other" and "unknown"; 0000 (all occupations) is kept
 FIELD = {  # content label -> model field
     "Månadslön": "mean",
@@ -63,6 +68,12 @@ def fetch(raw: Path, force: bool = False) -> dict[str, Path]:
             params["valueCodes[Alder]"] = "*"
         out[t] = cached_get("scb_pxweb", URL.format(table=t), raw / "pxweb" / f"{t}.json",
                             params=params, force=force, validate=_validate)
+    params = {"lang": "en", "outputFormat": "json-stat2", "valueCodes[Region]": "*",
+              "valueCodes[Sektor]": "0", "valueCodes[Kon]": "1+2", "valueCodes[Yrke2012]": "*",
+              "valueCodes[Tid]": "*", "valueCodes[ContentsCode]": ",".join(REGIONAL_FIELD)}
+    out[REGIONAL_TABLE] = cached_get(
+        "scb_pxweb", URL.format(table=REGIONAL_TABLE), raw / "pxweb" / f"{REGIONAL_TABLE}.json",
+        params=params, force=force, validate=_validate)
     return out
 
 
@@ -116,6 +127,26 @@ def parse_age_bands(path: Path, table: str, fetched_at: dt.datetime) -> list[Age
                           mean_monthly=v.get("mean_monthly"), headcount=v.get("headcount"),
                           mean_ci95=v.get("mean_ci95"))
             for (code, year, band), v in sorted(grouped.items())]
+
+
+def parse_regional(path: Path, fetched_at: dt.datetime) -> list[RegionalSalary]:
+    names = json.loads(path.read_text())["dimension"]["Region"]["category"]["label"]
+    grouped: dict[tuple[str, int, str], dict] = {}
+    for c in _cells(path):
+        if c["Yrke2012"] in NOT_OCCUPATIONS or c["ContentsCode"] not in REGIONAL_FIELD:
+            continue
+        key = (c["Yrke2012"], int(c["Tid"]), c["Region"])
+        grouped.setdefault(key, {})[REGIONAL_FIELD[c["ContentsCode"]]] = c["value"]
+    return [RegionalSalary(code=code, year=year, region=region, region_name=names[region],
+                           source_table=REGIONAL_TABLE, reference_year=year,
+                           fetched_at=fetched_at, mean=v.get("mean"),
+                           mean_ci95=v.get("mean_ci95"), employees=v.get("employees"))
+            for (code, year, region), v in sorted(grouped.items())]
+
+
+def build_regional(raw: Path) -> list[RegionalSalary]:
+    p = raw / "pxweb" / f"{REGIONAL_TABLE}.json"
+    return parse_regional(p, read_meta(p).fetched_at)
 
 
 def build_distributions(raw: Path) -> list[SalaryDistribution]:
