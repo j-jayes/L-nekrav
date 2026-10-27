@@ -3,10 +3,9 @@
 ## `OccupationMap` component
 
 - **Points**:
-  - 429 circles of radius 3 (5 when highlighted).
-  - Colour by major group for codes in focus; `--color-grid` grey otherwise. With no focus set,
-    every point is coloured.
-  - Group labels sit at each group's median position, with a halo for legibility.
+  - 429 circles of radius 2.5 in `--color-axis` grey.
+  - No colour by major group, and no group labels on the map (see `references/occupation-map.md`,
+    "Design changes made while building"). A code's group is shown in the readout and the table.
 - **Focus set**: the search hits (outlined) and the selected codes (filled, radius 6). Each
   selected code has lines to its 5 nearest neighbours, in `--color-muted`.
 - **Tooltip**:
@@ -15,7 +14,7 @@
   - with a selected code, "Closer to {sel} than {p} % of pairs", or "Same official description as
     {sel}".
   - Stacked points list every code at that spot.
-- **Controls**: + / − / Reset buttons, wheel and pinch zoom, and drag to pan. Tab moves through the
+- **Controls**: + / − / Selected (zoom to the selected codes and their neighbours) / Reset buttons, wheel zoom, and drag to pan. Tab moves through the
   focus set; Enter selects (adds to the selection, at most 4, as today).
 - **Table view**: `<details>` "Show as a table": Code | Title | Group | Nearest five.
 - **Caption**: "Each point is an occupation, placed by how similar its official description is

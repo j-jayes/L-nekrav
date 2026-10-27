@@ -41,7 +41,7 @@ for q in ["2511", "2221"]:
     i = codes.index(q)
     print(q, [(codes[j], round(float(S[i, j]), 3)) for j in np.argsort(-S[i])[1:6]])
 
-import umap  # noqa: E402  (only the UMAP half needs the map group)
+import umap
 
 full = np.argsort(-S, axis=1)[:, 1:21]
 Y = umap.UMAP(n_neighbors=15, min_dist=0.1, metric="cosine", random_state=0, n_jobs=1).fit_transform(X)

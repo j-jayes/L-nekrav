@@ -23,7 +23,13 @@ from lonekrav.core.models import (
     YearlyAds,
 )
 from lonekrav.core.occupation_map import (
-    Closeness, MapAnswer, NeighbourAnswer, OccupationMap, ServedPoint, SimilarCode, closeness,
+    Closeness,
+    MapAnswer,
+    NeighbourAnswer,
+    OccupationMap,
+    ServedPoint,
+    SimilarCode,
+    closeness,
 )
 from lonekrav.core.salary import SalaryPayload, payload, position
 from lonekrav.core.search import SearchAnswer, SearchEngine, SearchRequest, run

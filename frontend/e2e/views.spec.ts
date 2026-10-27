@@ -13,6 +13,11 @@ const VIEWS: { name: string; url: string; ready: (p: Page) => Promise<void> }[] 
       await p.getByRole("textbox", { name: /job title or ad/i }).fill("backend developer");
       await expect(p.getByText(/^Accurate results/)).toBeVisible({ timeout: 60_000 }); // a cold container loads Harrier (~17 s)
       await expect(p.getByRole("button", { name: "Remove 3511" })).toBeVisible();
+      // 007: the map, beside the results on a wide screen and folded away on a phone
+      const fold = p.getByText("Map of similar occupations", { exact: true });
+      if (await fold.isVisible()) await fold.click();
+      await expect(p.getByRole("group", { name: /Map of occupations/ })).toBeVisible();
+      await expect(p.getByTestId("selected")).toHaveCount(2);
     },
   },
   {

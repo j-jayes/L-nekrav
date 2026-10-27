@@ -4,7 +4,7 @@ import { IDENTITY, nearest, project, zoomAt } from "./mapScale";
 const pts = [
   { code: "1311", x: 0.2, y: 0.2 },
   { code: "1312", x: 0.2, y: 0.2 }, // drawn on the same spot
-  { code: "2512", x: 0.8, y: 0.6 },
+  { code: "2512", x: 0.85, y: 0.6 },
 ];
 
 describe("map scale", () => {

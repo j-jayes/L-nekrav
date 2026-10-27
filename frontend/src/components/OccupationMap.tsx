@@ -61,7 +61,7 @@ type Props = {
 
 export function OccupationMap({ map, hits, selected, onSelect }: Props) {
   const { ref, width } = useWidth();
-  const height = Math.round(Math.min(width * 0.75, 520));
+  const height = Math.round(Math.min(width * 0.7, 520));
   const [view, setView] = useState<View>(IDENTITY);
   const [shown, setShown] = useState<string[]>([]);
   const [asTable, setAsTable] = useState(false);

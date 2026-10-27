@@ -185,6 +185,10 @@ outlined on the map, 2511 is filled, and five lines run to the codes listed as i
 - **FR-013**: Each code card on "Your number" MUST have a "Similar work" section with its five
   nearest neighbours.
 - **FR-014**: Colour MUST NOT encode pay anywhere on the map.
+- **FR-015** (added in implementation): points MUST NOT be coloured by major group either. Ten
+  hues fail the dataviz all-pairs check, and the groups are skill levels that the map's domain
+  clusters cut across. Colour marks only the codes in play, and a code's group is read per point.
+  This supersedes the "coloured by its major group" wording in Story 2 and FR-010.
 
 ### Key Entities
 
