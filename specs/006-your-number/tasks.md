@@ -60,9 +60,9 @@ task after it is implemented.
 
 ## Phase 6: Polish and evidence
 
-- [ ] T024 Run the candidate walk (quickstart.md) at 390×844 and 1280×800; measure SC-001 and SC-004; write `references/your-number.md` with the curl output, the screenshots and the heights
-- [ ] T025 Update `README.md` and `CLAUDE.md` ("Things worked out in Feature 006") for anything the change invalidated or taught; update the memory leftover list (the threshold source leftover is closed)
-- [ ] T026 Full gates: `rtk proxy uv run pytest -q`, `(cd frontend && npm test && npm run build)`, Playwright views; then open the PR with the evidence
+- [X] T024 Run the candidate walk (quickstart.md) at 390×844 and 1280×800; measure SC-001 and SC-004; write `references/your-number.md` with the curl output, the screenshots and the heights
+- [X] T025 Update `README.md` and `CLAUDE.md` ("Things worked out in Feature 006") for anything the change invalidated or taught; update the memory leftover list (the threshold source leftover is closed)
+- [X] T026 Full gates: `rtk proxy uv run pytest -q`, `(cd frontend && npm test && npm run build)`, Playwright views; then open the PR with the evidence
 
 ## Dependencies
 

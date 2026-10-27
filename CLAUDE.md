@@ -227,3 +227,20 @@ Things worked out in Feature 005:
   sources to `tests/fixtures/README.md`, so the older fixtures are not re-downloaded.
   `scripts/record_api_fixtures.py BASE NAME…` records only the named page fixtures.
 
+Things worked out in Feature 006:
+
+- **A position is a bracket, never a percentile**: `core.salary.position` copies the nearest
+  published percentiles below and above. It rides on the eligibility answer (`market_position`),
+  so the candidate's number goes in a POST body, never a URL or a server log.
+- **The estimate is the age simulation plus an area factor** (TAB5696 area mean ÷ Sweden mean,
+  same year). A factor whose inputs SCB suppresses is left out with its reason (`left_out`). With
+  neither factor, `simulated` is null and `estimate_note` says why. A third of TAB5696's 2025
+  cells are suppressed, so partial estimates are normal.
+- **The page is three steps**: `?view=search|number|legal`. Old `?view=compare` links open
+  `number`. `/compare` takes 1–5 codes. The salary chart lives only on "Your number", and its
+  scale is padded around the drawn values, not zero-based.
+- **Live counts change between recordings**: page tests read numbers from the fixture, never
+  literals (the MarketPanel county test broke on re-recording).
+- **Playwright `getByLabel(/your number/)` also matched the advisor's checkbox hint**: use
+  `getByRole("textbox", { name })` for the number box.
+- Evidence and the SC-004 miss: `references/your-number.md`.

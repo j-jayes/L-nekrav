@@ -6,8 +6,16 @@ import pytest
 
 from lonekrav.core.models import AgeBandSalary, RegionalSalary, SalaryDistribution
 from lonekrav.core.salary import (
-    AGE_BANDS_, BOTH_FORMULA, FORMULA, PERCENTILES, REGION_FORMULA, REGIONS, load_age_bands,
-    load_distributions, load_regional, payload,
+    AGE_BANDS_,
+    BOTH_FORMULA,
+    FORMULA,
+    PERCENTILES,
+    REGION_FORMULA,
+    REGIONS,
+    load_age_bands,
+    load_distributions,
+    load_regional,
+    payload,
 )
 
 ON = dt.date(2026, 10, 27)

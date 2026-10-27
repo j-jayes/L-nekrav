@@ -10,7 +10,8 @@ A nav of three numbered steps: "1 Find your code" (`search`), "2 Your number" (`
 
 - The search box, status and ad passages are unchanged.
 - **Result card**: code and English title, the Swedish title, the matched passage, the flags and
-  "Add" / "Added". The rank chips (`ScoreStrip`) sit in `<details>` "How this was matched".
+  "Add to chart" / "On chart" (kept from 005: the code does go on the chart, in step 2). The rank
+  chips (`ScoreStrip`) sit in `<details>` "How this was matched".
 - **Selected**: a chip per code with ×, and the "Next: your number" button. No chart here.
 
 ## 2 Your number (replaces Compare)
@@ -40,7 +41,7 @@ Top to bottom:
      the checked-on date.
    - **`<details>` "What the work is"**: the official tasks in Swedish and English.
    - **`<details>` "Market"**: the existing `MarketPanel`, whose notice moves out of the card.
-4. **The market notice**, once, above the first "Market" section.
+4. **The market notice**, once, after the cards (it reaches the view from the first market answer).
 5. **The salary chart** (below).
 6. **Legal sources** and the disclaimer, as today.
 

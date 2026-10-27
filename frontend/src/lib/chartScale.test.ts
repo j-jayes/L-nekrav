@@ -10,7 +10,7 @@ describe("chart scale", () => {
   });
 
   it("keeps every value strictly inside the axis and the axis above zero", () => {
-    for (const values of [[41000, 77800], [34470, 60000, 72600], [60000], [5000, 9000]]) {
+    for (const values of [[41000, 77800], [34500, 60000, 72600], [60000], [5000, 9000]]) {
       const s = scale(values, 400);
       expect(s.min).toBeGreaterThanOrEqual(0);
       for (const v of values) {
