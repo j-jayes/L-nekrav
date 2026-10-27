@@ -24,3 +24,6 @@ export type LegalFlag = S["LegalFlag"];
 export type OccupationProfile = S["OccupationProfile"];
 export type MarketAnswer = S["MarketAnswer"];
 export type YearlyAds = S["YearlyAds"];
+export type MapAnswer = S["MapAnswer"];
+export type NeighbourAnswer = S["NeighbourAnswer"];
+export type Closeness = S["Closeness"];

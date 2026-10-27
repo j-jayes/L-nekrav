@@ -38,7 +38,9 @@ def create_app(engine=None, profiles=None, salaries=None, chat_model=None,
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
+        from lonekrav.core.embeddings import SPECS
         from lonekrav.core.market import JOBSEARCH_URL, LiveCache, load_history
+        from lonekrav.core.occupation_map import load_map, load_similarity
         from lonekrav.core.profiles import load_profiles
         from lonekrav.core.salary import load_age_bands, load_distributions, load_regional
         from lonekrav.core.search import SearchEngine
@@ -46,11 +48,16 @@ def create_app(engine=None, profiles=None, salaries=None, chat_model=None,
 
         distributions, age_bands = salaries or (load_distributions(), load_age_bands())
         regional, history = market or (load_regional(), load_history())
+        occupation_map = load_map()
+        if occupation_map.model != SPECS["harrier"].identity:  # served, but marked (007 R5)
+            logging.getLogger(__name__).warning("occupation map built with %s, index uses %s",
+                                                occupation_map.model, SPECS["harrier"].identity)
+            occupation_map = occupation_map.model_copy(update={"stale": True})
         app.state.service = Service(
             engine=engine or SearchEngine.load(),
             profiles=profiles if profiles is not None else load_profiles(),
             distributions=distributions, age_bands=age_bands, regional=regional,
-            history=history,
+            history=history, occupation_map=occupation_map, similarity=load_similarity(),
             live=live or LiveCache(base_url=os.environ.get("LONEKRAV_JOBSEARCH_URL")
                                    or JOBSEARCH_URL))
         yield

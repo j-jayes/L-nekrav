@@ -66,6 +66,13 @@ CALLS = {
     "eligibility-banned": ("POST", "/api/v1/eligibility", OFFER | {"code": "5343"}),
     "eligibility-invalid": ("POST", "/api/v1/eligibility",
                             OFFER | {"code": "2512", "filed_on": "2026-10-23"}),
+    # 007: the occupation map
+    "map": ("GET", "/api/v1/map", None),
+    "neighbours-2511": ("GET", "/api/v1/occupations/2511/neighbours?k=5", None),
+    "neighbours-2512": ("GET", "/api/v1/occupations/2512/neighbours?k=5", None),
+    "neighbours-2519": ("GET", "/api/v1/occupations/2519/neighbours?k=5", None),
+    "closeness-2511-2512": ("GET", "/api/v1/closeness?a=2511&b=2512", None),
+    "closeness-1311-1312": ("GET", "/api/v1/closeness?a=1311&b=1312", None),
     "timeline": ("GET", "/api/v1/legal/timeline", None),
     "registry": ("GET", "/api/v1/legal/registry", None),
     "agent-card": ("GET", "/.well-known/agent-card.json", None),

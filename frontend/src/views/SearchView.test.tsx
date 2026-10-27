@@ -1,13 +1,14 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-import type { SearchAnswer } from "../api/client";
+import type { MapAnswer, SearchAnswer } from "../api/client";
 import { initial } from "../lib/selection";
 import { fixture, serve } from "../test/fakeApi";
 import { SearchView } from "./SearchView";
 
 const FAST = fixture("search-title-fast").body as SearchAnswer;
 const FULL = fixture("search-title-full").body as SearchAnswer;
+const MAP = fixture("map").body as MapAnswer;
 
 function setup(full: SearchAnswer = FULL) {
   const seen = serve({
@@ -81,5 +82,41 @@ describe("SearchView selection", () => {
   it("cannot go on with nothing selected", () => {
     withSelection([]);
     expect(screen.getByRole("button", { name: /next: your number/i })).toBeDisabled();
+  });
+});
+
+describe("SearchView map (007 US3)", () => {
+  function withMap(codes: string[], wide = true) {
+    serve({
+      "POST /api/v1/search": (body) => ({ status: 200, body: (body as { mode: string }).mode === "full" ? FULL : FAST }),
+    });
+    render(<SearchView selection={{ ...initial(), codes }} dispatch={vi.fn()} onNext={() => {}} map={MAP} wide={wide} />);
+  }
+
+  it("outlines the search results on the map", async () => {
+    withMap([]);
+    await userEvent.type(screen.getByRole("textbox", { name: /job title or ad/i }), "backend developer");
+    await screen.findByText(/accurate results/i, {}, { timeout: 3000 });
+    expect(screen.getAllByTestId("hit")).toHaveLength(FULL.hits.length);
+  });
+
+  it("fills a selected code and draws lines to its five nearest", () => {
+    withMap(["2512"]);
+    expect(screen.getAllByTestId("selected")).toHaveLength(1);
+    expect(screen.getAllByTestId("link")).toHaveLength(5);
+  });
+
+  it("keeps its zoom while the results change", async () => {
+    withMap([]);
+    await userEvent.click(screen.getByRole("button", { name: "Zoom in" }));
+    const before = screen.getByTestId("zoom-layer").getAttribute("transform");
+    await userEvent.type(screen.getByRole("textbox", { name: /job title or ad/i }), "backend");
+    await screen.findAllByRole("article");
+    expect(screen.getByTestId("zoom-layer").getAttribute("transform")).toBe(before);
+  });
+
+  it("folds the map away under the results on a narrow screen", () => {
+    withMap(["2512"], false);
+    expect(screen.getByText("Map of similar occupations").closest("details")).not.toHaveAttribute("open");
   });
 });

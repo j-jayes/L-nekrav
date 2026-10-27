@@ -118,3 +118,41 @@ def load_similarity(path: Path = SIMILARITY) -> dict[tuple[str, str], float]:
     """Keyed by the ordered pair (code_a < code_b)."""
     df = pl.read_parquet(path)
     return dict(zip(zip(df["code_a"], df["code_b"], strict=True), df["cosine"].to_list(), strict=True))
+
+
+# --- what is served (Service adds titles, medians and flags, which the artefact never holds) ----
+
+class SimilarCode(BaseModel):
+    code: str
+    title_sv: str | None
+    title_en: str | None
+    cosine: float
+    percentile: int | None  # the share of code pairs less similar; null when same_description
+    same_description: bool
+    median_sek: int | None  # SCB's latest published median; context, never a reason to pick
+    median_year: int | None
+
+
+class NeighbourAnswer(BaseModel):
+    code: str
+    neighbours: list[SimilarCode]  # nearest first, by similarity of the official descriptions
+    honest_fit: str = HONEST_SIMILAR
+
+
+class ServedPoint(MapPoint):
+    title_sv: str | None
+    title_en: str | None
+    median_sek: int | None
+    median_year: int | None
+    legal_flags: list[str]  # the flag kinds, as in search results
+
+
+class MapAnswer(BaseModel):
+    model: str
+    umap: dict[str, str | int | float]
+    built_on: str
+    stale: bool
+    pair_quantiles: list[float]
+    major_groups: dict[str, dict[str, str]]
+    points: list[ServedPoint]
+    honest_fit: str = HONEST_SIMILAR

@@ -14,6 +14,7 @@ from lonekrav.core.eligibility import EligibilityAnswer, EligibilityRequest
 from lonekrav.core.legal import Registry, TimelineEvent
 from lonekrav.core.market import MarketAnswer
 from lonekrav.core.models import OccupationProfile
+from lonekrav.core.occupation_map import Closeness, MapAnswer, NeighbourAnswer
 from lonekrav.core.salary import SalaryPayload
 from lonekrav.core.search import SearchAnswer, SearchRequest
 from lonekrav.core.service import Service
@@ -55,6 +56,27 @@ def salary(code: str, request: Request, age_band: str | None = None,
 @router.get("/occupations/{code}/market")
 def market(code: str, request: Request) -> MarketAnswer:
     return _service(request).market(code)
+
+
+@router.get("/occupations/{code}/neighbours")
+def neighbours(code: str, request: Request, k: int = 10) -> NeighbourAnswer:
+    try:
+        return _service(request).neighbours(code, k=k)
+    except ValueError as e:  # k outside 1-10
+        raise HTTPException(422, str(e)) from e
+
+
+@router.get("/closeness")
+def closeness(a: str, b: str, request: Request) -> Closeness:
+    try:
+        return _service(request).closeness(a, b)
+    except ValueError as e:  # the same code twice
+        raise HTTPException(422, str(e)) from e
+
+
+@router.get("/map")
+def occupation_map(request: Request) -> MapAnswer:
+    return _service(request).map()
 
 
 @router.get("/occupations/{code}")

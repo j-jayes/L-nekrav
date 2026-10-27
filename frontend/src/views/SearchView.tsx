@@ -1,6 +1,8 @@
 import { type Dispatch, useEffect, useMemo, useState } from "react";
+import type { MapAnswer } from "../api/client";
 import { AdPassages } from "../components/AdPassages";
 import { Notice } from "../components/Notice";
+import { OccupationMap } from "../components/OccupationMap";
 import { ResultList } from "../components/ResultList";
 import { apiSearch, SearchSession, type SessionState } from "../lib/searchSession";
 import type { Action, Selection } from "../lib/selection";
@@ -9,6 +11,8 @@ export type SearchViewProps = {
   selection: Selection;
   dispatch: Dispatch<Action>;
   onNext: () => void; // on to step 2, Your number, where the selected codes' pay is shown
+  map?: MapAnswer | null; // the occupation map (007): beside the results when wide, folded away when not
+  wide?: boolean;
 };
 
 function useSearch() {
@@ -57,12 +61,17 @@ function Selected({ selection, dispatch, onNext }: SearchViewProps) {
 }
 
 export function SearchView(props: SearchViewProps) {
-  const { selection, dispatch } = props;
+  const { selection, dispatch, map, wide = false } = props;
   const [text, setText] = useState("");
   const search = useSearch();
   const state = search.state;
+  const occupationMap = map && (
+    <OccupationMap map={map} hits={state?.answer?.hits.map((h) => h.code) ?? []} selected={selection.codes}
+      onSelect={(code) => dispatch({ type: "add", code })} />
+  );
   return (
-    <>
+    <div className={occupationMap && wide ? "grid grid-cols-2 items-start gap-6" : ""}>
+    <div className="space-y-6">
       <section className="space-y-2">
         <h2 className="text-xl font-semibold">Find the codes that fit a job</h2>
         <label htmlFor="q" className="block text-sm">
@@ -85,6 +94,15 @@ export function SearchView(props: SearchViewProps) {
         </div>
       )}
       <Selected {...props} />
-    </>
+    </div>
+    {occupationMap && (wide
+      ? <aside aria-label="Map of similar occupations" className="sticky top-4">{occupationMap}</aside>
+      : (
+        <details className="mt-6 rounded border border-line bg-panel p-3">
+          <summary className="cursor-pointer text-sm font-semibold">Map of similar occupations</summary>
+          <div className="mt-2">{occupationMap}</div>
+        </details>
+      ))}
+    </div>
   );
 }

@@ -228,6 +228,121 @@
         }
       }
     },
+    "/api/v1/occupations/{code}/neighbours": {
+      "get": {
+        "summary": "Neighbours",
+        "operationId": "neighbours_api_v1_occupations__code__neighbours_get",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Code"
+            }
+          },
+          {
+            "name": "k",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "title": "K"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NeighbourAnswer"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/closeness": {
+      "get": {
+        "summary": "Closeness",
+        "operationId": "closeness_api_v1_closeness_get",
+        "parameters": [
+          {
+            "name": "a",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "A"
+            }
+          },
+          {
+            "name": "b",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "B"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Closeness"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/map": {
+      "get": {
+        "summary": "Occupation Map",
+        "operationId": "occupation_map_api_v1_map_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MapAnswer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/occupations/{code}": {
       "get": {
         "summary": "Occupation",
@@ -630,6 +745,51 @@
           "suppressed"
         ],
         "title": "AgeBandSalary"
+      },
+      "Closeness": {
+        "properties": {
+          "a": {
+            "type": "string",
+            "title": "A"
+          },
+          "b": {
+            "type": "string",
+            "title": "B"
+          },
+          "cosine": {
+            "type": "number",
+            "title": "Cosine"
+          },
+          "percentile": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Percentile"
+          },
+          "same_description": {
+            "type": "boolean",
+            "title": "Same Description"
+          },
+          "honest_fit": {
+            "type": "string",
+            "title": "Honest Fit",
+            "default": "The SSYK code on a work-permit offer must match the duties actually performed. Similar official descriptions are context, not advice on which code to choose."
+          }
+        },
+        "type": "object",
+        "required": [
+          "a",
+          "b",
+          "cosine",
+          "percentile",
+          "same_description"
+        ],
+        "title": "Closeness"
       },
       "CodeList": {
         "properties": {
@@ -1209,6 +1369,79 @@
         ],
         "title": "LiveDemand"
       },
+      "MapAnswer": {
+        "properties": {
+          "model": {
+            "type": "string",
+            "title": "Model"
+          },
+          "umap": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "number"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Umap"
+          },
+          "built_on": {
+            "type": "string",
+            "title": "Built On"
+          },
+          "stale": {
+            "type": "boolean",
+            "title": "Stale"
+          },
+          "pair_quantiles": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Pair Quantiles"
+          },
+          "major_groups": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Major Groups"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/components/schemas/ServedPoint"
+            },
+            "type": "array",
+            "title": "Points"
+          },
+          "honest_fit": {
+            "type": "string",
+            "title": "Honest Fit",
+            "default": "The SSYK code on a work-permit offer must match the duties actually performed. Similar official descriptions are context, not advice on which code to choose."
+          }
+        },
+        "type": "object",
+        "required": [
+          "model",
+          "umap",
+          "built_on",
+          "stale",
+          "pair_quantiles",
+          "major_groups",
+          "points"
+        ],
+        "title": "MapAnswer"
+      },
       "MarketAnswer": {
         "properties": {
           "code": {
@@ -1439,6 +1672,50 @@
           "source"
         ],
         "title": "MedianRecord"
+      },
+      "Neighbour": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "cosine": {
+            "type": "number",
+            "title": "Cosine"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "cosine"
+        ],
+        "title": "Neighbour"
+      },
+      "NeighbourAnswer": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "neighbours": {
+            "items": {
+              "$ref": "#/components/schemas/SimilarCode"
+            },
+            "type": "array",
+            "title": "Neighbours"
+          },
+          "honest_fit": {
+            "type": "string",
+            "title": "Honest Fit",
+            "default": "The SSYK code on a work-permit offer must match the duties actually performed. Similar official descriptions are context, not advice on which code to choose."
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "neighbours"
+        ],
+        "title": "NeighbourAnswer"
       },
       "OccupationProfile": {
         "properties": {
@@ -2369,6 +2646,186 @@
           "text"
         ],
         "title": "SearchRequest"
+      },
+      "ServedPoint": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "x": {
+            "type": "number",
+            "title": "X"
+          },
+          "y": {
+            "type": "number",
+            "title": "Y"
+          },
+          "major_group": {
+            "type": "string",
+            "title": "Major Group"
+          },
+          "chunks": {
+            "type": "integer",
+            "title": "Chunks"
+          },
+          "neighbours": {
+            "items": {
+              "$ref": "#/components/schemas/Neighbour"
+            },
+            "type": "array",
+            "title": "Neighbours"
+          },
+          "title_sv": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title Sv"
+          },
+          "title_en": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title En"
+          },
+          "median_sek": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Sek"
+          },
+          "median_year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Year"
+          },
+          "legal_flags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Legal Flags"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "x",
+          "y",
+          "major_group",
+          "chunks",
+          "neighbours",
+          "title_sv",
+          "title_en",
+          "median_sek",
+          "median_year",
+          "legal_flags"
+        ],
+        "title": "ServedPoint"
+      },
+      "SimilarCode": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title_sv": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title Sv"
+          },
+          "title_en": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title En"
+          },
+          "cosine": {
+            "type": "number",
+            "title": "Cosine"
+          },
+          "percentile": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Percentile"
+          },
+          "same_description": {
+            "type": "boolean",
+            "title": "Same Description"
+          },
+          "median_sek": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Sek"
+          },
+          "median_year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median Year"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "title_sv",
+          "title_en",
+          "cosine",
+          "percentile",
+          "same_description",
+          "median_sek",
+          "median_year"
+        ],
+        "title": "SimilarCode"
       },
       "SimulatedPercentiles": {
         "properties": {

@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from "react";
-import { api, type Registry } from "./api/client";
+import { api, type MapAnswer, type Registry } from "./api/client";
 import { AdvisorDrawer } from "./components/AdvisorDrawer";
 import { Notice } from "./components/Notice";
 import { type Draft, emptyDraft, offerFrom } from "./lib/offer";
@@ -48,6 +48,7 @@ export default function App() {
   const [draft, setDraft] = useState<Draft>(emptyDraft); // the candidate's number and offer details, memory only
   const offer = offerFrom(draft);
   const [registry, setRegistry] = useState<Registry | null>(null);
+  const [occupationMap, setOccupationMap] = useState<MapAnswer | null>(null);
   const [advisor, setAdvisor] = useState(false);
   const wide = useWide();
   const trigger = useRef<HTMLButtonElement>(null);
@@ -55,6 +56,7 @@ export default function App() {
 
   useEffect(() => {
     api.GET("/api/v1/legal/registry").then(({ data }) => data && setRegistry(data));
+    api.GET("/api/v1/map").then(({ data }) => data && setOccupationMap(data)); // once: about 230 KB
   }, []);
 
   useEffect(() => {
@@ -93,7 +95,8 @@ export default function App() {
       </nav>
       {selection.note && <Notice kind="warn">{selection.note}</Notice>}
       <main className="mt-4 space-y-6">
-        {view === "search" && <SearchView selection={selection} dispatch={dispatch} onNext={() => setView("number")} />}
+        {view === "search" && <SearchView selection={selection} dispatch={dispatch} onNext={() => setView("number")}
+          map={occupationMap} wide={wide} />}
         {view === "number" && (
           <>
             <NumberView selection={selection} dispatch={dispatch} age={age} setAge={setAge} region={region}

@@ -37,6 +37,8 @@ function routes() {
   return {
     "POST /api/v1/compare": compare,
     "POST /api/v1/eligibility": eligibility,
+    "GET /api/v1/closeness": fixture("closeness-2511-2512"),
+    ...Object.fromEntries(["2511", "2512", "2519"].map((c) => [`GET /api/v1/occupations/${c}/neighbours`, fixture(`neighbours-${c}`)])),
     ...Object.fromEntries(["2511", "2512", "2519", "2111", "3155", "1111"].flatMap((c) => [
       [`GET /api/v1/occupations/${c}/salary`, salary],
       [`GET /api/v1/occupations/${c}/market`, fixture("market-2512")],
@@ -178,5 +180,26 @@ describe("NumberView payloads", () => {
     await userEvent.click(screen.getByRole("button", { name: "re-add" }));
     expect(await screen.findByTestId("headline")).toBeInTheDocument();
     expect(seen.filter((r) => r.url.pathname.endsWith("/2512/salary"))).toHaveLength(2);
+  });
+});
+
+describe("NumberView similar work (007 FR-012, FR-013)", () => {
+  it("lists each code's five most similar occupations, nearest first, never by pay", async () => {
+    serve(routes());
+    render(<Harness codes={["2511"]} />);
+    const c = await card("2511");
+    const similar = within(c).getByText("Similar work").closest("details")!;
+    const items = await within(similar).findAllByRole("listitem");
+    const expected = (fixture("neighbours-2511").body as { neighbours: { code: string }[] }).neighbours;
+    expect(items.map((i) => i.textContent?.slice(0, 4))).toEqual(expected.map((n) => n.code));
+    expect(items[0]).toHaveTextContent(/closer than \d+ % of pairs/);
+    expect(within(similar).getByText(/must match the duties/)).toBeInTheDocument();
+  });
+
+  it("says how close the two codes are when exactly two are selected", async () => {
+    serve(routes());
+    render(<Harness codes={["2511", "2512"]} />);
+    expect(await screen.findByText(/2511 and 2512 have official descriptions closer than 99 % of pairs of occupations/))
+      .toBeInTheDocument();
   });
 });

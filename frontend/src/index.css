@@ -16,6 +16,10 @@
   --color-band: #86b6ef;
   --color-bar: #2a78d6;
   --color-dot: #eb6834;
+  /* The occupation map (007): bar, dot and near are the first three categorical slots, which
+     pass all-pairs in both modes (validate_palette.js --pairs all, 2026-10-27). Near is below 3:1
+     on light, so the map labels its points and offers a table. */
+  --color-near: #1baf7a;
   --color-grid: #e1e0d9;
   --color-axis: #c3c2b7;
 }
@@ -34,6 +38,7 @@
     --color-band: #184f95;
     --color-bar: #3987e5;
     --color-dot: #d95926;
+    --color-near: #199e70;
     --color-grid: #2c2c2a;
     --color-axis: #383835;
   }
