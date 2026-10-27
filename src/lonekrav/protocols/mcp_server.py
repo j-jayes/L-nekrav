@@ -18,6 +18,7 @@ from lonekrav.core.adparse import AdText, ParsedAd
 from lonekrav.core.compare import CompareRequest, Comparison
 from lonekrav.core.eligibility import EligibilityAnswer, EligibilityRequest, UnknownCode
 from lonekrav.core.market import MarketAnswer
+from lonekrav.core.occupation_map import Closeness, NeighbourAnswer
 from lonekrav.core.salary import SalaryPayload
 from lonekrav.core.search import SearchAnswer, SearchRequest
 from lonekrav.core.service import Service
@@ -76,6 +77,22 @@ def build_mcp(app) -> FastMCP:
         is context for the ask and does not affect eligibility."""
         with _expected():
             return service().eligibility(request)
+
+    @mcp.tool
+    def get_similar_occupations(code: str, k: int = 5) -> NeighbourAnswer:
+        """The k (1-10) SSYK codes whose official descriptions are most similar to this one's,
+        nearest first, with cosine similarity, titles and SCB's latest median. Similarity of
+        descriptions never decides which code fits: the duties actually performed do."""
+        with _expected():
+            return service().neighbours(code, k=k)
+
+    @mcp.tool
+    def get_occupation_closeness(a: str, b: str) -> Closeness:
+        """How similar two SSYK codes' official descriptions are: the cosine and the share of all
+        code pairs that are less similar, or that they share one description. Similarity never
+        decides which code fits: the duties actually performed do."""
+        with _expected():
+            return service().closeness(a, b)
 
     @mcp.tool
     def compare_occupations(request: CompareRequest) -> Comparison:

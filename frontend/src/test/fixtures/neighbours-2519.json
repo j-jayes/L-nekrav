@@ -1,0 +1,59 @@
+{
+  "status": 200,
+  "body": {
+    "code": "2519",
+    "neighbours": [
+      {
+        "code": "2511",
+        "title_sv": "Systemanalytiker och IT-arkitekter m.fl.",
+        "title_en": "System analysts and ICT-architects",
+        "cosine": 0.935,
+        "percentile": 99,
+        "same_description": false,
+        "median_sek": 56200,
+        "median_year": 2025
+      },
+      {
+        "code": "2514",
+        "title_sv": "Systemtestare och testledare",
+        "title_en": "System testers and test managers",
+        "cosine": 0.927,
+        "percentile": 99,
+        "same_description": false,
+        "median_sek": 49000,
+        "median_year": 2025
+      },
+      {
+        "code": "2512",
+        "title_sv": "Mjukvaru- och systemutvecklare m.fl.",
+        "title_en": "Software- and system developers",
+        "cosine": 0.914,
+        "percentile": 99,
+        "same_description": false,
+        "median_sek": 53500,
+        "median_year": 2025
+      },
+      {
+        "code": "2516",
+        "title_sv": "IT-säkerhetsspecialister",
+        "title_en": "Security specialists (ICT)",
+        "cosine": 0.863,
+        "percentile": 97,
+        "same_description": false,
+        "median_sek": 54900,
+        "median_year": 2025
+      },
+      {
+        "code": "1312",
+        "title_sv": "IT-chefer, nivå 2",
+        "title_en": "Information and communications technology service managers, level 2",
+        "cosine": 0.861,
+        "percentile": 97,
+        "same_description": false,
+        "median_sek": 71700,
+        "median_year": 2025
+      }
+    ],
+    "honest_fit": "The SSYK code on a work-permit offer must match the duties actually performed. Similar official descriptions are context, not advice on which code to choose."
+  }
+}

@@ -89,6 +89,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/occupations/{code}/neighbours": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Neighbours */
+        get: operations["neighbours_api_v1_occupations__code__neighbours_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/closeness": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Closeness */
+        get: operations["closeness_api_v1_closeness_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/map": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Occupation Map */
+        get: operations["occupation_map_api_v1_map_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/occupations/{code}": {
         parameters: {
             query?: never;
@@ -309,6 +360,24 @@ export interface components {
             /** Suppressed */
             readonly suppressed: string[];
         };
+        /** Closeness */
+        Closeness: {
+            /** A */
+            a: string;
+            /** B */
+            b: string;
+            /** Cosine */
+            cosine: number;
+            /** Percentile */
+            percentile: number | null;
+            /** Same Description */
+            same_description: boolean;
+            /**
+             * Honest Fit
+             * @default The SSYK code on a work-permit offer must match the duties actually performed. Similar official descriptions are context, not advice on which code to choose.
+             */
+            honest_fit: string;
+        };
         /** CodeList */
         CodeList: {
             /**
@@ -515,6 +584,34 @@ export interface components {
             fetched_at?: string | null;
             source?: components["schemas"]["SourceRef"] | null;
         };
+        /** MapAnswer */
+        MapAnswer: {
+            /** Model */
+            model: string;
+            /** Umap */
+            umap: {
+                [key: string]: string | number;
+            };
+            /** Built On */
+            built_on: string;
+            /** Stale */
+            stale: boolean;
+            /** Pair Quantiles */
+            pair_quantiles: number[];
+            /** Major Groups */
+            major_groups: {
+                [key: string]: {
+                    [key: string]: string;
+                };
+            };
+            /** Points */
+            points: components["schemas"]["ServedPoint"][];
+            /**
+             * Honest Fit
+             * @default The SSYK code on a work-permit offer must match the duties actually performed. Similar official descriptions are context, not advice on which code to choose.
+             */
+            honest_fit: string;
+        };
         /** MarketAnswer */
         MarketAnswer: {
             /** Code */
@@ -598,6 +695,25 @@ export interface components {
             /** Effective To */
             effective_to?: string | null;
             source: components["schemas"]["Source"];
+        };
+        /** Neighbour */
+        Neighbour: {
+            /** Code */
+            code: string;
+            /** Cosine */
+            cosine: number;
+        };
+        /** NeighbourAnswer */
+        NeighbourAnswer: {
+            /** Code */
+            code: string;
+            /** Neighbours */
+            neighbours: components["schemas"]["SimilarCode"][];
+            /**
+             * Honest Fit
+             * @default The SSYK code on a work-permit offer must match the duties actually performed. Similar official descriptions are context, not advice on which code to choose.
+             */
+            honest_fit: string;
         };
         /** OccupationProfile */
         OccupationProfile: {
@@ -932,6 +1048,50 @@ export interface components {
              * @default false
              */
             parse_ad: boolean;
+        };
+        /** ServedPoint */
+        ServedPoint: {
+            /** Code */
+            code: string;
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
+            /** Major Group */
+            major_group: string;
+            /** Chunks */
+            chunks: number;
+            /** Neighbours */
+            neighbours: components["schemas"]["Neighbour"][];
+            /** Title Sv */
+            title_sv: string | null;
+            /** Title En */
+            title_en: string | null;
+            /** Median Sek */
+            median_sek: number | null;
+            /** Median Year */
+            median_year: number | null;
+            /** Legal Flags */
+            legal_flags: string[];
+        };
+        /** SimilarCode */
+        SimilarCode: {
+            /** Code */
+            code: string;
+            /** Title Sv */
+            title_sv: string | null;
+            /** Title En */
+            title_en: string | null;
+            /** Cosine */
+            cosine: number;
+            /** Percentile */
+            percentile: number | null;
+            /** Same Description */
+            same_description: boolean;
+            /** Median Sek */
+            median_sek: number | null;
+            /** Median Year */
+            median_year: number | null;
         };
         /**
          * SimulatedPercentiles
@@ -1479,6 +1639,91 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    neighbours_api_v1_occupations__code__neighbours_get: {
+        parameters: {
+            query?: {
+                k?: number;
+            };
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NeighbourAnswer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    closeness_api_v1_closeness_get: {
+        parameters: {
+            query: {
+                a: string;
+                b: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Closeness"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    occupation_map_api_v1_map_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MapAnswer"];
                 };
             };
         };

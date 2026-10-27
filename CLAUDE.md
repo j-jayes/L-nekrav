@@ -244,3 +244,21 @@ Things worked out in Feature 006:
 - **Playwright `getByLabel(/your number/)` also matched the advisor's checkbox hint**: use
   `getByRole("textbox", { name })` for the number box.
 - Evidence and the SC-004 miss: `references/your-number.md`.
+
+Things worked out in Feature 007:
+
+- **The occupation map is built offline**: `uv run --group map lonekrav-etl map` (about 10 s)
+  pools the index's cached Harrier vectors per code (title and description chunks, no synonyms,
+  no ILO) and runs UMAP. `umap-learn` is in the opt-in `map` group, so the image never gets
+  numba. Rebuild after any change to chunks or the Harrier pin; the server marks a map built
+  with another model `stale`. Probe: `references/occupation_map_probe.py`.
+- **Closeness is exact, the picture is not**: neighbours and percentiles come from full-dimension
+  cosine (`occupation_similarity.parquet`). UMAP keeps about 65 % of each code's ten nearest
+  among its twenty nearest. Raw cosines are compressed (half of all pairs score above 0.74), so
+  the page speaks in "closer than X % of pairs".
+- **Major groups are skill levels, not domains**: never colour or label the map by them. Ten hues
+  also fail the dataviz all-pairs check, which caps a scatter at three.
+- **Codes that share a description** (22 pairs, mostly manager levels such as 1311/1312) are drawn
+  a few pixels apart, not on top of each other: group them by cosine ≥ 0.99, not by pixels.
+- Fixture codes (`scripts/cut_fixtures.py` CODES) do not include 2511: integration tests of
+  closeness use 2512 and 2421. Evidence: `references/occupation-map.md`.

@@ -26,3 +26,13 @@ def test_title_index_pads_military_codes(fixtures):
     assert "Arméofficer" in idx["0110"]
     assert "Systemutvecklare" in idx["2512"]
     assert len(idx["2512"]) >= 20
+
+
+def test_major_groups_in_swedish_and_english(fixtures):  # 007: the map's group labels
+    from lonekrav.etl.scb_files import parse_major_groups
+
+    g = parse_major_groups(fixtures / "scb/ssyk-2012-koder.xlsx",
+                           fixtures / "scb/structur_english_ssyk2012_1_4.xlsx")
+    assert sorted(g) == ["0", "1"]  # the fixture slices hold only these in both languages
+    assert g["1"] == {"sv": "Chefsyrken", "en": "Managers"}
+    assert g["0"]["en"] == "Armed forces occupations"

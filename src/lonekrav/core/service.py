@@ -22,6 +22,15 @@ from lonekrav.core.models import (
     SalaryDistribution,
     YearlyAds,
 )
+from lonekrav.core.occupation_map import (
+    Closeness,
+    MapAnswer,
+    NeighbourAnswer,
+    OccupationMap,
+    ServedPoint,
+    SimilarCode,
+    closeness,
+)
 from lonekrav.core.salary import SalaryPayload, payload, position
 from lonekrav.core.search import SearchAnswer, SearchEngine, SearchRequest, run
 
@@ -35,6 +44,8 @@ class Service:
     regional: list[RegionalSalary] = field(default_factory=list)
     history: list[YearlyAds] = field(default_factory=list)
     live: LiveCache = field(default_factory=LiveCache)
+    occupation_map: OccupationMap | None = None  # Feature 007; codes and numbers only
+    similarity: dict[tuple[str, str], float] = field(default_factory=dict)  # (code_a < code_b)
 
     def _known(self, code: str) -> OccupationProfile:
         if code not in self.profiles:
@@ -82,6 +93,55 @@ class Service:
         """Open ads now, regional means and yearly ads for a code: context, never a reason to
         choose it. A live failure is part of the answer, not an exception (FR-005)."""
         return market(self._known(code), self.profiles, self.live, self.regional, self.history)
+
+    def _medians(self) -> dict[str, tuple[int | None, int]]:
+        latest = {}
+        for d in self.distributions:
+            if d.year >= latest.get(d.code, (None, 0))[1]:
+                latest[d.code] = (d.median, d.year)
+        return latest
+
+    def _similar(self, code: str, cosine: float, medians: dict) -> SimilarCode:
+        p = self.profiles.get(code)
+        median, year = medians.get(code, (None, None))
+        near = closeness(code, code, cosine, self.occupation_map.pair_quantiles)
+        return SimilarCode(code=code, title_sv=p and p.title_sv, title_en=p and p.title_en,
+                           cosine=cosine, percentile=near.percentile,
+                           same_description=near.same_description, median_sek=median,
+                           median_year=year)
+
+    def map(self) -> MapAnswer:
+        """Every mapped code the service knows, with titles, latest median and flags (007 FR-010)."""
+        m, medians = self.occupation_map, self._medians()
+        points = []
+        for pt in m.points:
+            if (p := self.profiles.get(pt.code)) is None:
+                continue
+            median, year = medians.get(pt.code, (None, None))
+            points.append(ServedPoint(**pt.model_dump(), title_sv=p.title_sv, title_en=p.title_en,
+                                      median_sek=median, median_year=year,
+                                      legal_flags=[f.kind for f in flags_for(pt.code)]))
+        return MapAnswer(model=m.model, umap=m.umap, built_on=m.built_on, stale=m.stale,
+                         pair_quantiles=m.pair_quantiles, major_groups=m.major_groups, points=points)
+
+    def neighbours(self, code: str, k: int = 10) -> NeighbourAnswer:
+        """Raises UnknownCode, or ValueError for k outside 1-10."""
+        self._known(code)
+        if not 1 <= k <= 10:
+            raise ValueError(f"k must be between 1 and 10, not {k}")
+        point = next(p for p in self.occupation_map.points if p.code == code)
+        medians = self._medians()
+        return NeighbourAnswer(code=code, neighbours=[
+            self._similar(n.code, n.cosine, medians) for n in point.neighbours[:k]])
+
+    def closeness(self, a: str, b: str) -> Closeness:
+        """Raises UnknownCode, or ValueError when a and b are the same code."""
+        self._known(a)
+        self._known(b)
+        if a == b:
+            raise ValueError("a and b must be two different codes")
+        return closeness(a, b, self.similarity[tuple(sorted((a, b)))],
+                         self.occupation_map.pair_quantiles)
 
     def timeline(self) -> list[TimelineEvent]:
         return load_registry().timeline()

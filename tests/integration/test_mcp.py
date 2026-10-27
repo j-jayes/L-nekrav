@@ -5,7 +5,8 @@ import asyncio
 import pytest
 
 TOOLS = {"search_occupations", "extract_job_ad_signal", "get_occupation_salary",
-         "evaluate_permit_eligibility", "compare_occupations", "get_occupation_market"}
+         "evaluate_permit_eligibility", "compare_occupations", "get_occupation_market",
+         "get_similar_occupations", "get_occupation_closeness"}
 
 
 def mcp_call(api_client, fn):
@@ -22,7 +23,7 @@ def tool(api_client, name, args):
     return mcp_call(api_client, lambda c: c.call_tool(name, args, raise_on_error=False))
 
 
-def test_lists_exactly_the_six_tools(api_client):
+def test_lists_exactly_the_eight_tools(api_client):
     tools = mcp_call(api_client, lambda c: c.list_tools())
     assert {t.name for t in tools} == TOOLS
     for t in tools:
@@ -215,3 +216,21 @@ def test_eligibility_tool_says_the_position_is_a_published_bracket():
 
     text = " ".join(asyncio.run(describe()).split())
     assert "never an interpolated percentile" in text and "does not affect eligibility" in text
+
+
+# --- Feature 007: the occupation map -----------------------------------------------------
+
+def test_map_tools_equal_rest(api_client):
+    for name, args, path, params in [
+        ("get_similar_occupations", {"code": "2512", "k": 5}, "/api/v1/occupations/2512/neighbours", {"k": 5}),
+        ("get_occupation_closeness", {"a": "2512", "b": "2421"}, "/api/v1/closeness", {"a": "2512", "b": "2421"}),
+    ]:
+        result = tool(api_client, name, args)
+        assert not result.is_error
+        assert result.structured_content == api_client.get(path, params=params).json()
+
+
+def test_map_tools_say_similarity_never_decides_the_code(api_client):
+    tools = {t.name: " ".join(t.description.split()) for t in mcp_call(api_client, lambda c: c.list_tools())}
+    for name in ("get_similar_occupations", "get_occupation_closeness"):
+        assert "never decides which code fits" in tools[name]

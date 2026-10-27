@@ -3,8 +3,8 @@
 // where the number sits among them, an estimate for their age band and area (not an SCB figure),
 // and the floor check under it. Cards keep the order selected and are never ranked by pay.
 import { type Dispatch, useEffect, useRef, useState } from "react";
-import { api, type CompareColumn, type Comparison, type EligibilityAnswer, type Registry, type SalaryPayload,
-  type Source } from "../api/client";
+import { api, type CompareColumn, type Comparison, type Closeness, type EligibilityAnswer, type NeighbourAnswer,
+  type Registry, type SalaryPayload, type Source } from "../api/client";
 import { EligibilityResult } from "../components/EligibilityResult";
 import { MarketPanel } from "../components/MarketPanel";
 import { Notice } from "../components/Notice";
@@ -106,6 +106,48 @@ function Floor({ p, answer, rules }: { p?: SalaryPayload; answer?: EligibilityAn
   );
 }
 
+/** The five occupations whose official descriptions are closest, nearest first (007 FR-013). */
+function SimilarWork({ code }: { code: string }) {
+  const [answer, setAnswer] = useState<NeighbourAnswer | null>(null);
+  useEffect(() => {
+    let live = true;
+    api.GET("/api/v1/occupations/{code}/neighbours", { params: { path: { code }, query: { k: 5 } } })
+      .then(({ data }) => live && setAnswer(data ?? null));
+    return () => { live = false; };
+  }, [code]);
+  if (!answer) return null;
+  return (
+    <div className="mt-2 space-y-1">
+      <ul className="space-y-1">
+        {answer.neighbours.map((n) => (
+          <li key={n.code}>
+            <span className="font-mono">{n.code}</span> {n.title_en}
+            <span className="text-muted"> · {n.same_description ? "the same official description"
+              : `closer than ${n.percentile} % of pairs`}{n.median_sek != null && ` · median ${sek(n.median_sek)}`}</span>
+          </li>
+        ))}
+      </ul>
+      <p className="text-xs text-muted">{answer.honest_fit}</p>
+    </div>
+  );
+}
+
+function PairCloseness({ a, b }: { a: string; b: string }) {
+  const [near, setNear] = useState<Closeness | null>(null);
+  useEffect(() => {
+    let live = true;
+    api.GET("/api/v1/closeness", { params: { query: { a, b } } }).then(({ data }) => live && setNear(data ?? null));
+    return () => { live = false; };
+  }, [a, b]);
+  if (!near) return null;
+  return (
+    <p className="text-sm">
+      {near.same_description ? `${a} and ${b} share one official description: the text cannot tell them apart.`
+        : `${a} and ${b} have official descriptions closer than ${near.percentile} % of pairs of occupations.`}
+    </p>
+  );
+}
+
 type CardProps = { code: string; payload?: SalaryPayload; column?: CompareColumn; answer?: EligibilityAnswer | null;
   fte: number; rules?: Registry["rules"]; onRemove: () => void; onNotice: (n: string) => void };
 
@@ -131,6 +173,10 @@ function Card({ code, payload, column, answer, fte, rules, onRemove, onNotice }:
           {column && <Tasks title="Official tasks (Swedish)" texts={column.tasks_sv} lang="sv" />}
           {column && <Tasks title="Tasks in English" texts={column.tasks_en} lang="en" />}
         </div>
+      </details>
+      <details className="text-sm">
+        <summary className="cursor-pointer text-accent">Similar work</summary>
+        <SimilarWork code={code} />
       </details>
       <details className="text-sm">
         <summary className="cursor-pointer text-accent">Market</summary>
@@ -282,6 +328,7 @@ export function NumberView(props: NumberViewProps) {
         </div>
       </details>
       {comparison && <p className="text-sm text-muted">{comparison.honest_fit}</p>}
+      {codes.length === 2 && <PairCloseness a={codes[0]} b={codes[1]} />}
       <div className="grid gap-3 md:grid-cols-2">
         {codes.map((code) => (
           <Card key={code} code={code} payload={payloads[code]} column={comparison?.columns.find((c) => c.code === code)}

@@ -7,7 +7,7 @@ It serves all of this in four ways, on one port:
 
 | Surface | Path | For |
 |---|---|---|
-| Web page | `/` | People, in three steps: find your code; your number (where a salary sits among SCB's percentiles, an age and area estimate, the floor check, market context); the rules |
+| Web page | `/` | People, in three steps: find your code (with a map of similar occupations); your number (where a salary sits among SCB's percentiles, an age and area estimate, the floor check, similar work, market context); the rules |
 | REST | `/api/v1` (docs at `/api/v1/docs`) | Programs |
 | MCP | `/mcp` | Chat assistants such as Claude Code (`claude mcp add --transport http lonekrav http://localhost:8000/mcp`) |
 | A2A | `/a2a`, card at `/.well-known/agent-card.json` | Agents and the page's advisor drawer: the `lonekrav-advisor` honest-fit memo |

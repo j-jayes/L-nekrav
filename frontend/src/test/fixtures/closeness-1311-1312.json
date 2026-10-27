@@ -1,0 +1,11 @@
+{
+  "status": 200,
+  "body": {
+    "a": "1311",
+    "b": "1312",
+    "cosine": 0.998,
+    "percentile": null,
+    "same_description": true,
+    "honest_fit": "The SSYK code on a work-permit offer must match the duties actually performed. Similar official descriptions are context, not advice on which code to choose."
+  }
+}

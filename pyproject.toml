@@ -39,6 +39,11 @@ dev = [
     "pytest>=9.1.1",
     "ruff>=0.17.1",
 ]
+# Builds the occupation map (Feature 007): `uv run --group map lonekrav-etl map`. Not a default
+# group, so neither `uv sync` nor the container installs it (or numba).
+map = [
+    "umap-learn>=0.5.12",
+]
 
 # Linux (the container image) takes CPU-only torch: PyPI's Linux wheels pull in the CUDA stack,
 # gigabytes the CPU-only server never loads. macOS keeps PyPI's wheel, which is CPU-only already.
