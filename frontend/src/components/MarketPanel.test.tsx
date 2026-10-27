@@ -24,8 +24,9 @@ describe("MarketPanel", () => {
     const top = within(open).getByRole("list", { name: "Top counties" });
     expect(within(top).getAllByRole("listitem")).toHaveLength(5);
     expect(within(top).getAllByRole("listitem")[0].textContent).toContain(m2512.live.counties[0].name);
-    expect(within(open).getByText(/15 more counties/)).toBeInTheDocument();
-    expect(within(open).getByText(/no county given: 19/i)).toBeInTheDocument();
+    // the live counts change with every recording: read them from the fixture
+    expect(within(open).getByText(`${m2512.live.counties.length - 5} more counties`)).toBeInTheDocument();
+    expect(within(open).getByText(new RegExp(`no county given: ${m2512.live.no_county}`, "i"))).toBeInTheDocument();
     expect(within(open).getByRole("link", { name: /JobSearch/ })).toHaveAttribute("href", expect.stringContaining("occupation-group="));
     expect(open.textContent).toMatch(/fetched \d{4}-\d{2}-\d{2} \d{2}:\d{2}/);
   });

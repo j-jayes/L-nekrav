@@ -10,22 +10,22 @@
     "live": {
       "status": "available",
       "concept_id": "mZsb_A1K_Gec",
-      "ads": 84,
-      "positions": 84,
+      "ads": 80,
+      "positions": 80,
       "counties": [
+        {
+          "name": "Stockholms län",
+          "code": "01",
+          "ads": 21
+        },
         {
           "name": "Västra Götalands län",
           "code": "14",
           "ads": 21
         },
         {
-          "name": "Stockholms län",
-          "code": "01",
-          "ads": 18
-        },
-        {
-          "name": "Jönköpings län",
-          "code": "06",
+          "name": "Skåne län",
+          "code": "12",
           "ads": 8
         },
         {
@@ -34,8 +34,8 @@
           "ads": 7
         },
         {
-          "name": "Skåne län",
-          "code": "12",
+          "name": "Jönköpings län",
+          "code": "06",
           "ads": 6
         },
         {
@@ -44,19 +44,9 @@
           "ads": 5
         },
         {
-          "name": "Kalmar län",
-          "code": "08",
-          "ads": 3
-        },
-        {
-          "name": "Jämtlands län",
-          "code": "23",
-          "ads": 3
-        },
-        {
           "name": "Västerbottens län",
           "code": "24",
-          "ads": 3
+          "ads": 4
         },
         {
           "name": "Uppsala län",
@@ -64,8 +54,8 @@
           "ads": 2
         },
         {
-          "name": "Västmanlands län",
-          "code": "19",
+          "name": "Gävleborgs län",
+          "code": "21",
           "ads": 2
         },
         {
@@ -74,23 +64,18 @@
           "ads": 1
         },
         {
-          "name": "Blekinge län",
-          "code": "10",
-          "ads": 1
-        },
-        {
           "name": "Dalarnas län",
           "code": "20",
           "ads": 1
         },
         {
-          "name": "Gävleborgs län",
-          "code": "21",
+          "name": "Västernorrlands län",
+          "code": "22",
           "ads": 1
         },
         {
-          "name": "Västernorrlands län",
-          "code": "22",
+          "name": "Jämtlands län",
+          "code": "23",
           "ads": 1
         },
         {
@@ -101,7 +86,7 @@
       ],
       "no_county": 0,
       "reason": null,
-      "fetched_at": "2026-10-23T11:29:33.234765Z",
+      "fetched_at": "2026-10-27T20:04:07.844331Z",
       "source": {
         "source": "jobtech_jobsearch",
         "ref": "occupation-group=mZsb_A1K_Gec",

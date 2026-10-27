@@ -181,7 +181,13 @@
           "amount_sek": 34470,
           "median_sek": 38300,
           "median_reference_year": 2025,
-          "on": "2026-10-22"
+          "on": "2026-10-27",
+          "source": {
+            "key": "mv_lonekrav",
+            "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+            "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+            "checked_on": "2026-10-21"
+          }
         },
         "eligibility": null
       },
@@ -472,7 +478,13 @@
           "amount_sek": 34470,
           "median_sek": 38300,
           "median_reference_year": 2025,
-          "on": "2026-10-22"
+          "on": "2026-10-27",
+          "source": {
+            "key": "mv_lonekrav",
+            "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+            "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+            "checked_on": "2026-10-21"
+          }
         },
         "eligibility": null
       }

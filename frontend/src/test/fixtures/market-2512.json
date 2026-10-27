@@ -8,43 +8,43 @@
     "live": {
       "status": "available",
       "concept_id": "DJh5_yyF_hEM",
-      "ads": 1185,
-      "positions": 1571,
+      "ads": 1159,
+      "positions": 1534,
       "counties": [
         {
           "name": "Stockholms län",
           "code": "01",
-          "ads": 490
+          "ads": 473
         },
         {
           "name": "Västra Götalands län",
           "code": "14",
-          "ads": 243
+          "ads": 233
         },
         {
           "name": "Östergötlands län",
           "code": "05",
-          "ads": 123
+          "ads": 121
         },
         {
           "name": "Skåne län",
           "code": "12",
-          "ads": 109
+          "ads": 114
         },
         {
           "name": "Jönköpings län",
           "code": "06",
-          "ads": 31
+          "ads": 28
         },
         {
           "name": "Uppsala län",
           "code": "03",
-          "ads": 20
+          "ads": 21
         },
         {
           "name": "Kronobergs län",
           "code": "07",
-          "ads": 20
+          "ads": 19
         },
         {
           "name": "Örebro län",
@@ -52,29 +52,24 @@
           "ads": 19
         },
         {
-          "name": "Västmanlands län",
-          "code": "19",
-          "ads": 19
+          "name": "Västernorrlands län",
+          "code": "22",
+          "ads": 16
         },
         {
           "name": "Norrbottens län",
           "code": "25",
-          "ads": 18
-        },
-        {
-          "name": "Västernorrlands län",
-          "code": "22",
-          "ads": 13
-        },
-        {
-          "name": "Blekinge län",
-          "code": "10",
-          "ads": 11
+          "ads": 16
         },
         {
           "name": "Dalarnas län",
           "code": "20",
-          "ads": 11
+          "ads": 15
+        },
+        {
+          "name": "Västmanlands län",
+          "code": "19",
+          "ads": 14
         },
         {
           "name": "Gävleborgs län",
@@ -84,17 +79,12 @@
         {
           "name": "Västerbottens län",
           "code": "24",
+          "ads": 9
+        },
+        {
+          "name": "Blekinge län",
+          "code": "10",
           "ads": 7
-        },
-        {
-          "name": "Värmlands län",
-          "code": "17",
-          "ads": 6
-        },
-        {
-          "name": "Södermanlands län",
-          "code": "04",
-          "ads": 5
         },
         {
           "name": "Hallands län",
@@ -102,19 +92,29 @@
           "ads": 5
         },
         {
-          "name": "Kalmar län",
-          "code": "08",
+          "name": "Värmlands län",
+          "code": "17",
+          "ads": 5
+        },
+        {
+          "name": "Södermanlands län",
+          "code": "04",
           "ads": 4
         },
         {
           "name": "Jämtlands län",
           "code": "23",
+          "ads": 4
+        },
+        {
+          "name": "Kalmar län",
+          "code": "08",
           "ads": 3
         }
       ],
-      "no_county": 19,
+      "no_county": 24,
       "reason": null,
-      "fetched_at": "2026-10-23T11:29:32.608931Z",
+      "fetched_at": "2026-10-27T20:04:06.794053Z",
       "source": {
         "source": "jobtech_jobsearch",
         "ref": "occupation-group=DJh5_yyF_hEM",

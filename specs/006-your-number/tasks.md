@@ -35,7 +35,7 @@ task after it is implemented.
 - [X] T011 [US2] Write failing tests in `tests/integration/test_api.py` and `tests/integration/test_mcp.py`: `?region=SE11` works; `?region=SE99` gives 422 listing the allowed values; the MCP tool takes `region`
 - [X] T012 [US2] Pass `region` through `Service.salary` (with `self.regional`) in `src/lonekrav/core/service.py`, the route in `src/lonekrav/api/v1.py` and `get_occupation_salary` in `src/lonekrav/protocols/mcp_server.py`; add the one prompt line in `src/lonekrav/protocols/agent/loop.py` and its test in `tests/unit/test_agent_loop.py`
 - [X] T013 [US2] Regenerate the schema (`uv run python scripts/export_openapi.py && (cd frontend && npm run gen)`) and confirm `tests/integration/test_openapi_drift.py` passes
-- [ ] T014 [US2] Re-record the page fixtures with `scripts/record_api_fixtures.py` against a running server (salary with age and region, eligibility with a position, compare with one code), and add the new names to the script
+- [X] T014 [US2] Re-record the page fixtures with `scripts/record_api_fixtures.py` against a running server (salary with age and region, eligibility with a position, compare with one code), and add the new names to the script
 
 ## Phase 4: User Story 3 — A chart I can read (P2)
 

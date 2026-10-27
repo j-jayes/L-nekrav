@@ -341,7 +341,13 @@
         "amount_sek": 34470,
         "median_sek": 38300,
         "median_reference_year": 2025,
-        "on": "2026-10-22"
+        "on": "2026-10-22",
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
       },
       {
         "rule_id": "salary_75_exempt",
@@ -349,12 +355,19 @@
         "amount_sek": 28725,
         "median_sek": 38300,
         "median_reference_year": 2025,
-        "on": "2026-10-22"
+        "on": "2026-10-22",
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
       }
     ],
     "applicable_rule_id": "salary_90",
     "simulated": {
       "age_band": "25-34",
+      "region": null,
       "year": 2025,
       "p10": 35176,
       "p25": 41039,
@@ -372,8 +385,13 @@
           "table": "TAB5844",
           "reference_year": 2025
         }
-      ]
+      ],
+      "applied": [
+        "age"
+      ],
+      "left_out": []
     },
+    "estimate_note": null,
     "no_occupation_data": false
   }
 }
