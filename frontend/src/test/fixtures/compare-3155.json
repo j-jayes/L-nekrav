@@ -1,0 +1,127 @@
+{
+  "status": 200,
+  "body": {
+    "columns": [
+      {
+        "code": "3155",
+        "title_sv": "Flygtekniker",
+        "title_en": "Aircraft maintenance technician",
+        "tasks_sv": [
+          {
+            "lang": "sv",
+            "kind": "definition",
+            "text": "Ansvarar för och leder service- och underhållsarbete på flygplan och helikoptrar. Gör felsökning, inspektioner och funktionskontroller.",
+            "source": {
+              "source": "jobtech",
+              "ref": "taxonomy ssyk-level-4",
+              "url": "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
+            },
+            "isco_code": null,
+            "shared_with": []
+          }
+        ],
+        "tasks_en": [
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "Aircraft maintenance engineers make preflight and postflight inspections, adjustments, and minor repairs to ensure safe and sound performance of aircrafts. They inspect aircraft prior to takeoff to detect malfunctions such as oil leaks, electrical or hydraulic problems. They verify passenger and cargo distribution and amount of fuel to ensure that weight and balance specifications are met.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/81a1e1f5-cce3-444d-bfc3-9771236d57cd",
+              "url": "http://data.europa.eu/esco/occupation/81a1e1f5-cce3-444d-bfc3-9771236d57cd"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "Air traffic safety technicians provide technical support regarding the safety of air traffic control and navigation systems. They design, maintain, install and operate these systems both in the airport and on board the aeroplane according to regulations.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/0022f466-426c-41a4-ac96-a235c945cf97",
+              "url": "http://data.europa.eu/esco/occupation/0022f466-426c-41a4-ac96-a235c945cf97"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "Avionics inspectors inspect instruments, electrical, mechanical and electronic systems of aircrafts to ensure their compliance with the performance and safety standards. They also examine maintenance, repair and overhaul work and review any modification to check its conformity to standards and procedures. They provide detailed inspection, certification and repair records.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/b5e21e2b-ab0c-4c8d-8277-d98be4ad79c4",
+              "url": "http://data.europa.eu/esco/occupation/b5e21e2b-ab0c-4c8d-8277-d98be4ad79c4"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "Aircraft engine testers test the performance of all engines used for aircraft in specialised facilities such as laboratories.They position or give directions to workers positioning engines on the test stand. They use hand tools and machinery to position and connect the engine to the test stand. They use computerised equipment to enter, read and record test data such as temperature, speed, fuel consumption, oil and exhaust pressure.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/b343dd0c-8a83-4e13-a79c-0ac52f526c64",
+              "url": "http://data.europa.eu/esco/occupation/b343dd0c-8a83-4e13-a79c-0ac52f526c64"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "Avionics technicians install, test, inspect and adjust electrical and electronic equipment such as navigation, communication and flight control systems in aircraft and spacecraft. They carry out maintenance and repair work. They perform functional tests, diagnose problems and take corrective action.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/d9ab0f3d-078d-42a7-a502-3e739e0aeff6",
+              "url": "http://data.europa.eu/esco/occupation/d9ab0f3d-078d-42a7-a502-3e739e0aeff6"
+            },
+            "isco_code": null,
+            "shared_with": []
+          }
+        ],
+        "latest": {
+          "code": "3155",
+          "year": 2025,
+          "mean": 57900,
+          "median": 51600,
+          "p10": 41700,
+          "p25": null,
+          "p75": 68800,
+          "p90": 81700,
+          "mean_ci95": 7160,
+          "median_ci95": 4870,
+          "p10_ci95": 4500,
+          "p25_ci95": null,
+          "p75_ci95": 8620,
+          "p90_ci95": 10180,
+          "source_table": "TAB5932",
+          "reference_year": 2025,
+          "fetched_at": "2026-10-20T20:54:49.024907Z",
+          "suppressed": [
+            "p25"
+          ]
+        },
+        "legal_flags": [],
+        "threshold": {
+          "rule_id": "salary_90",
+          "percent": 90.0,
+          "amount_sek": 34470,
+          "median_sek": 38300,
+          "median_reference_year": 2025,
+          "on": "2026-10-27",
+          "source": {
+            "key": "mv_lonekrav",
+            "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+            "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+            "checked_on": "2026-10-21"
+          }
+        },
+        "eligibility": null
+      }
+    ],
+    "honest_fit": "The SSYK code on a work-permit offer must match the duties actually performed. These are the occupations whose official descriptions best match the text, not advice on which code to choose."
+  }
+}

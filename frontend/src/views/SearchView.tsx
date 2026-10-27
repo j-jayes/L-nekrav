@@ -1,20 +1,14 @@
-import { type Dispatch, useEffect, useMemo, useRef, useState } from "react";
-import { api, type EligibilityAnswer, type Offer, type Registry } from "../api/client";
+import { type Dispatch, useEffect, useMemo, useState } from "react";
 import { AdPassages } from "../components/AdPassages";
 import { Notice } from "../components/Notice";
 import { ResultList } from "../components/ResultList";
-import { SalaryChart } from "../components/SalaryChart";
 import { apiSearch, SearchSession, type SessionState } from "../lib/searchSession";
 import type { Action, Selection } from "../lib/selection";
-import { AGE_BANDS, type AgeBand } from "../lib/urlState";
 
 export type SearchViewProps = {
   selection: Selection;
   dispatch: Dispatch<Action>;
-  age: AgeBand | null;
-  setAge: (age: AgeBand | null) => void;
-  offer?: Offer | null; // when given, each code's floor is the one its eligibility answer used
-  rules?: Registry["rules"];
+  onNext: () => void; // on to step 2, Your number, where the selected codes' pay is shown
 };
 
 function useSearch() {
@@ -37,78 +31,27 @@ function Status({ state }: { state: SessionState }) {
   );
 }
 
-/** Fetch each selected code's salary payload, again when the age band changes. */
-function usePayloads({ selection, dispatch, age }: SearchViewProps) {
-  // The age band each code's payload was requested for, and which requests are still out. A code
-  // with no SCB data never carries a simulated block, so the request, not the answer, is the key.
-  const requested = useRef(new Map<string, string>());
-  const pending = useRef(new Set<string>());
-  useEffect(() => {
-    const band = age ?? "";
-    for (const code of selection.codes) {
-      const same = requested.current.get(code) === band;
-      if (same && (selection.payloads[code] || pending.current.has(code))) continue;
-      requested.current.set(code, band);
-      pending.current.add(code);
-      api.GET("/api/v1/occupations/{code}/salary", {
-        params: { path: { code }, query: age ? { age_band: age } : {} },
-      }).then(({ data }) => {
-        if (data && requested.current.get(code) === band) dispatch({ type: "payload", code, payload: data });
-      }).finally(() => pending.current.delete(code));
-    }
-  }, [selection.codes, selection.payloads, age, dispatch]);
-}
-
-/** With an offer, each selected code's eligibility answer: the chart's floor line follows it. */
-function useEligibility(codes: string[], offer: Offer | null | undefined) {
-  const [answers, setAnswers] = useState<Record<string, EligibilityAnswer | null>>({});
-  useEffect(() => {
-    if (!offer) return setAnswers({});
-    let live = true;
-    Promise.all(codes.map((code) => api.POST("/api/v1/eligibility", { body: { ...offer, code } })
-      .then(({ data }) => [code, data ?? null] as const)))
-      .then((pairs) => live && setAnswers(Object.fromEntries(pairs)));
-    return () => { live = false; };
-  }, [codes, offer]);
-  return answers;
-}
-
-function Selected(props: SearchViewProps) {
-  const { selection, dispatch, age, setAge, offer, rules } = props;
-  usePayloads(props);
-  const eligibility = useEligibility(selection.codes, offer);
-  if (!selection.codes.length)
-    return <p className="text-sm text-muted">Add up to four codes from the results to compare their salaries.</p>;
-  const payloads = selection.codes.map((c) => selection.payloads[c]).filter(Boolean);
+/** The selected codes, removable, and the step on to Your number (006 contracts/ui.md). */
+function Selected({ selection, dispatch, onNext }: SearchViewProps) {
   return (
-    <section aria-label="Salary chart" className="space-y-3">
-      <h2 className="text-lg font-semibold">What each code pays, and the salary floor</h2>
-      <div className="flex flex-wrap items-center gap-2">
-        {selection.codes.map((code) => (
-          <span key={code} className="flex items-center gap-2 rounded-full border border-line bg-panel px-3 py-1 text-sm">
-            <span className="font-mono">{code}</span>
-            <label className="flex items-center gap-1 text-xs text-muted">
-              <input type="checkbox" disabled={!age} checked={!!selection.simulated[code]}
-                onChange={() => dispatch({ type: "simulated", code })}
-                aria-label={`Simulated bar for ${code}`} />
-              simulated
-            </label>
-            <button type="button" aria-label={`Remove ${code}`} onClick={() => dispatch({ type: "remove", code })}
-              className="text-muted hover:text-ink">×</button>
-          </span>
-        ))}
-        <label className="text-sm">
-          Age band for simulated bars{" "}
-          <select value={age ?? ""} onChange={(e) => setAge((e.target.value || null) as AgeBand | null)}
-            className="rounded border border-line bg-panel px-1">
-            <option value="">none</option>
-            {AGE_BANDS.map((a) => <option key={a} value={a}>{a}</option>)}
-          </select>
-        </label>
-      </div>
-      {payloads.length > 0 && (
-        <SalaryChart payloads={payloads} eligibility={eligibility} rules={rules} simulated={age ? selection.simulated : {}} />
+    <section aria-label="Selected codes" className="space-y-2">
+      {selection.codes.length ? (
+        <div className="flex flex-wrap items-center gap-2">
+          {selection.codes.map((code) => (
+            <span key={code} className="flex items-center gap-2 rounded-full border border-line bg-panel px-3 py-1 text-sm">
+              <span className="font-mono">{code}</span>
+              <button type="button" aria-label={`Remove ${code}`} onClick={() => dispatch({ type: "remove", code })}
+                className="text-muted hover:text-ink">×</button>
+            </span>
+          ))}
+        </div>
+      ) : (
+        <p className="text-sm text-muted">Add the codes whose duties match the job (up to four).</p>
       )}
+      <button type="button" disabled={!selection.codes.length} onClick={onNext}
+        className="rounded bg-accent px-3 py-1.5 text-sm text-white disabled:opacity-50">
+        Next: your number →
+      </button>
     </section>
   );
 }

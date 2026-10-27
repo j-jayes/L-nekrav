@@ -9,10 +9,11 @@ type Props = {
   errors: Partial<Record<keyof Draft | "form", string>>;
   initial?: Draft;
   submitLabel?: string;
+  withSalary?: boolean; // "Your number" asks for the salary in its own field (006 contracts/ui.md)
 };
 
 /** The offer's fields, following the API's Offer schema; errors come back from the API. */
-export function OfferForm({ exemptions, onSubmit, errors, initial, submitLabel = "Use this offer" }: Props) {
+export function OfferForm({ exemptions, onSubmit, errors, initial, submitLabel = "Use this offer", withSalary = true }: Props) {
   const [d, setD] = useState<Draft>(initial ?? emptyDraft);
   const set = (k: keyof Draft) => (e: React.ChangeEvent<HTMLInputElement>) => setD({ ...d, [k]: e.target.value });
   const field = (k: keyof Draft, type: string, extra: object = {}) => (
@@ -27,7 +28,7 @@ export function OfferForm({ exemptions, onSubmit, errors, initial, submitLabel =
   return (
     <form className="space-y-3" onSubmit={(e) => { e.preventDefault(); onSubmit(d); }}>
       <div className="grid gap-3 sm:grid-cols-2">
-        {field("monthly_salary_sek", "number", { min: 1, inputMode: "numeric" })}
+        {withSalary && field("monthly_salary_sek", "number", { min: 1, inputMode: "numeric" })}
         {field("fte_percent", "number", { min: 1, max: 100 })}
         <fieldset className="flex flex-col gap-1">
           <legend className="text-sm">{LABELS.application_type}</legend>

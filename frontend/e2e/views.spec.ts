@@ -12,16 +12,18 @@ const VIEWS: { name: string; url: string; ready: (p: Page) => Promise<void> }[] 
     ready: async (p) => {
       await p.getByRole("textbox", { name: /job title or ad/i }).fill("backend developer");
       await expect(p.getByText(/^Accurate results/)).toBeVisible({ timeout: 60_000 }); // a cold container loads Harrier (~17 s)
-      await expect(p.getByRole("group", { name: /^3511 / })).toBeVisible();
+      await expect(p.getByRole("button", { name: "Remove 3511" })).toBeVisible();
     },
   },
   {
-    name: "compare",
-    url: "/?view=compare&codes=2512,2511,3511",
+    name: "number", // 006: replaces the compare view
+    url: "/?view=number&codes=2511,2512,2519&age=25-34&region=SE11",
     ready: async (p) => {
+      await p.getByRole("textbox", { name: /your number/i }).fill("60000");
       await expect(p.getByRole("article")).toHaveCount(3);
-      for (const code of ["2512", "2511", "3511"]) // Feature 005: each column's market panel
-        await expect(p.getByRole("region", { name: `Market for ${code}` }).getByRole("region", { name: "Ads per year" })).toBeVisible();
+      await expect(p.getByText(/is between the median/).first()).toBeVisible();
+      await expect(p.getByTestId("estimate-chip").first()).toBeVisible();
+      await expect(p.getByText(/reaches the salary floor/).first()).toBeVisible();
     },
   },
   {
@@ -42,3 +44,17 @@ for (const v of VIEWS) {
     await page.screenshot({ path: `${SHOTS}/${v.name}-${info.project.name}.png`, fullPage: true });
   });
 }
+
+// SC-001: on a phone, the first card's position, estimate and floor check need no scrolling.
+test("your number above the fold", async ({ page }, info) => {
+  test.skip(info.project.name !== "phone", "phone only");
+  await page.goto("/?view=number&codes=2511,2512,2519&age=25-34&region=SE11");
+  await page.getByRole("textbox", { name: /your number/i }).fill("60000");
+  const first = page.getByRole("article").first();
+  for (const el of [first.getByText(/is between the median/), first.getByTestId("estimate-chip"),
+    first.getByText(/reaches the salary floor/)]) {
+    await expect(el).toBeVisible();
+    const box = (await el.boundingBox())!;
+    expect(box.y + box.height).toBeLessThanOrEqual(page.viewportSize()!.height);
+  }
+});

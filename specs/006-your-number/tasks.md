@@ -42,21 +42,21 @@ task after it is implemented.
 **Goal**: the redrawn chart (contracts/ui.md, R6).
 **Independent test**: SalaryChart renders 2511 and 2512 with a number and an estimate; every mark is labelled; the scale minimum is below every drawn value and above zero.
 
-- [ ] T015 [US3] Load the `dataviz` skill. Write failing tests in `frontend/src/components/SalaryChart.test.tsx`: the marks per row (P10–P90, P25–P75, median, estimate outline, floor), one number line across rows labelled once, no age dots, a domain padded around the drawn values, the table columns from contracts/ui.md, and the caption "Estimates are not SCB figures."
-- [ ] T016 [US3] Redraw `frontend/src/components/SalaryChart.tsx` and adjust `frontend/src/lib/chartScale.ts` (padded domain, 5 000 ticks under a 30 000 span, with tests in `chartScale.test.ts`); run `validate_palette.js` if any token changes
+- [X] T015 [US3] Load the `dataviz` skill. Write failing tests in `frontend/src/components/SalaryChart.test.tsx`: the marks per row (P10–P90, P25–P75, median, estimate outline, floor), one number line across rows labelled once, no age dots, a domain padded around the drawn values, the table columns from contracts/ui.md, and the caption "Estimates are not SCB figures."
+- [X] T016 [US3] Redraw `frontend/src/components/SalaryChart.tsx` and adjust `frontend/src/lib/chartScale.ts` (padded domain, 5 000 ticks under a 30 000 span, with tests in `chartScale.test.ts`); run `validate_palette.js` if any token changes
 
 ## Phase 5: User Story 4 — Steps and Your number (P3)
 
 **Goal**: three numbered steps; "Your number" replaces Compare.
 **Independent test**: at 390×844, `/?view=number&codes=2511,2512,2519&age=25-34&region=SE11` with 60 000 typed shows the first card's position, estimate and floor check without scrolling.
 
-- [ ] T017 [US4] Write failing tests in `frontend/src/lib/urlState.test.ts`: `view=compare` parses as `number`; `region` round-trips and invalid values are dropped; the number never appears in `serialise`
-- [ ] T018 [US4] Update `frontend/src/lib/urlState.ts` (VIEWS, REGIONS with SCB's area names, region) and `frontend/src/lib/selection.ts` (drop `simulated`, with its tests)
-- [ ] T019 [US4] Write failing tests in `frontend/src/views/NumberView.test.tsx` on recorded fixtures: the headline per code; the position sentence for 60 000 ("between the median and the 75th percentile"); the suppressed-bound wording; the estimate chip with "not an SCB figure" and a left-out reason; the floor check with its source; the honest-fit text and the market notice exactly once each with three codes; one code works; the empty state links to step 1; cards in selection order; an empty, zero or non-numeric number shows no position and says why while the rest renders
-- [ ] T020 [US4] Implement `frontend/src/views/NumberView.tsx` (inputs; "Offer details" `<details>` reusing `OfferForm`; one card per code with `<details>` for tasks and `MarketPanel`; the chart; the legal sources). Take the notice out of `MarketPanel` into the view. Delete `frontend/src/views/CompareView.tsx` and its test
-- [ ] T021 [US4] Write failing tests in `frontend/src/App.test.tsx` and `frontend/src/views/SearchView.test.tsx`: the steps nav reads "1 Find your code", "2 Your number", "3 The rules"; the Next buttons; the search view has chips and Next but no chart; the result card's ranks sit in "How this was matched"
-- [ ] T022 [US4] Update `frontend/src/App.tsx`, `frontend/src/views/SearchView.tsx`, `frontend/src/components/ResultList.tsx` and `frontend/src/components/OfferBox.tsx` to pass
-- [ ] T023 [US4] Update `frontend/e2e/views.spec.ts` for the `number` view and run it against `lonekrav-serve` on port 8010 at both widths (no sideways scroll, axe clean)
+- [X] T017 [US4] Write failing tests in `frontend/src/lib/urlState.test.ts`: `view=compare` parses as `number`; `region` round-trips and invalid values are dropped; the number never appears in `serialise`
+- [X] T018 [US4] Update `frontend/src/lib/urlState.ts` (VIEWS, REGIONS with SCB's area names, region) and `frontend/src/lib/selection.ts` (drop `simulated`, with its tests)
+- [X] T019 [US4] Write failing tests in `frontend/src/views/NumberView.test.tsx` on recorded fixtures: the headline per code; the position sentence for 60 000 ("between the median and the 75th percentile"); the suppressed-bound wording; the estimate chip with "not an SCB figure" and a left-out reason; the floor check with its source; the honest-fit text and the market notice exactly once each with three codes; one code works; the empty state links to step 1; cards in selection order; an empty, zero or non-numeric number shows no position and says why while the rest renders
+- [X] T020 [US4] Implement `frontend/src/views/NumberView.tsx` (inputs; "Offer details" `<details>` reusing `OfferForm`; one card per code with `<details>` for tasks and `MarketPanel`; the chart; the legal sources). Take the notice out of `MarketPanel` into the view. Delete `frontend/src/views/CompareView.tsx` and its test
+- [X] T021 [US4] Write failing tests in `frontend/src/App.test.tsx` and `frontend/src/views/SearchView.test.tsx`: the steps nav reads "1 Find your code", "2 Your number", "3 The rules"; the Next buttons; the search view has chips and Next but no chart; the result card's ranks sit in "How this was matched"
+- [X] T022 [US4] Update `frontend/src/App.tsx`, `frontend/src/views/SearchView.tsx`, `frontend/src/components/ResultList.tsx` and `frontend/src/components/OfferBox.tsx` to pass
+- [X] T023 [US4] Update `frontend/e2e/views.spec.ts` for the `number` view and run it against `lonekrav-serve` on port 8010 at both widths (no sideways scroll, axe clean)
 
 ## Phase 6: Polish and evidence
 

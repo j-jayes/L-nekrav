@@ -54,3 +54,17 @@ export function fieldErrors(detail: Problem[]): Partial<Record<keyof Draft | "fo
   }
   return out;
 }
+
+/** The candidate's number as typed: whole SEK a month, spaces allowed ("60 000"). */
+export function parseNumber(text: string): { value: number | null; error: string | null } {
+  const t = text.replace(/\s/g, "");
+  if (!t) return { value: null, error: null };
+  if (!/^\d+$/.test(t) || Number(t) <= 0) return { value: null, error: "Enter a whole number of SEK a month, above zero." };
+  return { value: Number(t), error: null };
+}
+
+/** The offer the floor check and the advisor use: the draft, once its number is valid (006 FR-001). */
+export function offerFrom(d: Draft): Offer | null {
+  return parseNumber(d.monthly_salary_sek).value == null ? null
+    : toOffer({ ...d, monthly_salary_sek: d.monthly_salary_sek.replace(/\s/g, "") });
+}

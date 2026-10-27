@@ -165,7 +165,8 @@ function AdsPerYear({ a }: { a: MarketAnswer }) {
 
 /** Market context for one code (Feature 005): open ads now, mean pay by area and ads per year.
  * Context only: it never ranks codes, and every figure comes from the API. */
-export function MarketPanel({ code, floor }: { code: string; floor: number | null }) {
+export function MarketPanel({ code, floor, onNotice }: { code: string; floor: number | null;
+  onNotice?: (notice: string) => void }) { // with onNotice, the view shows the notice once (006 FR-019)
   const [answer, setAnswer] = useState<MarketAnswer | null>(null);
   const [failed, setFailed] = useState(false);
   useEffect(() => {
@@ -174,16 +175,17 @@ export function MarketPanel({ code, floor }: { code: string; floor: number | nul
       if (!live) return;
       setAnswer(data ?? null);
       setFailed(!data);
+      if (data) onNotice?.(data.notice);
     }, () => live && setFailed(true));
     return () => { live = false; };
-  }, [code]);
+  }, [code, onNotice]);
   return (
     <section aria-label={`Market for ${code}`} className="space-y-3 border-t border-line pt-3 text-sm">
-      <h4 className="font-semibold">Market</h4>
+      {!onNotice && <h4 className="font-semibold">Market</h4>}
       {failed && <Notice kind="error">The market data could not be loaded.</Notice>}
       {answer && (
         <>
-          <p className="text-xs text-muted">{answer.notice}</p>
+          {!onNotice && <p className="text-xs text-muted">{answer.notice}</p>}
           <OpenNow a={answer} />
           <PayByArea a={answer} floor={floor} />
           <AdsPerYear a={answer} />

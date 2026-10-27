@@ -47,10 +47,8 @@ describe("selection", () => {
     expect(s.payloads["2512"]).toBeUndefined();
   });
 
-  it("toggles the simulated bar per code, off by default", () => {
-    const s = run({ type: "add", code: "2512" }, { type: "add", code: "2514" },
-      { type: "simulated", code: "2514" });
-    expect(s.simulated).toEqual({ 2514: true });
+  it("holds no per-code simulated switch: the estimate follows the age band and area (006 FR-014)", () => {
+    expect(Object.keys(run({ type: "add", code: "2512" }))).not.toContain("simulated");
   });
 
   it("takes codes from the address with its dropped-code note", () => {
