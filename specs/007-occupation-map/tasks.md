@@ -5,17 +5,17 @@
 
 ## Phase 1: Setup
 
-- [ ] T001 Move the probe scripts to `references/occupation_map_probe.py` (pooling, neighbours, UMAP preservation) with its measured output in the docstring
-- [ ] T002 Add `[dependency-groups] map = ["umap-learn"]` to `pyproject.toml` (a version at least two weeks old), `uv lock`, and confirm `uv sync --no-dev` does not install it
+- [X] T001 Move the probe scripts to `references/occupation_map_probe.py` (pooling, neighbours, UMAP preservation) with its measured output in the docstring
+- [X] T002 Add `[dependency-groups] map = ["umap-learn"]` to `pyproject.toml` (a version at least two weeks old), `uv lock`, and confirm `uv sync --no-dev` does not install it
 
 ## Phase 2: User Story 1 — How close are two occupations? (P1) 🎯 MVP
 
-- [ ] T003 [US1] Write failing tests in `tests/unit/test_occupation_map.py` with fake profiles and vectors: `pool()` uses only title/desc chunks with `ilo=False` and normalises; `neighbours()` gives the top k by cosine and excludes self; `quantiles()` gives 101 sorted values; `closeness()` gives the percentile to a whole per cent, and `same_description` at ≥ 0.99 with a null percentile
-- [ ] T004 [US1] Implement `src/lonekrav/core/occupation_map.py` (models from data-model.md, pure functions, load/write of both artefacts)
-- [ ] T005 [US1] Write a failing test for `etl.occupation_map.build_map` on a fixture cache (3 codes) that the JSON and Parquet match the schema, the chunk-set hash and the model identity; the UMAP step under `importorskip("umap")`
-- [ ] T006 [US1] Implement `src/lonekrav/etl/occupation_map.py` and the `map` subcommand in `src/lonekrav/etl/cli.py` (lazy umap import with a clear error); run `uv run --group map lonekrav-etl map` on the real cache and commit the artefacts
-- [ ] T007 [US1] Add both tables to `data/processed/data-dict.yaml` and run `data-dict validate-data`
-- [ ] T008 [US1] Write failing tests in `tests/unit/test_occupation_map.py` against the committed artefacts: SC-001 (stored neighbours equal neighbours recomputed from the Parquet pairs), SC-002 (2511 → 2512 and 2519 in the top three; 2221 → 2239 and 2224 in the top five), and no text field anywhere
+- [X] T003 [US1] Write failing tests in `tests/unit/test_occupation_map.py` with fake profiles and vectors: `pool()` uses only title/desc chunks with `ilo=False` and normalises; `neighbours()` gives the top k by cosine and excludes self; `quantiles()` gives 101 sorted values; `closeness()` gives the percentile to a whole per cent, and `same_description` at ≥ 0.99 with a null percentile
+- [X] T004 [US1] Implement `src/lonekrav/core/occupation_map.py` (models from data-model.md, pure functions, load/write of both artefacts)
+- [X] T005 [US1] Write a failing test for `etl.occupation_map.build_map` on a fixture cache (3 codes) that the JSON and Parquet match the schema, the chunk-set hash and the model identity; the UMAP step under `importorskip("umap")`
+- [X] T006 [US1] Implement `src/lonekrav/etl/occupation_map.py` and the `map` subcommand in `src/lonekrav/etl/cli.py` (lazy umap import with a clear error); run `uv run --group map lonekrav-etl map` on the real cache and commit the artefacts
+- [X] T007 [US1] Add both tables to `data/processed/data-dict.yaml` and run `data-dict validate-data`
+- [X] T008 [US1] Write failing tests in `tests/unit/test_occupation_map.py` against the committed artefacts: SC-001 (stored neighbours equal neighbours recomputed from the Parquet pairs), SC-002 (2511 → 2512 and 2519 in the top three; 2221 → 2239 and 2224 in the top five), and no text field anywhere
 - [ ] T009 [US1] Write failing tests in `tests/integration/test_map_api.py` and `tests/integration/test_mcp.py` for `/occupations/{code}/neighbours`, `/closeness` (404, 422, same description) and both MCP tools, each carrying `honest_fit`
 - [ ] T010 [US1] Implement `Service.neighbours` and `Service.closeness`, the routes, the tools, and artefact loading with the stale check in `src/lonekrav/app.py`; regenerate the OpenAPI types
 

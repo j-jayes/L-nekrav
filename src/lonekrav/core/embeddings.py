@@ -30,6 +30,11 @@ class Spec:
     dtype: str = "float32"
     query_threads: int | None = None  # torch threads for query encoding; None keeps the default
 
+    @property
+    def identity(self) -> str:
+        """What the vector cache and the occupation map record: the exact weights and shape."""
+        return f"{self.hf_id}@{self.revision}:{self.dim}:{self.dtype}"
+
 
 SPECS = {
     "kblab": Spec("KBLab/sentence-bert-swedish-cased", "6b5e83cd29c03729cfdc33d13b1423399b0efb5c",
@@ -46,7 +51,7 @@ class SentenceTransformerEmbedder:
         from sentence_transformers import SentenceTransformer
 
         self.name, self.dim, self.spec, self.batch_size = name, spec.dim, spec, batch_size
-        self.identity = f"{spec.hf_id}@{spec.revision}:{spec.dim}:{spec.dtype}"
+        self.identity = spec.identity
         self.model = SentenceTransformer(spec.hf_id, revision=spec.revision, device="cpu",
                                          model_kwargs={"torch_dtype": getattr(torch, spec.dtype)})
 
@@ -110,12 +115,17 @@ class FakeEmbedder:
     encode_documents = encode_queries
 
 
+def cache_file(name: str, identity: str, cache_dir: Path) -> Path:
+    """The vector cache for one model: {name}-{sha256(identity)[:12]}.npz, keyed by text hash."""
+    return cache_dir / f"{name}-{hashlib.sha256(identity.encode()).hexdigest()[:12]}.npz"
+
+
 def encode_documents_cached(emb: Embedder, texts: list[str], cache_dir: Path) -> np.ndarray:
     """Encode documents, reusing vectors cached by (model identity, text hash) under `cache_dir`.
 
     A rebuild then re-embeds only chunks whose text changed (Harrier: ~20 min for a full pass).
     """
-    path = cache_dir / f"{emb.name}-{hashlib.sha256(emb.identity.encode()).hexdigest()[:12]}.npz"
+    path = cache_file(emb.name, emb.identity, cache_dir)
     cached: dict[str, np.ndarray] = {}
     if path.exists():
         with np.load(path) as z:

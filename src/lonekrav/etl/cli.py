@@ -33,6 +33,25 @@ def _index(args: argparse.Namespace) -> None:
     pipeline.index(args.models.split(","), db=Path(args.db) if args.db else None)
 
 
+def _map(args: argparse.Namespace) -> None:
+    import datetime as dt
+    from pathlib import Path
+
+    from lonekrav.core.embeddings import SPECS, cache_file
+    from lonekrav.core.profiles import load_profiles
+    from lonekrav.etl.occupation_map import build_map
+    from lonekrav.etl.scb_files import parse_major_groups
+
+    spec = SPECS["harrier"]
+    cache = cache_file("harrier", spec.identity, Path("data/raw/embeddings"))
+    groups = parse_major_groups(Path("data/raw/scb/ssyk-2012-koder.xlsx"),
+                                Path("data/raw/scb/structur_english_ssyk2012_1_4.xlsx"))
+    if len(groups) != 10:
+        raise ValueError(f"SSYK major groups: found {sorted(groups)} in data/raw/scb, need all ten")
+    m = build_map(load_profiles(), cache, spec.identity, dt.date.today().isoformat(), groups)
+    print(f"occupation map: {len(m.points)} codes from {cache}, UMAP {m.umap}")
+
+
 def _measure(args: argparse.Namespace) -> None:
     from lonekrav.etl import measure
 
@@ -60,6 +79,7 @@ COMMANDS: dict[str, Callable[[argparse.Namespace], None]] = {
     "benchmark": _benchmark,
     "measure-models": _measure,
     "fetch-models": _fetch_models,
+    "map": _map,
 }
 
 
@@ -77,6 +97,7 @@ def parser() -> argparse.ArgumentParser:
     b.add_argument("--db", default=None)
     sub.add_parser("measure-models", help="model latency and memory -> references/")
     sub.add_parser("fetch-models", help="download the pinned search models into HF_HOME")
+    sub.add_parser("map", help="occupation map from the vector cache (needs: uv run --group map)")
     return p
 
 

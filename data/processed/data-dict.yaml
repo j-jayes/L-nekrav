@@ -323,6 +323,95 @@ tables:
         constraints: [required]
         range: [2026-10-23T11:23:01, 2026-10-23T11:24:11]
 
+  - name: occupation_map
+    label: Occupation map (occupation_map.json)
+    description: >
+      Feature 007. One point per SSYK code (429): its 2-D position on the map, its major group
+      (first digit), how many chunks its vector was built from, and its ten most similar codes by
+      cosine. Built by `uv run --group map lonekrav-etl map` from the search index's cached Harrier
+      vectors of each code's title and description chunks (synonym lists and every chunk holding
+      ILO text are excluded), averaged and normalised per code. Not Parquet, so only the structure
+      here is checked, not the values. Holds codes and numbers only, no text.
+    details: >
+      Positions come from UMAP (cosine, 15 neighbours, min_dist 0.1, seed 0, one thread), scaled
+      into [0, 1]; they are a picture, and distances on it are approximate. Neighbours and
+      `pair_quantiles` (the 0th to 100th percentiles of all 91 806 pair cosines) are exact.
+      UMAP output is not byte-stable across platforms, so the file is rebuilt only on purpose. The
+      file also records the model identity, the UMAP parameters and version, the build date and a
+      SHA-256 of the pooled chunk ids, so a stale map can be detected. Derived from SCB, JobTech
+      and ESCO texts (see dataset details); no ILO text was used.
+    columns:
+      - name: code
+        type: string
+        constraints: [primary_key]
+        examples: ["2511", "2512", "2221"]
+      - name: x
+        type: number
+        range: [0, 1]
+        examples: [0.4123, 0.0815]
+      - name: y
+        type: number
+        range: [0, 1]
+        examples: [0.661, 0.2307]
+      - name: major_group
+        type: string
+        description: The SSYK major group, the code's first digit.
+        examples: ["0", "2", "9"]
+      - name: major_groups
+        type: struct
+        description: >
+          File-level, not per point: each first digit with its Swedish and English title, read
+          from SCB's SSYK 2012 structure files (CC0).
+        fields:
+          - name: sv
+            type: string
+            examples: ["Chefsyrken", "Militära yrken"]
+          - name: en
+            type: string
+            examples: ["Managers", "Armed forces occupations"]
+      - name: chunks
+        type: number(quantity)
+        description: Title and description chunks averaged into this code's vector.
+        range: [2, 177]
+      - name: neighbours
+        type: list(struct)
+        description: The ten most similar codes, nearest first, each with its cosine (3 decimals).
+        fields:
+          - name: code
+            type: string
+            examples: ["2512", "2519"]
+          - name: cosine
+            type: number
+            range: [0, 1]
+            examples: [0.939, 0.736]
+
+  - name: occupation_similarity
+    label: Similarity of every pair of occupations
+    source:
+      parquet: occupation_similarity.parquet
+    description: >
+      Feature 007. One row per unordered pair of SSYK codes (code_a < code_b; 91 806 rows): the
+      cosine similarity of their pooled Harrier vectors (see occupation_map). Lets any two codes'
+      closeness be answered exactly without serving vectors. Built with occupation_map.
+    details: >
+      Cosines of 0.99 or more mark codes that share their official description (22 pairs on
+      2026-10-27, mostly manager codes split by level, such as 1311 and 1312); the page says so
+      instead of giving a percentile.
+    columns:
+      - name: code_a
+        type: string
+        constraints: [primary_key]
+        examples: ["1311", "2511"]
+      - name: code_b
+        type: string
+        constraints: [primary_key]
+        examples: ["1312", "2512"]
+      - name: cosine
+        type: number
+        constraints: [required]
+        range: [0, 1.0001]
+        examples: [0.939, 0.736]
+
   - name: ssyk_profiles
     label: Occupation profiles (ssyk_profiles.json)
     description: >

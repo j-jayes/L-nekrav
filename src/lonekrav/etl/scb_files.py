@@ -57,6 +57,15 @@ def parse_english(path: Path) -> dict[str, str]:
             if (c := _code(r[0])) and r[1] and len(str(r[0]).strip()) == 4}
 
 
+def parse_major_groups(structure: Path, english: Path) -> dict[str, dict[str, str]]:
+    """SSYK's ten major groups (the first digit), in Swedish and English, for the occupation map."""
+    def one(path: Path, sheet: str) -> dict[str, str]:
+        return {str(r[0]).strip(): str(r[1]).strip() for r in _rows(path, sheet)
+                if r[0] is not None and r[1] and str(r[0]).strip().isdigit() and len(str(r[0]).strip()) == 1}
+    sv, en = one(structure, "1-siffer"), one(english, "1-digit")
+    return {d: {"sv": sv[d], "en": en[d]} for d in sorted(sv) if d in en}  # all ten in SCB's files
+
+
 def parse_isco_key(path: Path) -> dict[str, list[str]]:
     key = {}
     for r in _rows(path, "Nyckel"):
