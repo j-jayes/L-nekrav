@@ -353,7 +353,7 @@ export interface components {
         CompareRequest: {
             /**
              * Codes
-             * @description 2–5 distinct SSYK codes, in the order to show them
+             * @description 1–5 distinct SSYK codes, in the order to show them
              */
             codes: string[];
             offer?: components["schemas"]["Offer"] | null;
@@ -409,6 +409,7 @@ export interface components {
              * @default The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice.
              */
             disclaimer: string;
+            market_position?: components["schemas"]["MarketPosition"] | null;
         };
         /** EligibilityRequest */
         EligibilityRequest: {
@@ -456,6 +457,16 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** LeftOut */
+        LeftOut: {
+            /**
+             * Factor
+             * @enum {string}
+             */
+            factor: "age" | "region";
+            /** Reason */
+            reason: string;
         };
         /** LegalFlag */
         LegalFlag: {
@@ -531,6 +542,32 @@ export interface components {
              * @default The SSYK code on a work-permit offer must match the duties actually performed. Open ads and regional pay are context: they are never a reason to choose a code. Regional figures are SCB means; the work-permit salary floor comes from the national median and is the same in every area.
              */
             notice: string;
+        };
+        /**
+         * MarketPosition
+         * @description Where an amount sits among SCB's published percentiles: the nearest published one below
+         *     and above (either may be open), or the one it equals. Values are copied, never interpolated.
+         */
+        MarketPosition: {
+            /** Amount Sek */
+            amount_sek: number;
+            /** Year */
+            year: number;
+            /** Source Table */
+            source_table: string;
+            lower?: components["schemas"]["PercentileRef"] | null;
+            upper?: components["schemas"]["PercentileRef"] | null;
+            at?: components["schemas"]["PercentileRef"] | null;
+            /**
+             * Missing
+             * @default []
+             */
+            missing: ("p10" | "p25" | "median" | "p75" | "p90")[];
+            /**
+             * No Data
+             * @default false
+             */
+            no_data: boolean;
         };
         /** MatchedChunk */
         MatchedChunk: {
@@ -645,6 +682,16 @@ export interface components {
             kept_text: string;
             /** Fallback To Whole */
             fallback_to_whole: boolean;
+        };
+        /** PercentileRef */
+        PercentileRef: {
+            /**
+             * Name
+             * @enum {string}
+             */
+            name: "p10" | "p25" | "median" | "p75" | "p90";
+            /** Value Sek */
+            value_sek: number;
         };
         /** PersonalExemption */
         PersonalExemption: {
@@ -801,6 +848,8 @@ export interface components {
             /** Applicable Rule Id */
             applicable_rule_id: string | null;
             simulated?: components["schemas"]["SimulatedPercentiles"] | null;
+            /** Estimate Note */
+            estimate_note?: string | null;
             /** No Occupation Data */
             no_occupation_data: boolean;
         };
@@ -886,12 +935,16 @@ export interface components {
         };
         /**
          * SimulatedPercentiles
-         * @description Not an SCB figure: SCB publishes percentiles for all ages and means per age band, so this
-         *     scales each percentile by the band's mean relative to the all-ages mean.
+         * @description Not an SCB figure: SCB publishes percentiles only for all ages in all of Sweden, and means
+         *     per age band and per national area, so this scales each percentile by the band's mean relative
+         *     to the all-ages mean and the area's mean relative to Sweden's. A factor whose inputs SCB does
+         *     not publish is left out, with the reason (006 FR-008–FR-010).
          */
         SimulatedPercentiles: {
             /** Age Band */
-            age_band: string;
+            age_band?: string | null;
+            /** Region */
+            region?: string | null;
             /** Year */
             year: number;
             /** P10 */
@@ -917,6 +970,13 @@ export interface components {
             formula: string;
             /** Inputs */
             inputs: components["schemas"]["TableRef"][];
+            /** Applied */
+            applied: ("age" | "region")[];
+            /**
+             * Left Out
+             * @default []
+             */
+            left_out: components["schemas"]["LeftOut"][];
         };
         /** Source */
         Source: {
@@ -1016,6 +1076,7 @@ export interface components {
              * Format: date
              */
             on: string;
+            source: components["schemas"]["Source"];
         };
         /** TimelineEvent */
         TimelineEvent: {
@@ -1360,6 +1421,7 @@ export interface operations {
         parameters: {
             query?: {
                 age_band?: string | null;
+                region?: string | null;
                 on?: string | null;
             };
             header?: never;

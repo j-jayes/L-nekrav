@@ -1,4 +1,4 @@
-"""Side-by-side comparison of 2–5 codes (spec Story 6, FR-027, FR-028)."""
+"""Side-by-side comparison of 1–5 codes (spec Story 6, FR-027, FR-028)."""
 
 import datetime as dt
 
@@ -47,13 +47,16 @@ def test_offer_gives_each_column_the_same_answer_as_evaluate(cmp):
 
 def test_duplicates_are_dropped_before_counting(cmp):
     assert [col.code for col in cmp(codes=["2512", "2512", "3511"]).columns] == ["2512", "3511"]
-    with pytest.raises(ValidationError, match="2–5"):
-        CompareRequest(codes=["2512", "2512"])
+    assert [col.code for col in cmp(codes=["2512", "2512"]).columns] == ["2512"]
 
 
-@pytest.mark.parametrize("codes", [["2512"], ["0110", "1211", "1212", "2421", "2512", "3511"]])
-def test_two_to_five_codes(codes):
-    with pytest.raises(ValidationError, match="2–5"):
+def test_one_code_is_a_comparison_of_one(cmp):  # 006 R4: "Your number" works with one code
+    assert [col.code for col in cmp(codes=["2512"]).columns] == ["2512"]
+
+
+@pytest.mark.parametrize("codes", [[], ["0110", "1211", "1212", "2421", "2512", "3511"]])
+def test_one_to_five_codes(codes):
+    with pytest.raises(ValidationError, match="1–5"):
         CompareRequest(codes=codes)
 
 

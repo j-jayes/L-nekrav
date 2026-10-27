@@ -96,3 +96,28 @@ def test_search_runs_core_search(service):
 
     req = SearchRequest(text="mjukvaruutvecklare")
     assert service.search(req) == run(req, service.engine)
+
+
+def test_eligibility_places_the_full_time_equivalent_among_the_latest_percentiles(service):
+    latest = max((d for d in service.distributions if d.code == "2512"), key=lambda d: d.year)
+    full = service.eligibility(EligibilityRequest(code="2512", **OFFER))
+    half = service.eligibility(EligibilityRequest(code="2512", **{**OFFER, "fte_percent": 50,
+                                                                   "monthly_salary_sek": 20000}))
+    assert full.market_position.year == latest.year
+    assert full.market_position.amount_sek == half.market_position.amount_sek == 40000
+    assert full.market_position == half.market_position
+
+
+def test_the_position_does_not_change_eligibility(service):
+    from lonekrav.core.eligibility import evaluate
+
+    req = EligibilityRequest(code="2512", **OFFER)
+    ans = service.eligibility(req)
+    assert ans.model_copy(update={"market_position": None}) == evaluate(req, known_codes=service.profiles)
+
+
+def test_no_position_without_a_distribution(service):
+    from dataclasses import replace
+
+    bare = replace(service, distributions=[d for d in service.distributions if d.code != "2512"])
+    assert bare.eligibility(EligibilityRequest(code="2512", **OFFER)).market_position is None

@@ -70,7 +70,8 @@ def test_extract_job_ad_signal_equals_rest(api_client, fixtures):
                  "/api/v1/parse-job-ad", json=body)
 
 
-@pytest.mark.parametrize("params", [{}, {"age_band": "25-34", "on": "2026-10-21"}])
+@pytest.mark.parametrize("params", [{}, {"age_band": "25-34", "on": "2026-10-21"},
+                                    {"age_band": "25-34", "region": "SE11"}])
 def test_salary_equals_rest(api_client, params):
     same_as_rest(api_client, "get_occupation_salary", {"code": "2512", **params}, "get",
                  "/api/v1/occupations/2512/salary", params=params)
@@ -204,3 +205,13 @@ def test_served_at_exactly_slash_mcp_beside_rest(api_client):  # research R2
                         headers={"Accept": "application/json, text/event-stream"})
     assert r.status_code == 200 and r.headers.get("mcp-session-id")
     assert api_client.get("/api/v1/health").status_code == 200
+
+
+def test_eligibility_tool_says_the_position_is_a_published_bracket():
+    from lonekrav.protocols.mcp_server import build_mcp
+
+    async def describe():
+        return (await build_mcp(None).get_tool("evaluate_permit_eligibility")).description
+
+    text = " ".join(asyncio.run(describe()).split())
+    assert "never an interpolated percentile" in text and "does not affect eligibility" in text

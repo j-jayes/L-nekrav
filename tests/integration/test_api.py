@@ -60,7 +60,11 @@ def test_eligibility_returns_the_core_answer(api_client):
 
     r = api_client.post("/api/v1/eligibility", json=OFFER)
     assert r.status_code == 200
-    assert r.json() == evaluate(EligibilityRequest(**OFFER)).model_dump(mode="json")
+    body = r.json()
+    position = body.pop("market_position")
+    core = evaluate(EligibilityRequest(**OFFER)).model_dump(mode="json")
+    assert body == {k: v for k, v in core.items() if k != "market_position"}
+    assert position["amount_sek"] == 40000 and position["source_table"] in ("TAB4265", "TAB5932")
 
 
 def test_eligibility_invalid_body_names_the_field(api_client):
@@ -100,6 +104,16 @@ def test_salary_route_errors(api_client):
     assert api_client.get("/api/v1/occupations/1234/salary").status_code == 404
     r = api_client.get("/api/v1/occupations/2512/salary", params={"age_band": "12-17"})
     assert r.status_code == 422 and "age_band" in r.text
+    r = api_client.get("/api/v1/occupations/2512/salary", params={"region": "SE99"})
+    assert r.status_code == 422 and "SE11" in r.text
+
+
+def test_salary_route_with_an_area(api_client):  # 006 FR-011
+    r = api_client.get("/api/v1/occupations/2512/salary",
+                       params={"age_band": "25-34", "region": "SE11", "on": "2026-10-21"})
+    s = r.json()["simulated"]
+    assert s["applied"] == ["age", "region"] and s["region"] == "SE11" and s["is_simulated"]
+    assert "TAB5696" in {i["table"] for i in s["inputs"]}
 
 
 def test_compare_route(api_client):
@@ -113,8 +127,8 @@ def test_compare_route(api_client):
 
 
 def test_compare_route_errors(api_client):
-    r = api_client.post("/api/v1/compare", json={"codes": ["2512"]})
-    assert r.status_code == 422 and "2–5" in r.text
+    r = api_client.post("/api/v1/compare", json={"codes": []})
+    assert r.status_code == 422 and "1–5" in r.text
     assert api_client.post("/api/v1/compare", json={"codes": ["2512", "1234"]}).status_code == 404
 
 

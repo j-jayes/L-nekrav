@@ -10,31 +10,31 @@ task after it is implemented.
 
 ## Phase 1: Foundational (core models)
 
-- [ ] T001 Write failing tests in `tests/unit/test_salary_payload.py` that `ThresholdLine` carries `source` equal to its rule's registry source, for every line on 2026-10-27 and on a date before June 2026 (R3)
-- [ ] T002 Add `source: Source` to `ThresholdLine` in `src/lonekrav/core/salary.py` and fill it in `payload()`
+- [X] T001 Write failing tests in `tests/unit/test_salary_payload.py` that `ThresholdLine` carries `source` equal to its rule's registry source, for every line on 2026-10-27 and on a date before June 2026 (R3)
+- [X] T002 Add `source: Source` to `ThresholdLine` in `src/lonekrav/core/salary.py` and fill it in `payload()`
 
 ## Phase 2: User Story 1 — Where my number sits (P1) 🎯 MVP
 
 **Goal**: a full-time-equivalent amount placed between published percentiles, on the eligibility answer for every surface.
 **Independent test**: `POST /api/v1/eligibility` for 2511 at 60 000 gives `market_position` lower=median 56 200, upper=p75 66 700.
 
-- [ ] T003 [US1] Write failing tests in `tests/unit/test_salary_position.py` for `position()`: each of the seven brackets; exact equality gives `at`; a suppressed p25 widens to p10–median with `missing=["p25"]`; all percentiles null gives `no_data`; values are copied, never computed (property: every returned value is one of the distribution's fields)
-- [ ] T004 [US1] Implement `PercentileRef`, `MarketPosition` and `position()` in `src/lonekrav/core/salary.py`
-- [ ] T005 [US1] Write failing tests in `tests/unit/test_service.py`: `Service.eligibility` attaches `market_position` from the code's latest distribution, using salary ÷ (fte_percent/100); null for a code with no distribution; the eligibility status is unchanged by it
-- [ ] T006 [US1] Add `market_position` to `EligibilityAnswer` in `src/lonekrav/core/eligibility.py` and attach it in `Service.eligibility` in `src/lonekrav/core/service.py`
-- [ ] T007 [US1] Extend `tests/integration/test_api.py` and `tests/integration/test_mcp.py` for the field on REST and on `evaluate_permit_eligibility`; update the tool description in `src/lonekrav/protocols/mcp_server.py` (contracts/mcp.md)
-- [ ] T008 [US1] Write a failing test in `tests/unit/test_compare.py` that one code is accepted and six are refused with "give 1–5 distinct codes"; relax `src/lonekrav/core/compare.py` and the `compare_occupations` description (R4)
+- [X] T003 [US1] Write failing tests in `tests/unit/test_salary_position.py` for `position()`: each of the seven brackets; exact equality gives `at`; a suppressed p25 widens to p10–median with `missing=["p25"]`; all percentiles null gives `no_data`; values are copied, never computed (property: every returned value is one of the distribution's fields)
+- [X] T004 [US1] Implement `PercentileRef`, `MarketPosition` and `position()` in `src/lonekrav/core/salary.py`
+- [X] T005 [US1] Write failing tests in `tests/unit/test_service.py`: `Service.eligibility` attaches `market_position` from the code's latest distribution, using salary ÷ (fte_percent/100); null for a code with no distribution; the eligibility status is unchanged by it
+- [X] T006 [US1] Add `market_position` to `EligibilityAnswer` in `src/lonekrav/core/eligibility.py` and attach it in `Service.eligibility` in `src/lonekrav/core/service.py`
+- [X] T007 [US1] Extend `tests/integration/test_api.py` and `tests/integration/test_mcp.py` for the field on REST and on `evaluate_permit_eligibility`; update the tool description in `src/lonekrav/protocols/mcp_server.py` (contracts/mcp.md)
+- [X] T008 [US1] Write a failing test in `tests/unit/test_compare.py` that one code is accepted and six are refused with "give 1–5 distinct codes"; relax `src/lonekrav/core/compare.py` and the `compare_occupations` description (R4)
 
 ## Phase 3: User Story 2 — Estimate for age and area (P2)
 
 **Goal**: the simulated percentiles gain an area factor, with partial estimates and reasons.
 **Independent test**: `GET /salary?age_band=25-34&region=SE11` for 2511 gives p25 ≈ 44 711 and p75 ≈ 62 520 with both factors applied.
 
-- [ ] T009 [US2] Write failing tests in `tests/unit/test_salary_age.py` (or a new `test_salary_estimate.py`) for `_simulate` with a region: both factors (the 2511 numbers above); area only; age only; Sweden mean suppressed → region in `left_out` with the reason; no regional row for the year → reason names the table and year; neither applies → `simulated` null and `estimate_note` set; `formula` names only applied factors and states independence when both apply; `inputs` lists every table used; and a sweep over the committed data (every code × 7 age options × 9 area options) where each estimate equals the formula on published inputs or is absent with a reason (SC-003)
-- [ ] T010 [US2] Extend `SimulatedPercentiles` (`age_band` nullable, `region`, `applied`, `left_out`), `_simulate` and `payload(region=…, regional=…)` and add `SalaryPayload.estimate_note` in `src/lonekrav/core/salary.py`; validate `region` against the eight area codes
-- [ ] T011 [US2] Write failing tests in `tests/integration/test_api.py` and `tests/integration/test_mcp.py`: `?region=SE11` works; `?region=SE99` gives 422 listing the allowed values; the MCP tool takes `region`
-- [ ] T012 [US2] Pass `region` through `Service.salary` (with `self.regional`) in `src/lonekrav/core/service.py`, the route in `src/lonekrav/api/v1.py` and `get_occupation_salary` in `src/lonekrav/protocols/mcp_server.py`; add the one prompt line in `src/lonekrav/protocols/agent/loop.py` and its test in `tests/unit/test_agent_loop.py`
-- [ ] T013 [US2] Regenerate the schema (`uv run python scripts/export_openapi.py && (cd frontend && npm run gen)`) and confirm `tests/integration/test_openapi_drift.py` passes
+- [X] T009 [US2] Write failing tests in `tests/unit/test_salary_age.py` (or a new `test_salary_estimate.py`) for `_simulate` with a region: both factors (the 2511 numbers above); area only; age only; Sweden mean suppressed → region in `left_out` with the reason; no regional row for the year → reason names the table and year; neither applies → `simulated` null and `estimate_note` set; `formula` names only applied factors and states independence when both apply; `inputs` lists every table used; and a sweep over the committed data (every code × 7 age options × 9 area options) where each estimate equals the formula on published inputs or is absent with a reason (SC-003)
+- [X] T010 [US2] Extend `SimulatedPercentiles` (`age_band` nullable, `region`, `applied`, `left_out`), `_simulate` and `payload(region=…, regional=…)` and add `SalaryPayload.estimate_note` in `src/lonekrav/core/salary.py`; validate `region` against the eight area codes
+- [X] T011 [US2] Write failing tests in `tests/integration/test_api.py` and `tests/integration/test_mcp.py`: `?region=SE11` works; `?region=SE99` gives 422 listing the allowed values; the MCP tool takes `region`
+- [X] T012 [US2] Pass `region` through `Service.salary` (with `self.regional`) in `src/lonekrav/core/service.py`, the route in `src/lonekrav/api/v1.py` and `get_occupation_salary` in `src/lonekrav/protocols/mcp_server.py`; add the one prompt line in `src/lonekrav/protocols/agent/loop.py` and its test in `tests/unit/test_agent_loop.py`
+- [X] T013 [US2] Regenerate the schema (`uv run python scripts/export_openapi.py && (cd frontend && npm run gen)`) and confirm `tests/integration/test_openapi_drift.py` passes
 - [ ] T014 [US2] Re-record the page fixtures with `scripts/record_api_fixtures.py` against a running server (salary with age and region, eligibility with a position, compare with one code), and add the new names to the script
 
 ## Phase 4: User Story 3 — A chart I can read (P2)

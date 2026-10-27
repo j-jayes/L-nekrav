@@ -45,10 +45,10 @@ def search(body: SearchRequest, request: Request) -> SearchAnswer:
 
 @router.get("/occupations/{code}/salary")
 def salary(code: str, request: Request, age_band: str | None = None,
-           on: dt.date | None = None) -> SalaryPayload:
+           region: str | None = None, on: dt.date | None = None) -> SalaryPayload:
     try:
-        return _service(request).salary(code, on=on, age_band=age_band)
-    except ValueError as e:  # an unknown age band
+        return _service(request).salary(code, on=on, age_band=age_band, region=region)
+    except ValueError as e:  # an unknown age band or area
         raise HTTPException(422, str(e)) from e
 
 

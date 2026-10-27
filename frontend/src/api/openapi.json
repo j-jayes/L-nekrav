@@ -132,6 +132,22 @@
             }
           },
           {
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Region"
+            }
+          },
+          {
             "name": "on",
             "in": "query",
             "required": false,
@@ -755,7 +771,7 @@
             },
             "type": "array",
             "title": "Codes",
-            "description": "2–5 distinct SSYK codes, in the order to show them"
+            "description": "1–5 distinct SSYK codes, in the order to show them"
           },
           "offer": {
             "anyOf": [
@@ -918,6 +934,16 @@
             "type": "string",
             "title": "Disclaimer",
             "default": "The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice."
+          },
+          "market_position": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MarketPosition"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "type": "object",
@@ -1012,6 +1038,28 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "LeftOut": {
+        "properties": {
+          "factor": {
+            "type": "string",
+            "enum": [
+              "age",
+              "region"
+            ],
+            "title": "Factor"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "factor",
+          "reason"
+        ],
+        "title": "LeftOut"
       },
       "LegalFlag": {
         "properties": {
@@ -1237,6 +1285,80 @@
           "history"
         ],
         "title": "MarketAnswer"
+      },
+      "MarketPosition": {
+        "properties": {
+          "amount_sek": {
+            "type": "integer",
+            "title": "Amount Sek"
+          },
+          "year": {
+            "type": "integer",
+            "title": "Year"
+          },
+          "source_table": {
+            "type": "string",
+            "title": "Source Table"
+          },
+          "lower": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PercentileRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "upper": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PercentileRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "at": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PercentileRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "missing": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "p10",
+                "p25",
+                "median",
+                "p75",
+                "p90"
+              ]
+            },
+            "type": "array",
+            "title": "Missing",
+            "default": []
+          },
+          "no_data": {
+            "type": "boolean",
+            "title": "No Data",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "amount_sek",
+          "year",
+          "source_table"
+        ],
+        "title": "MarketPosition",
+        "description": "Where an amount sits among SCB's published percentiles: the nearest published one below\nand above (either may be open), or the one it equals. Values are copied, never interpolated."
       },
       "MatchedChunk": {
         "properties": {
@@ -1493,6 +1615,31 @@
           "fallback_to_whole"
         ],
         "title": "ParsedAd"
+      },
+      "PercentileRef": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": [
+              "p10",
+              "p25",
+              "median",
+              "p75",
+              "p90"
+            ],
+            "title": "Name"
+          },
+          "value_sek": {
+            "type": "integer",
+            "title": "Value Sek"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "value_sek"
+        ],
+        "title": "PercentileRef"
       },
       "PersonalExemption": {
         "properties": {
@@ -2003,6 +2150,17 @@
               }
             ]
           },
+          "estimate_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estimate Note"
+          },
           "no_occupation_data": {
             "type": "boolean",
             "title": "No Occupation Data"
@@ -2215,8 +2373,26 @@
       "SimulatedPercentiles": {
         "properties": {
           "age_band": {
-            "type": "string",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Age Band"
+          },
+          "region": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Region"
           },
           "year": {
             "type": "integer",
@@ -2294,21 +2470,40 @@
             },
             "type": "array",
             "title": "Inputs"
+          },
+          "applied": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "age",
+                "region"
+              ]
+            },
+            "type": "array",
+            "title": "Applied"
+          },
+          "left_out": {
+            "items": {
+              "$ref": "#/components/schemas/LeftOut"
+            },
+            "type": "array",
+            "title": "Left Out",
+            "default": []
           }
         },
         "type": "object",
         "required": [
-          "age_band",
           "year",
           "p10",
           "p25",
           "median",
           "p75",
           "p90",
-          "inputs"
+          "inputs",
+          "applied"
         ],
         "title": "SimulatedPercentiles",
-        "description": "Not an SCB figure: SCB publishes percentiles for all ages and means per age band, so this\nscales each percentile by the band's mean relative to the all-ages mean."
+        "description": "Not an SCB figure: SCB publishes percentiles only for all ages in all of Sweden, and means\nper age band and per national area, so this scales each percentile by the band's mean relative\nto the all-ages mean and the area's mean relative to Sweden's. A factor whose inputs SCB does\nnot publish is left out, with the reason (006 FR-008–FR-010)."
       },
       "Source": {
         "properties": {
@@ -2565,6 +2760,9 @@
             "type": "string",
             "format": "date",
             "title": "On"
+          },
+          "source": {
+            "$ref": "#/components/schemas/Source"
           }
         },
         "type": "object",
@@ -2574,7 +2772,8 @@
           "amount_sek",
           "median_sek",
           "median_reference_year",
-          "on"
+          "on",
+          "source"
         ],
         "title": "ThresholdLine"
       },

@@ -11,6 +11,7 @@ import datetime as dt
 from pydantic import BaseModel, Field, field_validator
 
 from lonekrav.core.eligibility import EligibilityAnswer, EligibilityRequest, Offer, evaluate
+from lonekrav.core.legal import load_registry
 from lonekrav.core.legal_flags import flags_for
 from lonekrav.core.models import (
     AgeBandSalary,
@@ -26,15 +27,15 @@ SWEDISH_SOURCES = ("scb_mis2012", "jobtech")  # SCB's SSYK publication first, th
 
 
 class CompareRequest(BaseModel):
-    codes: list[str] = Field(description="2–5 distinct SSYK codes, in the order to show them")
+    codes: list[str] = Field(description="1–5 distinct SSYK codes, in the order to show them")
     offer: Offer | None = None
 
     @field_validator("codes")
     @classmethod
     def _two_to_five(cls, v: list[str]) -> list[str]:
         v = list(dict.fromkeys(v))
-        if not 2 <= len(v) <= 5:
-            raise ValueError(f"codes: give 2–5 distinct codes, got {len(v)}")
+        if not 1 <= len(v) <= 5:
+            raise ValueError(f"codes: give 1–5 distinct codes, got {len(v)}")
         return v
 
 
@@ -69,7 +70,8 @@ def _line(a: EligibilityAnswer, on: dt.date) -> ThresholdLine | None:
         return None
     return ThresholdLine(rule_id=a.rule_id, percent=a.percent, amount_sek=a.threshold_sek,
                          median_sek=a.median.amount,
-                         median_reference_year=a.median.scb_reference_year, on=on)
+                         median_reference_year=a.median.scb_reference_year, on=on,
+                         source=load_registry().rules[a.rule_id].source)
 
 
 def compare(req: CompareRequest, profiles: dict[str, OccupationProfile],

@@ -22,7 +22,7 @@ from lonekrav.core.models import (
     SalaryDistribution,
     YearlyAds,
 )
-from lonekrav.core.salary import SalaryPayload, payload
+from lonekrav.core.salary import SalaryPayload, payload, position
 from lonekrav.core.search import SearchAnswer, SearchEngine, SearchRequest, run
 
 
@@ -47,16 +47,23 @@ class Service:
     def parse_ad(self, req: AdText) -> ParsedAd:
         return parse(req.text, self.engine.embedders["kblab"])
 
-    def salary(self, code: str, on: dt.date | None = None,
-               age_band: str | None = None) -> SalaryPayload:
-        """Raises UnknownCode, or ValueError for an unknown age band."""
+    def salary(self, code: str, on: dt.date | None = None, age_band: str | None = None,
+               region: str | None = None) -> SalaryPayload:
+        """Raises UnknownCode, or ValueError for an unknown age band or area."""
         p = self._known(code)
-        return payload(code, on=on or dt.date.today(), age_band=age_band,
+        return payload(code, on=on or dt.date.today(), age_band=age_band, region=region,
                        distributions=self.distributions, age_bands=self.age_bands,
+                       regional=self.regional,
                        titles={code: (p.title_sv, p.title_en)})
 
     def eligibility(self, req: EligibilityRequest) -> EligibilityAnswer:
-        return evaluate(req, known_codes=self.profiles)
+        answer = evaluate(req, known_codes=self.profiles)
+        latest = max((d for d in self.distributions if d.code == req.code),
+                     key=lambda d: d.year, default=None)
+        if latest is None:
+            return answer
+        fte = round(req.monthly_salary_sek * 100 / req.fte_percent)
+        return answer.model_copy(update={"market_position": position(fte, latest)})
 
     def compare(self, req: CompareRequest) -> Comparison:
         for code in req.codes:
