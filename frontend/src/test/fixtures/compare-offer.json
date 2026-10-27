@@ -181,7 +181,13 @@
           "amount_sek": 34470,
           "median_sek": 38300,
           "median_reference_year": 2025,
-          "on": "2026-10-01"
+          "on": "2026-10-01",
+          "source": {
+            "key": "mv_lonekrav",
+            "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+            "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+            "checked_on": "2026-10-21"
+          }
         },
         "eligibility": {
           "status": "fail",
@@ -212,7 +218,8 @@
               "checked_on": "2026-10-21"
             }
           ],
-          "disclaimer": "The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice."
+          "disclaimer": "The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice.",
+          "market_position": null
         }
       },
       {
@@ -502,7 +509,13 @@
           "amount_sek": 34470,
           "median_sek": 38300,
           "median_reference_year": 2025,
-          "on": "2026-10-01"
+          "on": "2026-10-01",
+          "source": {
+            "key": "mv_lonekrav",
+            "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+            "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+            "checked_on": "2026-10-21"
+          }
         },
         "eligibility": {
           "status": "fail",
@@ -533,7 +546,8 @@
               "checked_on": "2026-10-21"
             }
           ],
-          "disclaimer": "The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice."
+          "disclaimer": "The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice.",
+          "market_position": null
         }
       },
       {
@@ -631,7 +645,13 @@
           "amount_sek": 28725,
           "median_sek": 38300,
           "median_reference_year": 2025,
-          "on": "2026-10-01"
+          "on": "2026-10-01",
+          "source": {
+            "key": "mv_lonekrav",
+            "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+            "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+            "checked_on": "2026-10-21"
+          }
         },
         "eligibility": {
           "status": "pass",
@@ -668,7 +688,8 @@
               "checked_on": "2026-10-20"
             }
           ],
-          "disclaimer": "The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice."
+          "disclaimer": "The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice.",
+          "market_position": null
         }
       }
     ],

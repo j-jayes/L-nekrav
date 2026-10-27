@@ -107,7 +107,7 @@ export function AdvisorDrawer({ offer, dispatch, onClose, open = true, modal = f
           className="w-full rounded border border-line bg-panel p-2" />
         <label className="flex items-center gap-2 text-sm">
           <input type="checkbox" checked={withOffer} disabled={!offer} onChange={(e) => setWithOffer(e.target.checked)} />
-          Include my offer {!offer && <span className="text-muted">(add one under “Add your offer” first)</span>}
+          Include my offer {!offer && <span className="text-muted">(type your number in step 2 first)</span>}
         </label>
         <div className="flex gap-2">
           <button type="submit" disabled={running || !ad.trim()}

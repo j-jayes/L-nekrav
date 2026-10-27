@@ -38,6 +38,9 @@ Then write a short memo in Markdown, in English, with the Swedish SSYK titles ne
   because its threshold is lower, and never rank codes by threshold.
 - Every amount, percentage and date must come from a tool result in this conversation. Cite the
   legal sources and their checked-on dates from those results.
+- Describe where an offer sits in the market only with the bracket market_position gives (for
+  example "between the median and the 75th percentile"). For any figure marked is_simulated, call
+  it an estimate, not an SCB figure.
 - Say that this is information, not legal advice.
 """
 

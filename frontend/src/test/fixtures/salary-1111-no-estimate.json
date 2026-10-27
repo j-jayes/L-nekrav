@@ -1,0 +1,475 @@
+{
+  "status": 200,
+  "body": {
+    "code": "1111",
+    "title_sv": "Politiker",
+    "title_en": "Legislators",
+    "distributions": [
+      {
+        "code": "1111",
+        "year": 2014,
+        "mean": null,
+        "median": null,
+        "p10": null,
+        "p25": null,
+        "p75": null,
+        "p90": null,
+        "mean_ci95": null,
+        "median_ci95": null,
+        "p10_ci95": null,
+        "p25_ci95": null,
+        "p75_ci95": null,
+        "p90_ci95": null,
+        "source_table": "TAB4265",
+        "reference_year": 2014,
+        "fetched_at": "2026-10-20T20:54:47.713753Z",
+        "suppressed": [
+          "mean",
+          "median",
+          "p10",
+          "p25",
+          "p75",
+          "p90"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2015,
+        "mean": null,
+        "median": null,
+        "p10": null,
+        "p25": null,
+        "p75": null,
+        "p90": null,
+        "mean_ci95": null,
+        "median_ci95": null,
+        "p10_ci95": null,
+        "p25_ci95": null,
+        "p75_ci95": null,
+        "p90_ci95": null,
+        "source_table": "TAB4265",
+        "reference_year": 2015,
+        "fetched_at": "2026-10-20T20:54:47.713753Z",
+        "suppressed": [
+          "mean",
+          "median",
+          "p10",
+          "p25",
+          "p75",
+          "p90"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2016,
+        "mean": null,
+        "median": null,
+        "p10": null,
+        "p25": null,
+        "p75": null,
+        "p90": null,
+        "mean_ci95": null,
+        "median_ci95": null,
+        "p10_ci95": null,
+        "p25_ci95": null,
+        "p75_ci95": null,
+        "p90_ci95": null,
+        "source_table": "TAB4265",
+        "reference_year": 2016,
+        "fetched_at": "2026-10-20T20:54:47.713753Z",
+        "suppressed": [
+          "mean",
+          "median",
+          "p10",
+          "p25",
+          "p75",
+          "p90"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2017,
+        "mean": null,
+        "median": null,
+        "p10": null,
+        "p25": null,
+        "p75": null,
+        "p90": null,
+        "mean_ci95": null,
+        "median_ci95": null,
+        "p10_ci95": null,
+        "p25_ci95": null,
+        "p75_ci95": null,
+        "p90_ci95": null,
+        "source_table": "TAB4265",
+        "reference_year": 2017,
+        "fetched_at": "2026-10-20T20:54:47.713753Z",
+        "suppressed": [
+          "mean",
+          "median",
+          "p10",
+          "p25",
+          "p75",
+          "p90"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2018,
+        "mean": null,
+        "median": null,
+        "p10": null,
+        "p25": null,
+        "p75": null,
+        "p90": null,
+        "mean_ci95": null,
+        "median_ci95": null,
+        "p10_ci95": null,
+        "p25_ci95": null,
+        "p75_ci95": null,
+        "p90_ci95": null,
+        "source_table": "TAB4265",
+        "reference_year": 2018,
+        "fetched_at": "2026-10-20T20:54:47.713753Z",
+        "suppressed": [
+          "mean",
+          "median",
+          "p10",
+          "p25",
+          "p75",
+          "p90"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2019,
+        "mean": null,
+        "median": null,
+        "p10": null,
+        "p25": null,
+        "p75": null,
+        "p90": null,
+        "mean_ci95": null,
+        "median_ci95": null,
+        "p10_ci95": null,
+        "p25_ci95": null,
+        "p75_ci95": null,
+        "p90_ci95": null,
+        "source_table": "TAB4265",
+        "reference_year": 2019,
+        "fetched_at": "2026-10-20T20:54:47.713753Z",
+        "suppressed": [
+          "mean",
+          "median",
+          "p10",
+          "p25",
+          "p75",
+          "p90"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2020,
+        "mean": null,
+        "median": null,
+        "p10": null,
+        "p25": null,
+        "p75": null,
+        "p90": null,
+        "mean_ci95": null,
+        "median_ci95": null,
+        "p10_ci95": null,
+        "p25_ci95": null,
+        "p75_ci95": null,
+        "p90_ci95": null,
+        "source_table": "TAB4265",
+        "reference_year": 2020,
+        "fetched_at": "2026-10-20T20:54:47.713753Z",
+        "suppressed": [
+          "mean",
+          "median",
+          "p10",
+          "p25",
+          "p75",
+          "p90"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2021,
+        "mean": null,
+        "median": null,
+        "p10": null,
+        "p25": null,
+        "p75": null,
+        "p90": null,
+        "mean_ci95": null,
+        "median_ci95": null,
+        "p10_ci95": null,
+        "p25_ci95": null,
+        "p75_ci95": null,
+        "p90_ci95": null,
+        "source_table": "TAB4265",
+        "reference_year": 2021,
+        "fetched_at": "2026-10-20T20:54:47.713753Z",
+        "suppressed": [
+          "mean",
+          "median",
+          "p10",
+          "p25",
+          "p75",
+          "p90"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2022,
+        "mean": null,
+        "median": null,
+        "p10": null,
+        "p25": null,
+        "p75": null,
+        "p90": null,
+        "mean_ci95": null,
+        "median_ci95": null,
+        "p10_ci95": null,
+        "p25_ci95": null,
+        "p75_ci95": null,
+        "p90_ci95": null,
+        "source_table": "TAB4265",
+        "reference_year": 2022,
+        "fetched_at": "2026-10-20T20:54:47.713753Z",
+        "suppressed": [
+          "mean",
+          "median",
+          "p10",
+          "p25",
+          "p75",
+          "p90"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2023,
+        "mean": null,
+        "median": null,
+        "p10": null,
+        "p25": null,
+        "p75": null,
+        "p90": null,
+        "mean_ci95": null,
+        "median_ci95": null,
+        "p10_ci95": null,
+        "p25_ci95": null,
+        "p75_ci95": null,
+        "p90_ci95": null,
+        "source_table": "TAB5932",
+        "reference_year": 2023,
+        "fetched_at": "2026-10-20T20:54:49.024907Z",
+        "suppressed": [
+          "mean",
+          "median",
+          "p10",
+          "p25",
+          "p75",
+          "p90"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2024,
+        "mean": null,
+        "median": null,
+        "p10": null,
+        "p25": null,
+        "p75": null,
+        "p90": null,
+        "mean_ci95": null,
+        "median_ci95": null,
+        "p10_ci95": null,
+        "p25_ci95": null,
+        "p75_ci95": null,
+        "p90_ci95": null,
+        "source_table": "TAB5932",
+        "reference_year": 2024,
+        "fetched_at": "2026-10-20T20:54:49.024907Z",
+        "suppressed": [
+          "mean",
+          "median",
+          "p10",
+          "p25",
+          "p75",
+          "p90"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2025,
+        "mean": null,
+        "median": null,
+        "p10": null,
+        "p25": null,
+        "p75": null,
+        "p90": null,
+        "mean_ci95": null,
+        "median_ci95": null,
+        "p10_ci95": null,
+        "p25_ci95": null,
+        "p75_ci95": null,
+        "p90_ci95": null,
+        "source_table": "TAB5932",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-20T20:54:49.024907Z",
+        "suppressed": [
+          "mean",
+          "median",
+          "p10",
+          "p25",
+          "p75",
+          "p90"
+        ]
+      }
+    ],
+    "age_bands": [
+      {
+        "code": "1111",
+        "year": 2025,
+        "age_band": "18-24",
+        "mean_monthly": null,
+        "headcount": null,
+        "mean_ci95": null,
+        "source_table": "TAB5844",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-20T20:55:37.497460Z",
+        "suppressed": [
+          "mean_monthly",
+          "headcount"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2025,
+        "age_band": "25-34",
+        "mean_monthly": null,
+        "headcount": null,
+        "mean_ci95": null,
+        "source_table": "TAB5844",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-20T20:55:37.497460Z",
+        "suppressed": [
+          "mean_monthly",
+          "headcount"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2025,
+        "age_band": "35-44",
+        "mean_monthly": null,
+        "headcount": null,
+        "mean_ci95": null,
+        "source_table": "TAB5844",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-20T20:55:37.497460Z",
+        "suppressed": [
+          "mean_monthly",
+          "headcount"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2025,
+        "age_band": "45-54",
+        "mean_monthly": null,
+        "headcount": null,
+        "mean_ci95": null,
+        "source_table": "TAB5844",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-20T20:55:37.497460Z",
+        "suppressed": [
+          "mean_monthly",
+          "headcount"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2025,
+        "age_band": "55-64",
+        "mean_monthly": null,
+        "headcount": null,
+        "mean_ci95": null,
+        "source_table": "TAB5844",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-20T20:55:37.497460Z",
+        "suppressed": [
+          "mean_monthly",
+          "headcount"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2025,
+        "age_band": "65-68",
+        "mean_monthly": null,
+        "headcount": null,
+        "mean_ci95": null,
+        "source_table": "TAB5844",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-20T20:55:37.497460Z",
+        "suppressed": [
+          "mean_monthly",
+          "headcount"
+        ]
+      },
+      {
+        "code": "1111",
+        "year": 2025,
+        "age_band": "all",
+        "mean_monthly": null,
+        "headcount": null,
+        "mean_ci95": null,
+        "source_table": "TAB5844",
+        "reference_year": 2025,
+        "fetched_at": "2026-10-20T20:55:37.497460Z",
+        "suppressed": [
+          "mean_monthly",
+          "headcount"
+        ]
+      }
+    ],
+    "thresholds": [
+      {
+        "rule_id": "salary_90",
+        "percent": 90.0,
+        "amount_sek": 34470,
+        "median_sek": 38300,
+        "median_reference_year": 2025,
+        "on": "2026-10-22",
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      },
+      {
+        "rule_id": "salary_75_exempt",
+        "percent": 75.0,
+        "amount_sek": 28725,
+        "median_sek": 38300,
+        "median_reference_year": 2025,
+        "on": "2026-10-22",
+        "source": {
+          "key": "mv_lonekrav",
+          "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+          "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+          "checked_on": "2026-10-21"
+        }
+      }
+    ],
+    "applicable_rule_id": "salary_90",
+    "simulated": null,
+    "estimate_note": "SCB publishes neither P25 nor P75 for 1111 in 2025",
+    "no_occupation_data": false
+  }
+}

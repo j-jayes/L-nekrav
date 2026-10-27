@@ -1,0 +1,197 @@
+{
+  "status": 200,
+  "body": {
+    "columns": [
+      {
+        "code": "2512",
+        "title_sv": "Mjukvaru- och systemutvecklare m.fl.",
+        "title_en": "Software- and system developers",
+        "tasks_sv": [
+          {
+            "lang": "sv",
+            "kind": "definition",
+            "text": "Analyserar, designar och utvecklar IT-system eller delar av system. Utformar och utvecklar lösningar för programvara, applikationer, system och databaser.",
+            "source": {
+              "source": "jobtech",
+              "ref": "taxonomy ssyk-level-4",
+              "url": "https://taxonomy.api.jobtechdev.se/v1/taxonomy/graphql"
+            },
+            "isco_code": null,
+            "shared_with": []
+          }
+        ],
+        "tasks_en": [
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "User interface developers implement, code, document and maintain the interface of a software system by using front-end development technologies.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c",
+              "url": "http://data.europa.eu/esco/occupation/866c7813-2c03-47d7-9bdc-192cfbace57c"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "ICT application developers implement the ICT (software) applications based on the designs provided using application domain specific languages, tools, platforms and experience.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7",
+              "url": "http://data.europa.eu/esco/occupation/bd272aee-adc9-4a06-a15c-a73b4b4a46a7"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "ICT project managers schedule, control and direct the resources, people, funding and facilities to achieve the objectives of ICT projects. They establish budgets and timelines, perform risk analysis and quality management, and complete project closure reports.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525",
+              "url": "http://data.europa.eu/esco/occupation/8b6388a4-4904-471b-9331-d3b1211f5525"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "ICT system developers maintain, audit and improve organisational support systems. They use existing or new technologies to meet particular needs. They test both hardware and software system components, diagnose and resolve system faults.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135",
+              "url": "http://data.europa.eu/esco/occupation/a7c1d23d-aeca-4bee-9a08-5993ed98b135"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "Database developers program, implement and coordinate changes to computer databases based on their expertise of database management systems.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d",
+              "url": "http://data.europa.eu/esco/occupation/b11e1742-5e28-4270-b081-b0193d85ee7d"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "Database designers specify the database's logical structure, processes, and information flows. They design data models and databases to serve data acquisition.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427",
+              "url": "http://data.europa.eu/esco/occupation/8d9ec84d-cf2d-4179-87bc-335cda54a427"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "Software developers implement or program all kinds of software systems based on specifications and designs by using programming languages, tools, and platforms.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1",
+              "url": "http://data.europa.eu/esco/occupation/f2b15a0e-e65a-438a-affb-29b9d50b77d1"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "Database integrators perform integration among different databases. They maintain integration and ensure interoperability.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67",
+              "url": "http://data.europa.eu/esco/occupation/3d190639-90f8-4402-b1b3-a104a17e0d67"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "Data warehouse designers are responsible for planning, connecting, designing, scheduling, and deploying data warehouse systems. They develop, monitor and maintain ETL processes, reporting applications and data warehouse design.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84",
+              "url": "http://data.europa.eu/esco/occupation/1562c7a3-c7d9-419d-b9b6-db26610bcf84"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "ICT system architects design architecture, components, modules, interfaces, and data for a multi-components system to meet specified requirements.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae",
+              "url": "http://data.europa.eu/esco/occupation/e1c72b5f-4c5c-487c-a6df-e84b64a51dae"
+            },
+            "isco_code": null,
+            "shared_with": []
+          },
+          {
+            "lang": "en",
+            "kind": "definition",
+            "text": "Mobile app developers implement applications software for mobile devices, based on the designs provided, using general or specific development tools for device operating systems.",
+            "source": {
+              "source": "esco",
+              "ref": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c",
+              "url": "http://data.europa.eu/esco/occupation/2ed56c3f-61d6-4f7e-9ef8-8849eb102e4c"
+            },
+            "isco_code": null,
+            "shared_with": []
+          }
+        ],
+        "latest": {
+          "code": "2512",
+          "year": 2025,
+          "mean": 55500,
+          "median": 53500,
+          "p10": 39600,
+          "p25": 46200,
+          "p75": 62600,
+          "p90": 72600,
+          "mean_ci95": 940,
+          "median_ci95": 880,
+          "p10_ci95": 1080,
+          "p25_ci95": 970,
+          "p75_ci95": 1160,
+          "p90_ci95": 1340,
+          "source_table": "TAB5932",
+          "reference_year": 2025,
+          "fetched_at": "2026-10-20T20:54:49.024907Z",
+          "suppressed": []
+        },
+        "legal_flags": [],
+        "threshold": {
+          "rule_id": "salary_90",
+          "percent": 90.0,
+          "amount_sek": 34470,
+          "median_sek": 38300,
+          "median_reference_year": 2025,
+          "on": "2026-10-27",
+          "source": {
+            "key": "mv_lonekrav",
+            "title": "Migrationsverket: Lönekrav för arbetstillstånd",
+            "url": "https://www.migrationsverket.se/ordforklaringar/lonekrav-for-arbetstillstand",
+            "checked_on": "2026-10-21"
+          }
+        },
+        "eligibility": null
+      }
+    ],
+    "honest_fit": "The SSYK code on a work-permit offer must match the duties actually performed. These are the occupations whose official descriptions best match the text, not advice on which code to choose."
+  }
+}

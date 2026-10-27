@@ -1,19 +1,19 @@
 import { useEffect, useReducer, useRef, useState } from "react";
-import { api, type Offer, type Registry } from "./api/client";
+import { api, type Registry } from "./api/client";
 import { AdvisorDrawer } from "./components/AdvisorDrawer";
 import { Notice } from "./components/Notice";
-import { OfferBox } from "./components/OfferBox";
-import { type Draft, emptyDraft } from "./lib/offer";
+import { type Draft, emptyDraft, offerFrom } from "./lib/offer";
 import { initial, select } from "./lib/selection";
-import { type AgeBand, parse, serialise, type View } from "./lib/urlState";
-import { CompareView } from "./views/CompareView";
+import { type AgeBand, parse, type Region, serialise, type View } from "./lib/urlState";
 import { LegalView } from "./views/LegalView";
+import { NumberView } from "./views/NumberView";
 import { SearchView } from "./views/SearchView";
 
-const TABS: { view: View; label: string }[] = [
-  { view: "search", label: "Find a code" },
-  { view: "compare", label: "Compare" },
-  { view: "legal", label: "The rules" },
+// The page reads as three steps (006 FR-016): find the code, see your number against it, the rules.
+const STEPS: { view: View; label: string }[] = [
+  { view: "search", label: "1 Find your code" },
+  { view: "number", label: "2 Your number" },
+  { view: "legal", label: "3 The rules" },
 ];
 
 /** Whether the screen is wide enough for the drawer to sit beside the page (Tailwind's `lg`). */
@@ -42,10 +42,11 @@ export default function App() {
   const [start] = useState(() => parse(location.search));
   const [view, setView] = useState<View>(start.state.view);
   const [age, setAge] = useState<AgeBand | null>(start.state.age);
+  const [region, setRegion] = useState<Region | null>(start.state.region);
   const [selection, dispatch] = useReducer(select, undefined, initial);
   const [loaded, setLoaded] = useState(start.state.codes.length === 0);
-  const [draft, setDraft] = useState<Draft>(emptyDraft);
-  const [offer, setOffer] = useState<Offer | null>(null);
+  const [draft, setDraft] = useState<Draft>(emptyDraft); // the candidate's number and offer details, memory only
+  const offer = offerFrom(draft);
   const [registry, setRegistry] = useState<Registry | null>(null);
   const [advisor, setAdvisor] = useState(false);
   const wide = useWide();
@@ -65,8 +66,8 @@ export default function App() {
   }, [loaded, start]);
 
   useEffect(() => {
-    if (loaded) history.replaceState(null, "", serialise({ view, codes: selection.codes, age }));
-  }, [loaded, view, selection.codes, age]);
+    if (loaded) history.replaceState(null, "", serialise({ view, codes: selection.codes, age, region }));
+  }, [loaded, view, selection.codes, age, region]);
 
   return (
     <>
@@ -81,28 +82,28 @@ export default function App() {
         <button type="button" ref={trigger} onClick={() => (advisor ? closeAdvisor() : setAdvisor(true))} aria-expanded={advisor}
           className="rounded border border-accent px-3 py-1.5 text-sm text-accent">Ask the advisor</button>
       </header>
-      <nav aria-label="Views" className="mb-4 flex gap-1 border-b border-line">
-        {TABS.map((t) => (
+      <nav aria-label="Steps" className="mb-4 flex gap-1 overflow-x-auto border-b border-line">
+        {STEPS.map((t) => (
           <button key={t.view} type="button" onClick={() => setView(t.view)}
             aria-current={view === t.view ? "page" : undefined}
-            className={`px-3 py-2 text-sm ${view === t.view ? "border-b-2 border-accent font-semibold" : "text-muted"}`}>
+            className={`whitespace-nowrap px-3 py-2 text-sm ${view === t.view ? "border-b-2 border-accent font-semibold" : "text-muted"}`}>
             {t.label}
           </button>
         ))}
       </nav>
       {selection.note && <Notice kind="warn">{selection.note}</Notice>}
       <main className="mt-4 space-y-6">
-        {view !== "legal" && selection.codes.length > 0 && (
-          <OfferBox code={selection.codes[0]} draft={draft} offer={offer} registry={registry}
-            onApplied={(d, o) => { setDraft(d); setOffer(o); }} onClear={() => setOffer(null)} />
+        {view === "search" && <SearchView selection={selection} dispatch={dispatch} onNext={() => setView("number")} />}
+        {view === "number" && (
+          <>
+            <NumberView selection={selection} dispatch={dispatch} age={age} setAge={setAge} region={region}
+              setRegion={setRegion} draft={draft} setDraft={setDraft} onSearch={() => setView("search")}
+              rules={registry?.rules} exemptions={Object.values(registry?.exemptions ?? {})} />
+            <button type="button" onClick={() => setView("legal")}
+              className="rounded border border-accent px-3 py-1.5 text-sm text-accent">Next: the rules →</button>
+          </>
         )}
-        {view === "search" && (
-          <SearchView selection={selection} dispatch={dispatch} age={age} setAge={setAge} offer={offer}
-            rules={registry?.rules} />
-        )}
-        {view === "compare" && <CompareView codes={selection.codes} offer={offer} onSearch={() => setView("search")}
-          rules={registry?.rules} />}
-        {view === "legal" && <LegalView registry={registry} draft={draft} onApplied={(d, o) => { setDraft(d); setOffer(o); }} />}
+        {view === "legal" && <LegalView registry={registry} draft={draft} onApplied={(d) => setDraft(d)} />}
       </main>
     </div>
     {/* Hidden, not unmounted, when closed: a run keeps going and its answer is still there. */}

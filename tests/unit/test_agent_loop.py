@@ -158,3 +158,9 @@ def test_the_prompt_allows_market_context_but_never_choosing_by_it():  # Feature
     assert "get_occupation_market" in prompt
     assert "Never use open ads or pay as a reason to prefer or rank a code" in prompt
     assert "with its source and date" in prompt
+
+
+def test_prompt_keeps_positions_and_estimates_honest():  # 006 contracts/mcp.md
+    prompt = " ".join(SYSTEM_PROMPT.split())
+    assert "only with the bracket market_position gives" in prompt
+    assert "call it an estimate, not an SCB figure" in prompt

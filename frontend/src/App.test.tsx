@@ -24,7 +24,7 @@ describe("App", () => {
     at("?view=compare&codes=2512,9999");
     render(<App />);
     expect(await screen.findByText(/Not selected from the link: 9999/)).toBeInTheDocument();
-    expect(location.search).toBe("?view=compare&codes=2512");
+    expect(location.search).toBe("?view=number&codes=2512"); // an old compare link opens Your number
   });
 
   it("at phone width the open drawer is modal: focus moves in, the page is inert, Escape returns", async () => {  // Copilot on PR #4
@@ -41,12 +41,29 @@ describe("App", () => {
     expect(button).toHaveFocus();
   });
 
+  it("shows the views as three numbered steps (006 FR-016)", async () => {
+    serve({});
+    at("");
+    render(<App />);
+    const nav = await screen.findByRole("navigation", { name: "Steps" });
+    expect([...nav.querySelectorAll("button")].map((b) => b.textContent)).toEqual(
+      ["1 Find your code", "2 Your number", "3 The rules"]);
+  });
+
   it("writes the view to the address", async () => {
     serve({});
     at("");
     render(<App />);
-    (await screen.findByRole("button", { name: "Compare" })).click();
-    expect(await screen.findByRole("heading", { name: "Compare codes" })).toBeInTheDocument();
-    expect(location.search).toBe("?view=compare");
+    await userEvent.click(await screen.findByRole("button", { name: "2 Your number" }));
+    expect(await screen.findByRole("heading", { name: "Your number" })).toBeInTheDocument();
+    expect(location.search).toBe("?view=number");
+  });
+
+  it("ends Your number with a step on to the rules", async () => {
+    serve({});
+    at("?view=number");
+    render(<App />);
+    await userEvent.click(await screen.findByRole("button", { name: /next: the rules/i }));
+    expect(await screen.findByRole("heading", { name: "The salary requirement" })).toBeInTheDocument();
   });
 });

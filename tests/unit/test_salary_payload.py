@@ -93,3 +93,12 @@ def test_no_lines_before_the_registry_starts(salaries):
     dists, ages = salaries
     p = payload("2512", on=dt.date(2021, 1, 1), distributions=dists, age_bands=ages)
     assert p.thresholds == [] and p.applicable_rule_id is None
+
+
+@pytest.mark.parametrize("on", [ON, dt.date(2026, 3, 1)])
+def test_each_threshold_line_names_its_legal_source(salaries, on):
+    reg = load_registry()
+    p = payload("2512", on=on, distributions=salaries[0], age_bands=salaries[1])
+    assert p.thresholds
+    for t in p.thresholds:
+        assert t.source == reg.rules[t.rule_id].source

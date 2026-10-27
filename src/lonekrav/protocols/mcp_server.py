@@ -58,25 +58,28 @@ def build_mcp(app) -> FastMCP:
         return service().parse_ad(request)
 
     @mcp.tool
-    def get_occupation_salary(code: str, age_band: str | None = None,
+    def get_occupation_salary(code: str, age_band: str | None = None, region: str | None = None,
                               on: dt.date | None = None) -> SalaryPayload:
         """SCB salary distribution for a four-digit SSYK code, the work-permit salary thresholds
-        in force on date `on` (default today), and, for an age band such as "25-34", simulated
-        age-adjusted figures marked is_simulated."""
+        in force on date `on` (default today), and, for an age band such as "25-34" and/or a
+        national area such as "SE11" (Stockholm), an estimate marked is_simulated: not an SCB
+        figure. A factor is left out, with the reason, when SCB does not publish its inputs."""
         with _expected():
-            return service().salary(code, on=on, age_band=age_band)
+            return service().salary(code, on=on, age_band=age_band, region=region)
 
     @mcp.tool
     def evaluate_permit_eligibility(request: EligibilityRequest) -> EligibilityAnswer:
         """Check whether an offer (code, monthly salary, share of full time, application type and
         dates) meets the work-permit salary requirement, with the rule, threshold, margin,
-        warnings and legal sources."""
+        warnings and legal sources. `market_position` places the full-time equivalent between
+        SCB's nearest published percentiles (a bracket, never an interpolated percentile); it
+        is context for the ask and does not affect eligibility."""
         with _expected():
             return service().eligibility(request)
 
     @mcp.tool
     def compare_occupations(request: CompareRequest) -> Comparison:
-        """Compare 2–5 SSYK codes side by side: official task descriptions, latest salaries,
+        """Compare 1–5 SSYK codes side by side: official task descriptions, latest salaries,
         legal flags and thresholds, and eligibility for an optional offer."""
         with _expected():
             return service().compare(request)

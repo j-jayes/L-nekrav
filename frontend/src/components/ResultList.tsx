@@ -52,8 +52,11 @@ export function ResultList({ answer, selected, onSelect }: Props) {
               <span className="text-muted">Matched: </span>
               {h.matched_chunk.text}
             </p>
-            <ScoreStrip hit={h} />
             <Flags flags={h.legal_flags ?? []} />
+            <details className="text-sm">
+              <summary className="cursor-pointer text-muted">How this was matched</summary>
+              <div className="mt-1"><ScoreStrip hit={h} /></div>
+            </details>
           </article>
         );
       })}

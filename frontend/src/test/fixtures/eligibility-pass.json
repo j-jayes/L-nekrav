@@ -29,6 +29,22 @@
         "checked_on": "2026-10-21"
       }
     ],
-    "disclaimer": "The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice."
+    "disclaimer": "The salary must also be in line with the collective agreement or what is customary in the occupation or industry, which Lönekrav does not check. This is information, not legal advice.",
+    "market_position": {
+      "amount_sek": 52000,
+      "year": 2025,
+      "source_table": "TAB5932",
+      "lower": {
+        "name": "p25",
+        "value_sek": 46200
+      },
+      "upper": {
+        "name": "median",
+        "value_sek": 53500
+      },
+      "at": null,
+      "missing": [],
+      "no_data": false
+    }
   }
 }

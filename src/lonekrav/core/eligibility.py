@@ -13,6 +13,7 @@ from typing import Literal
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 from lonekrav.core.legal import MedianRecord, Registry, Source, load_registry, sek
+from lonekrav.core.salary import MarketPosition
 
 DISCLAIMER = ("The salary must also be in line with the collective agreement or what is customary "
               "in the occupation or industry, which Lönekrav does not check. This is information, "
@@ -82,6 +83,9 @@ class EligibilityAnswer(BaseModel):
     warnings: list[Warning] = []
     sources: list[Source]
     disclaimer: str = DISCLAIMER
+    # Where the full-time equivalent sits among SCB's latest published percentiles: context for
+    # the ask, never part of the rule (006 FR-003). Set by Service, which holds the distributions.
+    market_position: MarketPosition | None = None
 
 
 def _unique(sources: list[Source]) -> list[Source]:

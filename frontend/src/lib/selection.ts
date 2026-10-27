@@ -6,7 +6,6 @@ import { MAX_CODES } from "./urlState";
 export type Selection = {
   codes: string[];
   payloads: Record<string, SalaryPayload>;
-  simulated: Record<string, boolean>;
   note: string | null; // the last thing the user should be told about the selection
   leftOut: string[]; // codes the advisor selected that did not fit
 };
@@ -16,16 +15,15 @@ export type Action =
   | { type: "remove"; code: string }
   | { type: "advisor"; codes: string[] }
   | { type: "load"; codes: string[]; dropped: string[] }
-  | { type: "payload"; code: string; payload: SalaryPayload }
-  | { type: "simulated"; code: string };
+  | { type: "payload"; code: string; payload: SalaryPayload };
 
-export const initial = (): Selection => ({ codes: [], payloads: {}, simulated: {}, note: null, leftOut: [] });
+export const initial = (): Selection => ({ codes: [], payloads: {}, note: null, leftOut: [] });
 
 const only = <T,>(r: Record<string, T>, codes: string[]) =>
   Object.fromEntries(Object.entries(r).filter(([c]) => codes.includes(c)));
 
 function withCodes(s: Selection, codes: string[], note: string | null, leftOut: string[] = []): Selection {
-  return { codes, payloads: only(s.payloads, codes), simulated: only(s.simulated, codes), note, leftOut };
+  return { codes, payloads: only(s.payloads, codes), note, leftOut };
 }
 
 export function select(s: Selection, a: Action): Selection {
@@ -47,7 +45,5 @@ export function select(s: Selection, a: Action): Selection {
       return withCodes(s, a.codes, a.dropped.length ? `Not selected from the link: ${a.dropped.join(", ")}.` : null);
     case "payload":
       return s.codes.includes(a.code) ? { ...s, payloads: { ...s.payloads, [a.code]: a.payload } } : s;
-    case "simulated":
-      return { ...s, simulated: { ...s.simulated, [a.code]: !s.simulated[a.code] } };
   }
 }
