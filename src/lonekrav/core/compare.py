@@ -32,7 +32,7 @@ class CompareRequest(BaseModel):
 
     @field_validator("codes")
     @classmethod
-    def _two_to_five(cls, v: list[str]) -> list[str]:
+    def _one_to_five(cls, v: list[str]) -> list[str]:
         v = list(dict.fromkeys(v))
         if not 1 <= len(v) <= 5:
             raise ValueError(f"codes: give 1–5 distinct codes, got {len(v)}")
